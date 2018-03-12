@@ -7,7 +7,7 @@
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/custom.css">
-	<title>Insert title here</title>
+	<title>index.jsp</title>
 	<link rel="stylesheet" type="text/css" href="_main.css">
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
@@ -15,6 +15,9 @@
 
 </head>
 <body>
+
+
+	<!-- 인클루드 부분 -->
 	<div class="menu">
 		<input type="button" class="login" id="login">
 		<input type="button" class="account" id="account">
@@ -108,13 +111,21 @@
 	}
 	%>
 	<script type="text/javascript">
-	$(function() {
-		$("#login").click(function() {
-			location.href = "User?command=login";
+	$(function() {//좌측 메뉴바 누르는 곳.
+
+		$("#second").click(function() {
+			location.href="second.jsp";
 		});
-		$("#account").click(function() {
-			location.href = "User?command=join";
+
+		$("#techbbs").click(function() {
+			location.href="techbbs.jsp";
 		});
+
+		//게시판4 나효진
+		$("#community").click(function() {
+			location.href="community";
+		});
+
 	});
 	</script>
 </body>
