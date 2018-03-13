@@ -1,9 +1,10 @@
 
+<%@page import="user.UserDto"%>
 <%@page import="techpds.PdsService"%>
 <%@page import="techpds.PdsServiceImpl"%>
 <%@page import="techpds.PdsDto"%>
 <%@page import="java.util.List"%>
-<%@page import="user.UserDTO"%>
+<%@page import="user.UserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -20,7 +21,7 @@
 </head>
 <body>
 <%
-UserDTO mem = (UserDTO)session.getAttribute("login");
+UserDto mem = (UserDto)session.getAttribute("login");
 PdsDto pdsdto=null;
 List<PdsDto> pdslist=null;
 %>

@@ -20,6 +20,26 @@
   
   
   
+  <!-- 기술게시판파일업로드 -->
+  <servlet>
+    <servlet-name>PdsController</servlet-name>
+    <servlet-class>techpds.PdsController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PdsController</servlet-name>
+    <url-pattern>/PdsController</url-pattern>
+  </servlet-mapping>
+   
+     <!-- 기술게시판 -->
+  <servlet>
+    <servlet-name>TechbbsController</servlet-name>
+    <servlet-class>techbbs.TechbbsController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TechbbsController</servlet-name>
+    <url-pattern>/TechbbsController</url-pattern>
+  </servlet-mapping><!-- ------------------ -->
+  
   
   
   

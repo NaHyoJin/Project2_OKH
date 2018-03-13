@@ -170,6 +170,11 @@
 			location.href="User?command=join";
 		});
 		
+		$("#techbbs").click(function() {
+		      location.href="TechbbsController?command=techbbs";
+		   });
+		
+		
 		$("#jobs").click(function() {
 			location.href="community";
 		});

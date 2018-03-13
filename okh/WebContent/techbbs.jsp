@@ -1,8 +1,9 @@
 
+<%@page import="user.UserDto"%>
 <%@page import="techbbs.TechbbsService"%>
 <%@page import="techbbs.TechbbsServiceImpl"%>
 <%@page import="techbbs.TechbbsDto"%>
-<%@page import="user.UserDTO"%>
+
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="singleton.Singleton"%>
@@ -20,13 +21,15 @@ request.setCharacterEncoding("utf-8");
 <link rel="stylesheet" type="text/css" href="_techbbs.css?ver=1">
 </head>
 <body>
+
 <%
 
 
-UserDTO mem = (UserDTO)session.getAttribute("login");
+UserDto mem = (UserDto)session.getAttribute("login");
 
 List<TechbbsDto> techlist=(List<TechbbsDto>)request.getAttribute("techbbs");
 %>
+
 <div class="menu">
 <jsp:include page="menuinclude.jsp">
 <jsp:param name="actionPath" value="index.jsp"/>
