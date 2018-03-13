@@ -40,6 +40,17 @@
     <url-pattern>/TechbbsController</url-pattern>
   </servlet-mapping>
   
+  <!-- qnabbs 게시판 -->
+  <servlet>
+  	<servlet-name>qnaServlet</servlet-name>
+  	<servlet-class>qna.QnaServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>qnaServlet</servlet-name>
+  	<url-pattern>/qnaServlet</url-pattern>
+  </servlet-mapping>
+  
   
   
   

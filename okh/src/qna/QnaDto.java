@@ -1,4 +1,4 @@
-package qna.dto;
+package qna;
 
 import java.io.Serializable;
 
@@ -27,7 +27,8 @@ CREATE TABLE QNA(
 	READCOUNT NUMBER(8) NOT NULL,
 	
 	FAVOR NUMBER(1) NOT NULL,
-	LVPOINT NUMBER(8) NOT NULL
+	LVPOINT NUMBER(8) NOT NULL,
+	ANSWERCOUNT NUMBER(8) NOT NULL	
 );
 
 CREATE SEQUENCE SEQ_QNA
@@ -50,42 +51,19 @@ public class QnaDto implements Serializable{
 	private int depth;		// 깊이
 	private String title;
 	private String content;
-	private String wdate;
 	private String tag;
-
-
-
+	private String wdate;
 	private int parent;		// 부모글
 	private int del;
 	private int readcount;
 	private int favor;		// 찬성,반대
 	private int lvpoint;	// 활동 포인트 글+5, 댓글+2
+	private int answercount;	// 답변수
 	
 	public QnaDto() {}
+
 	
 	
-
-	public QnaDto(int seq, String id, int ref, int step, int depth, String title, String content, String wdate,
-			String tag, int parent, int del, int readcount, int favor, int lvpoint) {
-		super();
-		this.seq = seq;
-		this.id = id;
-		this.ref = ref;
-		this.step = step;
-		this.depth = depth;
-		this.title = title;
-		this.content = content;
-		this.wdate = wdate;
-		this.tag = tag;
-		this.parent = parent;
-		this.del = del;
-		this.readcount = readcount;
-		this.favor = favor;
-		this.lvpoint = lvpoint;
-	}
-
-
-
 	public QnaDto(String id, String title, String content, String tag) {
 		super();
 		this.id = id;
@@ -94,17 +72,44 @@ public class QnaDto implements Serializable{
 		this.tag = tag;
 	}
 
-	public String getTag() {
-		return tag;
+
+
+	public QnaDto(int seq, String id, int ref, int step, int depth, String title, String content, String tag,
+			String wdate, int parent, int del, int readcount, int favor, int lvpoint, int answercount) {
+		super();
+		this.seq = seq;
+		this.id = id;
+		this.ref = ref;
+		this.step = step;
+		this.depth = depth;
+		this.title = title;
+		this.content = content;
+		this.tag = tag;
+		this.wdate = wdate;
+		this.parent = parent;
+		this.del = del;
+		this.readcount = readcount;
+		this.favor = favor;
+		this.lvpoint = lvpoint;
+		this.answercount = answercount;
 	}
 
-	public void setTag(String tag) {
-		this.tag = tag;
+
+
+	@Override
+	public String toString() {
+		return "QnaDto [seq=" + seq + ", id=" + id + ", ref=" + ref + ", step=" + step + ", depth=" + depth + ", title="
+				+ title + ", content=" + content + ", tag=" + tag + ", wdate=" + wdate + ", parent=" + parent + ", del="
+				+ del + ", readcount=" + readcount + ", favor=" + favor + ", lvpoint=" + lvpoint + ", answercount="
+				+ answercount + "]";
 	}
+
+
 
 	public int getSeq() {
 		return seq;
 	}
+
 
 
 	public void setSeq(int seq) {
@@ -112,9 +117,11 @@ public class QnaDto implements Serializable{
 	}
 
 
+
 	public String getId() {
 		return id;
 	}
+
 
 
 	public void setId(String id) {
@@ -122,9 +129,11 @@ public class QnaDto implements Serializable{
 	}
 
 
+
 	public int getRef() {
 		return ref;
 	}
+
 
 
 	public void setRef(int ref) {
@@ -132,9 +141,11 @@ public class QnaDto implements Serializable{
 	}
 
 
+
 	public int getStep() {
 		return step;
 	}
+
 
 
 	public void setStep(int step) {
@@ -142,9 +153,11 @@ public class QnaDto implements Serializable{
 	}
 
 
+
 	public int getDepth() {
 		return depth;
 	}
+
 
 
 	public void setDepth(int depth) {
@@ -152,9 +165,11 @@ public class QnaDto implements Serializable{
 	}
 
 
+
 	public String getTitle() {
 		return title;
 	}
+
 
 
 	public void setTitle(String title) {
@@ -162,9 +177,11 @@ public class QnaDto implements Serializable{
 	}
 
 
+
 	public String getContent() {
 		return content;
 	}
+
 
 
 	public void setContent(String content) {
@@ -172,9 +189,23 @@ public class QnaDto implements Serializable{
 	}
 
 
+
+	public String getTag() {
+		return tag;
+	}
+
+
+
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+
+
+
 	public String getWdate() {
 		return wdate;
 	}
+
 
 
 	public void setWdate(String wdate) {
@@ -182,9 +213,11 @@ public class QnaDto implements Serializable{
 	}
 
 
+
 	public int getParent() {
 		return parent;
 	}
+
 
 
 	public void setParent(int parent) {
@@ -192,9 +225,11 @@ public class QnaDto implements Serializable{
 	}
 
 
+
 	public int getDel() {
 		return del;
 	}
+
 
 
 	public void setDel(int del) {
@@ -202,9 +237,11 @@ public class QnaDto implements Serializable{
 	}
 
 
+
 	public int getReadcount() {
 		return readcount;
 	}
+
 
 
 	public void setReadcount(int readcount) {
@@ -212,9 +249,11 @@ public class QnaDto implements Serializable{
 	}
 
 
+
 	public int getFavor() {
 		return favor;
 	}
+
 
 
 	public void setFavor(int favor) {
@@ -222,17 +261,28 @@ public class QnaDto implements Serializable{
 	}
 
 
+
 	public int getLvpoint() {
 		return lvpoint;
 	}
 
 
+
 	public void setLvpoint(int lvpoint) {
 		this.lvpoint = lvpoint;
 	}
-	
-	
-	
+
+
+
+	public int getAnswercount() {
+		return answercount;
+	}
+
+
+
+	public void setAnswercount(int answercount) {
+		this.answercount = answercount;
+	}
 	
 	
 	
