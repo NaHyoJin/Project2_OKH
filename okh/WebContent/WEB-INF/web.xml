@@ -38,7 +38,7 @@
   <servlet-mapping>
     <servlet-name>TechbbsController</servlet-name>
     <url-pattern>/TechbbsController</url-pattern>
-  </servlet-mapping><!-- ------------------ -->
+  </servlet-mapping>
   
   
   

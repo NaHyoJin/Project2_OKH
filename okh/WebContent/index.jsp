@@ -1,3 +1,4 @@
+<%@page import="user.UserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -45,9 +46,11 @@
 				location.href="second.jsp";
 			});
 	
+			
 			$("#techbbs").click(function() {
-				location.href="techbbs.jsp";
+				location.href="TechbbsController?command=techbbs";
 			});
+			
 			
 	/* 
 			//columns

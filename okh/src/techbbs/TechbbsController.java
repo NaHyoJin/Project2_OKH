@@ -19,7 +19,6 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import singleton.Singleton;
-import user.UserDTO;
 import user.UserDao;
 
 public class TechbbsController extends HttpServlet {
