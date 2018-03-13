@@ -5,5 +5,5 @@
 	<input type="button" class="bbs1">
 	<input type="button" class="techbbs_hjh" id="techbbs">
 	<input type="button" class="bbs3">
-	<input type="button" class="bbs4" id="community">
-	<input type="button" class="bbs5">
+	<input type="button" class="bbs4" id="">
+	<input type="button" class="bbs5" id="jobs">
