@@ -25,7 +25,7 @@
 		<input type="button" class="techbbs_hjh" id="techbbs">
 		<input type="button" class="bbs3">
 		<input type="button" class="bbs4" id="community">
-		<input type="button" class="bbs5">
+		<input type="button" class="bbs5"><!-- 정재흥 -->
 	</div>
 	<div class="wrap" id="tableChange">
 		<div class="partition1">
