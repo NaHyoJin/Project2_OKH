@@ -20,7 +20,7 @@
 			var userID = $('#userID').val();
 			$.ajax({
 				type: 'POST',
-				url: 'User?command=check',
+				url: 'UserRegisterCheck?command=check',
 				data: {userID: userID},
 				success: function(result) {
 					if(result == 1){
@@ -53,7 +53,7 @@
 		<input type="button" class="techbbs_hjh" id="techbbs">
 		<input type="button" class="bbs3">
 		<input type="button" class="bbs4">
-		<input type="button" class="bbs5">
+		<input type="button" class="bbs5" id="jobs">
 	</div>
 	<%
 	String userID = null;
@@ -110,7 +110,7 @@
 	</nav>
  --%>
 	<div class="container">
-		<form action="User" method="POST">
+		<form action="UserRegister" method="POST">
 			<table class="table table-bordered table-hover" style="text-align: center; border: 1px solid #dddddd">
 				<thead>
 					<tr>
@@ -121,7 +121,7 @@
 					<tr>
 						<td style="width: 110px;"><h5>아이디</h5></td>
 						<td>
-							<input type="hidden" name="command" value="joinAf">
+							<input type="hidden" name="command" value="regi">
 							<input type="text" class="form-control" id="userID" name="userID" maxlength="20" placeholder="아이디를 입력하세요.">
 						</td>
 						<td style="width: 110px">
@@ -248,15 +248,18 @@
 			</div>
 		</div>
 	</div>
+	
 	<script type="text/javascript">
 	$(function() {
 		$("#login").click(function() {
-			location.href = "User?command=login";
+			location.href="User?command=login";
 		});
+
 		$("#account").click(function() {
-			location.href = "User?command=join";
+			location.href="User?command=join";
 		});
 	});
 	</script>
+	
 </body>
 </html>

@@ -1,0 +1,106 @@
+@charset "UTF-8";
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+h3{
+	margin-top: 0;
+}
+.menu{
+position: fixed;
+width: 240px;
+height: 100%;
+background-color: #0059ab;
+}
+input.login {
+        background: url(image/login.PNG) no-repeat;
+        cursor: pointer;
+        width: 120px;
+        height: 40px;
+        border: 1px solid gray;
+		position: absolute;
+		top: 100px;
+      }
+ input.account {
+   background: url(image/account.PNG) no-repeat;
+   cursor: pointer;
+   width: 120px;
+   height: 40px;
+   border: 1px solid gray;
+   position: absolute;
+	top: 100px;
+	left: 120px;
+ }
+ input.bbs1 {
+   background: url(image/bbs1.PNG) no-repeat;
+   border: none;
+   cursor: pointer;
+   width: 240px;
+   height: 70px;
+   position: absolute;
+	top: 240px;
+ }
+ .techbbs_hjh {
+   background: url(image/bbs2.png) no-repeat;
+   border: none;
+   cursor: pointer;
+   width: 240px;
+   height: 70px;
+   position: absolute;
+	top: 320px;
+ }
+ input.bbs3 {
+   background: url(image/bbs3.PNG) no-repeat;
+   border: none;
+   cursor: pointer;
+   width: 240px;
+   height: 70px;
+   position: absolute;
+	top: 400px;
+ }
+ input.bbs4 {
+   background: url(image/bbs4.png) no-repeat;
+   border: none;
+   cursor: pointer;
+   width: 240px;
+   height: 70px;
+   position: absolute;
+	top: 480px;
+ }
+ input.bbs5 {
+   background: url(image/bbs5.png) no-repeat;
+   border: none;
+   cursor: pointer;
+   width: 240px;
+   height: 70px;
+   position: absolute;
+	top: 560px;
+ }
+.wrap{
+width:800px;
+ position: relative;
+ top: 30px;
+ left: 300px;
+}
+.writeform{
+ background-color: yellow;
+position: absolute;
+width: 800px;
+height: auto;
+}

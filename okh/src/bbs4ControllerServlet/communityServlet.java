@@ -46,10 +46,10 @@ public class communityServlet extends HttpServlet {
 		req.setCharacterEncoding("utf-8");
 		
 		//여기까지 잘 들어온다
-//		System.out.println("communityServlet으로 잘 들어오나 확인 코드");
+		System.out.println("communityServlet doProcess 으로 잘 들어오나 확인 코드");
 		
-		//커뮤니티 기본 화면이동 부분.
-		resp.sendRedirect("Bbs4_communityViewJsp/communityMain.jsp");
+		//커뮤니티 기본 화면이동 부분. HW 부분으로 가게 했다.
+		resp.sendRedirect("Bbs4_communityViewJsp/bbs4HWCoding.jsp");
 
 /*		//forward 부분.
 		String disp = "forwardTest";

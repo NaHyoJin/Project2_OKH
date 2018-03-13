@@ -57,7 +57,8 @@
   
   <servlet-mapping>
   	<servlet-name>BBSHWCodingController</servlet-name>
-  	<url-pattern>/BBSHWCodingController</url-pattern>
+  	<url-pattern>*.BBSHWCodingController</url-pattern>
+  	
   </servlet-mapping>
   
   

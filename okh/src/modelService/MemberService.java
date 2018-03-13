@@ -2,13 +2,13 @@ package modelService;
 
 import java.util.List;
 
-import dao.MemberDao;
+import dao.TechbbsDao;
 import dao.MemberDaoImpl;
 import dto.MemberDto;
 
 public class MemberService implements MemberServiceImpl {
 
-	MemberDaoImpl dao = new MemberDao();
+	MemberDaoImpl dao = new TechbbsDao();
 
 	
 	@Override
