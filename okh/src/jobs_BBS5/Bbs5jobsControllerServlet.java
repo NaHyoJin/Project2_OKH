@@ -27,18 +27,22 @@ public class Bbs5jobsControllerServlet extends HttpServlet {
 	*/
 	
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
+			throws ServletException, IOException {
 		doProcess(req, resp);
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
+			throws ServletException, IOException {
 		doProcess(req, resp);
 	}
 
 	
 	//어떤 방식으로와도 처리하는 과정 //어떤 방법으로도 작동 되게끔.
-	protected void doProcess(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	//인덱스 에서 처음 그냥 Bbs5jobsControllerServlet 곳으로 오는것 나중은 사용 안한다.
+	public void doProcess(HttpServletRequest req, HttpServletResponse resp) 
+			throws ServletException, IOException {
 
 		resp.setContentType("text/html; charset=utf-8");
 		PrintWriter out = resp.getWriter();
@@ -46,10 +50,10 @@ public class Bbs5jobsControllerServlet extends HttpServlet {
 		req.setCharacterEncoding("utf-8");
 		
 		//여기까지 잘 들어온다
-		System.out.println("communityServlet doProcess 으로 잘 들어오나 확인 코드");
+		System.out.println("Bbs5jobsControllerServlet doProcess 으로 잘 들어오나 확인 코드");
 		
-		//커뮤니티 기본 화면이동 부분. HW 부분으로 가게 했다.
-		resp.sendRedirect("Bbs4_communityViewJsp/bbs4HWCoding.jsp");
+		//jobs 기본 화면이동 부분. HW 부분으로 가게 했다.
+		resp.sendRedirect("Bbs5_jobsViewJsp/bbs4HWCoding.jsp");
 
 /*		//forward 부분.
 		String disp = "forwardTest";

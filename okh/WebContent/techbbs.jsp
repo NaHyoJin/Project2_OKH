@@ -17,24 +17,24 @@ request.setCharacterEncoding("utf-8");
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
-<title>Insert title here</title>
+<title>techbbs.jsp</title>
 <link rel="stylesheet" type="text/css" href="_techbbs.css?ver=1">
 </head>
 <body>
 
-<%
-
-
-UserDto mem = (UserDto)session.getAttribute("login");
-
-List<TechbbsDto> techlist=(List<TechbbsDto>)request.getAttribute("techbbs");
-%>
+	<%
+	
+	UserDto mem = (UserDto)session.getAttribute("login");
+	
+	List<TechbbsDto> techlist=(List<TechbbsDto>)request.getAttribute("techbbs");
+	%>
 
 <div class="menu">
 <jsp:include page="menuinclude.jsp">
 <jsp:param name="actionPath" value="index.jsp"/>
 </jsp:include>
 </div>
+
 <div class="wrap">
 	<div class="header">
 		<h3>Tech</h3>
@@ -83,17 +83,26 @@ List<TechbbsDto> techlist=(List<TechbbsDto>)request.getAttribute("techbbs");
 		</table>
 	</div>
 </div>
+
+
+
 <script type="text/javascript">
 
 
-$(function() {
-	$("#techbbs").click(function() {
-		location.href="TechbbsController?command=techbbs";
+	$(function() {
+		$("#techbbs").click(function() {
+			location.href="TechbbsController?command=techbbs";
+		});
+		$("#techwrite").click(function() {
+			location.href="TechbbsController?command=techwrite";
+		});
+		
+		
+		//게시판 5 호출
+		$("#jobs").click(function() {
+			location.href="jobs";
+		});
 	});
-	$("#techwrite").click(function() {
-		location.href="TechbbsController?command=techwrite";
-	});
-});
 </script>
 </body>
 </html>

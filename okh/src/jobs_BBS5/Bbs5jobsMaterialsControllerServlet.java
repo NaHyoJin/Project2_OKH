@@ -8,9 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import modelService.jobsBbs5ModelService;
-import modelService.jobsBbs5ModelServiceImpl;
-
 public class Bbs5jobsMaterialsControllerServlet extends HttpServlet {//자료실 게시판
 
 	

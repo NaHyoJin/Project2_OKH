@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns="http://java.sun.com/xml/ns/javaee" 
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
+version="3.0">
   <display-name>okh</display-name>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
@@ -54,18 +57,18 @@
   
   
   
-  <!-- BBS4 컨트롤러  -->
+  <!-- BBS5 jobs 컨트롤러  -->
   <!-- 설정 부분. 선언 부분. -->
-  <!-- 20180310 맨 아래 커뮤니티 부분 -->
+  <!-- 20180310 맨 아래 jobs 부분 -->
   <!-- 기본 화면 부분. 계속 컨트롤러 추가하면서 사용하면 된다. -->
   <servlet>
-  	<servlet-name>community</servlet-name> <!-- 이름 -->
-  	<servlet-class>bbs4ControllerServlet.communityServlet</servlet-class> <!-- 이쪽으로 가라 이 의미. -->
+  	<servlet-name>jobs</servlet-name> <!-- 이름 -->
+  	<servlet-class>jobs_BBS5.Bbs5jobsControllerServlet</servlet-class> <!-- 이쪽으로 가라 이 의미. -->
   </servlet>
-  
+
   <servlet-mapping>
-  	<servlet-name>community</servlet-name> <!-- 이름 -->
-  	<url-pattern>/community</url-pattern>
+  	<servlet-name>jobs</servlet-name> <!-- 이름 -->
+  	<url-pattern>/jobs</url-pattern>
   </servlet-mapping>
   
   <!-- BBSboardController 일반 게시판 컨트롤 -->
@@ -83,7 +86,7 @@
   <!-- BBSHWCodingController 컨트롤 -->
   <servlet>
   	<servlet-name>BBSHWCodingController</servlet-name>
-  	<servlet-class>bbs4ControllerServlet.BBSHWCodingController</servlet-class>
+  	<servlet-class>jobs_BBS5.Bbs5jobsHWCodingControllerServlet</servlet-class>
   </servlet>
   
   <servlet-mapping>
@@ -101,7 +104,7 @@
   
   <servlet-mapping>
   	<servlet-name>BBSmaterialsController</servlet-name>
-  	<url-pattern>/BBSmaterialsController</url-pattern>
+  	<url-pattern>*.BBSmaterialsController</url-pattern>
   </servlet-mapping>
   
   

@@ -26,14 +26,15 @@
 		<input type="button" class="account" id="account">
 		<input type="button" class="bbs1" id="qnabbs">
 		<input type="button" class="techbbs_hjh" id="techbbs">
-		<input type="button" class="bbs3"><!-- 정재흥 -->
+		<input type="button" class="bbs3" ><!-- 정재흥 -->
 		<input type="button" class="bbs4" >
-		<input type="button" class="bbs5" id="jobs">
+		<input type="button" class="bbs5" id="jobs"><!-- 나효진 -->
 	</div>	
+
 	
 	<script type="text/javascript">
 		$(function() {//좌측 메뉴바 누르는 곳.
-	
+
 			$("#login").click(function() {
 				location.href="User?command=login";
 			});
@@ -41,6 +42,8 @@
 			$("#account").click(function() {
 				location.href="User?command=join";
 			});
+			
+			//QNA
 			$("#qnabbs").click(function() {
 				location.href="qnaServlet?command=listQna";
 			});
@@ -60,12 +63,18 @@
 			$("#").click(function() {
 				location.href="";
 			});
-	 */		
+	 */
+	 
 			//게시판5 나효진 jobs 부분.
-			$("#jobs").click(function() {
-				location.href="community";
+/* 			$("#jobs").click(function() {
+				location.href="main.BBSHWCodingController";
 			});
-	
+ */	 
+			
+			$("#jobs").click(function name() {
+				location.href="jobs";
+			});
+
 		});
 	</script>
 	

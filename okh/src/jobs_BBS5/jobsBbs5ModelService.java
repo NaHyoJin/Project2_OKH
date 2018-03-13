@@ -3,9 +3,7 @@ package jobs_BBS5;
 import java.util.ArrayList;
 import java.util.List;
 
-import beanDtoVO.BbsHWCodingBeanDtoVO;
-import dao.jobsBbs5Dao;
-import dao.jobsBbs5DaoImpl;
+
 
 public class jobsBbs5ModelService implements jobsBbs5ModelServiceImpl {
 

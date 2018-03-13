@@ -8,9 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import modelService.jobsBbs5ModelService;
-import modelService.jobsBbs5ModelServiceImpl;
-
 public class Bbs5jobsHWCodingControllerServlet extends HttpServlet {//공지사항 게시판 컨트롤
 
 	
@@ -29,7 +26,7 @@ public class Bbs5jobsHWCodingControllerServlet extends HttpServlet {//공지사�
 	protected void doProcess(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	
 		//컨트롤러에서 각각 따로 만들어보자.
-		jobsBbs5ModelServiceImpl bbs4Service = new jobsBbs5ModelService();
+		jobsBbs5ModelServiceImpl bbs5Service = new jobsBbs5ModelService();
 		
 		resp.setContentType("text/html; charset=utf-8");
 		PrintWriter out = resp.getWriter();
@@ -46,12 +43,14 @@ public class Bbs5jobsHWCodingControllerServlet extends HttpServlet {//공지사�
 		//여기까지 잘 들어온다.
 		System.out.println("BBSHWCodingController doProcess realCommand : " + realCommand);
 
-		if("/HWCodingWrite.BBSHWCodingController".equals(realCommand)) {
-			resp.sendRedirect("Bbs4_communityViewJsp/jobs_bbs5HWCodingWrite.jsp");
-		} else if("/mainpage.BBSHWCodingController".equals(realCommand)) {
+		//확인후 갈 곳 계속 추가하는 부분.
+		if("/main.Bbs5jobsHWCodingControllerServlet".equals(realCommand)) {
+			resp.sendRedirect("Bbs5_jobsViewJsp/bbs4HWCoding.jsp");
+		} 
+/*		else if("/mainpage.BBSHWCodingController".equals(realCommand)) {
 			resp.sendRedirect("Bbs4_communityViewJsp/bbs4HWCoding.jsp");
 		}
-		
+*/		
 		//H/W 화면이동 부분.
 //		resp.sendRedirect("Bbs4_communityViewJsp/bbs4HWCoding.jsp");
 		

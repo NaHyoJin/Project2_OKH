@@ -249,6 +249,7 @@
 		</div>
 	</div>
 	
+	<!-- 버튼 부분. -->
 	<script type="text/javascript">
 	$(function() {
 		$("#login").click(function() {
@@ -257,6 +258,13 @@
 
 		$("#account").click(function() {
 			location.href="User?command=join";
+		});
+		
+		
+		
+		// 게시판 5 jobs 부분.
+		$("#jobs").click(function name() {
+			location.href="jobs";
 		});
 	});
 	</script>

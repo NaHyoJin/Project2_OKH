@@ -2,7 +2,6 @@ package jobs_BBS5;
 
 import java.util.List;
 
-import beanDtoVO.BbsHWCodingBeanDtoVO;
 
 
 public interface jobsBbs5DaoImpl {//bbs4 다오 IMPL부분.
