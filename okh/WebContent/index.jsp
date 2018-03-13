@@ -7,7 +7,9 @@
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/custom.css">
+	
 	<title>index.jsp</title>
+	
 	<link rel="stylesheet" type="text/css" href="_main.css">
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
@@ -23,10 +25,46 @@
 		<input type="button" class="account" id="account">
 		<input type="button" class="bbs1" id="qnabbs">
 		<input type="button" class="techbbs_hjh" id="techbbs">
-		<input type="button" class="bbs3">
-		<input type="button" class="bbs4" id="community">
-		<input type="button" class="bbs5"><!-- 정재흥 -->
-	</div>
+		<input type="button" class="bbs3"><!-- 정재흥 -->
+		<input type="button" class="bbs4" >
+		<input type="button" class="bbs5" id="jobs">
+	</div>	
+	
+	<script type="text/javascript">
+		$(function() {//좌측 메뉴바 누르는 곳.
+	
+			$("#login").click(function() {
+				location.href="User?command=login";
+			});
+	
+			$("#account").click(function() {
+				location.href="User?command=join";
+			});
+	
+			$("#second").click(function() {
+				location.href="second.jsp";
+			});
+	
+			$("#techbbs").click(function() {
+				location.href="techbbs.jsp";
+			});
+			
+	/* 
+			//columns
+			$("#").click(function() {
+				location.href="";
+			});
+	 */		
+			//게시판5 나효진 jobs 부분.
+			$("#jobs").click(function() {
+				location.href="community";
+			});
+	
+		});
+	</script>
+	
+	<!-- 황준현 -->
+<!-- wrap로 메인페이지 섹션사이즈만들어준거고 그밑에 자식들 partition1~partition4로 테이블뿌리면된니다  -->
 	<div class="wrap" id="tableChange">
 		<div class="partition1">
 			게시판뿌려주기1
@@ -105,28 +143,13 @@
 	<script>
 		$('#messageModal').modal("show");
 	</script>
+	
 	<%
-	session.removeAttribute("messageContent");
-	session.removeAttribute("messageType");
-	}
+			session.removeAttribute("messageContent");
+			session.removeAttribute("messageType");
+		}
 	%>
-	<script type="text/javascript">
-	$(function() {//좌측 메뉴바 누르는 곳.
+	
 
-		$("#second").click(function() {
-			location.href="second.jsp";
-		});
-
-		$("#techbbs").click(function() {
-			location.href="techbbs.jsp";
-		});
-
-		//게시판4 나효진
-		$("#community").click(function() {
-			location.href="community";
-		});
-
-	});
-	</script>
 </body>
 </html>

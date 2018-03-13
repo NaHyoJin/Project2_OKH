@@ -36,11 +36,24 @@ public class BBSHWCodingController extends HttpServlet {//공지사항 게시판
 		
 		req.setCharacterEncoding("utf-8");
 		
+		//root경로
+		String contextPath = req.getContextPath();
+		//전체 주소.
+		String reqURI = req.getRequestURI();
+		//contextPath의 길이부터 끝까지.
+		String realCommand = reqURI.substring(contextPath.length());
+		
 		//여기까지 잘 들어온다.
-		System.out.println("BBSHWCodingController으로 잘 들어오나 확인 코드");
+		System.out.println("BBSHWCodingController doProcess realCommand : " + realCommand);
 
+		if("/HWCodingWrite.BBSHWCodingController".equals(realCommand)) {
+			resp.sendRedirect("Bbs4_communityViewJsp/jobs_bbs5HWCodingWrite.jsp");
+		} else if("/mainpage.BBSHWCodingController".equals(realCommand)) {
+			resp.sendRedirect("Bbs4_communityViewJsp/bbs4HWCoding.jsp");
+		}
+		
 		//H/W 화면이동 부분.
-		resp.sendRedirect("Bbs4_communityViewJsp/bbs4HWCoding.jsp");
+//		resp.sendRedirect("Bbs4_communityViewJsp/bbs4HWCoding.jsp");
 		
 	}
 }
