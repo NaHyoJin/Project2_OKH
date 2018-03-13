@@ -1,11 +1,8 @@
-<%@page import="service.PdsService"%>
-<%@page import="service.PdsServiceImpl"%>
-<%@page import="service.TechbbsServiceImpl"%>
-<%@page import="service.TechbbsService"%>
+
+<%@page import="techpds.PdsDto"%>
+<%@page import="techpds.PdsService"%>
+<%@page import="techpds.PdsServiceImpl"%>
 <%@page import="singleton.Singleton"%>
-<%@page import="dto.PdsDto"%>
-<%@page import="dao.PdsDao"%>
-<%@page import="dao.iPdsDao"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="java.util.List"%>
 <%@page import="java.io.File"%>
@@ -89,7 +86,7 @@ if(isMultipart){
 		
 		FileItem item=it.next();
 		if(item.isFormField()){		//pdswrite에서받아올때 폼필드를받을때
-			if(item.getFieldName().equals("id")){	//id값이넘어온다
+			if(item.getFieldName().equals("id2")){	//id값이넘어온다
 				id=item.getString("utf-8");
 			}else if(item.getFieldName().equals("seq")){	//content값이넘어온다
 				sseq=item.getString("utf-8");
@@ -111,29 +108,26 @@ if(isMultipart){
 }
 PdsServiceImpl pservice=PdsService.getInstance();
 boolean isS;
-System.out.println(update+sseq);
+int parent=0;
+PdsDto dto1=null;
 if(update.equals("update")){
 	System.out.println("ghkdwn");
 	int seq=Integer.parseInt(sseq);
 	isS=pservice.pdsupdate(seq, filename);
 }else{
-	int parent=pservice.getSeq();
+	parent=pservice.getSeq();
 	isS=pservice.writePds(new PdsDto(id,filename,(parent+1)));
-	System.out.println(id+"222222"+filename);
+	System.out.println(id+"222222"+filename+parent);
 }
 if(isS){
+	dto1=new PdsDto(id,filename,(parent+1));
+	request.setAttribute("pdsdto11", dto1);
+	pageContext.forward("techwrite.jsp?command11=addafter");
 %>
-<script type="text/javascript">
-alert("추가성공");
-location.href="TechbbsController?command=addpds&filename=<%=filename%>";
-</script>
 <%
 }else{
+	pageContext.forward("techwrite.jsp?command11=addafter");
 %>
-<script type="text/javascript">
-alert("다시입력해주세요");
-location.href="TechbbsController?command=techwrite";
-</script>
 <%
 }
 %>

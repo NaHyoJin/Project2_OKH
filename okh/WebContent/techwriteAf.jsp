@@ -1,7 +1,7 @@
-<%@page import="service.TechbbsService"%>
-<%@page import="service.TechbbsServiceImpl"%>
-<%@page import="dto.TechbbsDto"%>
-<%@page import="dto.PdsDto"%>
+
+<%@page import="techbbs.TechbbsService"%>
+<%@page import="techbbs.TechbbsServiceImpl"%>
+<%@page import="techbbs.TechbbsDto"%>
 <%@page import="singleton.Singleton"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="java.util.List"%>
@@ -18,15 +18,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
-<title>techwriteAf.jsp</title>
+<title>Insert title here</title>
 </head>
 <body>
-	<%
-	TechbbsDto techwritedto=(TechbbsDto)request.getAttribute("techwritedto");
-	TechbbsServiceImpl service=TechbbsService.getInstance();
-	boolean isS=service.writeBbs(techwritedto);
-	if(isS){
-	%>
+<%
+TechbbsDto techwritedto=(TechbbsDto)request.getAttribute("techwritedto");
+TechbbsServiceImpl service=TechbbsService.getInstance();
+boolean isS=service.writeBbs(techwritedto);
+if(isS){
+%>
 <script type="text/javascript">
 alert("추가성공");
 location.href="TechbbsController?command=techbbs";

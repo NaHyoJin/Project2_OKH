@@ -1,11 +1,11 @@
-<%@page import="service.TechbbsService"%>
-<%@page import="service.TechbbsServiceImpl"%>
+
+<%@page import="techbbs.TechbbsService"%>
+<%@page import="techbbs.TechbbsServiceImpl"%>
+<%@page import="techbbs.TechbbsDto"%>
 <%@page import="user.UserDTO"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="dto.TechbbsDto"%>
 <%@page import="java.util.List"%>
 <%@page import="singleton.Singleton"%>
-<%@page import="controller.TechbbsController"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%
@@ -28,13 +28,10 @@ UserDTO mem = (UserDTO)session.getAttribute("login");
 List<TechbbsDto> techlist=(List<TechbbsDto>)request.getAttribute("techbbs");
 %>
 <div class="menu">
-
-	<jsp:include page="menuinclude.jsp">
-	<jsp:param name="actionPath" value="index.jsp"/>
-	</jsp:include>
-
+<jsp:include page="menuinclude.jsp">
+<jsp:param name="actionPath" value="index.jsp"/>
+</jsp:include>
 </div>
-
 <div class="wrap">
 	<div class="header">
 		<h3>Tech</h3>
@@ -68,7 +65,7 @@ List<TechbbsDto> techlist=(List<TechbbsDto>)request.getAttribute("techbbs");
 			<%
 			}
 			%>
-			<p><a href="techbbsdetail.jsp"><%=dto.getTitle() %></a></p>
+			<p><a href="TechbbsController?command=techdetail&id=<%=mem.getId()%>"><%=dto.getTitle() %></a></p>
 			</td>
 			<td><%=dto.getCommentcount() %></td>
 			<td><%=dto.getLikecount() %></td>

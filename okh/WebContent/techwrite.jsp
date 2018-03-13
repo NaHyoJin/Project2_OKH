@@ -1,11 +1,15 @@
-<%@page import="user.UserDto"%>
+
+<%@page import="techpds.PdsService"%>
+<%@page import="techpds.PdsServiceImpl"%>
+<%@page import="techpds.PdsDto"%>
+<%@page import="java.util.List"%>
+<%@page import="user.UserDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-       
-<title>techwrite.jsp</title>
+<head> 
+<title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="_write.css">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
@@ -15,11 +19,12 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 </head>
 <body>
-	<%
-		UserDto mem = (UserDto)session.getAttribute("login");
-		String filename="";
-		filename=request.getParameter("filename");
-	%>
+<%
+UserDTO mem = (UserDTO)session.getAttribute("login");
+PdsDto pdsdto=null;
+List<PdsDto> pdslist=null;
+%>
+
 <div class="menu">
 	<jsp:include page="menuinclude.jsp">
 	<jsp:param name="actionPath" value="index.jsp"/>
@@ -65,25 +70,70 @@
 	     </table>
 	 </form>
 	 <form action="pdsupload.jsp" method="post" enctype="multipart/form-data">
-	 <input type="text" readonly="readonly" value="첨부파일" class="form-control">
+	 <input type="text" id="addya" readonly="readonly" value="첨부파일" class="form-control">
 	 	<input type="file" name="fileload" style="width: 400px">
-	 	<div id="addfilelist"></div>
-	 	  <input type="hidden" name="id" value="<%=mem.getId()%>">
-	 	 <input type="submit" value="파일올리기" >
+	 	  <input type="hidden" name="id2" value="<%=mem.getId()%>">
+	 	 <input type="submit" id="btn" value="파일올리기" >
 	 </form>
 	 </div>
 
-</div>   
- <%
- if(filename!=null){
- %>
- <script type="text/javascript">
- 
- </script>
- <%
- }
- %>
-<script>
+</div>  
+<%
+PdsServiceImpl pservice=PdsService.getInstance();
+
+PdsDto dto11= (PdsDto)request.getAttribute("pdsdto11");
+String command11=request.getParameter("command11");
+if(dto11!=null&&command11!=null&&command11.equals("addafter")){
+	System.out.println(command11+"황준현"+dto11.getParent());
+	System.out.println("리스트생성");
+	 pdslist=pservice.getpdsList(dto11.getParent());
+}
+%>
+
+<%
+if(dto11==null||pdslist==null){
+	System.out.println("같은번호없음");
+}else if(pdslist.size()<1&&dto11!=null&&pdslist!=null){
+	System.out.println("황준현11");
+%>
+<script type="text/javascript">
+var aa=document.getElementById("addya").value;
+$("#addya").val(aa+"<%=dto11.getFilename()%>");	
+</script>   
+<%
+}else if(pdslist.size()>=1&&dto11!=null&&pdslist!=null){
+	 
+	 for(int i=0;i<pdslist.size();i++){
+		 PdsDto dto22=pdslist.get(i);
+		 System.out.println("황준현22"+dto22.getFilename());
+%>
+<script type="text/javascript">
+var aa=document.getElementById("addya").value;
+$("#addya").val(aa+"<%=dto22.getFilename()%>");	
+</script>  
+<%
+}
+}
+%> 
+<script type="text/javascript">
+		// 뒤로가기 버튼 방지 
+		history.pushState(null, null, "#noback");
+		$(window).bind("hashchange", function(){
+  		history.pushState(null, null, "#noback");
+		});
+		
+		// F5, ctrl + F5, ctrl + r 새로고침 막기
+		$(document).keydown(function (e) {
+		     
+		            if (e.which === 116) {
+		                if (typeof event == "object") {
+		                    event.keyCode = 0;
+		                }
+		                return false;
+		            } else if (e.which === 82 && e.ctrlKey) {
+		                return false;
+		            }
+		});  
 $(document).ready(function(){
     $("#tagString").keypress(function (e) {
      if (e.which == 13){
@@ -139,30 +189,25 @@ $(document).ready(function() {
             maxHeight: null,             // set maximum height of editor
             focus: true                  // set focus to editable area after initializing summernote
     });
-});$(document).ready(function() {
+});
+$(document).ready(function() {
   $('#summernote').summernote();
 });
 </script>  
-
-
-	 <!-- var id=$("#test").val();
-	$.ajax({
-        url:"techwriteAf.jsp",
-        type:'GET',
-        data: {
-        	userId:$("#test").text(),
-        	tagnames:obj
-		},
-        success:function(data){
-        },
-        error:function(jqXHR, textStatus, errorThrown){
-            alert("에러 발생~~ \n" + textStatus + " : " + errorThrown);
-            self.close();
-        }
-    });  
-    
-    /* 
-	$("a#"+i+"").attr('style',"background-color:green");
-	$("'#"+obj+"'").val(obj); */-->
+<!-- var formData = new FormData(); 
+	formData.append("id", $("input[name=id2]").val()); 
+	formData.append("fileload", $("input[name=fileload]")[0].files[0]); 
+	$.ajax({ 
+		url: 'pdsupload.jsp', 
+		data: formData, 
+		processData: false, 
+		contentType: false, 
+		type: 'POST', 
+		success: function(data){ 
+			alert("추가되었습니다"); 
+			
+			}
+		}); 
+	});  -->
 </body>
 </html>
