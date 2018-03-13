@@ -44,13 +44,14 @@ public class Bbs5jobsHWCodingControllerServlet extends HttpServlet {//공지사�
 		System.out.println("BBSHWCodingController doProcess realCommand : " + realCommand);
 
 		//확인후 갈 곳 계속 추가하는 부분.
-		if("/main.Bbs5jobsHWCodingControllerServlet".equals(realCommand)) {
+		if("/mainHW.BBSHWCodingController".equals(realCommand)) {
 			resp.sendRedirect("Bbs5_jobsViewJsp/bbs4HWCoding.jsp");
 		} 
-/*		else if("/mainpage.BBSHWCodingController".equals(realCommand)) {
-			resp.sendRedirect("Bbs4_communityViewJsp/bbs4HWCoding.jsp");
+		//HW글쓰는 분기
+		else if("/HwWrite.BBSHWCodingController".equals(realCommand)) {
+			resp.sendRedirect("Bbs5_jobsViewJsp/jobs_bbs5HWCodingWrite.jsp");
 		}
-*/		
+		
 		//H/W 화면이동 부분.
 //		resp.sendRedirect("Bbs4_communityViewJsp/bbs4HWCoding.jsp");
 		

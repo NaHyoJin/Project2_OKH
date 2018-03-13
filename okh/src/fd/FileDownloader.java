@@ -67,19 +67,19 @@ public class FileDownloader extends HttpServlet {
 		
 		try {
 			//경로완성
-			filePath=filePath+"\\"+filename;
+			filePath = filePath+"\\"+filename;
 			
 			File f=new File(filePath);
 			
 			if (f.exists()&&f.canRead()) {
-				// 다운 로드 window 설정(다운로드창)
+				// 다운로드 window 설정(다운로드창)
 				resp.setHeader("Content-Disposition", "attachment; filename=\"" + new String(filename.getBytes(), "utf-8") + "\";");
 				resp.setHeader("Content-Transfer-Encoding", "binary;");
 				resp.setHeader("Content-Length", "" + f.length());
 				resp.setHeader("Pragma", "no-cache;"); 
 				resp.setHeader("Expires", "-1;");
 				System.out.println(filename+213);
-				//받은바이트를 파일로생성
+				//받은바이트를 파일로 생성
 				BufferedInputStream fileInput=new BufferedInputStream(new FileInputStream(f));
 				byte buffer[]=new byte[BUFFER_SIZE];
 				

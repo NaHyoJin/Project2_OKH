@@ -1,11 +1,9 @@
 package singleton;
 
-import bbs4ControllerServlet.Bbs5jobsHWCodingControllerServlet;
-import bbs4ControllerServlet.Bbs5jobsBoardControllerServlet;
-import bbs4ControllerServlet.Bbs5jobsMaterialsControllerServlet;
-import controller.PdsController;
-import controller.TechbbsController;
 import db.DBConnection;
+import jobs_BBS5.Bbs5jobsBoardControllerServlet;
+import jobs_BBS5.Bbs5jobsHWCodingControllerServlet;
+import jobs_BBS5.Bbs5jobsMaterialsControllerServlet;
 
 //싱글톤 부분.
 public class Singleton {//싱글톤 만들어주고.
@@ -14,8 +12,8 @@ public class Singleton {//싱글톤 만들어주고.
 	private static Singleton single = null;
 	
 	//싱글톤 계속 추가해 주면 된다. 180309
-	public TechbbsController techCtrl;
-	public PdsController pdsCtrl;
+	public techbbs.TechbbsController techCtrl;
+	public techpds.PdsController pdsCtrl;
 	
 	
 	
@@ -27,8 +25,8 @@ public class Singleton {//싱글톤 만들어주고.
 	private Singleton() {
 		//싱글톤 부분 계속 추가해 주면 된다. 180309
 		DBConnection.initConnection();
-		techCtrl = new TechbbsController();
-		pdsCtrl=new PdsController();
+		techCtrl = new techbbs.TechbbsController();
+		pdsCtrl=new techpds.PdsController();
 	}
 	
 	

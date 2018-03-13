@@ -1,6 +1,5 @@
 package jobs_BBS5;
 
-import dto.PagingBean;
 
 public class PagingUtil {
 	
@@ -25,11 +24,3 @@ public class PagingUtil {
 		return paging;		
 	}
 }
-
-
-
-
-
-
-
-

@@ -83,7 +83,7 @@ version="3.0">
   </servlet-mapping>
   
   
-  <!-- BBSHWCodingController 컨트롤 -->
+  <!-- BBSHWCodingController 컨트롤. 모든거 다 처리 하는.-->
   <servlet>
   	<servlet-name>BBSHWCodingController</servlet-name>
   	<servlet-class>jobs_BBS5.Bbs5jobsHWCodingControllerServlet</servlet-class>

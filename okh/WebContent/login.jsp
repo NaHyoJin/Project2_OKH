@@ -160,6 +160,8 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- 좌측 버튼 부분 -->
 	<script type="text/javascript">
 	$(function() {
 		$("#login").click(function() {
@@ -176,7 +178,7 @@
 		
 		
 		$("#jobs").click(function() {
-			location.href="community";
+			location.href="jobs";
 		});
 	});
 	</script>

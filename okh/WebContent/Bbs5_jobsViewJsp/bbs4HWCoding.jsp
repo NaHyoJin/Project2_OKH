@@ -19,11 +19,13 @@
 <!-- 
 	bbs4HWCoding<br>
  -->
-	<a href="../mainpage.BBSHWCodingController">H/W & Coding NEWS;</a><!-- ../현재 폴더의 윗 폴더 -->
+	<a href="../mainHW.BBSHWCodingController">H/W & Coding NEWS;</a><!-- ../현재 폴더의 윗 폴더 -->
 	<a href="../BBSboardController">자유 게시판;</a><!-- /최상위 폴더 -->
 	<a href="../BBSmaterialsController">자료실;</a>
+	
+	<a href="../HwWrite.BBSHWCodingController">새 글 쓰기</a>
+	
 	<br>
-	<a href="../HWCodingWrite.BBSHWCodingController">새 글 쓰기</a>
 	<a href="">최신순</a>
 	<a href="">추천순</a>
 	<a href="">조회순</a>
