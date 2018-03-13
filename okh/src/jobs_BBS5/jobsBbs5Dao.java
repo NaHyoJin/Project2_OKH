@@ -1,4 +1,4 @@
-package dao;
+package jobs_BBS5;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -12,15 +12,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import beanDtoVO.BbsHWCodingBean;
+import beanDtoVO.BbsHWCodingBeanDtoVO;
 import db.DBClose;
 import db.DBConnection;
 
 
-public class Bbs4BoardDao implements Bbs4BoardDaoImpl {//일반 게시판 DAO부분.
+public class jobsBbs5Dao implements jobsBbs5DaoImpl {//일반 게시판 DAO부분.
 	
 /*
-	CREATE TABLE BBS4HWCoding(
+	CREATE TABLE BBS5HWCoding(
 			SEQ NUMBER(8) PRIMARY KEY,
 			ID VARCHAR2(50) NOT NULL,
 			CONTENT VARCHAR2(4000) NOT NULL,
@@ -40,9 +40,9 @@ public class Bbs4BoardDao implements Bbs4BoardDaoImpl {//일반 게시판 DAO부
 
 	
 	//게시판4. 하드웨어 코딩 부분 글 전체 가지고 오는것.
-	public List<BbsHWCodingBean> getBbsHWCodingBeanList(){
+	public List<BbsHWCodingBeanDtoVO> getBbsHWCodingBeanList(){
 		
-		List<BbsHWCodingBean> list = new ArrayList<BbsHWCodingBean>();
+		List<BbsHWCodingBeanDtoVO> list = new ArrayList<BbsHWCodingBeanDtoVO>();
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -62,7 +62,7 @@ public class Bbs4BoardDao implements Bbs4BoardDaoImpl {//일반 게시판 DAO부
 		String sql = " SELECT SEQ, ID, REF, STEP, DEPTH, "
 				+ " TITLE, CONTENT, WDATE, PARENT,"
 				+ " DEL, READCOUNT "
-				+ " FROM BBS4HWCoding "
+				+ " FROM BBS5HWCoding "
 				+ " ORDER BY REF DESC, STEP ASC ";
 		try {
 			conn = DBConnection.getConnection();
@@ -92,7 +92,7 @@ public class Bbs4BoardDao implements Bbs4BoardDaoImpl {//일반 게시판 DAO부
 			 */
 			while(rs.next()){
 				int i = 1;
-				BbsHWCodingBean dto = new BbsHWCodingBean(
+				BbsHWCodingBeanDtoVO dto = new BbsHWCodingBeanDtoVO(
 						rs.getInt(i++),//seq, 
 						rs.getString(i++),//id, 
 						rs.getInt(i++),//ref, 

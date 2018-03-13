@@ -2,7 +2,7 @@ package beanDtoVO;
 
 import java.io.Serializable;
 
-public class BbsHWCodingBean implements Serializable {//H/W coding 테이블 부분.
+public class BbsHWCodingBeanDtoVO implements Serializable {//H/W coding 테이블 부분.
 
 	private int seq;	//시퀀스 번호
 	private String id;	//아이디
@@ -21,9 +21,9 @@ public class BbsHWCodingBean implements Serializable {//H/W coding 테이블 부
 	
 	
 	
-	public BbsHWCodingBean() {}
+	public BbsHWCodingBeanDtoVO() {}
 
-	public BbsHWCodingBean(int seq, String id, int ref, int step, int depth, String title, String content, String wdate,
+	public BbsHWCodingBeanDtoVO(int seq, String id, int ref, int step, int depth, String title, String content, String wdate,
 			int parent, int del, int readcount) {
 		super();
 		this.seq = seq;
@@ -40,7 +40,7 @@ public class BbsHWCodingBean implements Serializable {//H/W coding 테이블 부
 	}
 
 	//글 작성하는 오버로드 부분.
-	public BbsHWCodingBean(String id, String title, String content) {
+	public BbsHWCodingBeanDtoVO(String id, String title, String content) {
 		super();
 		this.id = id;
 		this.title = title;

@@ -1,20 +1,20 @@
-package modelService;
+package jobs_BBS5;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import beanDtoVO.BbsHWCodingBean;
-import dao.Bbs4BoardDao;
-import dao.Bbs4BoardDaoImpl;
+import beanDtoVO.BbsHWCodingBeanDtoVO;
+import dao.jobsBbs5Dao;
+import dao.jobsBbs5DaoImpl;
 
-public class BBS4board implements BBS4boardImpl {
+public class jobsBbs5ModelService implements jobsBbs5ModelServiceImpl {
 
 	//모델에서 dao 생성 부분.
-	Bbs4BoardDaoImpl dao = new Bbs4BoardDao();
+	jobsBbs5DaoImpl dao = new jobs_BBS5.jobsBbs5Dao();
 	
 	//
 	@Override
-	public List<BbsHWCodingBean> getBbsHWCodingBeanList() {
+	public List<BbsHWCodingBeanDtoVO> getBbsHWCodingBeanList() {
 		// TODO Auto-generated method stub
 		return dao.getBbsHWCodingBeanList();
 	}

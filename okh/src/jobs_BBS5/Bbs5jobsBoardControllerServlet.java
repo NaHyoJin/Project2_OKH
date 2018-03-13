@@ -1,4 +1,4 @@
-package bbs4ControllerServlet;
+package jobs_BBS5;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -8,11 +8,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import modelService.BBS4board;
-import modelService.BBS4boardImpl;
+import modelService.jobsBbs5ModelService;
+import modelService.jobsBbs5ModelServiceImpl;
 
 //서블릿이 컨트롤러다.
-public class BBSboardController extends HttpServlet {//일반 게시판 컨트롤
+public class Bbs5jobsBoardControllerServlet extends HttpServlet {//일반 게시판 컨트롤
 	
 
 	@Override
@@ -30,7 +30,7 @@ public class BBSboardController extends HttpServlet {//일반 게시판 컨트�
 	protected void doProcess(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	
 		//컨트롤러에서 각각 따로 만들어보자.
-		BBS4boardImpl bbs4Service = new BBS4board();
+		jobsBbs5ModelServiceImpl bbs4Service = new jobsBbs5ModelService();
 		
 		resp.setContentType("text/html; charset=utf-8");
 		PrintWriter out = resp.getWriter();

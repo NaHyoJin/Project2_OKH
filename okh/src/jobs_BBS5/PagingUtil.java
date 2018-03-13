@@ -1,4 +1,4 @@
-package dto;
+package jobs_BBS5;
 
 import dto.PagingBean;
 

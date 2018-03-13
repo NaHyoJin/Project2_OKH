@@ -1,4 +1,4 @@
-package bbs4ControllerServlet;
+package jobs_BBS5;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class communityServlet extends HttpServlet {
+public class Bbs5jobsControllerServlet extends HttpServlet {
 
 	/* 
 	넘어가는 종류.

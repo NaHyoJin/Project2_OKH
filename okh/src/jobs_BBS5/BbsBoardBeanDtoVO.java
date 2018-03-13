@@ -1,8 +1,8 @@
-package beanDtoVO;
+package jobs_BBS5;
 
 import java.io.Serializable;
 
-public class BbsBoardBean implements Serializable{//일반 게시판 부분.
+public class BbsBoardBeanDtoVO implements Serializable{//일반 게시판 부분.
 	
 	
 	private int seq;//시퀀스

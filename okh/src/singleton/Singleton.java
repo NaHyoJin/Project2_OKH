@@ -1,8 +1,8 @@
 package singleton;
 
-import bbs4ControllerServlet.BBSHWCodingController;
-import bbs4ControllerServlet.BBSboardController;
-import bbs4ControllerServlet.BBSmaterialsController;
+import bbs4ControllerServlet.Bbs5jobsHWCodingControllerServlet;
+import bbs4ControllerServlet.Bbs5jobsBoardControllerServlet;
+import bbs4ControllerServlet.Bbs5jobsMaterialsControllerServlet;
 import controller.PdsController;
 import controller.TechbbsController;
 import db.DBConnection;
@@ -20,9 +20,9 @@ public class Singleton {//싱글톤 만들어주고.
 	
 	
 	//나효진 게시판 싱글톤 부분.
-	public BBSHWCodingController BBSHWCodingCtrl;//H/W Coding 게시판 부분.
-	public BBSboardController BBSboardCtrl;//나효진 일반 게시판 부분
-	public BBSmaterialsController BBSmaterialsCtrl;//자료실 게시판 부분.
+	public Bbs5jobsHWCodingControllerServlet BBSHWCodingCtrl;//H/W Coding 게시판 부분.
+	public Bbs5jobsBoardControllerServlet BBSboardCtrl;//나효진 일반 게시판 부분
+	public Bbs5jobsMaterialsControllerServlet BBSmaterialsCtrl;//자료실 게시판 부분.
 	
 	private Singleton() {
 		//싱글톤 부분 계속 추가해 주면 된다. 180309

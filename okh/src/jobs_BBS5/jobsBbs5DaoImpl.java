@@ -1,16 +1,15 @@
-package modelService;
+package jobs_BBS5;
 
 import java.util.List;
 
-import beanDtoVO.BbsHWCodingBean;
+import beanDtoVO.BbsHWCodingBeanDtoVO;
 
-public interface BBS4boardImpl {//서비스 부분. 
-	
-	//dto, bean, VO 다 같은말
-	
 
+public interface jobsBbs5DaoImpl {//bbs4 다오 IMPL부분.
+
+	
 	//게시판4. 하드웨어 코딩 부분 글 전체 가지고 오는것.
-	public List<BbsHWCodingBean> getBbsHWCodingBeanList();
+	public List<BbsHWCodingBeanDtoVO> getBbsHWCodingBeanList();
 /*	
 	public boolean writeSns(SnsDto dto);
 	
@@ -22,9 +21,11 @@ public interface BBS4boardImpl {//서비스 부분.
 	
 	public List<SnsDto> getMyContent(String myid);
 	
+	
 	public boolean likeCount(int seq);
 	
 	public boolean dislikeCount(int seq);
+	
 	
 	public int PrintconNum(String myid, String selid);
 	
@@ -34,10 +35,10 @@ public interface BBS4boardImpl {//서비스 부분.
 	
 	public boolean following(String myid, String selid);
 	
-	public List<selectFollowDto> selectfollow(String myid);	
+	public List<selectFollowDto> selectfollow(String myid);
 	
 	public boolean disconfollow(String myid, String followid);
-
+	
 	// bang
 	public List<MemberDto> chatList(String id);
 	
@@ -49,8 +50,10 @@ public interface BBS4boardImpl {//서비스 부분.
 	
 	public List<ChatDto> acceptid(String myid);
 	
+	// 1대 1 채팅이 시작하면 CDEL을 1로 변환
 	public void startChat(String myid, String chatid);
 	
+	// 1대 1 채팅이 끝나면 CDEL을 0로 변환
 	public void finishChat(String myid, String chatid);
 	
 	// 소현
@@ -69,8 +72,7 @@ public interface BBS4boardImpl {//서비스 부분.
 	
 	public boolean dislikedel(int seq, String id);
 	
-	// 소
+	// ㅅㅎ
 	public boolean shareBbs(SnsDto dto, String id);
-	*/
-	
-}////////////////BBS4boardImpl
+*/	
+}

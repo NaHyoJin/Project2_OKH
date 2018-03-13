@@ -38,6 +38,7 @@ public class FileDownloader extends HttpServlet {
 
 	private static final int BUFFER_SIZE=8192;	//8KB
 	private ServletConfig mConfig=null;
+	
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
@@ -50,7 +51,7 @@ public class FileDownloader extends HttpServlet {
 		
 		String filename=new String(req.getParameter("filename").getBytes("8859_1"),"KSC5601");
 		
-		//download횟수증가
+		//download 횟수 증가
 		String pdsseq=req.getParameter("seq");
 		int seq=Integer.parseInt(pdsseq);
 		
