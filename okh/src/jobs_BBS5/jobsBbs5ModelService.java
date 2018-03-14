@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 public class jobsBbs5ModelService implements jobsBbs5ModelServiceImpl {
 
 	//모델에서 dao 생성 부분.
-	jobsBbs5DaoImpl dao = new jobs_BBS5.jobsBbs5Dao();
+	jobsBbs5DaoImpl dao = new jobsBbs5Dao();
 	
 	//
 	@Override
@@ -167,5 +166,6 @@ public class jobsBbs5ModelService implements jobsBbs5ModelServiceImpl {
 	public boolean shareBbs(SnsDto dto, String id) {
 		return dao.shareBbs(dto, id);
 	}
-*/	
+*/
+
 }

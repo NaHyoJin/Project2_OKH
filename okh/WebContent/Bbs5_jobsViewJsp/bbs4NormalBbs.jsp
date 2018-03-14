@@ -28,8 +28,8 @@
  <div class="">
 	<jsp:include page="BBS5TopMenuinclude.jsp" flush="false" />
 </div>
-	<!-- HW글쓰기 로 가는거 테스트 -->
-	<a href="../HWCodingWrite.BBSHWCodingController">새 글 쓰기</a>
+	<!-- 일반 글 쓰기 로 가는것 -->
+	<a href="../NormalWrite.BBSboardController">새 글 쓰기</a>
 	
 	<br>
 	<a href="">최신순</a>

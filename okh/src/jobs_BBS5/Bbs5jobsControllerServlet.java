@@ -44,14 +44,30 @@ public class Bbs5jobsControllerServlet extends HttpServlet {
 	public void doProcess(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
 
+		String command = req.getParameter("userID");
+		
 		resp.setContentType("text/html; charset=utf-8");
 		PrintWriter out = resp.getWriter();
 		
 		req.setCharacterEncoding("utf-8");
 		
+/*		//root경로
+		String contextPath = req.getContextPath();
+		System.out.println("contextPath : " + contextPath);
+		//전체 주소.
+		String reqURI = req.getRequestURI();
+		//contextPath의 길이부터 끝까지.
+		String realCommand = reqURI.substring(contextPath.length());
+		
+		//여기까지 잘 들어온다.
+		System.out.println("Bbs5jobsControllerServlet doProcess realCommand : " + realCommand);
+
 		//여기까지 잘 들어온다
 		System.out.println("Bbs5jobsControllerServlet doProcess 으로 잘 들어오나 확인 코드");
-		
+		if("/jobs".equals(realCommand)) {
+			resp.sendRedirect("../index.jsp");
+		}else
+*/
 		//jobs 기본 화면이동 부분. HW 부분으로 가게 했다.
 		resp.sendRedirect("Bbs5_jobsViewJsp/bbs4HWCoding.jsp");
 

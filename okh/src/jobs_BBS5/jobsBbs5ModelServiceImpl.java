@@ -8,22 +8,22 @@ public interface jobsBbs5ModelServiceImpl {//서비스 부분.
 	//dto, bean, VO 다 같은말
 	
 
-	//게시판4. 하드웨어 코딩 부분 글 전체 가지고 오는것.
+	//게시판5. 하드웨어 코딩 부분 글 전체 가지고 오는것.
 	public List<BbsHWCodingBeanDtoVO> getBbsHWCodingBeanList();
-/*	
-	public boolean writeSns(SnsDto dto);
 	
-	public boolean snsDelete(int seq);
 	
-	public boolean snsUpdate(int seq,String content);
 	
-	public SnsDto getSNS(int seq);
 	
-	public List<SnsDto> getMyContent(String myid);
 	
-	public boolean likeCount(int seq);
 	
-	public boolean dislikeCount(int seq);
+	
+	
+	
+	
+	
+	/*
+	//조회수 부분.
+	public void readcount(int seq);
 	
 	public int PrintconNum(String myid, String selid);
 	

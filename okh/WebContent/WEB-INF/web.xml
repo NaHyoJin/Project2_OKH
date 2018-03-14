@@ -83,7 +83,7 @@ version="3.0">
   <!-- BBSboardController 일반 게시판 컨트롤 -->
   <servlet>
   	<servlet-name>BBSboardController</servlet-name>
-  	<servlet-class>bbs4ControllerServlet.BBSboardController</servlet-class>
+  	<servlet-class>jobs_BBS5.Bbs5jobsBoardControllerServlet</servlet-class>
   </servlet>
   
   <servlet-mapping>
@@ -108,7 +108,7 @@ version="3.0">
   <!-- BBSmaterialsController 컨트롤 -->
   <servlet>
   	<servlet-name>BBSmaterialsController</servlet-name>
-  	<servlet-class>bbs4ControllerServlet.BBSmaterialsController</servlet-class>
+  	<servlet-class>jobs_BBS5.Bbs5jobsMaterialsControllerServlet</servlet-class>
   </servlet>
   
   <servlet-mapping>
@@ -116,15 +116,15 @@ version="3.0">
   	<url-pattern>*.BBSmaterialsController</url-pattern>
   </servlet-mapping>
   
-  
-  <!-- detail 컨트롤 -->
+  <!-- 처음 화면 가는 서블릿. -->
   <servlet>
-  	<servlet-name>custuserDetailControl</servlet-name>
-  	<servlet-class>control.CustUserDetailControl</servlet-class>
+  	<servlet-name>mainJSP</servlet-name>
+  	<servlet-class>jobs_BBS5.mainJSPServlet</servlet-class>
   </servlet>
   
   <servlet-mapping>
-  	<servlet-name>custuserDetailControl</servlet-name>
-  	<url-pattern>/custuserdetailcontrol</url-pattern>
+  	<servlet-name>mainJSP</servlet-name>
+  	<url-pattern>/mainJSP</url-pattern>
   </servlet-mapping>
+  
 </web-app>

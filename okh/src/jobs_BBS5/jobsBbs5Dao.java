@@ -1134,10 +1134,8 @@ public class jobsBbs5Dao implements jobsBbs5DaoImpl {//일반 게시판 DAO부�
 			return count>0?true:false;
 		}
 */		
+	
+
 		
 		
 }////////////////////////////////////BbsBoardDao
-	
-	
-	
-	

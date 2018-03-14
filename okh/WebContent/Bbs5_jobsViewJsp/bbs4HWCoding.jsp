@@ -1,5 +1,27 @@
+<%@page import="user.UserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+    <%
+
+	//로그인 정보 확인 부분.
+	Object ologin = session.getAttribute("login");
+    
+    UserDto mem = null;
+    
+	if(ologin != null){
+		mem = (UserDto)ologin;
+		//로그인 정보 가지고 오나 확인 부분.
+		System.out.println("mem : " + mem.toString());
+	}
+	
+	/* qnaBbsDaoImpl dao = qnaBbsDao.getInstance();
+	List<QnaDto> qnalist = dao.getQnaList(); */
+	
+	
+	//QnaServiceImpl service = QnaService.getInstance();
+	//List<QnaDto> qnalist = service.getQnaList();
+	%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -28,8 +50,14 @@
 	<jsp:include page="BBS5TopMenuinclude.jsp" flush="false" />
 </div>
 
-	<a href="../HwWrite.BBSHWCodingController">새 글 쓰기</a>
-	
+	<%
+		//인간 로그인 안하면 안보이게 하는 부분.
+		if(mem != null){
+	%>
+		<a href="../HwWrite.BBSHWCodingController">새 글 쓰기</a>
+	<%
+		}
+	%>
 	<br>
 	<a href="">최신순</a>
 	<a href="">추천순</a>
@@ -54,7 +82,7 @@
 //		if(bbslist == null || bbslist.size() == 0){
 	%>	
 		<tr>
-			<td colspan="6">작성된 글이 없습니다</td>
+			<td colspan="6" align="center">작성된 글이 없습니다.</td>
 		</tr>	
 	<%
 //		}

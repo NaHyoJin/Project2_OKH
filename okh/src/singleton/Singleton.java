@@ -27,6 +27,10 @@ public class Singleton {//싱글톤 만들어주고.
 		DBConnection.initConnection();
 		techCtrl = new techbbs.TechbbsController();
 		pdsCtrl = new techpds.PdsController();
+		
+		BBSHWCodingCtrl = new Bbs5jobsHWCodingControllerServlet();
+		BBSboardCtrl = new Bbs5jobsBoardControllerServlet();
+		BBSmaterialsCtrl = new Bbs5jobsMaterialsControllerServlet();
 	}
 
 

@@ -33,11 +33,31 @@ public class Bbs5jobsMaterialsControllerServlet extends HttpServlet {//자료실
 		
 		req.setCharacterEncoding("utf-8");
 		
-		//여기까지 잘 들어온다
-		System.out.println("BBSmaterialsController으로 잘 들어오나 확인 코드");
+		//root경로
+		String contextPath = req.getContextPath();
+		//전체 주소.
+		String reqURI = req.getRequestURI();
+		//contextPath의 길이부터 끝까지.
+		String realCommand = reqURI.substring(contextPath.length());
 		
-		//자료실 게시판 화면이동 부분.
-		resp.sendRedirect("Bbs4_communityViewJsp/bbs4Materials.jsp");
+		//여기까지 잘 들어온다.
+		System.out.println("Bbs5jobsMaterialsControllerServlet doProcess realCommand : " + realCommand);
+
+		//확인후 갈 곳 계속 추가하는 부분.
+		//처음 화면 가는 부분.
+		if("/mainPDS.BBSmaterialsController".equals(realCommand)) {
+			resp.sendRedirect("Bbs5_jobsViewJsp/bbs4Materials.jsp");
+		} 
+		//자료실 올리기.
+		else if("/PdsWrite.BBSmaterialsController".equals(realCommand)) {
+			resp.sendRedirect("Bbs5_jobsViewJsp/jobs_bbs5MaterialsWrite.jsp");
+		}
+		else if("/PdsDetail.BBSmaterialsController".equals(realCommand)) {
+//			req.getParameter(arg0)
+		}
+		
+		//H/W 화면이동 부분.
+//		resp.sendRedirect("Bbs4_communityViewJsp/bbs4HWCoding.jsp");
 		
 	}
 	

@@ -1,10 +1,13 @@
+<%@page import="user.UserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <title>jobs_bbs5HWCodingWrite.jsp</title>
+
 <link rel="stylesheet" type="text/css" href="_write.css">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
@@ -16,7 +19,10 @@
 <body>
 	
 	<%
-//		UserDto mem = (UserDto)session.getAttribute("login");
+		//세션에 있는 로그인 정보 가지고 오는 부분.
+		UserDto mem = (UserDto)session.getAttribute("login");
+	//확인 부분.
+	System.out.println("mem : " + mem.toString());
 //		PdsDto pdsdto=null;
 //		List<PdsDto> pdslist=null;
 	%>
@@ -34,11 +40,11 @@
 	 	<table class="techinput">
 	 		<tr>
 	 		<td>
-<%-- 	 		
+ 	 		
 	 			 <p id="test" align="left"><%=mem.getId() %></p>
 	 			 <input type="hidden" name="id" value="<%=mem.getId()%>">
 	 			 <input type="hidden" name="command" value="techwriteAf">
- --%>	 			 
+
 	 		</td>
 	 		</tr>
 	 		<tr>
@@ -139,7 +145,7 @@ $("#addya").val(aa+"<%=dto11.getFilename()%>");
 		
 		// F5, ctrl + F5, ctrl + r 새로고침 막기
 		$(document).keydown(function (e) {
-		     
+
 		            if (e.which === 116) {
 		                if (typeof event == "object") {
 		                    event.keyCode = 0;

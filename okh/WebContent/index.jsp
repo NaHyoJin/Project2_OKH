@@ -8,7 +8,7 @@
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/custom.css">
-	
+
 	<title>index.jsp</title>
 	
 	<link rel="stylesheet" type="text/css" href="_main.css">
@@ -70,15 +70,11 @@
 	 */
 	 
 			//게시판5 나효진 jobs 부분.
-/* 			$("#jobs").click(function() {
-				location.href="main.BBSHWCodingController";
-			});
- */	 
-			
-			$("#jobs").click(function name() {
+			$("#jobs").click(function () {
 				location.href="jobs";
 			});
 
+	 
 		});
 	</script>
 	

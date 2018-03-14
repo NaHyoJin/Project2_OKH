@@ -3,12 +3,18 @@ package jobs_BBS5;
 import java.util.List;
 
 
-
-public interface jobsBbs5DaoImpl {//bbs4 다오 IMPL부분.
+public interface jobsBbs5DaoImpl {//bbs5 jobs 다오 IMPL부분.
 
 	
-	//게시판4. 하드웨어 코딩 부분 글 전체 가지고 오는것.
+	//게시판5. 하드웨어 코딩 부분 글 전체 가지고 오는것.
 	public List<BbsHWCodingBeanDtoVO> getBbsHWCodingBeanList();
+	
+	
+	
+	//게시판5. 일반 게시판 부분. 인터페이스.
+	
+	
+
 /*	
 	public boolean writeSns(SnsDto dto);
 	
