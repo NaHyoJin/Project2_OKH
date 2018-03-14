@@ -19,9 +19,15 @@
 <!-- 
 	bbs4NormalBbs<br>
  -->	
-	<a href="../BBSHWCodingController">H/W & Coding NEWS;</a><!-- ../현재 폴더의 윗 폴더 -->
-	<a href="../BBSboardController">자유 게시판;</a><!-- /최상위 폴더 -->
+<!--  
+	<a href="../BBSHWCodingController">H/W & Coding NEWS;</a>../현재 폴더의 윗 폴더
+	<a href="../BBSboardController">자유 게시판;</a>/최상위 폴더
 	<a href="../BBSmaterialsController">자료실;</a>
+ -->	
+ 
+ <div class="">
+	<jsp:include page="BBS5TopMenuinclude.jsp" flush="false" />
+</div>
 	<!-- HW글쓰기 로 가는거 테스트 -->
 	<a href="../HWCodingWrite.BBSHWCodingController">새 글 쓰기</a>
 	

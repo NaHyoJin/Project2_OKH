@@ -2,6 +2,43 @@ package jobs_BBS5;
 
 import java.io.Serializable;
 
+/*
+DROP TABLE BbsHWCodingBeanDtoVO
+CASCADE CONSTRAINTS;
+
+DROP SEQUENCE SEQ_BbsHWCodingBeanDtoVO;
+
+CREATE TABLE BbsHWCodingBeanDtoVO(
+	SEQ NUMBER(8) PRIMARY KEY,	--게시글 고유 번호
+	ID VARCHAR2(50) NOT NULL,	--아이디 외래키로 사용
+	
+	REF NUMBER(8) NOT NULL,
+	STEP NUMBER(8) NOT NULL,
+	DEPTH NUMBER(8) NOT NULL,
+	
+	TITLE VARCHAR2(200) NOT NULL,
+	CONTENT VARCHAR2(4000) NOT NULL,
+	WDATE DATE NOT NULL,	--작성일
+	PARENT NUMBER(8) NOT NULL,
+	
+	DEL NUMBER(1) NOT NULL,
+	READCOUNT NUMBER(8) NOT NULL,	--조회수
+	
+	FILENAME VARCHAR2(50),	--파일 이름
+	DOWNCOUNT NUMBER(8),	--파일 다운로드 수
+	REGDATE DATE	--파일 등록일.
+	
+);
+
+CREATE SEQUENCE SEQ_BbsHWCodingBeanDtoVO
+START WITH 1 INCREMENT BY 1;
+
+ALTER TABLE BbsHWCodingBeanDtoVO
+ADD CONSTRAINT FK_BbsHWCodingBeanDtoVO_ID FOREIGN KEY(ID)
+REFERENCES OKHMEM(ID);
+
+*/
+
 public class BbsHWCodingBeanDtoVO implements Serializable {//H/W coding 테이블 부분.
 
 	private int seq;	//시퀀스 번호
@@ -18,6 +55,8 @@ public class BbsHWCodingBeanDtoVO implements Serializable {//H/W coding 테이�
 	
 	private int del;	// 삭제
 	private int readcount;//조회수
+	
+	
 	
 	
 	

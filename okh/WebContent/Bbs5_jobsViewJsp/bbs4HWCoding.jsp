@@ -19,10 +19,15 @@
 <!-- 
 	bbs4HWCoding<br>
  -->
-	<a href="../mainHW.BBSHWCodingController">H/W & Coding NEWS;</a><!-- ../현재 폴더의 윗 폴더 -->
-	<a href="../BBSboardController">자유 게시판;</a><!-- /최상위 폴더 -->
+<!--  
+	<a href="../mainHW.BBSHWCodingController">H/W & Coding NEWS;</a>../현재 폴더의 윗 폴더
+	<a href="../BBSboardController">자유 게시판;</a>/최상위 폴더
 	<a href="../BBSmaterialsController">자료실;</a>
-	
+ -->	
+<div class="">
+	<jsp:include page="BBS5TopMenuinclude.jsp" flush="false" />
+</div>
+
 	<a href="../HwWrite.BBSHWCodingController">새 글 쓰기</a>
 	
 	<br>
@@ -39,7 +44,7 @@
 	<div align="center">
 
 <table border="1">
-<col width="70"><col width="500"><col width="50"><col width="50"><col width="50"><col width="150">
+<col width="70"><col width="500"><col width="50"><col width="50"><col width="70"><col width="150">
 
 <tr>
 	<th>번호</th><th>제목</th><th>답글</th><th>추천</th><th>조회수</th><th>작성자</th>
