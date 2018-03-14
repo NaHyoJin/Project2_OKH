@@ -20,7 +20,7 @@
 			var userID = $('#userID').val();
 			$.ajax({
 				type: 'POST',
-				url: 'UserRegisterCheck?command=check',
+				url: 'User?command=check',
 				data: {userID: userID},
 				success: function(result) {
 					if(result == 1){
@@ -110,7 +110,7 @@
 	</nav>
  --%>
 	<div class="container">
-		<form action="UserRegister" method="POST">
+		<form action="User" method="GET">
 			<table class="table table-bordered table-hover" style="text-align: center; border: 1px solid #dddddd">
 				<thead>
 					<tr>
@@ -121,7 +121,7 @@
 					<tr>
 						<td style="width: 110px;"><h5>아이디</h5></td>
 						<td>
-							<input type="hidden" name="command" value="regi">
+							<input type="hidden" name="command" value="joinAf">
 							<input type="text" class="form-control" id="userID" name="userID" maxlength="20" placeholder="아이디를 입력하세요.">
 						</td>
 						<td style="width: 110px">
