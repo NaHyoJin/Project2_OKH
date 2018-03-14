@@ -29,6 +29,7 @@
 		<input type="button" class="bbs3" ><!-- 정재흥 -->
 		<input type="button" class="bbs4" >
 		<input type="button" class="bbs5" id="jobs"><!-- 나효진 -->
+		<input type="button" class="bbs6">
 	</div>	
 
 	
