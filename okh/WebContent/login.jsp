@@ -180,6 +180,10 @@
 		$("#jobs").click(function() {
 			location.href="jobs";
 		});
+		
+		$("#life").click(function() {
+			location.href="LifeBbs?command=life";
+		});
 	});
 	</script>
 </body>

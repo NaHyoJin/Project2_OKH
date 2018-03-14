@@ -14,20 +14,15 @@
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/bootstrap.js"></script>
 	<script src="js/bootstrap-tagsinput.js"></script>
-<!-- 	
-	include libraries(jQuery, bootstrap)
+	
+	<!-- include libraries(jQuery, bootstrap) -->
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
 	
-	include summernote css/js
+	<!-- include summernote css/js -->
 	<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
- -->
- <!-- 데이트피커 -->
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
-<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script> 
 
 </head>
 <body>
@@ -114,13 +109,6 @@
 					<input type="text" size="50" id="tag" name="tag" value="" 
 						placeholder="Tags," class="form-control" data-role="tagsinput" 
 						style="display: none;" onclick="make_tag()">
-				</td>
-			</tr>
-			
-			<tr>
-				<td>데이트</td>
-				<td>
-					<input type="text" id="testDatepicker">
 				</td>
 			</tr>
 			

@@ -266,6 +266,10 @@
 		$("#jobs").click(function name() {
 			location.href="jobs";
 		});
+		
+		$("#life").click(function() {
+			location.href="LifeBbs?command=life";
+		});
 	});
 	</script>
 	
