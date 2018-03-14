@@ -73,20 +73,13 @@
 	});
 	</script>
 	
-	<script type="text/javascript">
-	$(function() {
-	    $( "#testDatepicker" ).datepicker({
-	    });
-	});
-	</script>
-	
 	<div class="wrap">
 		<a href="logout.jsp">로그아웃</a>
 		<h1>새 글 쓰기</h1>
 		
 		<h2><%=mem.getId() %></h2>
 	
-		<form action="LifeBbs?command=writeAf" method="post">
+		<form action="lifeBbsUpload.jsp" method="post" enctype="multipart/form-data">
 		<table border="1">
 			<col width="200"><col width="500">
 			<tr>
@@ -109,6 +102,13 @@
 					<input type="text" size="50" id="tag" name="tag" value="" 
 						placeholder="Tags," class="form-control" data-role="tagsinput" 
 						style="display: none;" onclick="make_tag()">
+				</td>
+			</tr>
+	
+			<tr>
+				<td>파일 업로드</td>
+				<td>
+					<input type="file" name="fileload" style="widows: 400px">
 				</td>
 			</tr>
 			

@@ -219,6 +219,39 @@ public class LifeBbsDao implements ILifeBbsDao {
 	}
 
 	@Override
+	public boolean downloadcount(int seq) {
+		String sql = " UPDATE LIFEBBS "
+				+ " SET DOWNCOUNT=DOWNCOUNT+1 "
+				+ " WHERE SEQ=? ";
+		
+		int count = 0;
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 downloadcount success");
+	        
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, seq);
+			System.out.println("2/6 downloadcount success");
+			
+			count = psmt.executeUpdate();
+			System.out.println("3/6 downloadcount success");
+	         
+	         
+		} catch (SQLException e) {
+			System.out.println("downloadcount Fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);
+		}
+		
+		return count>0;
+	}
+
+	@Override
 	public boolean answer(int seq, LifeBbsDto bbs) {
 		String sql1 = " UPDATE LIFEBBS "
 				+ " SET STEP=+1 "

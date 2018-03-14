@@ -69,6 +69,20 @@
 	LifeBbsDto bbs = dao.getDetailBbs(seq);
 	%>
 	
+	<script type="text/javascript">
+	var myVar;
+	$(function() {
+		$("#btnDown").click(function() {
+			myVar = setTimeout(_refrush, 1000);
+		});
+	});
+	
+	function _refrush() {
+		location.reload();
+		clearTimeout(myVar);
+	}
+	</script>
+	
 	<div class="wrap">
 		<table border="2">
 			<col width="200"><col width="500">
@@ -92,6 +106,14 @@
 			<tr>
 				<td>작성일</td>
 				<td><%=bbs.getWdate() %></td>
+			</tr>
+			
+			<tr>
+				<td>다운로드</td>
+				<td>
+					<input type="button" name="btnDown" id="btnDown" value="파일" 
+				onclick="location.href='LifeBbs?command=fileDown&filename=<%=bbs.getFilename() %>&seq=<%=bbs.getSeq() %>'">
+				</td>
 			</tr>
 			
 			<tr>

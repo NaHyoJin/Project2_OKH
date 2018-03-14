@@ -10,6 +10,7 @@ public interface ILifeBbsDao {
 
 	public LifeBbsDto getDetailBbs(int seq);
 	public void readcount(int seq);
+	public boolean downloadcount(int seq);
 	
 	public boolean answer(int seq, LifeBbsDto bbs);
 	
