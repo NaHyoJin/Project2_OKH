@@ -21,6 +21,15 @@ version="3.0">
     <url-pattern>/User</url-pattern>
   </servlet-mapping>
   
+<!-- 사는얘기 게시판 -->
+  <servlet>
+    <servlet-name>LifeBbsController</servlet-name>
+    <servlet-class>lifeBbs.LifeBbsController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LifeBbsController</servlet-name>
+    <url-pattern>/LifeBbs</url-pattern>
+  </servlet-mapping>
   
   
   <!-- 기술게시판파일업로드 -->
