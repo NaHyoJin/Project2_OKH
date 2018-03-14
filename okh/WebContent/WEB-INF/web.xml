@@ -88,7 +88,7 @@ version="3.0">
   
   <servlet-mapping>
   	<servlet-name>BBSboardController</servlet-name>
-  	<url-pattern>/BBSboardController</url-pattern>
+  	<url-pattern>*.BBSboardController</url-pattern>
   </servlet-mapping>
   
   

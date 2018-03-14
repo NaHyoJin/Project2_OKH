@@ -26,10 +26,10 @@ public class Singleton {//싱글톤 만들어주고.
 		//싱글톤 부분 계속 추가해 주면 된다. 180309
 		DBConnection.initConnection();
 		techCtrl = new techbbs.TechbbsController();
-		pdsCtrl=new techpds.PdsController();
+		pdsCtrl = new techpds.PdsController();
 	}
-	
-	
+
+
 	public static Singleton getInstance() {
 		if(single == null) {
 			single = new Singleton();

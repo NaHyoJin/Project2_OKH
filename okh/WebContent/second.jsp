@@ -7,7 +7,7 @@
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
 <link rel="stylesheet" type="text/css" href="_main.css">
-<title>Insert title here</title>
+<title>second.jsp</title>
 </head>
 <body>
 <!-- div 클래스면 menu로만들고 그안에 include코드넣어주면된다  (actionPath안붙이니까안불러지길래넣었는데왜있는지모르겠어요)-->

@@ -34,10 +34,31 @@ public class Bbs5jobsBoardControllerServlet extends HttpServlet {//일반 게시
 		
 		req.setCharacterEncoding("utf-8");
 		
-		//여기까지 잘 들어온다
-		System.out.println("BBSboardController으로 잘 들어오나 확인 코드");
 		
 		//기본 게시판 화면이동 부분.
 		resp.sendRedirect("Bbs4_communityViewJsp/bbs4NormalBbs.jsp");
+		
+		
+		//root경로
+		String contextPath = req.getContextPath();
+		//전체 주소.
+		String reqURI = req.getRequestURI();
+		//contextPath의 길이부터 끝까지.
+		String realCommand = reqURI.substring(contextPath.length());
+		
+		//여기까지 잘 들어온다.
+		System.out.println("Bbs5jobsBoardControllerServlet doProcess realCommand : " + realCommand);
+
+		//확인후 갈 곳 계속 추가하는 부분.
+		if("/mainBBS.BBSboardController".equals(realCommand)) {
+			resp.sendRedirect("Bbs5_jobsViewJsp/bbs4NormalBbs.jsp");
+		}
+		//HW글쓰는 분기
+		else if("/HwWrite.BBSHWCodingController".equals(realCommand)) {
+			resp.sendRedirect("Bbs5_jobsViewJsp/jobs_bbs5HWCodingWrite.jsp");
+		}
+		
+		//일반 게시판 화면이동 부분.
+//		resp.sendRedirect("Bbs4_communityViewJsp/bbs4HWCoding.jsp");
 	}
 }
