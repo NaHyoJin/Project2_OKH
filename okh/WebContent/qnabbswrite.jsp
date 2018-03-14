@@ -18,7 +18,7 @@
 
 	
 	<!-- <link rel="stylesheet" type="text/css" href="/main/_qnahbbs.css"> -->
-	<link rel="stylesheet" type="text/css" href="/main/_main.css">
+	<link rel="stylesheet" type="text/css" href="_main.css">
 </head>
 <body>
 
@@ -58,19 +58,19 @@ UserDto mem = (UserDto)ologin;
 
 <tr>
 	<td>
-		<input type="text" name="tItle" placeholder="제목을 입력하세요">
+		<input type="text" name="tItle"  placeholder="제목을 입력하세요" style="width: 800px"><br><br>
 	</td>	
 </tr>
 
 <tr>
 	<td>
-		<input type="text" name="tAg" placeholder="tag를 입력하세요">
+		<input type="text" name="tAg" id="tAg" data-role="tagsinput" placeholder="tag를 입력하세요" style="width: 800px"  ><br><br>
 	</td>
 </tr>	
 
 <tr>
 	<td>
-		<textarea rows="10" cols="50" name="cOntent" id="summernote" style="resize: none;"></textarea>
+		<textarea rows="10" cols="50" name="cOntent" id="summernote" ></textarea>
 		
 		
 	</td>
@@ -78,7 +78,7 @@ UserDto mem = (UserDto)ologin;
 
 <tr>
 	<td>
-		<input type="reset" value="취소" onclick="location.href='qnaServlet?command=listQna'">
+		<input type="reset" value="취소" onclick="location.href='qnaServlet?command=listQna'" >
 		<input type="submit" value="등록">
 	</td>
 </tr>
@@ -94,12 +94,9 @@ $(document).ready(function() {
             height: 300,                 // set editor height
             minHeight: null,             // set minimum height of editor
             maxHeight: null,             // set maximum height of editor
-            focus: true                  // set focus to editable area after initializing summernote
+            focus: true                  // set focus to editable area after initializing summernote            
     });
 });
-
-
-
 </script>
 
 

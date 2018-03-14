@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
+
 public class QnaServlet extends HttpServlet {
 
 	@Override
@@ -21,7 +22,6 @@ public class QnaServlet extends HttpServlet {
 		myFunc(req, resp);
 	}
 	
-	
 	protected void dispatch(String urls, 
 			HttpServletRequest req, HttpServletResponse resp)
 					throws ServletException, IOException {
@@ -30,7 +30,6 @@ public class QnaServlet extends HttpServlet {
 		_dispatch.forward(req, resp);		
 	}
 
-	
 	protected void myFunc(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		req.setCharacterEncoding("utf-8");
@@ -72,7 +71,9 @@ public class QnaServlet extends HttpServlet {
 			RequestDispatcher rd = req.getRequestDispatcher("qnabbslist.jsp");
 
             rd.forward(req, resp);
-
+			
+		}else if(command.equals("qnaDetail")) {
+			System.out.println("여기는 qnadetail");
 			
 		}
 		

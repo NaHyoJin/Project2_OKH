@@ -1,4 +1,5 @@
 
+
 <%@page import="qna.PagingBean"%>
 <%@page import="qna.QnaDto"%>
 <%@page import="qna.QnaService"%>
@@ -26,6 +27,17 @@ String choice = request.getParameter("choice");
 	
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/bootstrap.js"></script>
+	
+<style type="text/css">
+table {
+	width: 100%;
+	border: 1px solid #444444;
+}
+tr,td {
+	border: 1px ;
+	
+}
+</style>		
 </head>
 <body>
 
@@ -79,7 +91,7 @@ QnaServiceImpl service = QnaService.getInstance();
 List<QnaDto> qnalist = service.getQnaPagingList(paging, findWord, cho);
 
 --%>
-
+<div class="wrap">
 
 <div align="center">
 
@@ -94,7 +106,7 @@ List<QnaDto> qnalist = service.getQnaPagingList(paging, findWord, cho);
 
 <div align="center">
 <!-- 관리자 공지 위치 -->
-<table border="1" >
+<table>
 <!-- (게시물번호)(태그)(좋아요)(답변수)(작성자정보) -->
 <col width="50"><col width="300"><col width="50"><col width="50"><col width="100">
 	<tr>
@@ -106,9 +118,7 @@ List<QnaDto> qnalist = service.getQnaPagingList(paging, findWord, cho);
 	</tr>
 	<tr>
 		<td colspan="2">게시물 타이틀</td>		
-	</tr>
-	
-	
+	</tr>	
 </table>
 </div>
 <br><br>
@@ -117,7 +127,7 @@ List<QnaDto> qnalist = service.getQnaPagingList(paging, findWord, cho);
 
 <!-- 실질적인 qna게시판  -->
 <div align="center">
-<table border="1">
+<table >
 <!-- (게시물번호)(태그)(좋아요)(답변수)(작성자정보) -->
 <col width="50"><col width="300"><col width="50"><col width="50"><col width="100">
 	<%
@@ -134,14 +144,20 @@ List<QnaDto> qnalist = service.getQnaPagingList(paging, findWord, cho);
 	%>
 	
 	<tr>
-		<td>번호 :<%=qna.getSeq() %></td>
+		<td>번호 :<%=qna.getRef() %></td>
 		<td>테그 : <%=qna.getTag() %></td>
-		<td rowspan="2">좋아요 : <%=qna.getFavor() %></td>
-		<td rowspan="2">답변수 : <%=qna.getAnswercount() %></td>
-		<td rowspan="2">작성자정보 : <%=qna.getId() %> </td>		
+		<td rowspan="2" style="border-bottom: 1px solid #444444; ">좋아요 : <%=qna.getFavor() %></td>
+		<td rowspan="2" style="border-bottom: 1px solid #444444; ">답변수 : <%=qna.getAnswercount() %></td>
+		<td rowspan="2" style="border-bottom: 1px solid #444444; ">작성자정보 : <%=qna.getId() %> </td>		
 	</tr>
 	<tr>
-		<td colspan="2">게시물 타이틀 : <%=qna.getTitle() %></td>		
+		<td colspan="2" style="border-bottom: 1px solid #444444; ">
+			게시물 타이틀 : 
+			<%-- <a href="bbsdetail.jsp?seq=<%=qna.getSeq() %>"> --%>
+			<a href="qnabbsdetail.jsp?seq=<%=qna.getSeq() %>">
+			 <%=qna.getTitle() %>
+			</a>
+		</td>		
 	</tr>	
 	
 	<%
@@ -162,7 +178,7 @@ List<QnaDto> qnalist = service.getQnaPagingList(paging, findWord, cho);
 
 </div>
 
-
+</div>
 
 
 

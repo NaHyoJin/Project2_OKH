@@ -6,6 +6,7 @@ import java.util.List;
 
 public class QnaService implements QnaServiceImpl {
 
+	
 	private static QnaService qnaService = new QnaService();
 	
 	public QnaBbsDaoImpl qnadao;	
@@ -35,7 +36,14 @@ public class QnaService implements QnaServiceImpl {
 	public List<QnaDto> getBbsPagingList(PagingBean paging) {		
 		return qnadao.getBbsPagingList(paging);
 	}
-	
+	@Override
+	public QnaDto getBbs(int seq) {
+		return qnadao.getBbs(seq);
+	}
+	@Override
+	public String RemoveHTMLTag(String changeStr) {
+		return qnadao.RemoveHTMLTag(changeStr);
+	}
 	
 	
 }

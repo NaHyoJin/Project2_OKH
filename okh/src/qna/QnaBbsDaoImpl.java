@@ -16,4 +16,8 @@ public interface QnaBbsDaoImpl {
 	
 //	public List<QnaDto> getQnaPagingList(PagingBean paging, String searchWord, int search);
 	
+	public QnaDto getBbs(int seq);
+	public void readcount(int seq);
+	
+	public String RemoveHTMLTag(String changeStr);	
 }

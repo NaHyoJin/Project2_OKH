@@ -117,6 +117,93 @@ public class QnaBbsDao implements QnaBbsDaoImpl {
 	*/
 	
 	@Override
+	public void readcount(int seq) {
+		String sql = " UPDATE QNA "
+				+ " SET READCOUNT = READCOUNT+1 "
+				+ " WHERE SEQ=?";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 readcount Success");
+			
+			psmt = conn.prepareStatement(sql);			
+			psmt.setInt(1, seq);
+			System.out.println("2/6 readcount Success");
+			
+			psmt.executeUpdate();
+			System.out.println("3/6 readcount Success");					
+			
+		} catch (SQLException e) {
+			System.out.println("readcount Fail");
+			e.printStackTrace();
+		}finally {
+			System.out.println("4/6 readcount Success");
+			DBClose.close(psmt, conn, null);
+		}	
+	}
+	
+	@Override
+	public QnaDto getBbs(int seq) {
+		
+		String sql = " SELECT SEQ, ID, REF, STEP, DEPTH, TITLE, CONTENT, TAG, WDATE, PARENT,"
+				+ " DEL, READCOUNT, FAVOR, LVPOINT, ANSWERCOUNT "
+				+ " FROM QNA"
+				+ " WHERE SEQ=? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		QnaDto dto = null;
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 getBbs Success");
+			
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, seq);
+			System.out.println("2/6 getBbs Success");
+			
+			rs = psmt.executeQuery();
+			System.out.println("3/6 getBbs Success");
+			
+			if(rs.next()) {
+				dto = new QnaDto(rs.getInt(1),		//seq,
+						rs.getString(2),	//id,
+						rs.getInt(3),		//ref,
+						rs.getInt(4),		//step,
+						rs.getInt(5),		//depth,
+						rs.getString(6),	//title,
+						rs.getString(7),	//content,
+						rs.getString(8),	// tag
+						rs.getString(9),	//wdate,
+						rs.getInt(10),		//parent,
+						rs.getInt(11),		//del,
+						rs.getInt(12),		//readcount,
+						rs.getInt(13),		//favor,
+						rs.getInt(14),		//lvpoint)
+						rs.getInt(15));		//answercount	
+				// 조회수 올리는 함수
+				readcount(dto.getSeq());
+			}
+			System.out.println("4/6 getBbs Success");
+			
+		} catch (SQLException e) {
+			System.out.println("getBbs Fail");
+			e.printStackTrace();
+		}finally {
+			System.out.println("5/6 getBbs Success");
+			DBClose.close(psmt, conn, rs);			
+		}		
+		return dto;
+		
+	}
+	
+	
+	@Override
 	public List<QnaDto> getBbsPagingList(PagingBean paging) {
 		
 		Connection conn = null;
@@ -294,7 +381,17 @@ public class QnaBbsDao implements QnaBbsDaoImpl {
 		return list;
 	}
 
+	@Override
+	public String RemoveHTMLTag(String changeStr){
+	    if(changeStr != null && !changeStr.equals("")){
+	        changeStr = changeStr.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
+	    }else{
+	        changeStr = "";
+	    }
+	    return changeStr;
 
+	}
+	
 
 
 
