@@ -91,6 +91,7 @@ version="3.0">
   </servlet-mapping>
   
   
+  
   <!-- BBS5 jobs 컨트롤러  -->
   <!-- 설정 부분. 선언 부분. -->
   <!-- 20180310 맨 아래 jobs 부분 -->
@@ -105,18 +106,7 @@ version="3.0">
   	<url-pattern>/jobs</url-pattern>
   </servlet-mapping>
   
-  <!-- BBSboardController 일반 게시판 컨트롤 -->
-  <servlet>
-  	<servlet-name>BBSboardController</servlet-name>
-  	<servlet-class>jobs_BBS5.Bbs5jobsBoardControllerServlet</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-  	<servlet-name>BBSboardController</servlet-name>
-  	<url-pattern>*.BBSboardController</url-pattern>
-  </servlet-mapping>
-  
-  
+    
   <!-- BBSHWCodingController 컨트롤. 모든거 다 처리 하는.-->
   <servlet>
   	<servlet-name>BBSHWCodingController</servlet-name>
@@ -127,6 +117,18 @@ version="3.0">
   	<servlet-name>BBSHWCodingController</servlet-name>
   	<url-pattern>*.BBSHWCodingController</url-pattern>
   	
+  </servlet-mapping>
+  
+  
+  <!-- BBSboardController 일반 게시판 컨트롤 -->
+  <servlet>
+  	<servlet-name>BBSboardController</servlet-name>
+  	<servlet-class>jobs_BBS5.Bbs5jobsBoardControllerServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>BBSboardController</servlet-name>
+  	<url-pattern>/BBSboardController</url-pattern>
   </servlet-mapping>
   
   

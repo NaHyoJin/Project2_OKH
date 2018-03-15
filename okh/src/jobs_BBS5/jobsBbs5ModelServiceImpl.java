@@ -2,6 +2,10 @@ package jobs_BBS5;
 
 import java.util.List;
 
+import studysrc.CombbsDto;
+import studysrc.PagingBean;
+import studysrc.comment_bbsDto;
+
 
 public interface jobsBbs5ModelServiceImpl {//서비스 부분. 
 	
@@ -10,12 +14,30 @@ public interface jobsBbs5ModelServiceImpl {//서비스 부분.
 
 	//게시판5. 하드웨어 코딩 부분 글 전체 가지고 오는것.
 	public List<BbsHWCodingBeanDtoVO> getBbsHWCodingBeanList();
-	
-	
+		//글 작성 부분.
+//		public boolean writeBbs(BbsHWCodingBeanDtoVO dto);
+		//글 수정.
+		
+		//글 삭제.
+		
+		
 	//게시판5. 일반 글 전체 가지고 오는것.
 	public List<BbsBoardBeanDtoVO> getBbsNormalBeanDTOList();
+		//글 작성 부분.
+		public boolean writeBbs(BbsBoardBeanDtoVO dto);
+		//글 수정.
+		
+		//글 삭제.
+		
+/*	
+	public void readcount(int seq);
+	public String[] getTagName(String tagname);
+	public List<comment_bbsDto> detailbbs(int seq);
 	
-	
+	public List<CombbsDto> getpagingComList(PagingBean paging, String searchWord, int search);
+	public List<CombbsDto> commentnull(int seq);
+	public void commentcount(int seq);
+*/	
 	//게시판5. 자료실 글 전체 가지고 오는것.
 	
 	

@@ -72,7 +72,7 @@
 	<a href="../BBSmaterialsController">자료실;</a>
  -->	
  
- <div class="">
+ <div >
 	<jsp:include page="BBS5TopMenuinclude.jsp" flush="false" />
 </div>
 
@@ -83,7 +83,7 @@
 	
 	<br>
 	<!-- 일반 글 쓰기 로 가는것 -->
-	<a href="../NormalWrite.BBSboardController">새 글 쓰기</a>
+	<a href="../BBSboardController?command=normalwrite">새 게시판 글 쓰기</a><!-- 경로 문제였음....십할.. -->
 	 <!-- <a href="../PdsWrite.BBSmaterialsController?command=detail">새 글 쓰기</a>  -->
 		<!-- <a href="../PdsWrite.BBSmaterialsController" 
 		style="text-decoration: none; text-align: right">자료올리기</a> -->
@@ -115,6 +115,7 @@ jobsBbs5ModelServiceImpl service = jobsBbs5ModelService.getInstance();//먼저 �
 
 List<BbsBoardBeanDtoVO> bbslist = service.getBbsNormalBeanDTOList();
 	%>
+	
 	<div align="center">
 
 		<!-- search -->
@@ -165,15 +166,17 @@ List<BbsBoardBeanDtoVO> bbslist = service.getBbsNormalBeanDTOList();
 		<!-- 제목 부분 -->
 		<td align="left">
 		<!-- 컨트롤러로 시퀀스 번호 넘겨줘야하는 부분인데??? -->
-			<a hre="../PdsDetail.BBSmaterialsController?command=detail&seq=<%=bbs.getSeq() %>">
-			<%-- <a href="pdsdetail.jsp?seq=<%=pds.getSeq() %>"> --%>
+<%-- 		
+			<a href="../PdsDetail.BBSmaterialsController?command=detail&seq=<%=bbs.getSeq() %>">
+ --%>			
+			<a href="BBSboardController?command=detail&seq=<%=bbs.getSeq() %>"> 
 			<%-- <a href="pdsdetail_180308.jsp?seq=<%=pds.getSeq() %>"> --%>
 				<%=bbs.getTitle() %>
 			</a>
 		</td>
 		<!-- 다운로드 부분. -->
 		<td>
-			<input type="button" name="btnDown" id="btnDown" value="파일"
+			<input type="button" name="btnDown" id="btnDown" value="Download"
 			onclick="location.href='filedown?filename=<%=bbs.getFilename() %>&seq=<%=bbs.getSeq() %>'">			
 		</td>
 		
@@ -192,13 +195,16 @@ List<BbsBoardBeanDtoVO> bbslist = service.getBbsNormalBeanDTOList();
 
 </table>
 
-	<jsp:include page="paging.jsp">
-		<jsp:param name="actionPath" value="pdslist.jsp"/>
+
+<%-- 
+	<jsp:include page="paging.jsp" flush="false">
+		<jsp:param name="actionPath" value="bbs4NormalBbs.jsp"/>
 		<jsp:param name="nowPage" value="<%=String.valueOf(paging.getNowPage()) %>" />
 		<jsp:param name="totalCount" value="<%=String.valueOf(paging.getTotalCount()) %>" />
 		<jsp:param name="countPerPage" value="<%=String.valueOf(paging.getCountPerPage()) %>" />
 		<jsp:param name="blockCount" value="<%=String.valueOf(paging.getBlockCount()) %>" />
 	</jsp:include>
+ --%>	
 
 	
 

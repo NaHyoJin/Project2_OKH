@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-String actionPath = request.getParameter("actionPath"); // bbslist.jsp
+String actionPath = request.getParameter("actionPath"); // bbslist.jsp 보여줄 화면 리스트 부분?
 
-String sNowPage = request.getParameter("nowPage"); // 현재 페이지
+String sNowPage = request.getParameter("nowPage"); // 현재 페이지. 누른 현재 페이지. 어떤거 누를지 모른다.
 String sTotalCount = request.getParameter("totalCount"); // 총 글수
-String sCountPerPage =  request.getParameter("countPerPage"); // 10
-String sBlockCount = request.getParameter("blockCount");	// 10 
+String sCountPerPage =  request.getParameter("countPerPage"); // 10. 한 화면에 보여줄 글 갯수.
+String sBlockCount = request.getParameter("blockCount");	// 10개로 지금 설정해놨다.
 
+//확인 코드 잘 넘어오나 확인 부분.
 System.out.println("sNowPage:" + sNowPage);
 System.out.println("sTotalCount:" + sTotalCount);
 System.out.println("sCountPerPage:" + sCountPerPage);
@@ -48,7 +49,7 @@ int nowBlock = (int)((nowPage - 1) / countPerBlock);
 		[11] ~ [14]
 */
 
-int firstPage = 0;
+int firstPage = 0; //맨처음 페이지 0값
 int prevPage = 0;
 int nextPage = 0;
 int lastPage = 0;
@@ -99,6 +100,7 @@ function gotoPage(pageNum) {
 	var objForm = document.frmPaging;
 	objForm.nowPage.value = pageNum;
 	objForm.submit();	// form의 Action이 실행되도록한다.
+	//클릭했을때 들어오는것. form의 Action이 실행되도록 한다.
 }
 </script>
 
@@ -135,16 +137,3 @@ function gotoPage(pageNum) {
 	</div>
 
 </form>
-
-
-
-
-
-
-
-
-
-
-
-
-

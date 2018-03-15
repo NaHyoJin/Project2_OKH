@@ -69,20 +69,8 @@ List<PdsDto> pdslist=null;
 				location.href="LifeBbs?command=life";
 			});
 			
-			
-	/* 
-			//columns
-			$("#").click(function() {
-				location.href="";
-			});
-	 */
 	 
-			//게시판5 나효진 jobs 부분.
-/* 			$("#jobs").click(function() {
-				location.href="main.BBSHWCodingController";
-			});
- */	 
-			
+			//게시판5 나효진 jobs 부분.			
 			$("#jobs").click(function name() {
 				location.href="jobs";
 			});

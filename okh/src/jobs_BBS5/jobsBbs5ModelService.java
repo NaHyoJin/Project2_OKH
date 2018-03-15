@@ -37,7 +37,9 @@ public class jobsBbs5ModelService implements jobsBbs5ModelServiceImpl {
 		// TODO Auto-generated method stub
 		return dao.getBbsNormalBeanDTOList();
 	}
-	
+		public boolean writeBbs(BbsBoardBeanDtoVO dto) {
+			return dao.writeBbs(dto);
+		}
 	/*
 	@Override
 	public boolean snsDelete(int seq) {

@@ -8,7 +8,7 @@ request.setCharacterEncoding("utf-8");
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>study_communitybbswrite.jsp</title>
 <link rel="stylesheet" type="text/css" href="_main.css">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
@@ -49,7 +49,8 @@ mem = (UserDto)ologin;
 		<input type="button" class="techbbs_hjh" id="techbbs">
 		<input type="button" class="bbs3">
 		<input type="button" class="bbs4" id="combbs">
-		<input type="button" class="bbs5">
+		<input type="button" class="bbs5" id="jobs">
+		<input type="button" class="bbs6" id="">
 </div>
 <div align="center">
 	<h2>게시글 작성</h2>

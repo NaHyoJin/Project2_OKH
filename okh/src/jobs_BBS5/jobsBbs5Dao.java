@@ -123,7 +123,7 @@ public class jobsBbs5Dao implements jobsBbs5DaoImpl {//일반 게시판 DAO부�
 	//게시판5. 일반 게시판 글 전체 가지고 오는것.
 	@Override
 	public List<BbsBoardBeanDtoVO> getBbsNormalBeanDTOList() {
-List<BbsBoardBeanDtoVO> list = new ArrayList<BbsBoardBeanDtoVO>();
+		List<BbsBoardBeanDtoVO> list = new ArrayList<BbsBoardBeanDtoVO>();
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -206,7 +206,52 @@ List<BbsBoardBeanDtoVO> list = new ArrayList<BbsBoardBeanDtoVO>();
 		return list;
 	}
 
-	
+		//일반 게시판 글 작성 부분.
+		public boolean writeBbs(BbsBoardBeanDtoVO dto) {
+			int count = 0;
+			
+			Connection conn = null;
+			PreparedStatement psmt = null;
+			ResultSet rs = null;
+			
+			String sql = " INSERT INTO BbsBoardBeanDtoVO(SEQ, ID, "
+					+ " REF, STEP, DEPTH, "
+					+ " TITLE, CONTENT, TAG, FILENAME, UP, DOWN, WDATE, PARENT, "
+					+ " DEL, READCOUNT, DOWNCOUNT, regdate) "
+					+ " VALUES(SEQ_BbsBoardBeanDtoVO.NEXTVAL, ?, "//시퀀스 이름이 틀렸다...십할...
+					+ " (SELECT NVL(MAX(REF), 0)+1 FROM BbsBoardBeanDtoVO), 0, 0, "
+					+ " ?, ?, ?, ?, 0, 0, SYSDATE, 0, "
+					+ " 0, 0, 0, SYSDATE) ";
+			
+			try {
+				conn = DBConnection.getConnection();
+				System.out.println("2/6 writeBbs Success");
+				
+				psmt = conn.prepareStatement(sql);
+				System.out.println("3/6 writeBbs Success");
+				
+				psmt.setString(1, dto.getId());
+				System.out.println("dto.getid : " + dto.getId());
+				psmt.setString(2, dto.getTitle());
+				System.out.println("dto.getTitle : " + dto.getTitle());
+				psmt.setString(3, dto.getContent());
+				System.out.println("dto.getContent : " + dto.getContent());
+				psmt.setString(4, dto.getTag());
+				System.out.println("dto.getTag : " + dto.getTag());
+				psmt.setString(5, dto.getFilename());
+				System.out.println("dto.getFilename : " + dto.getFilename());
+				
+				count = psmt.executeUpdate();
+				System.out.println("4/6 writeBbs Success");
+				
+			} catch (SQLException e) {			
+				System.out.println("writeBbs fail");
+			} finally{
+				DBClose.close(psmt, conn, rs);			
+			}
+			
+			return count>0?true:false;
+		}
 	
 	
 	
@@ -214,35 +259,7 @@ List<BbsBoardBeanDtoVO> list = new ArrayList<BbsBoardBeanDtoVO>();
 /*
 		@Override
 		public boolean writeSns(SnsDto dto) {
-			int count = 0;
 			
-			Connection conn = null;
-			PreparedStatement psmt = null;
-			ResultSet rs = null;
-			
-			String sql = "INSERT INTO SNSBBS(SEQ, BGROUP, SORTS, DEPTH, ID, CONTENT, WDATE, DEL, LIKECOUNT) "
-					+ " VALUES(SEQ_SNSBBS.NEXTVAL, SEQ_SNSBBS.NEXTVAL, 0, 0, ?, ?, SYSDATE, 0, 0) ";
-			
-			try {
-				conn = DBConnection.getConnection();
-				System.out.println("2/6 writeSns Success");
-				
-				psmt = conn.prepareStatement(sql);
-				System.out.println("3/6 writeSns Success");
-				
-				psmt.setString(1, dto.getId());
-				psmt.setString(2, dto.getContent());
-				
-				count = psmt.executeUpdate();
-				System.out.println("4/6 writeSns Success");
-				
-			} catch (SQLException e) {			
-				System.out.println("writeSns fail");
-			} finally{
-				DBClose.close(psmt, conn, rs);			
-			}
-			
-			return count>0?true:false;
 		}
 
 		@Override

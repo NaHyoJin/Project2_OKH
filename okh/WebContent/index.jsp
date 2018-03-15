@@ -18,7 +18,7 @@
 	
 </head>
 <body>
-<!-- test --><!-- test2 -->
+<!-- test --><!-- ignore test2 -->
 
 	<!-- 인클루드 부분 -->
 	<div class="menu">

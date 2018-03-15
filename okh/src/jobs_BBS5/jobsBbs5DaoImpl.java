@@ -8,21 +8,21 @@ public interface jobsBbs5DaoImpl {//bbs5 jobs 다오 IMPL부분.
 	
 	//게시판5. 하드웨어 코딩 부분 글 전체 가지고 오는것.
 	public List<BbsHWCodingBeanDtoVO> getBbsHWCodingBeanList();
-	
+		//글 작성 부분.
+//		public boolean writeSns(BbsHWCodingBeanDtoVO dto);
 	
 	//게시판5. 일반 글 전체 가지고 오는것.
 	public List<BbsBoardBeanDtoVO> getBbsNormalBeanDTOList();
-		
-
+		//글 작성 부분.
+		public boolean writeBbs(BbsBoardBeanDtoVO dto);
+		//글 수정 부분.
+//		public boolean bbsUpdate(int seq, String content);
+		//글 삭제 부분.
+//		public boolean bbsDelete(int seq);
 	//게시판5. 자료실 글 전체 가지고 오는것.
 	
 /*	
-	public boolean writeSns(SnsDto dto);
-	
-	public boolean snsDelete(int seq);
-	
-	public boolean snsUpdate(int seq,String content);
-	
+			
 	public SnsDto getSNS(int seq);
 	
 	public List<SnsDto> getMyContent(String myid);

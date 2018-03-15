@@ -44,12 +44,20 @@ public class Bbs5jobsControllerServlet extends HttpServlet {
 	public void doProcess(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
 
-		String command = req.getParameter("userID");
+		
+		String command = req.getParameter("command");
 		
 		resp.setContentType("text/html; charset=utf-8");
 		PrintWriter out = resp.getWriter();
 		
 		req.setCharacterEncoding("utf-8");
+		
+//		resp.sendRedirect("Bbs5_jobsViewJsp/jobs_bbs5NormalBbsWrite.jsp");
+/*		
+		if(command.equals("normalwrite")) {
+			resp.sendRedirect("Bbs5_jobsViewJsp/jobs_bbs5NormalBbsWrite.jsp");
+		}
+		*/
 		
 /*		//root경로
 		String contextPath = req.getContextPath();

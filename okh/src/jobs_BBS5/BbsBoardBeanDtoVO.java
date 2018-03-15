@@ -227,12 +227,7 @@ public class BbsBoardBeanDtoVO implements Serializable{//일반 게시판 부분
 		this.tag = tag;
 		this.filename = filename;
 	}
-	public BbsBoardBeanDtoVO(String id, String title, String content) {
-		super();
-		this.id = id;
-		this.title = title;
-		this.content = content;
-	}
+	
 	public BbsBoardBeanDtoVO(String id, String title, String content, String tag) {
 		super();
 		this.id = id;

@@ -33,6 +33,7 @@
 		<input type="button" class="techbbs_hjh" id="techbbs">
 		<input type="button" class="bbs3">
 		<input type="button" class="bbs4">
+		<input type="button" class="bbs5" id="jobs"><!-- 나효진 게시판5 -->
 		<input type="button" class="bbs5" id="life">
 	</div>
 	<script type="text/javascript">
@@ -43,6 +44,11 @@
 		$("#account").click(function() {
 			location.href = "User?command=join";
 		});
+		
+		$("#jobs").click(function() {
+			location.href = "jobs";
+		});
+		
 		$("#life").click(function() {
 			location.href = "LifeBbs?command=life";
 		});
