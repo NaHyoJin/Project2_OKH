@@ -1,3 +1,5 @@
+<%@page import="studysrc.CombbsService"%>
+<%@page import="studysrc.ICombbsService"%>
 <%@page import="studysrc.CommentService"%>
 <%@page import="studysrc.iCommentService"%>
 <%@page import="studysrc.ComCommentDto"%>
@@ -13,15 +15,35 @@
 <body>
 
 <%
-UserDto mem = (UserDto)session.getAttribute("login");
+
+
+Object ologin = session.getAttribute("login");
+UserDto mem = null;
+if(ologin == null){
+	%>
+	<script type="text/javascript">
+	alert("로그인해 주십시오");
+	location.href = "index.jsp";	
+	</script>	
+	<%
+	return;
+}
+mem = (UserDto)ologin;
 ComCommentDto dto = (ComCommentDto)session.getAttribute("comment");
+String parents = request.getParameter("parent");
+int parent = Integer.parseInt(parents);
+ICombbsService service1 = CombbsService.getInstance();
+
 iCommentService service = CommentService.getInstance();
 boolean isS =service.writecomment(dto);
 if(isS){
 %>
 <script type="text/javascript">
+
 alert("추가성공");
+
 location.href="CommunityControl?command=list";
+service1.commentcount(parent);
 </script>
 <%
 }else{

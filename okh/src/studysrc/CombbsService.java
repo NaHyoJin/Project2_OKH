@@ -19,7 +19,7 @@ public class CombbsService implements ICombbsService {
 
 	@Override
 	public void readcount(int seq) {
-			
+			comdao.readcount(seq);
 	}
 	@Override
 	public String[] getTagName(String tagname) {
@@ -36,7 +36,19 @@ public class CombbsService implements ICombbsService {
 		
 		return comdao.detailbbs(seq);
 	}
+	@Override
+	public List<CombbsDto> getpagingComList(PagingBean paging, String searchWord, int search) {
+		return comdao.getpagingComList(paging, searchWord, search);
+	}
+	@Override
+	public List<CombbsDto> commentnull(int seq) {
 	
+		return comdao.commentnull(seq);
+	}
+	
+	public void commentcount(int seq) {
+		comdao.commentcount(seq);
+	}
 	
 	
 	

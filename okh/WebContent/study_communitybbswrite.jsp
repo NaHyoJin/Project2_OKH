@@ -22,7 +22,18 @@ request.setCharacterEncoding("utf-8");
 
 
 <%
-UserDto mem = (UserDto)session.getAttribute("login");
+Object ologin = session.getAttribute("login");
+UserDto mem = null;
+if(ologin == null){
+	%>
+	<script type="text/javascript">
+	alert("로그인해 주십시오");
+	location.href = "index.jsp";	
+	</script>	
+	<%
+	return;
+}
+mem = (UserDto)ologin;
 %>
 
 

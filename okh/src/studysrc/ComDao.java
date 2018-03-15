@@ -11,11 +11,86 @@ import java.util.StringTokenizer;
 import db.DBClose;
 import db.DBConnection;
 
+
+
 public class ComDao implements iComDao {
 	
 	
 	@Override
+	public void commentcount(int seq) {
+		String sql = " UPDATE COMBBS "
+				+ " SET COMMENTCOUNT=COMMENTCOUNT+1 "
+				+ " WHERE SEQ=? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 readcount Success");
+			
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, seq);
+			System.out.println("2/6 readcount Success");
+			
+			psmt.executeUpdate();
+			System.out.println("3/6 readcount Success");
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("readcount Fail");
+		} finally {
+			DBClose.close(psmt, conn, null);			
+		}		
+	}
+	
+	
+	
+	@Override
+	public List<CombbsDto> commentnull(int seq) {
+		String sql = " SELECT ID, TITLE, CONTENT, TAGNAME, JOINDATE FROM COMBBS WHERE SEQ = ? ";
+		CombbsDto dto = null;
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		List<CombbsDto> list = new ArrayList<CombbsDto>();
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("detailbbs 1/6 S");
+			psmt= conn.prepareStatement(sql);
+			System.out.println("detailbbs 2/6 S");
+			psmt.setInt(1, seq);
+		
+			rs = psmt.executeQuery();
+			System.out.println("detailbbs 3/6 S");
+			
+			while(rs.next()) {
+				int i = 1;
+		
+				dto = new CombbsDto(rs.getString(i++),//id,
+									rs.getString(i++),//title,
+									rs.getString(i++),	//String content,			
+									rs.getString(i++),	//String tagname,	
+									rs.getString(i++));	//String joindate)		
+													
+							list.add(dto);						
+			}
+			System.out.println("detailbbs 4/6 S");
+		} catch (SQLException e) {
+			System.out.println("detailbbs F");
+			e.printStackTrace();
+		}finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		return list;
+	}
+
+	@Override
 	public List<comment_bbsDto> detailbbs(int seq) {
+		
+		
 	String sql =" SELECT * FROM COMBBS B,SCOMMENT S  "
 				+" WHERE B.PARENT=S.CHILD AND B.SEQ=? AND B.SEQ=S.CHILD ";
 	comment_bbsDto dto = null;
@@ -171,7 +246,6 @@ public class ComDao implements iComDao {
 			System.out.println("3/6 readcount Success");
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("readcount Fail");
 		} finally {
@@ -248,7 +322,87 @@ public boolean writeBbs(CombbsDto dto) {
 	return count>0?true:false;
 }
 
+@Override
+public List<CombbsDto> getpagingComList(PagingBean paging, String searchWord, int search) {
+	Connection conn = null;
+	PreparedStatement psmt = null;
+	ResultSet rs = null;
 	
+	List<CombbsDto> list = new ArrayList<CombbsDto>();
+	
+	System.out.println("searchWord=" +searchWord+"  search = " + search);
+	
+	String sWord = "";		
+	if(search == 0) {	// 제목
+		sWord = " WHERE TITLE LIKE '%" + searchWord.trim() + "%' ";
+	}else if(search == 1) {	// 작성자
+		sWord = " WHERE ID=' " + searchWord.trim() + " ' ";
+	}else if(search == 2) {	// 내용
+		sWord = " WHERE = CONTENT LIKE '%" +searchWord.trim() +"%' ";
+	} 
+	
+	try {
+		conn = DBConnection.getConnection();
+		System.out.println("1/6 gettechBbsPagingList Success");
+		
+		// 글의 총수
+		String totalSql = " SELECT COUNT(SEQ) FROM COMBBS " + sWord;
+		psmt = conn.prepareStatement(totalSql);
+		rs = psmt.executeQuery();
+		System.out.println("2/6 gettechBbsPagingList Success");
+		
+		int totalCount = 0;
+		rs.next();
+		totalCount = rs.getInt(1);	// row의 총 갯수
+		System.out.println("total:" +totalCount);
+		paging.setTotalCount(totalCount);
+		
+		paging = PagingUtil.setPagingInfo(paging);
+		
+		psmt.close();
+		rs.close();
+		
+		// row를 취득
+		String sql = " SELECT * FROM "
+				+ " (SELECT * FROM (SELECT * FROM COMBBS " + sWord + " ORDER BY SEQ ASC) "
+				+ "  WHERE ROWNUM <=" + paging.getStartNum() + " ORDER BY SEQ DESC) "
+				+ " WHERE ROWNUM <=" + paging.getCountPerPage();
+		
+		System.out.println("paging.getStartNum() = " + paging.getStartNum());
+		
+		psmt = conn.prepareStatement(sql);
+		System.out.println("3/6 getpagingComList Success");
+		
+		rs = psmt.executeQuery();
+		System.out.println("4/6 getpagingComList Success");
+		
+		while(rs.next()) {
+			CombbsDto dto = new CombbsDto(rs.getInt(1),//	int seq;
+										rs.getString(2),//	String id;
+										rs.getString(3),//String title;
+										rs.getString(4),//	String content
+										rs.getString(5),//	String wdate;
+										rs.getInt(6),//	int del
+										rs.getInt(7),//	int readcount;
+										rs.getInt(8),//	int commentcount,
+										rs.getString(9),//  String tagname;
+										rs.getInt(10),//	int parent;
+										rs.getInt(11),//	int joinercount;
+										rs.getString(12));		//	String joindate;
+				list.add(dto);
+		}
+		System.out.println("5/6 getpagingComList Success");			
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+		System.out.println("getpagingComList Fail");
+	} finally {
+		DBClose.close(psmt, conn, rs);
+		System.out.println("6/6 getpagingComList Success");	
+	}
+	
+	return list;
+}
 	
 	
 }

@@ -1,5 +1,7 @@
 package studysrc;
 
+import java.io.Serializable;
+
 /*
 	
 DROP TABLE COMBBS
@@ -30,7 +32,7 @@ ADD CONSTRAINT FK_COMBBS_ID FOREIGN KEY(ID)
 REFERENCES OKHMEM(ID);
  	
  */
-public class CombbsDto {
+public class CombbsDto implements Serializable{
 
 	
 	private int seq;		//시퀀스

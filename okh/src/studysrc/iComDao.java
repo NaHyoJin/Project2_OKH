@@ -8,4 +8,8 @@ public interface iComDao {
 	public String[] getTagName(String tagname);
 	public boolean writeBbs(CombbsDto dto);
 	public List<comment_bbsDto> detailbbs(int seq);
+	public List<CombbsDto> getpagingComList(PagingBean paging, String searchWord, int search);
+	
+	public List<CombbsDto> commentnull(int seq);
+	public void commentcount(int seq);
 }

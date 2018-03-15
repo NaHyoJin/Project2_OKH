@@ -1,3 +1,5 @@
+<%@page import="studysrc.PagingBean"%>
+<%@page import="studysrc.ComDao"%>
 <%@page import="studysrc.CombbsService"%>
 <%@page import="studysrc.ICombbsService"%>
 <%@page import="studysrc.CombbsDto"%>
@@ -37,15 +39,64 @@ request.setCharacterEncoding("utf-8");
 
 <%
 
+String findWord = request.getParameter("findWord");
+String choice = request.getParameter("choice");
+if(choice == null){
+	choice = "title";
+}
+if(findWord == null || findWord.equals("")){
+	choice = "title";
+}
 
-UserDto mem = (UserDto)session.getAttribute("login");
 
-List<CombbsDto> comlist=(List<CombbsDto>)request.getAttribute("communitybbs");
+
+
+/* List<CombbsDto> comlist=(List<CombbsDto>)request.getAttribute("communitybbs"); */
+
+Object ologin = session.getAttribute("login");
+UserDto mem = null;
+if(ologin == null){
+	%>
+	<script type="text/javascript">
+	alert("로그인해 주십시오");
+	location.href = "index.jsp";	
+	</script>	
+	<%
+	return;
+}
+mem = (UserDto)ologin;
+
+%>
+
+<%
+
+PagingBean paging = new PagingBean();
+if(request.getParameter("nowPage") == null){
+	paging.setNowPage(1);
+}else{
+	paging.setNowPage(Integer.parseInt(request.getParameter("nowPage")));
+}
+%>
+
+<%
+if(findWord == null){
+	findWord = "";
+}
+int cho = 0;
+
+if(choice == null) cho = 0;
+else if(choice.equals("title")) cho = 0;
+else if(choice.equals("writer")) cho = 1;
+
+ICombbsService service = CombbsService.getInstance();
+List<CombbsDto> bbslist = service.getpagingComList(paging, findWord, cho);
+
+
 %>
 <a>최신순</a> <a>조회순</a> <a>댓글순</a> <a>참여도순</a>
 	<table border="1">
 		<col width="5"><col width="500"><col width="70"><col width="70"><col width="70"><col width="200">
-		<%if(comlist==null||comlist.size()==0){
+		<%if(bbslist==null||bbslist.size()==0){
 				
 			%><tr>
 				<td colspan="6">리스트가없습니다</td>
@@ -57,13 +108,13 @@ List<CombbsDto> comlist=(List<CombbsDto>)request.getAttribute("communitybbs");
 			}else{
 			%>
 			<tr>
-			<td/> <td>제목</td> <td>참여자수</td> <td>댓글수</td> <td>작성자</td> <td>작성일</td> 
+			<td/> <td>제목</td> <td>조회수</td> <td>댓글수</td> <td>작성자</td> <td>작성일</td> 
 		</tr>
 			<% 	
 				
-				for(int i=0;i<comlist.size();i++){
-					CombbsDto dto = comlist.get(i);
-					ICombbsService service = CombbsService.getInstance();
+				for(int i=0;i<bbslist.size();i++){
+					CombbsDto dto = bbslist.get(i);
+					service = CombbsService.getInstance();
 					String[] tagnames=service.getTagName(dto.getTagname
 							());
 				
@@ -86,7 +137,7 @@ List<CombbsDto> comlist=(List<CombbsDto>)request.getAttribute("communitybbs");
 			%>
 			<p><b style="font-size: 24px"><a href="CommunityControl?command=detail&seq=<%=dto.getSeq() %>"><%=dto.getTitle() %></a></b></p>
 			</td>
-			<td><%=dto.getJoinercount() %></td>
+			<td><%=dto.getReadcount() %></td>
 			<td><%=dto.getCommentcount()%></td>
 			<td><%=dto.getId() %></td>
 			<td><%=dto.getWdate() %></td>
@@ -97,8 +148,41 @@ List<CombbsDto> comlist=(List<CombbsDto>)request.getAttribute("communitybbs");
 			}
 			%>
 	</table>
+	<br>
+		<jsp:include page="paging.jsp">
+			<jsp:param name="actionPath" value="study_communitybbs.jsp"/>
+			<jsp:param name="nowPage" value="<%=String.valueOf(paging.getNowPage()) %>" />
+			<jsp:param name="totalCount" value="<%=String.valueOf(paging.getTotalCount()) %>" />
+			<jsp:param name="countPerPage" value="<%=String.valueOf(paging.getCountPerPage()) %>" />
+			<jsp:param name="blockCount" value="<%=String.valueOf(paging.getBlockCount()) %>" />
+		</jsp:include>
 </div>
 
+<div align="center">
+		<!-- search -->
+		
+		<select id="choice">
+		<option value="title" <%if(choice.equals("title")) out.println("selected");%>>제목</option>
+		<option value="writer" <%if(choice.equals("writer")) out.println("selected");%>>작성자</option>
+		<option value="content" <%if(choice.equals("content")) out.println("selected");%>>내용</option>
+		</select>
+		
+		<input type="text" id="search" value="<%=findWord %>">
+		<button name="search" onclick="searchBbs()">검색</button>
+		</div>
+		
+<script type="text/javascript">
+		function searchBbs() {
+			var word = document.getElementById("search").value;
+			var choice = document.getElementById("choice").value;
+			location.href = "study_communitybbs.jsp?findWord=" + word + "&choice=" + choice;
+		}
+</script>
+	
+<script type="text/javascript">
 
+
+
+</script>
 </body>
 </html>

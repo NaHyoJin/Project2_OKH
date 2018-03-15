@@ -17,10 +17,6 @@
 </script>
    
    
-<link href="../../bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-<link href="../../tagsinput/css/bootstrap-tagsinput.css" rel="stylesheet" type="text/css">
-<script src="../../tagsinput/js/bootstrap-tagsinput.min.js"></script>
-   
 
 
 
@@ -28,20 +24,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-<script>
-    $('#tagPlaces').tagsinput({
-        allowDuplicates: true
-    });
-</script>
 <input type="text" id="cdate">
 <input type="button" value="선택" onclick="setParentText()">
 
-<div class="form-group">
-        <label for="tagPlaces" class="col-sm-2 control-label">Tag Places</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" data-role="tagsinput" id="tagPlaces">
-        </div>
-</div>
+
 <script type="text/javascript">
 $(function() {
     $( "#cdate" ).datepicker({

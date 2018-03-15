@@ -36,10 +36,10 @@ public class CommunityControl extends HttpServlet {
 		
 		if(command.equals("list")) {
 			System.out.println("list");
-			ICombbsService service = CombbsService.getInstance();
-			List<CombbsDto> list =  service.getComList();
-			request.setAttribute("communitybbs", list);
-			dispatch("study_communitybbs.jsp", request, response);
+			response.sendRedirect("study_communitybbs.jsp");
+			
+			
+			
 		
 		}else if(command.equals("write")) {
 			response.sendRedirect("study_communitybbswrite.jsp");
@@ -69,9 +69,18 @@ public class CommunityControl extends HttpServlet {
 			int seq = Integer.parseInt(sseq);
 			ICombbsService service = CombbsService.getInstance();
 			List<comment_bbsDto> list = service.detailbbs(seq);
-			
-			request.setAttribute("detail", list);
-			request.setAttribute("detail1", seq);
+			if(list==null||list.size()==0) {
+				List<CombbsDto> list1 = service.commentnull(seq);
+				System.out.println("코맨트없는 리스트1");
+				request.setAttribute("detail1", list1);
+				
+			}else {
+				request.setAttribute("detail", list);
+				System.out.println("코맨트있는 리스트");
+				
+			}
+			service.readcount(seq);
+			request.setAttribute("seq", seq);
 			dispatch("study_communitybbsdetail.jsp", request, response);
 		}else if(command.equals("commentAF")) {
 			String id = request.getParameter("id");
@@ -82,10 +91,12 @@ public class CommunityControl extends HttpServlet {
 			/*String childs = request.getParameter("child");
 			int child = Integer.parseInt(childs);*/
 			
+			
 			System.out.println(id+parent+content);
 			ComCommentDto dto = new ComCommentDto( id, content,child);
 			System.out.println("dto:"+dto.getId()+dto.getContent());
 			request.getSession().setAttribute("comment", dto);
+			request.setAttribute("parent", parent);
 			dispatch("study_communitybbscommentAF.jsp", request, response);
 		}
 		
