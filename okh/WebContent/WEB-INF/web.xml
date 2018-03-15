@@ -32,7 +32,7 @@ version="3.0">
   </servlet-mapping>
   
   
-  <!-- 기술게시판파일업로드 -->
+   <!-- 기술게시판파일업로드 -->
   <servlet>
     <servlet-name>PdsController</servlet-name>
     <servlet-class>techpds.PdsController</servlet-class>
@@ -41,7 +41,15 @@ version="3.0">
     <servlet-name>PdsController</servlet-name>
     <url-pattern>/PdsController</url-pattern>
   </servlet-mapping>
-   
+    <!-- 기술게시판파일다운 -->
+    <servlet>
+  	<servlet-name>techfiledown</servlet-name>
+  	<servlet-class>techpds.FileDownloader</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>techfiledown</servlet-name>
+  	<url-pattern>/techfiledown</url-pattern>
+  </servlet-mapping>
      <!-- 기술게시판 -->
   <servlet>
     <servlet-name>TechbbsController</servlet-name>
@@ -50,6 +58,15 @@ version="3.0">
   <servlet-mapping>
     <servlet-name>TechbbsController</servlet-name>
     <url-pattern>/TechbbsController</url-pattern>
+  </servlet-mapping>
+   <!-- 기술답글게시판 -->
+  <servlet>
+    <servlet-name>TechRepbbsController</servlet-name>
+    <servlet-class>techreplebbs.TechRepbbsController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TechRepbbsController</servlet-name>
+    <url-pattern>/TechRepbbsController</url-pattern>
   </servlet-mapping>
   
   <!-- qnabbs 게시판 -->
