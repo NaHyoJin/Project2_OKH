@@ -10,11 +10,12 @@ public interface jobsBbs5DaoImpl {//bbs5 jobs 다오 IMPL부분.
 	public List<BbsHWCodingBeanDtoVO> getBbsHWCodingBeanList();
 	
 	
-	
-	//게시판5. 일반 게시판 부분. 인터페이스.
-	
-	
+	//게시판5. 일반 글 전체 가지고 오는것.
+	public List<BbsBoardBeanDtoVO> getBbsNormalBeanDTOList();
+		
 
+	//게시판5. 자료실 글 전체 가지고 오는것.
+	
 /*	
 	public boolean writeSns(SnsDto dto);
 	

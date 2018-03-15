@@ -26,8 +26,8 @@ public class Bbs5jobsBoardControllerServlet extends HttpServlet {//일반 게시
 	//어떤 방식으로와도 처리하는 과정 //어떤 방법으로도 작동 되게끔.
 	protected void doProcess(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	
-		//컨트롤러에서 각각 따로 만들어보자.
-		jobsBbs5ModelServiceImpl bbs5Service = new jobsBbs5ModelService();
+		//싱글톤 만들어 주는 부분?
+		jobsBbs5ModelServiceImpl bbs5Service = jobsBbs5ModelService.getInstance();
 		
 		resp.setContentType("text/html; charset=utf-8");
 		PrintWriter out = resp.getWriter();

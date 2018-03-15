@@ -3,25 +3,42 @@ package jobs_BBS5;
 import java.util.ArrayList;
 import java.util.List;
 
+import techbbs.TechbbsDao;
+import techbbs.TechbbsService;
+import techbbs.iTechbbsDao;
+
 
 public class jobsBbs5ModelService implements jobsBbs5ModelServiceImpl {
 
 	//모델에서 dao 생성 부분.
-	jobsBbs5DaoImpl dao = new jobsBbs5Dao();
+
+	private static jobsBbs5ModelService jobsBbs5ModelService = new jobsBbs5ModelService();
+	public jobsBbs5DaoImpl dao;
 	
-	//
+	private jobsBbs5ModelService() {
+		//게시판 dao 생성 부분.
+		dao = new jobsBbs5Dao();
+	}
+	
+	public static jobsBbs5ModelService getInstance() {
+		return jobsBbs5ModelService;
+	}
+	
+	//H/W 모든 게시판 가지고 오는것.
 	@Override
 	public List<BbsHWCodingBeanDtoVO> getBbsHWCodingBeanList() {
 		// TODO Auto-generated method stub
 		return dao.getBbsHWCodingBeanList();
 	}
-/*
-	@Override
-	public boolean writeSns(SnsDto dto) {
-		// TODO Auto-generated method stub
-		return dao.writeSns(dto);
-	}
 
+	//일반 모든 게시판 가지고 오는것.
+	@Override
+	public List<BbsBoardBeanDtoVO> getBbsNormalBeanDTOList() {
+		// TODO Auto-generated method stub
+		return dao.getBbsNormalBeanDTOList();
+	}
+	
+	/*
 	@Override
 	public boolean snsDelete(int seq) {
 		// TODO Auto-generated method stub
@@ -167,5 +184,7 @@ public class jobsBbs5ModelService implements jobsBbs5ModelServiceImpl {
 		return dao.shareBbs(dto, id);
 	}
 */
+
+	
 
 }

@@ -27,8 +27,7 @@
 
 <h3>자료 올리기</h3>
 
-<form action="pdsupload.jsp" method="post" 
-	enctype="multipart/form-data">
+<form action="../WriteUpload.BBSmaterialsController" method="post" enctype="multipart/form-data">
 	
 	<table border="1" bgcolor="gray">
 	<col width="200"><col width="500">
@@ -37,7 +36,9 @@
 		<td>아이디</td>
 		<td>
 			<%=mem.getId() %>
+			<input type="hidden" name="command" value="detail"> <!-- 일단실험 디테일이동하는지 보는부분 -->
 			<input type="hidden" name="id" value="<%=mem.getId() %>">
+			
 		</td>
 	</tr>
 	

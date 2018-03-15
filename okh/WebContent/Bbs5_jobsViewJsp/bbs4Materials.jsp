@@ -80,9 +80,9 @@
 	%>
 	
 	<br>
-		<!-- <a href="../HwWrite.BBSHWCodingController">새 글 쓰기</a> -->
-		<a href="../PdsWrite.BBSmaterialsController" 
-		style="text-decoration: none; text-align: right">자료올리기</a>
+	 <a href="../PdsWrite.BBSmaterialsController?command=detail">새 글 쓰기</a> 
+		<!-- <a href="../PdsWrite.BBSmaterialsController" 
+		style="text-decoration: none; text-align: right">자료올리기</a> -->
 		
 	<%
 		}
@@ -162,7 +162,7 @@ List<BbsMaterialsBeanDtoVO> pdslist = dao.getPdsPagingList(paging, findWord, cho
 		<!-- 제목 부분 -->
 		<td align="left">
 		<!-- 컨트롤러로 시퀀스 번호 넘겨줘야하는 부분인데??? -->
-			<a hre="../PdsDetail.BBSmaterialsController">
+			<a hre="../PdsDetail.BBSmaterialsController?command=detail&seq=<%=pds.getSeq() %>">
 			<%-- <a href="pdsdetail.jsp?seq=<%=pds.getSeq() %>"> --%>
 			<%-- <a href="pdsdetail_180308.jsp?seq=<%=pds.getSeq() %>"> --%>
 				<%=pds.getTitle() %>

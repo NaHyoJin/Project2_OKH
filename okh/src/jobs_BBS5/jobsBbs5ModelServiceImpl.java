@@ -12,7 +12,11 @@ public interface jobsBbs5ModelServiceImpl {//서비스 부분.
 	public List<BbsHWCodingBeanDtoVO> getBbsHWCodingBeanList();
 	
 	
+	//게시판5. 일반 글 전체 가지고 오는것.
+	public List<BbsBoardBeanDtoVO> getBbsNormalBeanDTOList();
 	
+	
+	//게시판5. 자료실 글 전체 가지고 오는것.
 	
 	
 	
@@ -38,7 +42,7 @@ public interface jobsBbs5ModelServiceImpl {//서비스 부분.
 	public boolean disconfollow(String myid, String followid);
 
 	// bang
-	public List<MemberDto> chatList(String id);
+	
 	
 	public boolean addchat(ChatDto dto);
 	

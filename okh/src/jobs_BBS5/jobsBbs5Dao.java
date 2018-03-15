@@ -38,7 +38,7 @@ public class jobsBbs5Dao implements jobsBbs5DaoImpl {//일반 게시판 DAO부�
 */
 
 	
-	//게시판4. 하드웨어 코딩 부분 글 전체 가지고 오는것.
+	//게시판5. 하드웨어 코딩 부분 글 전체 가지고 오는것.
 	public List<BbsHWCodingBeanDtoVO> getBbsHWCodingBeanList(){
 		
 		List<BbsHWCodingBeanDtoVO> list = new ArrayList<BbsHWCodingBeanDtoVO>();
@@ -119,6 +119,98 @@ public class jobsBbs5Dao implements jobsBbs5DaoImpl {//일반 게시판 DAO부�
 		return list;	
 	}
 
+	
+	//게시판5. 일반 게시판 글 전체 가지고 오는것.
+	@Override
+	public List<BbsBoardBeanDtoVO> getBbsNormalBeanDTOList() {
+List<BbsBoardBeanDtoVO> list = new ArrayList<BbsBoardBeanDtoVO>();
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+/*		기존에 있던 코드 참고해서 만든것.
+		String sql = " SELECT SEQ, BGROUP, SORTS, DEPTH, ID, CONTENT, TO_CHAR(WDATE, 'YY/MM/DD'), DEL, LIKECOUNT " 
+				+ " FROM SNSBBS "  
+				+ " WHERE ID IN (SELECT FOLLOWID "
+				+ " 				FROM SNSFOLLOW " 
+				+ " 				WHERE MYID = '" + myid + "' "
+				+ "						AND CONNECTN = 0 ) "
+				+ "		AND DEL = 0 "
+				+ " ORDER BY BGROUP DESC, SORTS ASC ";
+*/
+		
+		String sql = " SELECT SEQ, ID, REF, STEP, DEPTH, "
+				+ " TITLE, CONTENT, tag, filename, up, down, WDATE, PARENT,"
+				+ " DEL, READCOUNT, downcount "
+				+ " FROM BbsBoardBeanDtoVO "
+				+ " ORDER BY REF DESC, STEP ASC ";
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("2/6 getBbsNormalBeanDTOList Success");
+			
+			psmt = conn.prepareStatement(sql);
+			System.out.println("3/6 getBbsNormalBeanDTOList Success");
+			
+			rs = psmt.executeQuery();
+			System.out.println("4/6 getBbsNormalBeanDTOList Success");
+			
+			/*
+			 		private int seq;	//시퀀스 번호
+					private String id;	//아이디
+					
+					private int ref;	// 그룹번호
+					private int step;	// 열번호
+					private int depth;	// 깊이
+					
+					private String title;
+					private String content;
+					private String wdate;//작성일
+					private int parent;	// 부모글
+					
+					private int del;	// 삭제
+					private int readcount;//조회수
+			 */
+			while(rs.next()){
+				int i = 1;
+				BbsBoardBeanDtoVO dto = new BbsBoardBeanDtoVO(
+						rs.getInt(i++),//seq, 
+						rs.getString(i++),//id, 
+						rs.getInt(i++),//ref, 
+						rs.getInt(i++),//step, 
+						rs.getInt(i++),//depth, 
+						rs.getString(i++),//title, 
+						rs.getString(i++),//content,
+						rs.getString(i++),//tag
+						rs.getString(i++),//filename
+						rs.getInt(i++),//up
+						rs.getInt(i++),//down 
+						rs.getString(i++),//wdate, 
+						rs.getInt(i++),//parent, 
+						rs.getInt(i++),//del, 
+						rs.getInt(i++),//readcount
+						rs.getInt(i++)//downcount.
+						);
+						
+				list.add(dto);
+			}
+			
+			System.out.println("5/6 getBbsNormalBeanDTOList Success");
+			
+		} catch (SQLException e) {
+			System.out.println("getBbsNormalBeanDTOList fail");
+		} finally{
+			DBClose.close(psmt, conn, rs);
+			System.out.println("6/6 getBbsNormalBeanDTOList Success");
+		}
+		return list;
+	}
+
+	
+	
+	
+	
+	
 /*
 		@Override
 		public boolean writeSns(SnsDto dto) {

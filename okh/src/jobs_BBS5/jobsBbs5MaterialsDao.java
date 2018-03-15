@@ -12,18 +12,7 @@ import db.DBConnection;
 
 public class jobsBbs5MaterialsDao implements jobsBbs5MaterialsDaoImpl {
 	
-	//싱글톤 부분.
-	private static jobsBbs5MaterialsDao pdsDao = new jobsBbs5MaterialsDao();
-	
-	private jobsBbs5MaterialsDao() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	public static jobsBbs5MaterialsDao getInstance() {
-		return pdsDao;
-	}
-	
-	
+
 	
 	@Override
 	public List<BbsMaterialsBeanDtoVO> getPdsList() {
