@@ -63,7 +63,15 @@ version="3.0">
   	<url-pattern>/qnaServlet</url-pattern>
   </servlet-mapping>
   
-  
+   		<!-- 커뮤니티일정게시판 -->
+  <servlet>
+    <servlet-name>CommunityControl</servlet-name>
+    <servlet-class>studysrc.CommunityControl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CommunityControl</servlet-name>
+    <url-pattern>/CommunityControl</url-pattern>
+  </servlet-mapping>
   
   
   <!-- BBS5 jobs 컨트롤러  -->
@@ -126,5 +134,7 @@ version="3.0">
   	<servlet-name>mainJSP</servlet-name>
   	<url-pattern>/mainJSP</url-pattern>
   </servlet-mapping>
+  
+  
   
 </web-app>

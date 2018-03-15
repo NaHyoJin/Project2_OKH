@@ -88,7 +88,7 @@ List<CombbsDto> comlist=(List<CombbsDto>)request.getAttribute("communitybbs");
 			</td>
 			<td><%=dto.getJoinercount() %></td>
 			<td><%=dto.getCommentcount()%></td>
-			<td><%=mem.getId() %></td>
+			<td><%=dto.getId() %></td>
 			<td><%=dto.getWdate() %></td>
 			
 			</tr>

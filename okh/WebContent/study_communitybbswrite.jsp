@@ -16,6 +16,11 @@ request.setCharacterEncoding("utf-8");
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+
+<link rel="stylesheet" href="css/bootstrap-tagsinput.css">
+<script src="js/bootstrap-tagsinput.js"></script>
+
+
 <%
 UserDto mem = (UserDto)session.getAttribute("login");
 %>
@@ -65,9 +70,8 @@ UserDto mem = (UserDto)session.getAttribute("login");
 			<tr>
 				<td>테그</td>
 				<td>
-					<input type="text" name="tag" value="" id="tagString" onblur="eventonblur()" size="100"/>
-					<div id="tagdiv">
-	 				</div>
+					<input type="text" value="" data-role="tagsinput" name="tagnames" >
+					
 				</td>
 			</tr>
 			

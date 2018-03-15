@@ -1,3 +1,5 @@
+<%@page import="studysrc.comment_bbsDto"%>
+<%@page import="java.util.List"%>
 <%@page import="studysrc.CombbsService"%>
 <%@page import="studysrc.ICombbsService"%>
 <%@page import="studysrc.CombbsDto"%>
@@ -22,10 +24,11 @@
 UserDto mem = (UserDto)session.getAttribute("login");
 %>
 <%
-CombbsDto dto = (CombbsDto)request.getAttribute("comwritedto");
+List<comment_bbsDto> list = (List<comment_bbsDto>)request.getAttribute("detail");
 ICombbsService service = CombbsService.getInstance();
-int seq = (int)request.getAttribute("detail");
-dto = service.detailbbs(seq);
+int seq = (int)request.getAttribute("detail1");
+
+list = service.detailbbs(seq);
 
 %>
 
@@ -34,31 +37,31 @@ dto = service.detailbbs(seq);
 	<table border="1">
 		<col width="600"> <col width="200">
 		<tr>
-		<td colspan="2"><div class="myinfo">작성자<%=mem.getId() %>
-											조회수 <%=dto.getReadcount() %>
-											댓글수 <%=dto.getCommentcount() %> 
-											<input type="hidden" name="parent" value="<%=dto.getParent() %>"> 
+		<td colspan="2"><div class="myinfo">작성자<%= list.get(0).getBbsid() %>
+											조회수 <%=list.get(0).getBbsreadcount() %>
+											댓글수 <%=list.get(0).getBbscommentcount() %> 
+											<input type="hidden" name="parent" value="<%=list.get(0).getBbsparent() %>"> 
 		 					 </div></td>
 		 
 			
 		</tr>
 		<tr>	
-			<td><h2 class="title"><%=dto.getTagname() %> <%=dto.getTitle() %> <br>
-			<%=dto.getWdate() %><hr/></h2>
+			<td><h2 class="title"><%=list.get(0).getBbstagname() %> <%=list.get(0).getBbstitle() %> <br>
+			<%=list.get(0).getBbswdate() %><hr/></h2>
 			</td>	
 			
 				<td	rowspan="2">
 				<div class="like">
-					<button>좋아요</button><br>
-					<button>싫어요</button>
+					<button type="button">좋아요</button><br>
+					<button type="button">싫어요</button>
 				</div>
 				</td>
 			
 		</tr>
 		<tr>
 			<td><article class="content">
-					<%=dto.getContent() %><br>
-				모임날짜 <%=dto.getJoindate() %>
+					<%=list.get(0).getBbscontent()%><br>
+				모임날짜 <%=list.get(0).getBbsjoindate() %>
 				</article>
 			</td>
 		</tr>
@@ -68,18 +71,53 @@ dto = service.detailbbs(seq);
 		</tr>
 	</table>
 <a href="CommunityControl?command=list">글목록</a>
-<a href="CommunityControl?command=update&seq=<%=dto.getSeq() %>">수정</a>
-<a href="CommunityControl?command=delet&seq=<%=dto.getSeq() %>">삭제</a>
+<a href="CommunityControl?command=update&seq=<%=list.get(0).getBbsseq() %>">수정</a>
+<a href="CommunityControl?command=delet&seq=<%=list.get(0).getBbsseq() %>">삭제</a>
 <br>
 
+
+<table border="1">
+	<col width="400"> <col width="100">
+	<%if(list==null||list.size()==0){
+				
+			%><tr>
+				<td colspan="2">등록된 댓글이 없습니다.</td>
+				</tr>
+				
+				
+				
+			<%
+	}else{
+		for(int i = 0;i<list.size();i++){
+			%>
+		
+	<tr>
+		<td> <%= list.get(i).getCommentid() %><br><%=list.get(i).getCommentwdate() %>작성
+		<td rowspan="2"><input type="button" value="같이해요!">  </td>
+	</tr>
+	<tr>
+		<td><%=list.get(i).getCommentcontent() %> </td>
+	</tr>
+
+<%
+		}
+	}
+%>
+</table>
+
+
+
+
 <table>
+<tr>
+	<th> 댓 글 </th>
+</tr>
 			<col width="100"> <col width="700">
 			<tr>
-				<td>작성자</td>
-				<td>
+			
+				<td colspan="2">
 					<input type="text" id="id" readonly="readonly" value="<%=mem.getId() %>" size="100">
 					<input type="hidden" name="id" value="<%=mem.getId() %>">
-					
 	 				<input type="hidden" name="command" value="commentAF">
 				</td>
 			</tr>
@@ -87,15 +125,15 @@ dto = service.detailbbs(seq);
 			
 			
 			<tr>
-				<td>내 용</td>
-				<td>
+				
+				<td colspan="2">
 					<textarea name="content" id="summernote"></textarea>
 				</td>
 			</tr>
 			<tr>
-		 		<td>
-		 			<input type="button" id="cancel" value="취소">
-		 			 <input type="submit" value="댓글달기" >
+		 		<td colspan="2">
+		 			<input type="submit" value="댓글달기" > <input type="reset" id="cancel" value="리셋"> 
+		 			
 		 		</td>
 	 		</tr>
 			

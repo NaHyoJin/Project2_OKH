@@ -27,7 +27,7 @@
 		<input type="button" class="bbs1" id="qnabbs">
 		<input type="button" class="techbbs_hjh" id="techbbs">
 		<input type="button" class="bbs3" ><!-- 정재흥 -->
-		<input type="button" class="bbs4" >
+		<input type="button" class="bbs4" id="combbs"> <!-- 장문석 study -->
 		<input type="button" class="bbs5" id="jobs"><!-- 나효진 -->
 		<input type="button" class="bbs6" id="life"><!-- 병찬 사는얘기 -->
 	</div>	
@@ -60,7 +60,10 @@
 			$("#life").click(function() {
 				location.href="LifeBbs?command=life";
 			});
-			
+			/* 장문석  study*/
+			$("#combbs").click(function () {
+				location.href = "CommunityControl?command=list";
+			});
 			
 	/* 
 			//columns
