@@ -1,0 +1,15 @@
+/db/
+/jobs_BBS5/
+/lifeBbs/
+/net/
+/qna/
+/singleton/
+/studysrc/
+/techbbs/
+/techpds/
+/techreplebbs/
+/user/
+*.class
+*.jar
+*.war
+*.ear
