@@ -52,7 +52,7 @@ public String processUploadFile(FileItem fileItem, String dir, JspWriter out) th
 //지정폴더에저장
 //String fupload="C:\\tmp";	//물리적으로삭제해야된다
 //톰캣에배포
-String fupload=application.getRealPath("/upload");	//WebContent안의 폴더이름을정해준거다 여기에올라갈거다
+String fupload=application.getRealPath("/techupload");	//WebContent안의 폴더이름을정해준거다 여기에올라갈거다
 System.out.println("파일업로드:"+fupload);
 
 String yourTempDirectory=fupload;

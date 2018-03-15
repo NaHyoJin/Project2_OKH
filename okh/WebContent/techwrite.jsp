@@ -1,18 +1,18 @@
-
 <%@page import="user.UserDto"%>
 <%@page import="techpds.PdsService"%>
 <%@page import="techpds.PdsServiceImpl"%>
 <%@page import="techpds.PdsDto"%>
 <%@page import="java.util.List"%>
-<%@page import="user.UserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+        <%
+request.setCharacterEncoding("utf-8");
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head> 
-<title>techwrite.jsp</title>
-
-<link rel="stylesheet" type="text/css" href="_write.css">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="_write.css?ver=1">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
@@ -20,7 +20,6 @@
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 </head>
-
 <body>
 <%
 UserDto mem = (UserDto)session.getAttribute("login");
@@ -28,12 +27,68 @@ PdsDto pdsdto=null;
 List<PdsDto> pdslist=null;
 %>
 
-<div class="menu">
-	<jsp:include page="menuinclude.jsp">
-	<jsp:param name="actionPath" value="index.jsp"/>
-	</jsp:include>
-</div>
 
+	<!-- 인클루드 부분 -->
+	<div class="menu">
+		<input type="button" class="login" id="login">
+		<input type="button" class="account" id="account">
+		<input type="button" class="bbs1" id="qnabbs">
+		<input type="button" class="techbbs_hjh" id="techbbs">
+		<input type="button" class="bbs3" ><!-- 정재흥 -->
+		<input type="button" class="bbs4" >
+		<input type="button" class="bbs5" id="jobs"><!-- 나효진 -->
+		<input type="button" class="bbs6" id="life"><!-- 병찬 사는얘기 -->
+	</div>	
+
+	
+	<script type="text/javascript">
+		$(function() {//좌측 메뉴바 누르는 곳.
+
+			$("#login").click(function() {
+				location.href="User?command=login";
+			});
+	
+			$("#account").click(function() {
+				location.href="User?command=join";
+			});
+			
+			//QNA
+			$("#qnabbs").click(function() {
+				location.href="qnaServlet?command=listQna";
+			});
+			
+			$("#second").click(function() {
+				location.href="second.jsp";
+			});
+	
+			$("#techbbs").click(function() {
+				location.href="TechbbsController?command=techbbs";
+			});
+	
+			$("#life").click(function() {
+				location.href="LifeBbs?command=life";
+			});
+			
+			
+	/* 
+			//columns
+			$("#").click(function() {
+				location.href="";
+			});
+	 */
+	 
+			//게시판5 나효진 jobs 부분.
+/* 			$("#jobs").click(function() {
+				location.href="main.BBSHWCodingController";
+			});
+ */	 
+			
+			$("#jobs").click(function name() {
+				location.href="jobs";
+			});
+
+		});
+	</script>
 <div class="wrap">
 	<h2>새글쓰기</h2>
 	<div class="writeform">
@@ -120,6 +175,7 @@ $("#addya").val(aa+"<%=dto22.getFilename()%>");
 }
 %> 
 <script type="text/javascript">
+
 		// 뒤로가기 버튼 방지 
 		history.pushState(null, null, "#noback");
 		$(window).bind("hashchange", function(){
@@ -177,7 +233,7 @@ function eventonblur() {
 	
 	var button = document.createElement("button")	//span태그옆에 취소버튼(name=cancel)
 	var BtnText = document.createTextNode( 'X' );
-	button.name="cancel"
+	button.name="can"
 	span.appendChild( jbBtnText );
 	span.appendChild( inputNode );
 	span.appendChild( button );

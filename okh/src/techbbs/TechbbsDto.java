@@ -24,6 +24,7 @@ CREATE TABLE TECHBBS(
 	READCOUNT NUMBER(8) NOT NULL,
 	LIKECOUNT NUMBER(8) NOT NULL,
 	COMMENTCOUNT NUMBER(8) NOT NULL,
+	POINT NUMBER(8) NOT NULL,
 	SCRAPCOUNT NUMBER(8) NOT NULL
 );
 
@@ -32,7 +33,17 @@ START WITH 1 INCREMENT BY 1;
 
 ALTER TABLE TECHBBS
 ADD CONSTRAINT FK_TECHBBS_ID FOREIGN KEY(ID)
-REFERENCES MEMBER(ID);
+REFERENCES OKHMEM(ID);
+
+SELECT B.SEQ,B.ID, B.TITLE,B.TAGNAME,B.CONTENT,B.WDATE, 
+B.READCOUNT,B.LIKECOUNT,B.COMMENTCOUNT,B.POINT,B.SCRAPCOUNT,P.SEQ pdsseq,P.FILENAME,P.PARENT 
+FROM TECHBBS B,TECH_PDS P  
+WHERE B.ID=P.ID AND B.SEQ=1 AND B.SEQ=P.PARENT; 
+
+SELECT SEQ,ID, TITLE,TAGNAME,CONTENT,WDATE,DEL,  
+READCOUNT,LIKECOUNT,COMMENTCOUNT,POINT,SCRAPCOUNT 
+FROM TECHBBS 
+WHERE SEQ=1
  */
 public class TechbbsDto implements Serializable {
 	private int seq;
@@ -46,12 +57,40 @@ public class TechbbsDto implements Serializable {
 	private int del;	// 삭제
 	private int readcount;
 	private int commentcount;
+	private int point;
 	private int likecount;
 	private int scrapcount;
 	
+	private String filename;
+	private int parent;
+	private int pdsseq;
+	private int pdsys;
+	
+	//조인으로얻어온값들
+	public TechbbsDto(int seq, String id, String title, String tagname, String content, String wdate, 
+			int readcount, int commentcount, int point, int likecount, int scrapcount, String filename, int parent,
+			int pdsseq,int pdsys) {
+		super();
+		this.seq = seq;
+		this.id = id;
+		this.title = title;
+		this.tagname = tagname;
+		this.content = content;
+		this.wdate = wdate;
+		this.readcount = readcount;
+		this.commentcount = commentcount;
+		this.point = point;
+		this.likecount = likecount;
+		this.scrapcount = scrapcount;
+		this.filename = filename;
+		this.parent = parent;
+		this.pdsseq = pdsseq;
+		this.pdsys = pdsys;
+	}
 
+	//자료유무판단
 	public TechbbsDto(int seq, String id, String title, String tagname, String content, String wdate, int del,
-			int readcount, int commentcount, int likecount, int scrapcount) {
+			int readcount, int commentcount, int point, int likecount, int scrapcount, int pdsys) {
 		super();
 		this.seq = seq;
 		this.id = id;
@@ -62,11 +101,82 @@ public class TechbbsDto implements Serializable {
 		this.del = del;
 		this.readcount = readcount;
 		this.commentcount = commentcount;
+		this.point = point;
+		this.likecount = likecount;
+		this.scrapcount = scrapcount;
+		this.pdsys = pdsys;
+	}
+
+
+	public int getPdsys() {
+		return pdsys;
+	}
+
+
+	public void setPdsys(int pdsys) {
+		this.pdsys = pdsys;
+	}
+
+
+	public String getFilename() {
+		return filename;
+	}
+
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
+
+	public int getParent() {
+		return parent;
+	}
+
+
+	public void setParent(int parent) {
+		this.parent = parent;
+	}
+
+
+	public int getPdsseq() {
+		return pdsseq;
+	}
+
+
+	public void setPdsseq(int pdsseq) {
+		this.pdsseq = pdsseq;
+	}
+
+
+	public int getPoint() {
+		return point;
+	}
+
+
+	public void setPoint(int point) {
+		this.point = point;
+	}
+
+
+	//게시판dto
+	public TechbbsDto(int seq, String id, String title, String tagname, String content, String wdate, int del,
+			int readcount, int commentcount, int point, int likecount, int scrapcount) {
+		super();
+		this.seq = seq;
+		this.id = id;
+		this.title = title;
+		this.tagname = tagname;
+		this.content = content;
+		this.wdate = wdate;
+		this.del = del;
+		this.readcount = readcount;
+		this.commentcount = commentcount;
+		this.point = point;
 		this.likecount = likecount;
 		this.scrapcount = scrapcount;
 	}
-	
-	
+
+	//글쓰기할때dto
 	public TechbbsDto(String id, String title, String tagname, String content) {
 		super();
 		this.id = id;
@@ -145,12 +255,6 @@ public class TechbbsDto implements Serializable {
 	}
 	public void setScrapcount(int scrapcount) {
 		this.scrapcount = scrapcount;
-	}
-	@Override
-	public String toString() {
-		return "TechBbsDto [seq=" + seq + ", id=" + id + ", title=" + title + ", content=" + content + ", wdate="
-				+ wdate + ", del=" + del + ", readcount=" + readcount + ", likecount=" + likecount + ", scrapcount="
-				+ scrapcount + "]";
 	}
 	
 	

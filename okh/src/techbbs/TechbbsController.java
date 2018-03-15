@@ -2,6 +2,7 @@ package techbbs;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -34,21 +35,20 @@ public class TechbbsController extends HttpServlet {
 	public void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=uTF-8");
-		String userID = request.getParameter("userID");
-		String userPassword = request.getParameter("userPassword");
-		
+		int parent=0;
 		String command = request.getParameter("command");
+		String command1=(String)request.getAttribute("command");
 		
+		TechbbsServiceImpl tservice=TechbbsService.getInstance();
 		if(command.equals("techbbs")) {
-			TechbbsServiceImpl service=TechbbsService.getInstance();
-			List<TechbbsDto> list=service.gettechBbsList();
+			
+			List<TechbbsDto> list=tservice.gettechBbsList();
 			request.setAttribute("techbbs", list);
 			dispatch("techbbs.jsp", request, response);
 		}else if(command.equals("techwrite")) {
 			response.sendRedirect("techwrite.jsp");
 		}else if(command.equals("techwriteAf")) {
 			String tagname="TechTips&강좌-";
-			String tagString=request.getParameter("tagString");
 			String[] tagnames=request.getParameterValues("tagnames");	//span태그안의value값다받아오기
 			String id=request.getParameter("id");
 			String title=request.getParameter("title");
@@ -61,6 +61,86 @@ public class TechbbsController extends HttpServlet {
 			request.setAttribute("techwritedto", dto);
 			dispatch("techwriteAf.jsp", request, response);
 		}else if(command.equals("techdetail")) {
+			String sseq = request.getParameter("seq");
+			int seq = Integer.parseInt(sseq);
+			System.out.println(seq+"fdjnfd");
+			boolean b=tservice.getparent(seq);
+			List<TechbbsDto> list=new ArrayList<>();
+			if (b) {
+				list=tservice.getpdsdetail(seq);
+				System.out.println("자료있다");
+			}else {
+				list=tservice.getdetail(seq);
+				System.out.println("자료없다");
+			}
+			request.setAttribute("whatlist", list);
+			dispatch("techdetail.jsp", request, response);
+		}else if(command.equals("update")) {
+			String sseq = request.getParameter("seq");
+			int seq = Integer.parseInt(sseq);
+			request.setAttribute("seq", seq);
+			dispatch("techupdate.jsp", request, response);
+		}else if(command.equals("updateAf")) {
+			
+			String title = request.getParameter("title");
+			String content = request.getParameter("content");
+			String sseq = request.getParameter("seq");
+			int seq = Integer.parseInt(sseq);
+			boolean b=tservice.update(seq, title, content);
+			if (b) {
+				System.out.println("업데이트성공");
+				List<TechbbsDto> list=tservice.gettechBbsList();
+				request.setAttribute("techbbs", list);
+				dispatch("techbbs.jsp", request, response);
+			}else {
+				System.out.println("업데이트실패");
+				request.setAttribute("seq", seq);
+				dispatch("techupdate.jsp", request, response);
+			}
+		}
+		else if(command.equals("delete")) {
+			String sseq = request.getParameter("seq");
+			int seq = Integer.parseInt(sseq);
+			boolean b=tservice.delete(seq);
+			if (b) {
+				System.out.println("게시판지웠다");
+				boolean c= tservice.pdsdelete(seq);
+				if (c) {
+					System.out.println("자료도지웠다");
+					tservice.repAlldelete(seq);
+					List<TechbbsDto> list=tservice.gettechBbsList();
+					request.setAttribute("techbbs", list);
+					dispatch("techbbs.jsp", request, response);
+				}else {
+					List<TechbbsDto> list=tservice.gettechBbsList();
+					request.setAttribute("techbbs", list);
+					dispatch("techbbs.jsp", request, response);
+				}
+				
+			}else {
+				List<TechbbsDto> list=tservice.gettechBbsList();
+				request.setAttribute("techbbs", list);
+				dispatch("techbbs.jsp", request, response);
+			}
+		}
+		if(command1==null) {
+			
+		}
+			
+		else if(command1!=null&&command1.equals("techdetail1")) { 
+			parent=(int)request.getAttribute("seq");
+			System.out.println(parent+"fdjnfd");
+			boolean b=tservice.getparent(parent);
+			List<TechbbsDto> list=new ArrayList<>();
+			if (b) {
+				list=tservice.getpdsdetail(parent);
+				System.out.println("자료있다");
+			}else {
+				list=tservice.getdetail(parent);
+				System.out.println("자료없다");
+			}
+			request.setAttribute("whatlist", list);
+			dispatch("techdetail.jsp", request, response);
 		}
 	}
 	public void dispatch(String urls, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

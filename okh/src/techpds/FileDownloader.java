@@ -52,14 +52,13 @@ public class FileDownloader extends HttpServlet {
 		String pdsseq=req.getParameter("seq");
 		int seq=Integer.parseInt(pdsseq);
 		
-		Singleton ss=Singleton.getInstance();
 		BufferedOutputStream out=new BufferedOutputStream(resp.getOutputStream());
 		String filePath="";
 		if(pdsseq!=null) {
 			//개인폴더에올렸을때
 			//filePath="C:\\tmp";
 			//톰캣에올렸을때
-			filePath=mConfig.getServletContext().getRealPath("/upload");
+			filePath=mConfig.getServletContext().getRealPath("/techupload");
 		}
 		
 		try {

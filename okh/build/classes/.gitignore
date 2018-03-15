@@ -50,3 +50,10 @@ local.properties
 .tern-project
 .springBeans
 .recommenders/
+/singleton/
+/jobs_BBS5/
+/studysrc/
+/user/
+/techbbs/
+/techpds/
+/techreplebbs/

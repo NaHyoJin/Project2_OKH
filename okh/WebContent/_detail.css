@@ -19,6 +19,12 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
+.menu{
+position: fixed;
+width: 240px;
+height: 100%;
+background-color: #0059ab;
+}
 input.login {
         background: url(image/login.PNG) no-repeat;
         cursor: pointer;
@@ -92,31 +98,84 @@ input.login {
    position: absolute;
 	top: 600px;
  }
-.menu{
-position: fixed;
-width: 240px;
-height: 100%;
-background-color: #0059ab;
-}
-.wrap{
-width:800px;
- position: relative;
- top: 30px;
-}
-.header{
-width:800px;
+ .wrap{
+   width: 940px;
+   height:100%;
+ margin: 10px;
+ padding: 20px;
+ border: 1px solid #bcbcbc;
  position: relative;
  top: 30px;
  left: 300px;
-}
-.techtable {
+ }
+ 
+ .myinfo{
+  padding: 20px;
+  margin-bottom: 20px;
+  float: left;
+  border: 1px solid #bcbcbc;
+  width: 100%;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-bottom: 1px solid #DDD;
+    text-align: left;
+    vertical-align: baseline;
+ 	background-color: #fff;
+ }
+ .myinfo_icon{
+ 	text-align: right;
+ }
+ .contentareawrap{
+ display: flex;
+  margin-bottom: 20px;
+  float: left;
+  border: 1px solid #bcbcbc;
+  width:898px;
+  height:100%;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-bottom: 1px solid #DDD;
+    text-align: left;
+    vertical-align: baseline;
+ 	background-color: #fff;
+ }
+ .contentarea{
+ order:1;
+  padding: 20px;
+  margin-bottom: 20px;
+  float: left;
+  border: 1px solid #bcbcbc;
+  width: 700px;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-bottom: 1px solid #DDD;
+    text-align: left;
+    vertical-align: baseline;
+ 	background-color: #fff;
+ }
+ 
+   .like{
+    order:2;
+width: 200px;
+    margin-bottom: 20px;
+    float: right;
+    border: 1px solid #bcbcbc;
+ }
+   .qna{
+   clear: both;
+  border: 1px solid #bcbcbc;
+width: 100%;
+ }
+ 
+ /* 테이블 */
+ .reptable {
     width: 100%;
     border: none;
     border-collapse: separate;
     border-spacing: 2px;
 }
  
-.techtable th {
+.reptable th {
     padding: 15px;
     border: none;
     border-left: 5px solid #C03;
@@ -128,17 +187,46 @@ width:800px;
    vertical-align: middle;
 }
  
-.techtable td {
-    padding: 15px;
+.reptable td {
     border: none;
     border-bottom: 1px solid #DDD;
     text-align: left;
     vertical-align: baseline;
 }
-.board{
-width:800px;
- position: relative;
- top: 80px;
- left: 300px;
-}
-/*버튼이미지*/
+ .replistwrap{
+ display: flex;
+  margin-bottom: 20px;
+  float: left;
+  border: 1px solid #bcbcbc;
+  width:898px;
+  height:100%;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-bottom: 1px solid #DDD;
+    text-align: left;
+    vertical-align: baseline;
+ 	background-color: #fff;
+ }
+ .replist{
+ order:1;
+  float: left;
+  border: 1px solid #bcbcbc;
+  width: 700px;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-bottom: 1px solid #DDD;
+    text-align: left;
+    vertical-align: baseline;
+ 	background-color: #fff;
+ }
+ 
+   .replike{
+    order:2;
+width: 200px;
+    margin-bottom: 20px;
+    float: right;
+    border: 1px solid #bcbcbc;
+ }
+ #summer{
+ width: 700px;
+ }
