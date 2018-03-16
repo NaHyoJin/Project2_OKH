@@ -42,6 +42,27 @@ REFERENCES OKHMEM(ID);
 public class BbsBoardBeanDtoVO implements Serializable{//일반 게시판 부분.
 	
 	
+	public BbsBoardBeanDtoVO(int seq, String id, String title, String content, String tag, String filename) {
+		super();
+		this.seq = seq;
+		this.id = id;
+		this.title = title;
+		this.content = content;
+		this.tag = tag;
+		this.filename = filename;
+	}
+	public BbsBoardBeanDtoVO(int seq, String id, String title, String content, String tag, String filename,
+			String regdate) {
+		super();
+		this.seq = seq;
+		this.id = id;
+		this.title = title;
+		this.content = content;
+		this.tag = tag;
+		this.filename = filename;
+		this.regdate = regdate;
+	}
+
 	private int seq;//시퀀스
 	private String id;//해당 아이디
 	
@@ -64,8 +85,10 @@ public class BbsBoardBeanDtoVO implements Serializable{//일반 게시판 부분
 	private String regdate;//파일 등록일.
 	
 	
-	public BbsBoardBeanDtoVO(int seq, String id, int ref, int step, int depth, String title, String content, String tag,
-			String filename, int up, int down, String wdate, int parent, int del, int readcount, int downcount,
+	public BbsBoardBeanDtoVO(int seq, String id, int ref, int step, int depth, 
+			String title, String content, String tag,
+			String filename, int up, int down, String wdate, int parent, 
+			int del, int readcount, int downcount,
 			String regdate) {
 		super();
 		this.seq = seq;

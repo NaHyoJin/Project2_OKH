@@ -32,7 +32,9 @@ mem = (UserDto)ologin;
 BbsBoardBeanDtoVO dto = (BbsBoardBeanDtoVO)request.getAttribute("normalbbswritedto");
 //싱글톤 호출 부분.
 jobsBbs5ModelServiceImpl service = jobsBbs5ModelService.getInstance();
+
 boolean isS = service.writeBbs(dto);
+
 if(isS){
 %>
 	<script type="text/javascript">

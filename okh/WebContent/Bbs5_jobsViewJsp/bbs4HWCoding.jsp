@@ -122,7 +122,8 @@
 		//인간 로그인 안하면 안보이게 하는 부분.
 		if(mem != null){
 	%>
-		<a href="../HwWrite.BBSHWCodingController" style="margin-left: 800px; color: green">새 글 쓰기</a>
+		<a href="../HwWrite.BBSHWCodingController" 
+		style="margin-left: 800px; color: green">새 글 쓰기</a>
 	<br>
 	<%
 		}

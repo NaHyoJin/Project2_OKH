@@ -49,7 +49,8 @@ if(findWord == null || findWord.equals("")){
 		<input type="button" class="techbbs_hjh" id="techbbs">
 		<input type="button" class="bbs3">
 		<input type="button" class="bbs4">
-		<input type="button" class="bbs5" id="life">
+		<input type="button" class="bbs5" id="jobs">
+		<input type="button" class="bbs6" id="life">
 	</div>
 	<script type="text/javascript">
 	$(function() {

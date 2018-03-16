@@ -1,3 +1,7 @@
+<%@page import="jobs_BBS5.BbsBoardBeanDtoVO"%>
+<%@page import="java.util.List"%>
+<%@page import="jobs_BBS5.jobsBbs5ModelService"%>
+<%@page import="jobs_BBS5.jobsBbs5ModelServiceImpl"%>
 <%@page import="user.UserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -12,7 +16,7 @@
 	<title>index.jsp</title>
 	
 	<link rel="stylesheet" type="text/css" href="_main.css">
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://coㅏde.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/bootstrap.js"></script>
 	
@@ -65,12 +69,6 @@
 				location.href = "CommunityControl?command=list";
 			});
 			
-	/* 
-			//columns
-			$("#").click(function() {
-				location.href="";
-			});
-	 */
 	 
 			//게시판5 나효진 jobs 부분.
 			$("#jobs").click(function () {
@@ -97,33 +95,50 @@
 					<td>준</td>
 					<td>현</td>
 				</tr>
-				<tr>
-					<td>황</td>
-					<td>준</td>
-					<td>현</td>
-				</tr>
-				<tr>
-					<td>황</td>
-					<td>준</td>
-					<td>현</td>
-				</tr>
-				<tr>
-					<td>황</td>
-					<td>준</td>
-					<td>현</td>
-				</tr>
 			</table>
 		</div>
-		<div class="partition2">
-			게시판뿌려주기2
-		</div>
-		<div class="partition3">
-			게시판뿌려주기3
-		</div>
-		<div class="partition4">
-			게시판뿌려주기4
-		</div>
-	</div>
+		
+			<div class="partition2">
+				게시판뿌려주기2
+			</div>
+			
+			<div class="partition3">
+				게시판뿌려주기3
+			</div>
+			
+			<div class="partition4">
+				<table border="1">
+				<tr align="center" height="5">
+				<!-- tr,tf,td 어떻게 사용해야 되는지 모르겠네........................ -->
+					<th>제목</th>
+<td>
+				<%
+				//싱글톤 생성 부분.
+				jobsBbs5ModelServiceImpl service = jobsBbs5ModelService.getInstance();//먼저 서비스를 불러야지...
+				
+				List<BbsBoardBeanDtoVO> normalbbs  = service.getBbsNormalBeanDTOList();//전체글 가지고 오는건데...
+				//확인 부분.
+				for(byte b = 0; b < normalbbs.size(); b++){
+					System.out.println(normalbbs.get(b).toString());
+				%>
+				
+				<%=normalbbs.get(b).getTitle() %>
+				
+				<%
+				}
+				%>			
+</td>				
+				</tr>
+				
+				</table>
+			</div>
+			
+			
+			
+			
+			
+		
+</div>
 	<%
 	String messageContent = null;
 	if(session.getAttribute("messageContent") != null){
@@ -158,6 +173,7 @@
 			</div>
 		</div>
 	</div>
+	
 	<script>
 		$('#messageModal').modal("show");
 	</script>

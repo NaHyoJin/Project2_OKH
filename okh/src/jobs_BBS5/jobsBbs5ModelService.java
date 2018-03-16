@@ -3,6 +3,7 @@ package jobs_BBS5;
 import java.util.ArrayList;
 import java.util.List;
 
+import qna.QnaDto;
 import techbbs.TechbbsDao;
 import techbbs.TechbbsService;
 import techbbs.iTechbbsDao;
@@ -37,8 +38,27 @@ public class jobsBbs5ModelService implements jobsBbs5ModelServiceImpl {
 		// TODO Auto-generated method stub
 		return dao.getBbsNormalBeanDTOList();
 	}
+		@Override
+		//일반 게시판 글 작성 부분.
 		public boolean writeBbs(BbsBoardBeanDtoVO dto) {
 			return dao.writeBbs(dto);
+		}
+		//디테일 부분.
+		@Override
+		public BbsBoardBeanDtoVO detailbbs(int seq) {
+			return dao.detailbbs(seq);
+		}
+		//조회수 부분.
+		public void readcount(int seq) {
+			dao.readcount(seq);
+		}
+		//일반 게시판 수정 부분.
+		public boolean updateBbs(BbsBoardBeanDtoVO bbs) {
+			return dao.updateBbs(bbs);
+		}
+		//일반 게시판 글 삭제 부분.
+		public boolean deleteBbs(int seq) {
+			return dao.deleteBbs(seq);
 		}
 	/*
 	@Override
@@ -59,10 +79,7 @@ public class jobsBbs5ModelService implements jobsBbs5ModelServiceImpl {
 		return dao.getSNS(seq);
 	}
 
-	@Override
-	public List<SnsDto> getMyContent(String myid) {
-		return dao.getMyContent(myid);
-	}
+	
 	
 	@Override
 	public boolean likeCount(int seq) {

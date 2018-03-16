@@ -15,10 +15,14 @@ public interface jobsBbs5DaoImpl {//bbs5 jobs 다오 IMPL부분.
 	public List<BbsBoardBeanDtoVO> getBbsNormalBeanDTOList();
 		//글 작성 부분.
 		public boolean writeBbs(BbsBoardBeanDtoVO dto);
+		//디테일 부분.
+		public BbsBoardBeanDtoVO detailbbs(int seq);
+		//조회수 부분.
+		public void readcount(int seq);
 		//글 수정 부분.
-//		public boolean bbsUpdate(int seq, String content);
+		public boolean updateBbs(BbsBoardBeanDtoVO bbs);
 		//글 삭제 부분.
-//		public boolean bbsDelete(int seq);
+		public boolean deleteBbs(int seq);
 	//게시판5. 자료실 글 전체 가지고 오는것.
 	
 /*	

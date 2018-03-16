@@ -2,6 +2,8 @@ package jobs_BBS5;
 
 import java.util.List;
 
+import lifeBbs.LifeBbsDto;
+import qna.QnaDto;
 import studysrc.CombbsDto;
 import studysrc.PagingBean;
 import studysrc.comment_bbsDto;
@@ -25,14 +27,19 @@ public interface jobsBbs5ModelServiceImpl {//서비스 부분.
 	public List<BbsBoardBeanDtoVO> getBbsNormalBeanDTOList();
 		//글 작성 부분.
 		public boolean writeBbs(BbsBoardBeanDtoVO dto);
+		//디테일 부분.
+		public BbsBoardBeanDtoVO detailbbs(int seq);
+		//조회수 부분.
+		public void readcount(int seq);
 		//글 수정.
-		
+		public boolean updateBbs(BbsBoardBeanDtoVO bbs);
 		//글 삭제.
+		public boolean deleteBbs(int seq);
 		
 /*	
 	public void readcount(int seq);
 	public String[] getTagName(String tagname);
-	public List<comment_bbsDto> detailbbs(int seq);
+	
 	
 	public List<CombbsDto> getpagingComList(PagingBean paging, String searchWord, int search);
 	public List<CombbsDto> commentnull(int seq);

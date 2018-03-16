@@ -142,19 +142,19 @@
 	     });
 	});
 	</script>
-<%-- 
+ 
 	<%
 		//인간 로그인 안하면 안보이게 하는 부분.
-		if(mem != null){
+//		if(mem != null){
 	%>
 <!-- 	
 		<a href="../HwWrite.BBSHWCodingController" style="margin-left: 800px; color: green">새 글 쓰기</a>
 	<br>
  -->	
 	<%
-		}
+//		}
 	%>
- --%>	
+
 	<%-- 
 	<a href="" style="margin-left: 320px">최신순</a>
 	<a href="">추천순</a>
@@ -330,7 +330,7 @@
  --%>	
  
 <div class="wrap">
-		<a href="logout.jsp">로그아웃</a>
+		<a href="../logout.jsp">로그아웃</a>
 				
 		<h2 align="center"><%=mem.getId() %>님 게시글 작성</h2><br>
 	
@@ -360,7 +360,7 @@
 			<tr>
 				<td>Tag</td>
 				<td>
-					<input type="text" size="50" id="tag" name="tag" value="" 
+					<input type="text" size="50" id="tag" name="tag" value="IT News & 정보" 
 						placeholder="Tags," class="form-control" data-role="tagsinput" 
 						style="display: none;" onclick="make_tag()">
 				</td>
@@ -369,7 +369,7 @@
 			<tr>
 				<td>파일 업로드</td>
 				<td>
-					<input type="file" name="fileload" style="widows: 400px">
+					<input type="file" name="filename" style="widows: 400px">
 				</td>
 			</tr>
 			

@@ -122,18 +122,34 @@ width: 375px;
 height: 300px;
  	
  }
-   .partition3{
+  .partition3{
  background-color: yellow;
 position: absolute;
 top: 420px;
 left: 20px;
-width: 450px;
-height: 600px;
+width: 375px;
+height: 300px;
  }
-   .partition4{
+  .partition4{
  background-color: yellow;
 position: absolute;
 top: 420px;
+right: 0;
+width: 375px;
+height: 300px;
+ }
+  .partition5{
+ background-color: yellow;
+position: absolute;
+top: 720px;
+right: 0;
+width: 375px;
+height: 300px;
+ }
+  .partition6{
+ background-color: yellow;
+position: absolute;
+top: 720px;
 right: 0;
 width: 300px;
 height: 600px;

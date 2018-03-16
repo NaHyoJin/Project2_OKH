@@ -22,6 +22,7 @@
 		<input type="button" class="bbs3">
 		<input type="button" class="bbs4">
 		<input type="button" class="bbs5" id="jobs">
+		<input type="button" class="bbs6" id="">
 	</div>
 	<%
 	String userID = null;

@@ -14,9 +14,15 @@ import java.util.List;
 
 import db.DBClose;
 import db.DBConnection;
+import lifeBbs.LifeBbsDto;
 
 
 public class jobsBbs5Dao implements jobsBbs5DaoImpl {//일반 게시판 DAO부분.
+	
+	//DB연결부분이 없었다. 정병찬 디버그 180316
+	public jobsBbs5Dao() {
+		DBConnection.initConnection();
+	}	
 	
 /*
 	CREATE TABLE BBS5HWCoding(
@@ -123,6 +129,7 @@ public class jobsBbs5Dao implements jobsBbs5DaoImpl {//일반 게시판 DAO부�
 	//게시판5. 일반 게시판 글 전체 가지고 오는것.
 	@Override
 	public List<BbsBoardBeanDtoVO> getBbsNormalBeanDTOList() {
+		
 		List<BbsBoardBeanDtoVO> list = new ArrayList<BbsBoardBeanDtoVO>();
 		
 		Connection conn = null;
@@ -142,19 +149,19 @@ public class jobsBbs5Dao implements jobsBbs5DaoImpl {//일반 게시판 DAO부�
 		
 		String sql = " SELECT SEQ, ID, REF, STEP, DEPTH, "
 				+ " TITLE, CONTENT, tag, filename, up, down, WDATE, PARENT,"
-				+ " DEL, READCOUNT, downcount "
+				+ " DEL, READCOUNT, downcount, regdate "
 				+ " FROM BbsBoardBeanDtoVO "
 				+ " ORDER BY REF DESC, STEP ASC ";
 		try {
 			conn = DBConnection.getConnection();
 			System.out.println("2/6 getBbsNormalBeanDTOList Success");
-			
+
 			psmt = conn.prepareStatement(sql);
 			System.out.println("3/6 getBbsNormalBeanDTOList Success");
-			
+
 			rs = psmt.executeQuery();
 			System.out.println("4/6 getBbsNormalBeanDTOList Success");
-			
+
 			/*
 			 		private int seq;	//시퀀스 번호
 					private String id;	//아이디
@@ -189,7 +196,8 @@ public class jobsBbs5Dao implements jobsBbs5DaoImpl {//일반 게시판 DAO부�
 						rs.getInt(i++),//parent, 
 						rs.getInt(i++),//del, 
 						rs.getInt(i++),//readcount
-						rs.getInt(i++)//downcount.
+						rs.getInt(i++),//downcount.
+						rs.getString(i++)//등록일
 						);
 						
 				list.add(dto);
@@ -217,7 +225,7 @@ public class jobsBbs5Dao implements jobsBbs5DaoImpl {//일반 게시판 DAO부�
 			String sql = " INSERT INTO BbsBoardBeanDtoVO(SEQ, ID, "
 					+ " REF, STEP, DEPTH, "
 					+ " TITLE, CONTENT, TAG, FILENAME, UP, DOWN, WDATE, PARENT, "
-					+ " DEL, READCOUNT, DOWNCOUNT, regdate) "
+					+ " DEL, READCOUNT, downcount, regdate) "
 					+ " VALUES(SEQ_BbsBoardBeanDtoVO.NEXTVAL, ?, "//시퀀스 이름이 틀렸다...십할...
 					+ " (SELECT NVL(MAX(REF), 0)+1 FROM BbsBoardBeanDtoVO), 0, 0, "
 					+ " ?, ?, ?, ?, 0, 0, SYSDATE, 0, "
@@ -252,8 +260,161 @@ public class jobsBbs5Dao implements jobsBbs5DaoImpl {//일반 게시판 DAO부�
 			
 			return count>0?true:false;
 		}
-	
-	
+		//디테일 부분.
+			@Override
+			public BbsBoardBeanDtoVO detailbbs(int seq) {
+				BbsBoardBeanDtoVO dto = null;
+				
+				Connection conn = null;
+				PreparedStatement psmt = null;
+				ResultSet rs = null;
+				
+				String sql = " SELECT * "
+						+ " FROM BbsBoardBeanDtoVO "
+						+ " WHERE SEQ = ? " ;
+				
+				try {			
+					conn = DBConnection.getConnection();
+					psmt = conn.prepareStatement(sql);	
+						
+					psmt.setInt(1, seq);
+					rs = psmt.executeQuery();
+					
+					while(rs.next()){
+						int i = 1;
+						
+						dto = new BbsBoardBeanDtoVO(
+											rs.getInt(1),			// seq
+											rs.getString(2),		// id
+											rs.getInt(3),			// ref
+											rs.getInt(4),			// step
+											rs.getInt(5),			// depth
+											rs.getString(6),		// title
+											rs.getString(7),		// content
+											rs.getString(8),		// tag
+											rs.getString(9),		// filename
+											rs.getInt(10),			// up
+											rs.getInt(11),			// down
+											rs.getString(12),		// wdate
+											rs.getInt(13),			// parent
+											rs.getInt(14),			// del
+											rs.getInt(15),			// readcount
+											rs.getInt(16),			// downcount
+						rs.getString(17));//파일 등록일.
+					}
+					
+				} catch (SQLException e) {			
+					e.printStackTrace();
+				} finally{
+					DBClose.close(psmt, conn, rs);	
+				}
+				return dto;// TODO Auto-generated method stub
+			}
+			//조회수 부분.
+			public void readcount(int seq) {
+				String sql = " UPDATE BbsBoardBeanDtoVO "
+						+ " SET READCOUNT=READCOUNT+1 "
+						+ " WHERE SEQ=? ";
+				
+				Connection conn = null;
+				PreparedStatement psmt = null;
+				
+				try {
+					conn = DBConnection.getConnection();
+					System.out.println("4/6 BbsBoardBeanDtoVO readcount Success");
+					
+					psmt = conn.prepareStatement(sql);
+					psmt.setInt(1, seq);
+					System.out.println("5/6 BbsBoardBeanDtoVO readcount Success");
+					
+					psmt.executeUpdate();
+					System.out.println("6/6 BbsBoardBeanDtoVO readcount Success");
+					
+				} catch (SQLException e) {
+					System.out.println("readcount Fail");
+					e.printStackTrace();
+				} finally {
+					DBClose.close(psmt, conn, null);
+				}
+			}//////조회수
+			
+			@Override
+			public boolean updateBbs(BbsBoardBeanDtoVO bbs) {
+				//seq, id, title, content, tag, filename
+				String sql = " UPDATE BbsBoardBeanDtoVO "
+						+ "SET TITLE=?, CONTENT=?, TAG=?, filename=? "
+						+ "WHERE SEQ=? ";
+				
+				System.out.println("jobsBbs5Dao updateBbs bbs in dao : " + bbs.toString());
+				
+				Connection conn = null;
+				PreparedStatement psmt = null;
+				
+				int count = 0;
+				
+				try {
+					conn = DBConnection.getConnection();
+					System.out.println("1/6 updateBbs Success");
+					
+					psmt = conn.prepareStatement(sql);
+					System.out.println("2/6 updateBbs Success");
+					
+					System.out.println("bbs.getTitle() : " + bbs.getTitle());
+					psmt.setString(1, bbs.getTitle().trim());
+					psmt.setString(2, bbs.getContent().trim());
+					System.out.println("bbs.getTag() : " + bbs.getTag());
+					psmt.setString(3, bbs.getTag().trim());
+					// filename 잘 가지고 오는지 확인 부분.
+					System.out.println("bbs.getFilename() : " + bbs.getFilename());
+					psmt.setString(4, bbs.getFilename().trim());
+					psmt.setInt(5, bbs.getSeq());
+					
+					count = psmt.executeUpdate();
+					System.out.println("3/6 updateBbs Success");
+					System.out.println("count in dao executeUpdate : " + count);
+					
+				} catch (SQLException e) {
+					System.out.println("updateBbs Fail");
+					e.printStackTrace();
+				} finally {
+					DBClose.close(psmt, conn, null);
+					System.out.println("4/6 updateBbs Success finally");
+				}
+				
+				return count>0?true:false;
+			}
+			
+			//일반 게시판 삭제 부분.
+			@Override
+			public boolean deleteBbs(int seq) {
+				String sql = " UPDATE BbsBoardBeanDtoVO SET DEL=1 WHERE SEQ=? ";
+				
+				Connection conn = null;
+				PreparedStatement psmt = null;
+				
+				int count = 0;
+				
+				try {
+					conn = DBConnection.getConnection();
+					System.out.println("1/6 deleteBbs Success");
+					
+					psmt = conn.prepareStatement(sql);
+					System.out.println("2/6 deleteBbs Success");
+					
+					psmt.setInt(1, seq);
+					
+					count = psmt.executeUpdate();
+					System.out.println("3/6 deleteBbs Success");
+					
+				} catch (SQLException e) {
+					System.out.println("deleteBbs Fail");
+					e.printStackTrace();
+				} finally {
+					DBClose.close(psmt, conn, null);
+				}
+				
+				return count>0?true:false;
+			}
 	
 	
 /*
@@ -262,30 +423,6 @@ public class jobsBbs5Dao implements jobsBbs5DaoImpl {//일반 게시판 DAO부�
 			
 		}
 
-		@Override
-		public boolean snsDelete(int seq) {
-			String sql=" UPDATE SNSBBS SET  "
-					+" DEL=1 "
-					+" WHERE SEQ=? ";
-			
-			int count = 0;
-			Connection conn=null;
-			PreparedStatement psmt=null;
-			
-			try {
-				conn = DBConnection.getConnection();			
-				psmt=conn.prepareStatement(sql);
-				psmt.setInt(1, seq);			
-				count = psmt.executeUpdate();
-				
-			} catch (SQLException e) {			
-				e.printStackTrace();
-			} finally{
-				DBClose.close(psmt, conn, null);			
-			}
-					
-			return count>0?true:false;
-		}
 
 		@Override
 		public boolean snsUpdate(int seq, String content) {
@@ -322,41 +459,7 @@ public class jobsBbs5Dao implements jobsBbs5DaoImpl {//일반 게시판 DAO부�
 		//////
 		@Override
 		public SnsDto getSNS(int seq) {
-			SnsDto dto = null;
 			
-			Connection conn = null;
-			PreparedStatement psmt = null;
-			ResultSet rs = null;
-			
-			String sql = " SELECT BGROUP, SORTS, DEPTH, ID, CONTENT, WDATE, LIKECOUNT "
-					+ " FROM SNSBBS "
-					+ " WHERE SEQ = ? " ;
-			
-			try {			
-				conn = DBConnection.getConnection();
-				psmt = conn.prepareStatement(sql);	
-					
-				psmt.setInt(1, seq);
-				rs = psmt.executeQuery();
-				
-				while(rs.next()){
-					int bgroup = rs.getInt(1);
-					int sorts = rs.getInt(2);
-					int depth = rs.getInt(3);
-					String id = rs.getString(4);
-					String content = rs.getString(5);	
-					String wdate = rs.getString(6);
-					int likecount = rs.getInt(7);
-					
-					dto = new SnsDto(seq, bgroup, sorts, depth, id, content, wdate, 0, likecount);	
-				}
-				
-			} catch (SQLException e) {			
-				e.printStackTrace();
-			} finally{
-				DBClose.close(psmt, conn, rs);	
-			}
-			return dto;// TODO Auto-generated method stub
 		}
 
 		//////

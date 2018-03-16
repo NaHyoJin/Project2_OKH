@@ -8,7 +8,22 @@
 <%@page import="jobs_BBS5.PagingBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+   
+    <%!
+		// 댓글용
+		public String arrow(int depth){
+			String rs = "<img src='../image/arrow.png' width='20px' height='20px'/>";
+			String nbsp = "&nbsp;&nbsp;&nbsp;&nbsp;";
+			String ts = "";
+			
+			for(int i = 0;i < depth; i++){
+				ts += nbsp;
+			}
+			return depth == 0?"":ts+rs;
+		}
+	%>
+
+   
     <!-- 페이징 처리 정보 교환 -->
 	<%
 		PagingBean paging = new PagingBean();
@@ -18,17 +33,24 @@
 			paging.setNowPage(Integer.parseInt(request.getParameter("nowPage")));
 		}
 	%>
-	
+
+
 	<%
 		//검색을 하기위한 변수 값 받는 부분.
 		String findWord = request.getParameter("findWord"); 
 		String choice = request.getParameter("choice"); 
+
+		
+		System.out.println("IT News & 정보");
+List<BbsBoardBeanDtoVO> bbslist = (List<BbsBoardBeanDtoVO>)request.getAttribute("bbslist");
+		
 	%>
-	
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <title>bbs4NormalBbs.jsp</title>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -51,18 +73,38 @@
 
 
 <%
+//싱글톤 생성 부분.
+jobsBbs5ModelServiceImpl service = jobsBbs5ModelService.getInstance();//먼저 서비스를 불러야지...
 
 	//로그인 정보 확인 부분.
-	Object ologin = session.getAttribute("login");
+	Object ologin = null;
+	ologin = session.getAttribute("login");
     
+//로그인 안하고 들어올수 있는 경우.
     UserDto mem = null;
     
+	//로그인을 안해도 일단 글 보여야되는데...
+	bbslist = service.getBbsNormalBeanDTOList();//전체글 가지고 오는건데...
+     
 	if(ologin != null){
 		mem = (UserDto)ologin;
 		//로그인 정보 가지고 오나 확인 부분.
 		System.out.println("mem : " + mem.toString());
 	}
+	else{
+		System.out.println("일반 게시판 로그인한 정보 없음.");
+		System.out.println("로그인한 정보 없는때도 전체 글 다 가지고 와야되는데");
+		service = jobsBbs5ModelService.getInstance();//먼저 서비스를 불러야지...
+		
+		//로그인을 안해도 일단 글 보여야되는데...
+		bbslist = service.getBbsNormalBeanDTOList();
+	}
 	
+	//싱글톤 생성 부분.
+	service = jobsBbs5ModelService.getInstance();//먼저 서비스를 불러야지...
+
+	//로그인을 안해도 일단 글 보여야되는데...
+	bbslist = service.getBbsNormalBeanDTOList();
 	
 %>
 	
@@ -76,11 +118,11 @@
 	<jsp:include page="BBS5TopMenuinclude.jsp" flush="false" />
 </div>
 
-<%
+	<%
 		//인간 로그인 안하면 안보이게 하는 부분.
 		if(mem != null){
 	%>
-	
+	<p align="center">환영합니다. <%=mem.getName() %>님 반갑습니다.</p>
 	<br>
 	<!-- 일반 글 쓰기 로 가는것 -->
 	<a href="../BBSboardController?command=normalwrite">새 게시판 글 쓰기</a><!-- 경로 문제였음....십할.. -->
@@ -99,7 +141,7 @@
 	<a href="">조회순</a>
 	
 	<%
-		if(findWord == null){
+ 		if(findWord == null){
 			findWord = "";
 		}
 	
@@ -110,10 +152,11 @@
 		else if(choice.equals("writer")) cho = 1;
 		else if(choice.equals("content")) cho = 2;
 		
-//싱글톤 생성 부분.
-jobsBbs5ModelServiceImpl service = jobsBbs5ModelService.getInstance();//먼저 서비스를 불러야지...
+		//싱글톤 생성 부분.
+		service = jobsBbs5ModelService.getInstance();//먼저 서비스를 불러야지...
 
-List<BbsBoardBeanDtoVO> bbslist = service.getBbsNormalBeanDTOList();
+		//로그인을 안해도 일단 글 보여야되는데...
+		bbslist = service.getBbsNormalBeanDTOList();
 	%>
 	
 	<div align="center">
@@ -127,20 +170,20 @@ List<BbsBoardBeanDtoVO> bbslist = service.getBbsNormalBeanDTOList();
 		</select>
 		
 		<input type="text" id="search">
-		<button name="search" onclick="searchBbs()">检索 bbs4NormalBbs</button>
+		<button name="search" onclick="searchBbs()" autofocus>检索 bbs4NormalBbs</button>
 	</div>
 	
 	
 	<br>
 
 <table border="1">
-<col width="50"><col width="100"><col width="400"><col width="100">
-<col width="100"><col width="100"><col width="100">
+	<col width="50"><col width="100"><col width="400"><col width="100">
+	<col width="100"><col width="100"><col width="100">
 
-<tr bgcolor="#09bbaa">
-	<th>번호</th><th>작성자</th><th>제목</th><th>다운로드</th>
-	<th>조회수</th><th>다운수</th><th>작성일</th>
-</tr>
+	<tr bgcolor="#09bbaa">
+		<th>번호</th><th>작성자</th><th>제목</th><th>다운로드</th>
+		<th>조회수</th><th>다운수</th><th>작성일</th>
+	</tr>
 
 	<%
 	for(int i = 0; i < bbslist.size(); i++){
@@ -153,10 +196,11 @@ List<BbsBoardBeanDtoVO> bbslist = service.getBbsNormalBeanDTOList();
 			bgcolor = "#ddddbb";
 		}
 	%>
-	
  
 
 	<tr bgcolor="<%=bgcolor %>" align="center" height="5">
+	
+		
 		<!-- 글 번호 부분 -->
 		<td><%=i+1 %> </td>
 		
@@ -167,12 +211,27 @@ List<BbsBoardBeanDtoVO> bbslist = service.getBbsNormalBeanDTOList();
 		<td align="left">
 		<!-- 컨트롤러로 시퀀스 번호 넘겨줘야하는 부분인데??? -->
 <%-- 		
+		<%
+			if(bbs.getDel() != 0){//삭제된건 안보여주게 하는것.
+		%>
+		<h4 align="center" >이 글은 삭제되었습니다.</h5>
+					
+				<%
+					}else{
+				%>
+ --%>				
+<%-- 		
 			<a href="../PdsDetail.BBSmaterialsController?command=detail&seq=<%=bbs.getSeq() %>">
  --%>			
-			<a href="BBSboardController?command=detail&seq=<%=bbs.getSeq() %>"> 
+			<a href="../BBSboardController?command=detail&seq=<%=bbs.getSeq() %>"> 
 			<%-- <a href="pdsdetail_180308.jsp?seq=<%=pds.getSeq() %>"> --%>
 				<%=bbs.getTitle() %>
 			</a>
+<%-- 			
+			<%
+			}
+			%>
+			 --%>
 		</td>
 		<!-- 다운로드 부분. -->
 		<td>
@@ -185,12 +244,13 @@ List<BbsBoardBeanDtoVO> bbslist = service.getBbsNormalBeanDTOList();
 		
 		<!-- 글작성일. -->
 		<td><%=bbs.getWdate() %></td>
+		
 	</tr>
 	
 	
 	
 	<%	
-		}
+		}//////////전체 for문.
 	%>
 
 </table>
@@ -204,7 +264,7 @@ List<BbsBoardBeanDtoVO> bbslist = service.getBbsNormalBeanDTOList();
 		<jsp:param name="countPerPage" value="<%=String.valueOf(paging.getCountPerPage()) %>" />
 		<jsp:param name="blockCount" value="<%=String.valueOf(paging.getBlockCount()) %>" />
 	</jsp:include>
- --%>	
+ --%>
 
 	
 
