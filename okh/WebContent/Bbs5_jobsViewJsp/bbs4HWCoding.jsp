@@ -92,6 +92,7 @@
 				location.href="TechbbsController?command=techbbs";
 			});
 	
+			//병찬 사는 이야기.
 			$("#life").click(function() {
 				location.href="LifeBbs?command=life";
 			});
