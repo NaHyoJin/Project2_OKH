@@ -9,7 +9,7 @@ import techpds.iPdsDao;
 public class jobsBbs5MaterialsService implements jobsBbs5MaterialsServiceImpl {
 
 	//싱글톤 생성 부분.
-	private static jobsBbs5MaterialsService pdsService=new jobsBbs5MaterialsService();
+	private static jobsBbs5MaterialsService pdsService = new jobsBbs5MaterialsService();
 	
 	public jobsBbs5MaterialsDaoImpl pdsdao;
 	
