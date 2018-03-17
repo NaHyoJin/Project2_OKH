@@ -11,11 +11,64 @@ import db.DBClose;
 import db.DBConnection;
 
 public class jobsBbs5MaterialsDao implements jobsBbs5MaterialsDaoImpl {
-	
+
+	//DB연결부분이 없었다. 정병찬 디버그 180316
+	public jobsBbs5MaterialsDao() {
+		DBConnection.initConnection();
+	}	
 
 	
 	@Override
 	public List<BbsMaterialsBeanDtoVO> getPdsList() {
+		// TODO Auto-generated method stub
+		
+		String sql = " select seq, id, title, content, filename, readcount, downcount, regdate "
+				+ " from BbsMaterialsBeanDtoVO "
+				+ " order by seq desc ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		List<BbsMaterialsBeanDtoVO> list = new ArrayList<BbsMaterialsBeanDtoVO>();
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 getPdsList Success");
+			
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 getPdsList Success");
+			
+			rs = psmt.executeQuery();
+			System.out.println("3/6 getPdsList Success");
+			
+			while (rs.next()) {
+				BbsMaterialsBeanDtoVO dto = new BbsMaterialsBeanDtoVO(rs.getInt(1),//seq, 
+										rs.getString(2),//id, 
+										rs.getString(3),//title, 
+										rs.getString(4),//content, 
+										rs.getString(5),//filename, 
+										rs.getInt(6),//readcount, 
+										rs.getInt(7),//downcount, 
+										rs.getString(8)//regdate
+										);
+				list.add(dto);
+			}
+			System.out.println("4/6 getPdsList Success");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("getPdsList fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+			System.out.println("5/6 getPdsList Success");
+		}
+
+		return list;
+	}
+	
+	@Override
+	public List<BbsMaterialsBeanDtoVO> getPdsList(int parent) {
 		// TODO Auto-generated method stub
 		
 		String sql = " select seq, id, title, content, filename, readcount, downcount, regdate "
@@ -150,7 +203,6 @@ public class jobsBbs5MaterialsDao implements jobsBbs5MaterialsDaoImpl {
 		
 		//담을 리스트 준비
 		//자료실 게시판이 테이블 별도로 필요. 
-		List<BbsMaterialsBeanDtoVOTable> bbslist = new ArrayList<BbsMaterialsBeanDtoVOTable>();
 		List<BbsMaterialsBeanDtoVO> pdslist = new ArrayList<BbsMaterialsBeanDtoVO>();
 		
 		//찾는 번호 제목인지 작성자인지 내용인지 구분하는 int 번호

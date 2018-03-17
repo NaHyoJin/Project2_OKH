@@ -115,7 +115,7 @@ version="3.0">
   
   <servlet-mapping>
   	<servlet-name>BBSHWCodingController</servlet-name>
-  	<url-pattern>*.BBSHWCodingController</url-pattern>
+  	<url-pattern>/BBSHWCodingController</url-pattern>
   	
   </servlet-mapping>
   
@@ -140,7 +140,9 @@ version="3.0">
   
   <servlet-mapping>
   	<servlet-name>BBSmaterialsController</servlet-name>
-  	<url-pattern>*.BBSmaterialsController</url-pattern>
+  	<url-pattern>/BBSmaterialsController</url-pattern>
+  	<!-- 예전에 하다가 망한 코드 -->
+  	<!-- <url-pattern>*.BBSmaterialsController</url-pattern> -->
   </servlet-mapping>
   
   <!-- 처음 화면 가는 서블릿. -->

@@ -1,3 +1,8 @@
+<%@page import="jobs_BBS5.BbsHWCodingBeanDtoVO"%>
+<%@page import="jobs_BBS5.jobsBbs5ModelService"%>
+<%@page import="jobs_BBS5.jobsBbs5ModelServiceImpl"%>
+<%@page import="jobs_BBS5.BbsBoardBeanDtoVO"%>
+<%@page import="user.UserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -7,9 +12,45 @@
 <title>jobs_bbs5HWCodingWriteAf.jsp</title>
 </head>
 <body>
+	<%
 
+Object ologin = session.getAttribute("login");
+UserDto mem = null;
+if(ologin == null){
+	%>
+	<script type="text/javascript">
+	alert("로그인해 주십시오");
+	location.href = "index.jsp";	
+	</script>	
+	<%
+	return;
+}
+mem = (UserDto)ologin;
 
-	<!-- HW관련 글 작성후 처리되는 jsp -->
+%>
 
+<%
+BbsHWCodingBeanDtoVO dto = (BbsHWCodingBeanDtoVO)request.getAttribute("hwbbswritedto");
+//싱글톤 호출 부분.
+jobsBbs5ModelServiceImpl service = jobsBbs5ModelService.getInstance();
+
+boolean isS = service.writeBbs(dto);
+
+if(isS){
+%>
+	<script type="text/javascript">
+	alert("글 입력 완료");
+	location.href="BBSHWCodingController?command=list";
+	</script>
+<%
+}else{
+%>
+	<script type="text/javascript">
+	alert("다시 입력해 주세요.");
+	location.href="BBSHWCodingController?command=list";
+	</script>
+<%
+}
+%>
 </body>
 </html>

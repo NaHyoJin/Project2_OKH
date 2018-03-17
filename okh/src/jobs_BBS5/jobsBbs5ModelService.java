@@ -25,12 +25,33 @@ public class jobsBbs5ModelService implements jobsBbs5ModelServiceImpl {
 		return jobsBbs5ModelService;
 	}
 	
+	
 	//H/W 모든 게시판 가지고 오는것.
 	@Override
 	public List<BbsHWCodingBeanDtoVO> getBbsHWCodingBeanList() {
 		// TODO Auto-generated method stub
 		return dao.getBbsHWCodingBeanList();
 	}
+		//HW 게시판 글 작성 부분.
+		public boolean writeBbs(BbsHWCodingBeanDtoVO dto) {
+			return dao.writeBbs(dto);
+		}
+		//디테일 부분.
+		public BbsHWCodingBeanDtoVO detailHWbbs(int seq) {
+			return dao.detailHWbbs(seq);
+		}
+		//조회수 부분.
+		public void readcounthwbbs(int seq) {
+			dao.readcounthwbbs(seq);
+		}
+		//HW 게시판 수정 부분.
+		public boolean updateBbs(BbsHWCodingBeanDtoVO bbs) {
+			return dao.updateBbs(bbs);
+		}
+		//HW 게시판 글 삭제 부분.
+		public boolean deleteHWBbs(int seq) {
+			return dao.deleteHWBbs(seq);
+		}
 
 	//일반 모든 게시판 가지고 오는것.
 	@Override
@@ -40,8 +61,8 @@ public class jobsBbs5ModelService implements jobsBbs5ModelServiceImpl {
 	}
 		@Override
 		//일반 게시판 글 작성 부분.
-		public boolean writeBbs(BbsBoardBeanDtoVO dto) {
-			return dao.writeBbs(dto);
+		public boolean writenormalBbs(BbsBoardBeanDtoVO dto) {
+			return dao.writenormalBbs(dto);
 		}
 		//디테일 부분.
 		@Override
@@ -49,8 +70,8 @@ public class jobsBbs5ModelService implements jobsBbs5ModelServiceImpl {
 			return dao.detailbbs(seq);
 		}
 		//조회수 부분.
-		public void readcount(int seq) {
-			dao.readcount(seq);
+		public void readcountnormalbbs(int seq) {
+			dao.readcountnormalbbs(seq);
 		}
 		//일반 게시판 수정 부분.
 		public boolean updateBbs(BbsBoardBeanDtoVO bbs) {

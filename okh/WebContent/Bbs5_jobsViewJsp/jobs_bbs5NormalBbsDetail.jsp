@@ -82,8 +82,8 @@
 	
 	jobsBbs5ModelServiceImpl dao = jobsBbs5ModelService.getInstance();
 	
-	//누르면 조회수 올라가는 부분.
-	dao.readcount(seq);
+	//누르면 조회수 올라가는 부분. 일반 게시판 글 조회수. 3개를 다 따로 만들어야 한다.
+	dao.readcountnormalbbs(seq);
 	
 	//dao 에서 가지고 오는 부분.
 	BbsBoardBeanDtoVO bbs = dao.detailbbs(seq);

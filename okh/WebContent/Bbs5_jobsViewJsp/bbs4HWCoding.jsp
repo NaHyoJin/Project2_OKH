@@ -1,6 +1,23 @@
+<%@page import="jobs_BBS5.BbsHWCodingBeanDtoVO"%>
+<%@page import="java.util.List"%>
+<%@page import="jobs_BBS5.jobsBbs5ModelService"%>
+<%@page import="jobs_BBS5.jobsBbs5ModelServiceImpl"%>
 <%@page import="user.UserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%!
+		// 댓글용
+		public String arrow(int depth){
+			String rs = "<img src='../image/arrow.png' width='20px' height='20px'/>";
+			String nbsp = "&nbsp;&nbsp;&nbsp;&nbsp;";
+			String ts = "";
+			
+			for(int i = 0;i < depth; i++){
+				ts += nbsp;
+			}
+			return depth == 0?"":ts+rs;
+		}
+	%>
     <%
 
 	//로그인 정보 확인 부분.
@@ -16,8 +33,8 @@
 		System.out.println("로그인한 정보 없음.");
 	}
 	
-	/* qnaBbsDaoImpl dao = qnaBbsDao.getInstance();
-	List<QnaDto> qnalist = dao.getQnaList(); */	
+	jobsBbs5ModelServiceImpl dao = jobsBbs5ModelService.getInstance();
+	List<BbsHWCodingBeanDtoVO> hwlist = dao.getBbsHWCodingBeanList();
 	%>
 	
 	<%
@@ -76,31 +93,31 @@
 			});
 	
 			$("#account").click(function() {
-				location.href="User?command=join";
+				location.href="../User?command=join";
 			});
 			
 			//QNA
 			$("#qnabbs").click(function() {
-				location.href="qnaServlet?command=listQna";
+				location.href="../qnaServlet?command=listQna";
 			});
 			
 			$("#second").click(function() {
-				location.href="second.jsp";
+				location.href="../second.jsp";
 			});
 	
 			$("#techbbs").click(function() {
-				location.href="TechbbsController?command=techbbs";
+				location.href="../TechbbsController?command=techbbs";
 			});
 	
 			//병찬 사는 이야기.
 			$("#life").click(function() {
-				location.href="LifeBbs?command=life";
-			});
-			/* 장문석  study*/
-			$("#combbs").click(function () {
-				location.href = "CommunityControl?command=list";
+				location.href="../LifeBbs?command=life";
 			});
 			
+			/* 장문석  study*/
+			$("#combbs").click(function () {
+				location.href = "../CommunityControl?command=list";
+			});			
 	 
 			//게시판5 나효진 jobs 부분.
 			$("#jobs").click(function () {
@@ -123,7 +140,8 @@
 		//인간 로그인 안하면 안보이게 하는 부분.
 		if(mem != null){
 	%>
-		<a href="../HwWrite.BBSHWCodingController" 
+		<!-- <a href="../HwWrite.BBSHWCodingController"  기존 코드..망한것.-->
+		<a href="../BBSHWCodingController?command=HWwrite" 
 		style="margin-left: 800px; color: green">새 글 쓰기</a>
 	<br>
 	<%
@@ -137,7 +155,8 @@
 	
 	<div >
 	<form action="" style="">
-		<input type="text" border="1" style="margin-left: 320px" placeholder="검색" autofocus>
+		<input type="text" border="1" style="margin-left: 320px" 
+			placeholder="검색" autofocus>
 		<button onclick="" >检索 bbs4HWCoding</button>
 	</form>
 	</div>
@@ -152,19 +171,19 @@
 </tr>
 
 	<%
-//		if(bbslist == null || bbslist.size() == 0){
+		if(hwlist == null || hwlist.size() == 0){
 	%>	
 		<tr>
 			<td colspan="6" align="center">작성된 글이 없습니다.</td>
 		</tr>
 	<%
-//		}
-//		for(int i = 0;i < bbslist.size(); i++){
-//			BbsDto bbs = bbslist.get(i);
+		}
+		for(int i = 0;i < hwlist.size(); i++){
+			BbsHWCodingBeanDtoVO bbs = hwlist.get(i);
 	%>
 
 	
-	<%-- 	<tr>
+ 	<tr>
 			<td><%=i+1 %></td>
 			<td>
 				<%=arrow(bbs.getDepth()) %>
@@ -181,7 +200,7 @@
 				%>
 
 <!-- 디테일로 가는 부분 -->				
-				<a href="bbsdetail.jsp?seq=<%=bbs.getSeq() %>">
+				<a href="../BBSHWCodingController?command=detail&seq=<%=bbs.getSeq() %>">
 					<%=bbs.getTitle() %>
 				
 				<%
@@ -191,10 +210,10 @@
 				</a>
 			</td>
 			<td><%=bbs.getId() %></td>
-		</tr> --%>	
+		</tr>
 		
 	<%
-//		}
+		}
 	%>
 </table>
 <br>

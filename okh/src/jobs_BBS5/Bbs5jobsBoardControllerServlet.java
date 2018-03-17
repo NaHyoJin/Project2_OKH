@@ -40,7 +40,6 @@ public class Bbs5jobsBoardControllerServlet extends HttpServlet {//일반 게시
 		
 		//싱글톤 생성 부분.
 		jobsBbs5ModelServiceImpl service = jobsBbs5ModelService.getInstance();//먼저 서비스를 불러야지...
-		service = jobsBbs5ModelService.getInstance();//먼저 서비스를 불러야지...
 		
 		List<BbsBoardBeanDtoVO> bbslist = null;
 		//root경로

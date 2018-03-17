@@ -65,9 +65,9 @@ public class jobsBbs5Dao implements jobsBbs5DaoImpl {//일반 게시판 DAO부�
 */
 		
 		String sql = " SELECT SEQ, ID, REF, STEP, DEPTH, "
-				+ " TITLE, CONTENT, WDATE, PARENT,"
-				+ " DEL, READCOUNT "
-				+ " FROM BBS5HWCoding "
+				+ " TITLE, CONTENT, tag, filename, up, down, WDATE, PARENT,"
+				+ " DEL, READCOUNT, downcount, regdate "
+				+ " FROM BbsHWCodingBeanDtoVO "
 				+ " ORDER BY REF DESC, STEP ASC ";
 		try {
 			conn = DBConnection.getConnection();
@@ -79,24 +79,9 @@ public class jobsBbs5Dao implements jobsBbs5DaoImpl {//일반 게시판 DAO부�
 			rs = psmt.executeQuery();
 			System.out.println("4/6 getBbsHWCodingBeanList Success");
 			
-			/*
-			 		private int seq;	//시퀀스 번호
-					private String id;	//아이디
-					
-					private int ref;	// 그룹번호
-					private int step;	// 열번호
-					private int depth;	// 깊이
-					
-					private String title;
-					private String content;
-					private String wdate;//작성일
-					private int parent;	// 부모글
-					
-					private int del;	// 삭제
-					private int readcount;//조회수
-			 */
 			while(rs.next()){
 				int i = 1;
+
 				BbsHWCodingBeanDtoVO dto = new BbsHWCodingBeanDtoVO(
 						rs.getInt(i++),//seq, 
 						rs.getString(i++),//id, 
@@ -105,10 +90,16 @@ public class jobsBbs5Dao implements jobsBbs5DaoImpl {//일반 게시판 DAO부�
 						rs.getInt(i++),//depth, 
 						rs.getString(i++),//title, 
 						rs.getString(i++),//content, 
+						rs.getString(i++),//tag
+						rs.getString(i++),//filename
+						rs.getInt(i++),//up
+						rs.getInt(i++),//down
 						rs.getString(i++),//wdate, 
 						rs.getInt(i++),//parent, 
 						rs.getInt(i++),//del, 
-						rs.getInt(i++)//readcount
+						rs.getInt(i++),//readcount
+						rs.getInt(i++),//downcount
+						rs.getString(i++)//regdate
 						);
 						
 				list.add(dto);
@@ -122,9 +113,218 @@ public class jobsBbs5Dao implements jobsBbs5DaoImpl {//일반 게시판 DAO부�
 			DBClose.close(psmt, conn, rs);
 			System.out.println("6/6 getBbsHWCodingBeanList Success");
 		}
-		return list;	
+		return list;
 	}
 
+	//게시판5 HW 게시판 글 작성 부분.
+	public boolean writeBbs(BbsHWCodingBeanDtoVO dto) {
+		
+		int count = 0;
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		String sql = " INSERT INTO BbsHWCodingBeanDtoVO(SEQ, ID, "
+				+ " REF, STEP, DEPTH, "
+				+ " TITLE, CONTENT, TAG, FILENAME, UP, DOWN, WDATE, PARENT, "
+				+ " DEL, READCOUNT, downcount, regdate) "
+				+ " VALUES(SEQ_BbsHWCodingBeanDtoVO.NEXTVAL, ?, "//시퀀스 이름이 틀렸다...십할...
+				+ " (SELECT NVL(MAX(REF), 0)+1 FROM BbsHWCodingBeanDtoVO), 0, 0, "
+				+ " ?, ?, ?, ?, 0, 0, SYSDATE, 0, "
+				+ " 0, 0, 0, SYSDATE) ";
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("2/6 BbsHWCodingBeanDtoVO writeBbs Success");
+			
+			psmt = conn.prepareStatement(sql);
+			System.out.println("3/6 BbsHWCodingBeanDtoVO writeBbs Success");
+			
+			psmt.setString(1, dto.getId());
+			System.out.println("dto.getid : " + dto.getId());
+			psmt.setString(2, dto.getTitle());
+			System.out.println("dto.getTitle : " + dto.getTitle());
+			psmt.setString(3, dto.getContent());
+			System.out.println("dto.getContent : " + dto.getContent());
+			psmt.setString(4, dto.getTag());
+			System.out.println("dto.getTag : " + dto.getTag());
+			psmt.setString(5, dto.getFilename());
+			System.out.println("dto.getFilename : " + dto.getFilename());
+			
+			count = psmt.executeUpdate();
+			System.out.println("4/6 BbsHWCodingBeanDtoVO writeBbs Success");
+			
+		} catch (SQLException e) {			
+			System.out.println("BbsHWCodingBeanDtoVO writeBbs fail");
+		} finally{
+			DBClose.close(psmt, conn, rs);			
+		}
+		
+		return count>0?true:false;
+	}
+	
+	//디테일 부분.
+	@Override
+	public BbsHWCodingBeanDtoVO detailHWbbs(int seq) {
+		BbsHWCodingBeanDtoVO dto = null;
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		String sql = " SELECT * "
+				+ " FROM BbsHWCodingBeanDtoVO "
+				+ " WHERE SEQ = ? " ;
+		
+		try {			
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);	
+				
+			psmt.setInt(1, seq);
+			rs = psmt.executeQuery();
+			
+			while(rs.next()){
+				int i = 1;
+				
+				dto = new BbsHWCodingBeanDtoVO(
+									rs.getInt(1),			// seq
+									rs.getString(2),		// id
+									rs.getInt(3),			// ref
+									rs.getInt(4),			// step
+									rs.getInt(5),			// depth
+									rs.getString(6),		// title
+									rs.getString(7),		// content
+									rs.getString(8),		// tag
+									rs.getString(9),		// filename
+									rs.getInt(10),			// up
+									rs.getInt(11),			// down
+									rs.getString(12),		// wdate
+									rs.getInt(13),			// parent
+									rs.getInt(14),			// del
+									rs.getInt(15),			// readcount
+									rs.getInt(16),			// downcount
+				rs.getString(17));//파일 등록일.
+			}
+			
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		} finally{
+			DBClose.close(psmt, conn, rs);	
+		}
+		return dto;// TODO Auto-generated method stub
+	}
+	//조회수 부분. hw 게시판 조회수.
+	public void readcounthwbbs(int seq) {
+		String sql = " UPDATE BbsHWCodingBeanDtoVO "
+				+ " SET READCOUNT=READCOUNT+1 "
+				+ " WHERE SEQ=? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("4/6 BbsHWCodingBeanDtoVO readcount Success");
+			
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, seq);
+			System.out.println("5/6 BbsHWCodingBeanDtoVO readcount Success");
+			
+			psmt.executeUpdate();
+			System.out.println("6/6 BbsHWCodingBeanDtoVO readcount Success");
+			
+		} catch (SQLException e) {
+			System.out.println("readcount Fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);
+		}
+	}//////조회수
+	
+	//hw 수정 부분.
+	@Override
+	public boolean updateBbs(BbsHWCodingBeanDtoVO bbs) {
+		//seq, id, title, content, tag, filename
+		String sql = " UPDATE BbsHWCodingBeanDtoVO "
+				+ "SET TITLE=?, CONTENT=?, TAG=?, filename=? "
+				+ "WHERE SEQ=? ";
+		
+		System.out.println("BbsHWCodingBeanDtoVO updateBbs bbs in dao : " + bbs.toString());
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		
+		int count = 0;
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 BbsHWCodingBeanDtoVO updateBbs Success");
+			
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 BbsHWCodingBeanDtoVO updateBbs Success");
+			
+			System.out.println("bbs.getTitle() : " + bbs.getTitle());
+			psmt.setString(1, bbs.getTitle().trim());
+			psmt.setString(2, bbs.getContent().trim());
+			System.out.println("bbs.getTag() : " + bbs.getTag());
+			psmt.setString(3, bbs.getTag().trim());
+			// filename 잘 가지고 오는지 확인 부분.
+			System.out.println("bbs.getFilename() : " + bbs.getFilename());
+			psmt.setString(4, bbs.getFilename().trim());
+			psmt.setInt(5, bbs.getSeq());
+			
+			count = psmt.executeUpdate();
+			System.out.println("3/6 updateBbs Success");
+			System.out.println("count in dao executeUpdate : " + count);
+			
+		} catch (SQLException e) {
+			System.out.println("updateBbs Fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);
+			System.out.println("4/6 updateBbs Success finally");
+		}
+		
+		return count>0?true:false;
+	}
+	
+	//hw 게시판 삭제 부분.
+	@Override
+	public boolean deleteHWBbs(int seq) {
+		String sql = " UPDATE BbsHWCodingBeanDtoVO SET DEL=1 WHERE SEQ=? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		
+		int count = 0;
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 BbsHWCodingBeanDtoVO deleteBbs Success");
+			
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 BbsHWCodingBeanDtoVO deleteBbs Success");
+			
+			psmt.setInt(1, seq);
+			
+			count = psmt.executeUpdate();
+			System.out.println("3/6 deleteBbs Success");
+			
+		} catch (SQLException e) {
+			System.out.println("BbsHWCodingBeanDtoVO deleteBbs Fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);
+		}
+		
+		return count>0?true:false;
+	}
+	
+	
+	
+	
+	
 	
 	//게시판5. 일반 게시판 글 전체 가지고 오는것.
 	@Override
@@ -215,7 +415,7 @@ public class jobsBbs5Dao implements jobsBbs5DaoImpl {//일반 게시판 DAO부�
 	}
 
 		//일반 게시판 글 작성 부분.
-		public boolean writeBbs(BbsBoardBeanDtoVO dto) {
+		public boolean writenormalBbs(BbsBoardBeanDtoVO dto) {
 			int count = 0;
 			
 			Connection conn = null;
@@ -310,8 +510,8 @@ public class jobsBbs5Dao implements jobsBbs5DaoImpl {//일반 게시판 DAO부�
 				}
 				return dto;// TODO Auto-generated method stub
 			}
-			//조회수 부분.
-			public void readcount(int seq) {
+			//조회수 부분. 일반 게시판 조회수.
+			public void readcountnormalbbs(int seq) {
 				String sql = " UPDATE BbsBoardBeanDtoVO "
 						+ " SET READCOUNT=READCOUNT+1 "
 						+ " WHERE SEQ=? ";

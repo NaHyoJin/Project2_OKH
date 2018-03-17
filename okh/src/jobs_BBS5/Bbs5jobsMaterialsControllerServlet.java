@@ -2,7 +2,9 @@ package jobs_BBS5;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -26,9 +28,10 @@ public class Bbs5jobsMaterialsControllerServlet extends HttpServlet {//자료실
 	protected void doProcess(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
 	
+		//싱글톤 생성 부분.
+		jobsBbs5ModelServiceImpl service = jobsBbs5ModelService.getInstance();//먼저 서비스를 불러야지...
 		
-		//컨트롤러에서 각각 따로 만들어보자.
-		jobsBbs5ModelServiceImpl bbs5Service = new jobsBbs5ModelService();
+		List<BbsMaterialsBeanDtoVO> materialsbbslist = null;
 		
 		resp.setContentType("text/html; charset=utf-8");
 		PrintWriter out = resp.getWriter();
@@ -40,16 +43,23 @@ public class Bbs5jobsMaterialsControllerServlet extends HttpServlet {//자료실
 		
 		
 		//root경로
-		String contextPath = req.getContextPath();
+//		String contextPath = req.getContextPath();
 		//전체 주소.
-		String reqURI = req.getRequestURI();
+//		String reqURI = req.getRequestURI();
 		
 		//contextPath의 길이부터 끝까지.
-		String realCommand = reqURI.substring(contextPath.length());
+//		String realCommand = reqURI.substring(contextPath.length());
 		
 		//여기까지 잘 들어온다.
-		System.out.println("Bbs5jobsMaterialsControllerServlet doProcess realCommand : " + realCommand);
+//		System.out.println("Bbs5jobsMaterialsControllerServlet doProcess realCommand : " + realCommand);
 
+		
+		
+		
+		
+		
+		
+		/*
 		//확인후 갈 곳 계속 추가하는 부분.
 		//처음 화면 가는 부분.
 		if("/mainPDS.BBSmaterialsController".equals(realCommand)) {
@@ -74,7 +84,7 @@ public class Bbs5jobsMaterialsControllerServlet extends HttpServlet {//자료실
 			
 			
 		}
-		
+		*/
 		
 //		else if(command.equals("detail")) {
 //			req.getParameter(arg0)
@@ -83,8 +93,13 @@ public class Bbs5jobsMaterialsControllerServlet extends HttpServlet {//자료실
 			
 	
 		}//////////////////////////doProcess
-		
-		//H/W 화면이동 부분.
-//		resp.sendRedirect("Bbs4_communityViewJsp/bbs4HWCoding.jsp");
+	
+	
+	//짐 가지고 가는 부분.
+	public void dispatch(String urls, HttpServletRequest req, HttpServletResponse resp) 
+			throws ServletException, IOException {
+		RequestDispatcher _dispatch = req.getRequestDispatcher(urls);
+		_dispatch.forward(req, resp);
+	}
 			
 }//////////////////////////////////////////////////////Bbs5jobsMaterialsControllerServlet

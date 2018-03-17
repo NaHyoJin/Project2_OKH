@@ -7,6 +7,7 @@ public interface jobsBbs5MaterialsDaoImpl {
 	
 	//무조건 일단 다 가지고 온다....................향후 검색 부분 추가해보자.
 	public List<BbsMaterialsBeanDtoVO> getPdsList();
+	public List<BbsMaterialsBeanDtoVO> getPdsList(int parent);//부모글 있는것.
 	
 	//파일 넣는 부분. DB에 넣는 부분.
 	public boolean writePds(BbsMaterialsBeanDtoVO pds);

@@ -17,20 +17,25 @@ public interface jobsBbs5ModelServiceImpl {//서비스 부분.
 	//게시판5. 하드웨어 코딩 부분 글 전체 가지고 오는것.
 	public List<BbsHWCodingBeanDtoVO> getBbsHWCodingBeanList();
 		//글 작성 부분.
-//		public boolean writeBbs(BbsHWCodingBeanDtoVO dto);
+		public boolean writeBbs(BbsHWCodingBeanDtoVO dto);
+		//디테일 부분.
+		public BbsHWCodingBeanDtoVO detailHWbbs(int seq);
+		//조회수 부분.
+		public void readcounthwbbs(int seq);
 		//글 수정.
-		
+		public boolean updateBbs(BbsHWCodingBeanDtoVO bbs);
 		//글 삭제.
+		public boolean deleteHWBbs(int seq);
 		
 		
 	//게시판5. 일반 글 전체 가지고 오는것.
 	public List<BbsBoardBeanDtoVO> getBbsNormalBeanDTOList();
 		//글 작성 부분.
-		public boolean writeBbs(BbsBoardBeanDtoVO dto);
+		public boolean writenormalBbs(BbsBoardBeanDtoVO dto);
 		//디테일 부분.
 		public BbsBoardBeanDtoVO detailbbs(int seq);
 		//조회수 부분.
-		public void readcount(int seq);
+		public void readcountnormalbbs(int seq);
 		//글 수정.
 		public boolean updateBbs(BbsBoardBeanDtoVO bbs);
 		//글 삭제.
@@ -46,7 +51,17 @@ public interface jobsBbs5ModelServiceImpl {//서비스 부분.
 	public void commentcount(int seq);
 */	
 	//게시판5. 자료실 글 전체 가지고 오는것.
-	
+/*	public List<BbsMaterialsBeanDtoVO> getBbsMaterialsBeanDtoVOList();
+		//글 작성 부분.
+		public boolean writenormalBbs(BbsMaterialsBeanDtoVO dto);
+		//디테일 부분.
+		public BbsMaterialsBeanDtoVO detailmaterials(int seq);
+		//조회수 부분.
+		public void readcountmaterials(int seq);
+		//글 수정.
+		public boolean updateBbs(BbsMaterialsBeanDtoVO bbs);
+		//글 삭제.
+		public boolean deletematerials(int seq);*/
 	
 	
 	

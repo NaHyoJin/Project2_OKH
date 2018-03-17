@@ -22,6 +22,13 @@ public class jobsBbs5MaterialsService implements jobsBbs5MaterialsServiceImpl {
 	}
 	
 	
+	//모든글 가지고 오는것.
+	@Override
+	public List<BbsMaterialsBeanDtoVO> getPdsList() {
+		// TODO Auto-generated method stub
+		return pdsdao.getPdsList();
+	}
+	//부모글 있는것.
 	@Override
 	public List<BbsMaterialsBeanDtoVO> getPdsList(int parent) {
 		// TODO Auto-generated method stub
@@ -54,8 +61,7 @@ public class jobsBbs5MaterialsService implements jobsBbs5MaterialsServiceImpl {
 
 	@Override
 	public void readcount(int seq) {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 }

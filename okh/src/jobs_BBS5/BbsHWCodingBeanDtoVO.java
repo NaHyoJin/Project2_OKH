@@ -18,16 +18,17 @@ CREATE TABLE BbsHWCodingBeanDtoVO(
 	
 	TITLE VARCHAR2(200) NOT NULL,
 	CONTENT VARCHAR2(4000) NOT NULL,
+	TAG VARCHAR2(200),
+	FILENAME VARCHAR2(50),	--파일 이름
+	UP NUMBER(8) NOT NULL,
+	DOWN NUMBER(8) NOT NULL,
 	WDATE DATE NOT NULL,	--작성일
 	PARENT NUMBER(8) NOT NULL,
 	
-	DEL NUMBER(1) NOT NULL,
+	DEL NUMBER(1) NOT NULL,	--삭제 번호.
 	READCOUNT NUMBER(8) NOT NULL,	--조회수
-	
-	FILENAME VARCHAR2(50),	--파일 이름
-	DOWNCOUNT NUMBER(8),	--파일 다운로드 수.
-	REGDATE DATE	--파일 등록일.
-	
+	DOWNCOUNT NUMBER(8) NOT NULL,	--파일 다운로드 수.
+	REGDATE DATE	--파일 등록일.	
 );
 
 CREATE SEQUENCE SEQ_BbsHWCodingBeanDtoVO
@@ -50,134 +51,248 @@ public class BbsHWCodingBeanDtoVO implements Serializable {//H/W coding 테이�
 	
 	private String title;//제목
 	private String content;//내용
+	private String tag;//태그 관련 사용시 준비.
+	private String filename;//파일 이름.올릴 파일 이름 필요시 사용.
+	private int up;			// 추천
+	private int down;		// 반대
 	private String wdate;//작성일
 	private int parent;	// 부모글
 	
-	private int del;	// 삭제
+	private int del;	// 삭제. 삭제시 1. 기본값 0.
 	private int readcount;//조회수
-	
-	
-	
+	private int downcount; //다운로드 수.
+	private String regdate;//파일 등록일.
 	
 	
 	public BbsHWCodingBeanDtoVO() {}
 
-	public BbsHWCodingBeanDtoVO(int seq, String id, int ref, int step, int depth, String title, String content, String wdate,
-			int parent, int del, int readcount) {
-		super();
-		this.seq = seq;
-		this.id = id;
-		this.ref = ref;
-		this.step = step;
-		this.depth = depth;
-		this.title = title;
-		this.content = content;
-		this.wdate = wdate;
-		this.parent = parent;
-		this.del = del;
-		this.readcount = readcount;
+
+	@Override
+	public String toString() {
+		return "BbsHWCodingBeanDtoVO [seq=" + seq + ", id=" + id + ", ref=" + ref + ", step=" + step + ", depth="
+				+ depth + ", title=" + title + ", content=" + content + ", tag=" + tag + ", filename=" + filename
+				+ ", up=" + up + ", down=" + down + ", wdate=" + wdate + ", parent=" + parent + ", del=" + del
+				+ ", readcount=" + readcount + ", downcount=" + downcount + ", regdate=" + regdate + "]";
 	}
 
-	//글 작성하는 오버로드 부분.
-	public BbsHWCodingBeanDtoVO(String id, String title, String content) {
-		super();
-		this.id = id;
-		this.title = title;
-		this.content = content;
-	}
 
 	public int getSeq() {
 		return seq;
 	}
 
+
 	public void setSeq(int seq) {
 		this.seq = seq;
 	}
+
 
 	public String getId() {
 		return id;
 	}
 
+
 	public void setId(String id) {
 		this.id = id;
 	}
+
 
 	public int getRef() {
 		return ref;
 	}
 
+
 	public void setRef(int ref) {
 		this.ref = ref;
 	}
+
 
 	public int getStep() {
 		return step;
 	}
 
+
 	public void setStep(int step) {
 		this.step = step;
 	}
+
 
 	public int getDepth() {
 		return depth;
 	}
 
+
 	public void setDepth(int depth) {
 		this.depth = depth;
 	}
+
 
 	public String getTitle() {
 		return title;
 	}
 
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
 
 	public String getContent() {
 		return content;
 	}
 
+
 	public void setContent(String content) {
 		this.content = content;
 	}
+
+
+	public String getTag() {
+		return tag;
+	}
+
+
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+
+
+	public String getFilename() {
+		return filename;
+	}
+
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
+
+	public int getUp() {
+		return up;
+	}
+
+
+	public void setUp(int up) {
+		this.up = up;
+	}
+
+
+	public int getDown() {
+		return down;
+	}
+
+
+	public void setDown(int down) {
+		this.down = down;
+	}
+
 
 	public String getWdate() {
 		return wdate;
 	}
 
+
 	public void setWdate(String wdate) {
 		this.wdate = wdate;
 	}
+
 
 	public int getParent() {
 		return parent;
 	}
 
+
 	public void setParent(int parent) {
 		this.parent = parent;
 	}
+
 
 	public int getDel() {
 		return del;
 	}
 
+
 	public void setDel(int del) {
 		this.del = del;
 	}
+
 
 	public int getReadcount() {
 		return readcount;
 	}
 
+
 	public void setReadcount(int readcount) {
 		this.readcount = readcount;
 	}
 
-	@Override
-	public String toString() {
-		return "BbsDto [seq=" + seq + ", id=" + id + ", ref=" + ref + ", step=" + step + ", depth=" + depth + ", title="
-				+ title + ", content=" + content + ", wdate=" + wdate + ", parent=" + parent + ", del=" + del
-				+ ", readcount=" + readcount + "]";
+
+	public int getDowncount() {
+		return downcount;
 	}
+
+
+	public void setDowncount(int downcount) {
+		this.downcount = downcount;
+	}
+
+
+	public String getRegdate() {
+		return regdate;
+	}
+
+
+	public void setRegdate(String regdate) {
+		this.regdate = regdate;
+	}
+
+
+	//생성자 전체 부분.
+	public BbsHWCodingBeanDtoVO(int seq, String id, int ref, int step, int depth, String title, String content,
+			String tag, String filename, int up, int down, String wdate, int parent, int del, int readcount,
+			int downcount, String regdate) {
+		super();
+		this.seq = seq;
+		this.id = id;
+		this.ref = ref;
+		this.step = step;
+		this.depth = depth;
+		this.title = title;
+		this.content = content;
+		this.tag = tag;
+		this.filename = filename;
+		this.up = up;
+		this.down = down;
+		this.wdate = wdate;
+		this.parent = parent;
+		this.del = del;
+		this.readcount = readcount;
+		this.downcount = downcount;
+		this.regdate = regdate;
+	}
+
+
+	public BbsHWCodingBeanDtoVO(int seq, String id, String title, String content, String tag, String filename) {
+		super();
+		this.seq = seq;
+		this.id = id;
+		this.title = title;
+		this.content = content;
+		this.tag = tag;
+		this.filename = filename;
+	}
+
+
+	public BbsHWCodingBeanDtoVO(String id, String title, String content, String tag, String filename) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.content = content;
+		this.tag = tag;
+		this.filename = filename;
+	}
+
+
+	
+
+	
 }

@@ -33,7 +33,7 @@ BbsBoardBeanDtoVO dto = (BbsBoardBeanDtoVO)request.getAttribute("normalbbswrited
 //싱글톤 호출 부분.
 jobsBbs5ModelServiceImpl service = jobsBbs5ModelService.getInstance();
 
-boolean isS = service.writeBbs(dto);
+boolean isS = service.writenormalBbs(dto);
 
 if(isS){
 %>
