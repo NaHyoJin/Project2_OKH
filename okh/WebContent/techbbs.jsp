@@ -19,11 +19,21 @@ String choice = request.getParameter("choice");
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
+ 
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="_techbbs.css?ver=1.47">
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+	
+
+<!-- 폰트  -->
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="_techbbs.css?ver=1.58">
 </head>
-<body>
+<body bgcolor="#fcfbfb">
 <%//로그인한id가져오기
 Object ologin = session.getAttribute("login");
 UserDto mem = null;
@@ -131,14 +141,12 @@ System.out.println(techlist.size()+"사이즈크기");
 
 		});
 	</script>
+	<div class="titlediv"><h2 style="font-family: 'Nanum Gothic', sans-serif ">기술게시판</h2><br>
+	<button class="create btn btn-success btn-wide pull-right " type="button" id="techwrite">게시글쓰기</button></div>
 <div class="wrap">
-	<div class="header">
-		<h1 style="font-size: 2em; font-family: monospace ">기술게시판</h1>
-		<button type="button" id="techwrite">게시글쓰기</button>
-	</div>
 	<div class="board">
 		<table border="1" class="techtable">
-		<col width="450"><col width="50"><col width="50"><col width="50"><col width="200">
+		<col width="450"><col width="80"><col width="80"><col width="80"><col width="150">
 			
 			<%if(techlist==null||techlist.size()==0){
 				
@@ -158,26 +166,57 @@ System.out.println(techlist.size()+"사이즈크기");
 			%>
 			<tr>
 				<th>
+				#<%=techlist.get(i).getSeq() %>
 			<%
 			}else{
 			%>
 			<tr>
 				<th style="border-left: 5px solid #808080">
-					<span id="tag"><%=i+1 %></span>
-				
+				#<%=techlist.get(i).getSeq() %>
 			<%}
 			for(int j=0;j<tagnames.length;j++){//추가시킬때무조건추가시킬거는 -없이해도되고 엔터치면 -그값을넣어준다
 			%>
-				<span><button name="tag<%=j%>" id="tag<%=j%>" onclick="searchBbs1(this)" value="<%=tagnames[j]%>"><%=tagnames[j] %></button></span>
+				<span><button class="hjhtag" name="tag<%=j%>" id="tag<%=j%>" onclick="searchBbs1(this)" value="<%=tagnames[j]%>"><%=tagnames[j] %></button></span>
 			<%
 			}
 			%>
-			<p><a href="TechbbsController?command=techdetail&likeid=<%=mem.getId() %>&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a></p>
+			<p style="font-size: 20px"><a href="TechbbsController?command=techdetail&likeid=<%=mem.getId() %>&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a></p>
 			</th>
-			<td><%=dto.getCommentcount() %></td>
-			<td><%=dto.getLikecount() %></td>
-			<td><%=dto.getReadcount() %></td>
-			<td><%=dto.getId() %></td>
+			<%if(dto.getCommentcount()>0){
+			%>
+			<td><img src="image/repleon.PNG"><span class="textalig"> <%=dto.getCommentcount() %></span></td>
+			<%
+			}else{
+			%>
+			<td><img src="image/repleoff.png"><span class="textalig"> <%=dto.getCommentcount() %></span></td>
+			<%
+			}
+			%>
+			<%if(dto.getLikecount()>0){
+			%>
+			<td style="padding-top: 3px"><img src="image/likeeon.png"><span class="textalig"> <%=dto.getLikecount() %></span></td>
+			<%
+			}else{
+			%>
+			<td style="padding-top: 3px"><img src="image/likeeoff.png"><span class="textalig"> <%=dto.getLikecount() %></span></td>
+			<%
+			}
+			%>
+			<%if(dto.getReadcount()>0){
+			%>
+			<td><img src="image/readcounton.PNG"><span class="textalig"> <%=dto.getReadcount() %></span></td>
+			<%
+			}else{
+			%>
+			<td><img src="image/readcountoff.png"><span class="textalig"> <%=dto.getReadcount() %></span></td>
+			<%
+			}
+			%>
+			
+			<td>
+			<%=dto.getId() %>
+			<p style="font-size: 10px"><%=dto.getWdate() %></p>
+			</td>
 			</tr>
 			<%
 			}
@@ -194,19 +233,22 @@ System.out.println(techlist.size()+"사이즈크기");
 	<jsp:param name="countPerPage" value="<%=String.valueOf(paging.getCountPerPage()) %>" />
 	<jsp:param name="blockCount" value="<%=String.valueOf(paging.getBlockCount()) %>" />
 </jsp:include>
-<select id="choice">
+<div class="sercharea">
+<select id="choice" style="height: 27px; margin-right: 15px;">
 		<option value="tagname" <%if(cho==3){ out.println("selected");}%>>선택하세요</option>
 		<option value="title" <%if(cho==0){ out.println("selected");}%>>제목</option>
 		<option value="writer" <%if(cho==1){ out.println("selected");}%>>작성자</option>
 		<option value="content" <%if(cho==2){ out.println("selected");}%>>내용</option>
 		</select>
-<input type="text" id="search" value="<%=findWord %>">
+<input type="text" style="width: 304px" id="search" value="<%=findWord %>">
+<button name="search" class="btn btn-primary" onclick="searchBbs()">검색</button>
+</div>
 <script type="text/javascript">
 if(document.getElementById("choice").value=="tagname"){
 	$("#search").val("");
 }
 </script>
-<button name="search" onclick="searchBbs()">검색</button>
+
 	</div>
 </div>
 
