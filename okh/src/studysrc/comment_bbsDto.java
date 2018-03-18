@@ -19,13 +19,16 @@ public class comment_bbsDto {
 	private String commentid;
 	private String commentcontent;
 	private String commentwdate;
-	private int commentjoiner;
-	private int commentchild;
 	private int commentdel;
+	private int commentchild;
+	private int commentjoiner;
+	
+	
+	
 	public comment_bbsDto(int bbsseq, String bbsid, String bbstitle, String bbscontent, String bbswdate, int bbsdel,
 			int bbsreadcount, int bbscommentcount, String bbstagname, int bbsparent, int bbsjoinercount,
 			String bbsjoindate, int commentseq, String commentid, String commentcontent, String commentwdate,
-			int commentjoiner, int commentchild, int commentdel) {
+			int commentdel, int commentchild, int commentjoiner) {
 		super();
 		this.bbsseq = bbsseq;
 		this.bbsid = bbsid;
@@ -43,9 +46,9 @@ public class comment_bbsDto {
 		this.commentid = commentid;
 		this.commentcontent = commentcontent;
 		this.commentwdate = commentwdate;
-		this.commentjoiner = commentjoiner;
-		this.commentchild = commentchild;
 		this.commentdel = commentdel;
+		this.commentchild = commentchild;
+		this.commentjoiner = commentjoiner;
 	}
 	public int getBbsseq() {
 		return bbsseq;
@@ -160,6 +163,16 @@ public class comment_bbsDto {
 	}
 	public void setCommentdel(int commentdel) {
 		this.commentdel = commentdel;
+	}
+	@Override
+	public String toString() {
+		return "comment_bbsDto [bbsseq=" + bbsseq + ", bbsid=" + bbsid + ", bbstitle=" + bbstitle + ", bbscontent="
+				+ bbscontent + ", bbswdate=" + bbswdate + ", bbsdel=" + bbsdel + ", bbsreadcount=" + bbsreadcount
+				+ ", bbscommentcount=" + bbscommentcount + ", bbstagname=" + bbstagname + ", bbsparent=" + bbsparent
+				+ ", bbsjoinercount=" + bbsjoinercount + ", bbsjoindate=" + bbsjoindate + ", commentseq=" + commentseq
+				+ ", commentid=" + commentid + ", commentcontent=" + commentcontent + ", commentwdate=" + commentwdate
+				+ ", commentjoiner=" + commentjoiner + ", commentchild=" + commentchild + ", commentdel=" + commentdel
+				+ "]";
 	}
 	
 	

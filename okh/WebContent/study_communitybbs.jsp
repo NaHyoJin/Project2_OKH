@@ -15,7 +15,7 @@ request.setCharacterEncoding("utf-8");
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>OKH:스터디모집</title>
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/custom.css">
@@ -123,13 +123,23 @@ List<CombbsDto> bbslist = service.getpagingComList(paging, findWord, cho);
 		
 		
 		<tr>
+		<%
+		if(dto.getDel()==1){
+		%>
+			<td colspan="6">삭제된 글입니다</td>
+			
+		<%
+		}else if(dto.getDel()==0){
+		%>
 		
 		<td bgcolor="blue"/>
+		
 				<td>
 					<span id="tag"><%=i+1 %></span>
 				
 			<%
 			for(int j=0;j<tagnames.length;j++){//추가시킬때무조건추가시킬거는 -없이해도되고 엔터치면 -그값을넣어준다
+				
 			%>
 				<span><button name="tag<%=j%>" id="tag<%=j%>" value="<%=tagnames[j]%>"><%=tagnames[j] %></button></span>
 			<%
@@ -144,8 +154,9 @@ List<CombbsDto> bbslist = service.getpagingComList(paging, findWord, cho);
 			
 			</tr>
 			<%
-			}
-			}
+		}
+	}
+}
 			%>
 	</table>
 	<br>
@@ -175,7 +186,8 @@ List<CombbsDto> bbslist = service.getpagingComList(paging, findWord, cho);
 		function searchBbs() {
 			var word = document.getElementById("search").value;
 			var choice = document.getElementById("choice").value;
-			location.href = "study_communitybbs.jsp?findWord=" + word + "&choice=" + choice;
+			var content = document.getElementById("content").value;
+			location.href = "study_communitybbs.jsp?findWord=" + word + "&choice=" + choice + "&content=" +content;
 		}
 </script>
 	

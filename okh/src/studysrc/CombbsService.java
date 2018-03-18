@@ -49,6 +49,14 @@ public class CombbsService implements ICombbsService {
 	public void commentcount(int seq) {
 		comdao.commentcount(seq);
 	}
+	@Override
+	public void updatebbs(CombbsDto dto,int seq) {
+		 comdao.updatebbs(dto,seq);
+	}
+	@Override
+	public void delbbs(int seq) {
+		comdao.delbbs(seq);
+	}
 	
 	
 	

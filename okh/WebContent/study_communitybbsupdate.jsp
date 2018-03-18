@@ -1,14 +1,13 @@
 <%@page import="user.UserDto"%>
+<%@page import="studysrc.CombbsDto"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%
-request.setCharacterEncoding("utf-8");
-%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>OKH:스터디모임글쓰기</title>
+<title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="_main.css">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
@@ -35,24 +34,18 @@ if(ologin == null){
 }
 mem = (UserDto)ologin;
 %>
-
-
-
-
 </head>
 <body>
-<%// UserDto mem = (UserDto)session.getAttribute("login");%>
-<div class="menu">
-		<input type="button" class="login" id="login">
-		<input type="button" class="account" id="account">
-		<input type="button" class="bbs1">
-		<input type="button" class="techbbs_hjh" id="techbbs">
-		<input type="button" class="bbs3">
-		<input type="button" class="bbs4" id="combbs">
-		<input type="button" class="bbs5">
-</div>
+<%
+String sseq = request.getParameter("seq");
+int seq=Integer.parseInt(sseq);
+List<CombbsDto> list=(List<CombbsDto>)request.getAttribute("list");
+
+System.out.println(list.get(0).getId());
+
+%>
 <div align="center">
-	<h2>게시글 작성</h2>
+	<h2>게시글 수정</h2>
 	<form action="CommunityControl">
 		<table>
 			<col width="100"> <col width="700">
@@ -61,21 +54,22 @@ mem = (UserDto)ologin;
 				<td>
 					<input type="text" id="id" readonly="readonly" value="<%=mem.getId() %>" size="100">
 					<input type="hidden" name="id" value="<%=mem.getId() %>">
-	 				<input type="hidden" name="command" value="ComwriteAF">
+	 				<input type="hidden" name="command" value="updateAF">
+	 				<input type="hidden" name="seq" value="<%=seq %>">
 				</td>
 			</tr>
 			
 			<tr>
 				<td>제목</td>
 				<td>
-					<input type="text" id="title" name="title" size="100">
+					<input type="text" id="title" name="title" size="100" value="<%=list.get(0).getTitle() %>">
 				</td>
 			</tr>
 			<tr>
 				<td>날짜</td>
 				<td>
 					<input type="button" value="날짜선택 호출" onclick="opendate();" />
-					<input type="text" id="pdate" name="date" value="">
+					<input type="text" id="pdate" name="date" value="<%=list.get(0).getJoindate() %>">
 					<select name="hour">
 				<option value="시"> 시
 				<%
@@ -113,7 +107,7 @@ mem = (UserDto)ologin;
 			<tr>
 				<td>내 용</td>
 				<td>
-					<textarea name="content" id="summernote"></textarea>
+					<textarea name="content" id="summernote" ><%=list.get(0).getContent() %></textarea>
 				</td>
 			</tr>
 			<tr>
@@ -210,6 +204,8 @@ function eventonblur() {
         }
  
    </script>
+
+
 
 
 </body>

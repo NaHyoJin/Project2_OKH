@@ -15,7 +15,7 @@ import db.DBConnection;
 
 public class ComDao implements iComDao {
 	
-	
+
 	@Override
 	public void commentcount(int seq) {
 		String sql = " UPDATE COMBBS "
@@ -89,7 +89,7 @@ public class ComDao implements iComDao {
 
 	@Override
 	public List<comment_bbsDto> detailbbs(int seq) {
-		
+		System.out.println("seq?"+seq);
 		
 	String sql =" SELECT * FROM COMBBS B,SCOMMENT S  "
 				+" WHERE B.PARENT=S.CHILD AND B.SEQ=? AND B.SEQ=S.CHILD ";
@@ -130,7 +130,10 @@ public class ComDao implements iComDao {
 									rs.getInt(i++),//commentjoiner, 
 									rs.getInt(i++),//commentchild, 
 									rs.getInt(i++));//commentdel);
-				list.add(dto);
+				
+						System.out.println("dto?" +dto);
+						
+						list.add(dto);
 				
 			}
 			
@@ -141,7 +144,7 @@ public class ComDao implements iComDao {
 		}finally {
 			DBClose.close(psmt, conn, rs);
 		}
-		
+		System.out.println("listdel?:"+list.get(0).getCommentdel());
 		
 		return list;
 	
@@ -284,6 +287,13 @@ public boolean writeBbs(CombbsDto dto) {
 	PARENT NUMBER(8) NOT NULL,
 	JOINERCOUNT NUMBER(8),
 	JOINDATE VARCHAR2 (50) NOT NULL 
+	
+	String sql = " INSERT INTO CALENDAR(SEQ, ID, TITLE, CONTENT, RDATE, WDATE) "
+				+ " VALUES(SEQ_CAL.NEXTVAL, ?, "
+				+ " ?, ?, ?, SYSDATE) ";
+	
+	
+	
 	 */
 	String sql = " INSERT INTO COMBBS(SEQ, ID, "
 			+ " TITLE, TAGNAME, CONTENT,JOINDATE,WDATE, "
@@ -293,13 +303,25 @@ public boolean writeBbs(CombbsDto dto) {
 	
 	Connection conn = null;
 	PreparedStatement psmt = null;
-	
+	ResultSet rs = null;
 	int count = 0;
 	
 	try {
 		conn = DBConnection.getConnection();			
-		System.out.println("1/6 writeBbs Success");
 		
+		
+		String sql1 = " INSERT INTO CALENDAR(SEQ, ID, TITLE, CONTENT, RDATE, WDATE) "
+				+ " VALUES(SEQ_CAL.NEXTVAL, ?, "
+				+ " ?, ?, ?, SYSDATE) ";
+		psmt = conn.prepareStatement(sql1);
+		System.out.println("1/6 cal success");
+		psmt.setString(1, dto.getId());
+		psmt.setString(2, dto.getTitle());
+		psmt.setString(3, dto.getContent());
+		psmt.setString(4, dto.getJoindate());
+		rs = psmt.executeQuery();
+		psmt.close();
+		rs.close();
 		psmt = conn.prepareStatement(sql);
 		System.out.println("2/6 writeBbs Success");
 		
@@ -316,7 +338,7 @@ public boolean writeBbs(CombbsDto dto) {
 		System.out.println("writeBbs fail");
 		e.printStackTrace();
 	} finally {
-		DBClose.close(psmt, conn, null);			
+		DBClose.close(psmt, conn, rs);			
 	}
 	
 	return count>0?true:false;
@@ -403,6 +425,100 @@ public List<CombbsDto> getpagingComList(PagingBean paging, String searchWord, in
 	
 	return list;
 }
+
+
+
+@Override
+public void updatebbs(CombbsDto dto, int seq) {
+	
+	String sql = " UPDATE COMBBS SET "
+			+ " TITLE = ?, CONTENT = ?, TAGNAME = ?, JOINDATE = ? WHERE SEQ = ? ";
+	
+	Connection conn = null;
+	PreparedStatement psmt = null;
+	ResultSet rs = null;
+	try {
+		conn = DBConnection.getConnection();
+		System.out.println("1/6 updatebbs Success");
+		String sql1 = " UPDATE CALENDAR SET "
+				+ " TITLE = ?, CONTENT = ?, RDATE = ? WHERE SEQ=? ";
+		psmt = conn.prepareStatement(sql1);
+		System.out.println("1/6 cal success");
+		psmt.setString(1, dto.getTitle());
+		psmt.setString(2, dto.getContent());
+		psmt.setString(3, dto.getJoindate());
+		psmt.setInt(4, seq);
+		rs = psmt.executeQuery();
+		psmt.close();
+		rs.close();
+		
+		
+		
+		psmt = conn.prepareStatement(sql);
+		psmt.setString(1, dto.getTitle());
+		psmt.setString(2, dto.getContent());
+		psmt.setString(3, dto.getTagname());
+		psmt.setString(4, dto.getJoindate());
+		psmt.setInt(5, seq);
+		System.out.println("2/6 updatebbs Success");
+		
+		psmt.executeUpdate();
+		System.out.println("3/6 updatebbs Success");
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+		System.out.println("updatebbs Fail");
+	} finally {
+		DBClose.close(psmt, conn, rs);			
+	}		
+}
+
+
+
+@Override
+public void delbbs(int seq) {
+	String sql = " UPDATE COMBBS SET "
+			+ " DEL = 1 WHERE SEQ = ? ";
+	
+	Connection conn = null;
+	PreparedStatement psmt = null;
+	ResultSet rs = null;
+	try {
+		conn = DBConnection.getConnection();
+		System.out.println("1/6 updatebbs Success");
+		
+		String sql1 = " DELETE FROM CALENDAR WHERE SEQ=?  ";
+		psmt = conn.prepareStatement(sql1);
+		System.out.println("1/6 cal success");
+		
+		psmt.setInt(1, seq);
+		rs = psmt.executeQuery();
+		psmt.close();
+		rs.close();
+		
+		
+		
+		psmt = conn.prepareStatement(sql);
+		
+		psmt.setInt(1, seq);
+		System.out.println("2/6 updatebbs Success");
+		
+		psmt.executeUpdate();
+		System.out.println("3/6 updatebbs Success");
+		
+	} catch (SQLException e) {
+		e.printStackTrace();
+		System.out.println("updatebbs Fail");
+	} finally {
+		DBClose.close(psmt, conn, rs);			
+	}		
+}
 	
 	
+
+
+
+
+
+
 }

@@ -48,7 +48,10 @@ public class CommunityControl extends HttpServlet {
 			String id = request.getParameter("id");
 			String title =request.getParameter("title");
 			String content = request.getParameter("content");
+			String hour = request.getParameter("hour");
+			String min = request.getParameter("min");
 			String date = request.getParameter("date");
+			date += two(hour)+two(min);
 			String tag = request.getParameter("tag");
 			String filename = request.getParameter("filename");
 			
@@ -75,6 +78,7 @@ public class CommunityControl extends HttpServlet {
 				request.setAttribute("detail1", list1);
 				
 			}else {
+				System.out.println("listdel:"+list.get(0).getCommentdel());
 				request.setAttribute("detail", list);
 				System.out.println("코맨트있는 리스트");
 				
@@ -99,12 +103,77 @@ public class CommunityControl extends HttpServlet {
 			request.setAttribute("parent", parent);
 			dispatch("study_communitybbscommentAF.jsp", request, response);
 		}
+		else if(command.equals("update")) {
+			String sseq = request.getParameter("seq");
+			int seq = Integer.parseInt(sseq);
+			ICombbsService service = CombbsService.getInstance();
+			
+				List<CombbsDto> list = service.commentnull(seq);
+				System.out.println("리스트");
+				request.setAttribute("list", list);
+				
 		
+			request.setAttribute("seq", seq);
+			dispatch("study_communitybbsupdate.jsp", request, response);
+		}
+		else if(command.equals("updateAF")) {
+			String id = request.getParameter("id");
+			String title =request.getParameter("title");
+			String content = request.getParameter("content");
+			String hour = request.getParameter("hour");
+			String min = request.getParameter("min");
+			String date = request.getParameter("date");
+			date += two(hour)+two(min);
+			String tag = request.getParameter("tag");
+			String filename = request.getParameter("filename");
+			String sseq = request.getParameter("seq");
+			int seq=Integer.parseInt(sseq);
+			
+			String tagname="스터디모임-";
+			
+			String[] tagnames=request.getParameterValues("tagnames");
+			for(int i=0; i < tagnames.length; i++){
+				tagname += tagnames[i]+"-";
+			}
+			tagname = tagname.substring(0, tagname.lastIndexOf("-"));
+			System.out.println(id+title+content+tagname+date);
+			CombbsDto dto = new CombbsDto(id, title, content, tagname, date);
+			ICombbsService service = CombbsService.getInstance();
+			service.updatebbs(dto, seq);
+			dispatch("study_communitybbs.jsp", request, response);
+			
+		}else if(command.equals("delet")) {
+			String sseq = request.getParameter("seq");
+			int seq=Integer.parseInt(sseq);
+			System.out.println("seq:                  "+ seq);
+			ICombbsService service = CombbsService.getInstance();
+			service.delbbs(seq);
+			dispatch("study_communitybbs.jsp", request, response);
+		}
+		else if(command.equals("delcomment")) {
+			String sseq = request.getParameter("seq");
+			int seq=Integer.parseInt(sseq);
+			iCommentService service = CommentService.getInstance();
+			service.delcomment(seq);
+			dispatch("study_communitybbs.jsp", request, response);
+		}else if(command.equals("commentup")) {
+			String sseq = request.getParameter("commentseq");
+			int seq=Integer.parseInt(sseq);
+			String content = request.getParameter("upcontent");
+			System.out.println(content);
+			iCommentService service = CommentService.getInstance(); 
+			service.updatecomment(content, seq);
+			dispatch("study_communitybbs.jsp", request, response);
+		}
 		
 	}
 	
 	public void dispatch(String urls, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		RequestDispatcher _dispatch=req.getRequestDispatcher(urls);
 		_dispatch.forward(req, resp);
+	}
+	
+	public String two(String msg){
+		return msg.trim().length()<2?"0"+msg:msg.trim();
 	}
 }

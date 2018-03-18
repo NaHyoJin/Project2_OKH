@@ -1,3 +1,5 @@
+<%@page import="java.sql.Timestamp"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="studysrc.comment_bbsDto"%>
 <%@page import="java.util.List"%>
 <%@page import="studysrc.CombbsService"%>
@@ -10,16 +12,30 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>study_communitybbsdetail.jsp</title>
+<title>OKH:스터디모집글</title>
 <link rel="stylesheet" type="text/css" href="_main.css">
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> 
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script> 
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 </head>
 <body>
+<%!
+public String toDates(String mdate){
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 hh시 mm분");
+	
+	String s = mdate.substring(0, 4) + "-" 	// yyyy
+			+ mdate.substring(4, 6) + "-"	// MM
+			+ mdate.substring(6, 8) + " " 	// dd
+			+ mdate.substring(8, 10) + ":"	// hh
+			+ mdate.substring(10, 12) + ":00"; 
+	Timestamp d = Timestamp.valueOf(s);
+	
+	return sdf.format(d);	
+} 
+%>
 <%
 Object ologin = session.getAttribute("login");
 UserDto mem = null;
@@ -64,8 +80,8 @@ if(list==null||list.size()==0){
 				
 					<td	rowspan="2">
 					<div class="like">
-						<button type="button">좋아요</button><br>
-						<button type="button">싫어요</button>
+					<img src="image/like1.png" style="cursor: pointer;" onclick="location.href='CommunityControl?command=like&seq=<%=list1.get(0).getSeq() %>'">
+					
 					</div>
 					</td>
 				
@@ -73,7 +89,7 @@ if(list==null||list.size()==0){
 			<tr>
 				<td><article class="content">
 						<%=list1.get(0).getContent()%><br>
-					모임날짜 <%=list1.get(0).getJoindate() %>
+					모임날짜 <%=toDates(list1.get(0).getJoindate()) %>
 					</article>
 				</td>
 			</tr>
@@ -83,8 +99,18 @@ if(list==null||list.size()==0){
 			</tr>
 		</table>
 	<a href="CommunityControl?command=list">글목록</a>
-	<a href="CommunityControl?command=update&seq=<%=list1.get(0).getSeq() %>">수정</a>
-	<a href="CommunityControl?command=delet&seq=<%=list1.get(0).getSeq() %>">삭제</a>
+	
+	<%
+		if(mem.getId().trim().equals(list1.get(0).getId().trim())){
+		
+	%>
+	<a href="CommunityControl?command=update&seq=<%=seq %>">수정</a>
+	
+	<a href="CommunityControl?command=delet&seq=<%=seq %>">삭제</a>
+	
+	<%
+		}
+	%>
 	<br>
 
 
@@ -105,7 +131,9 @@ if(list==null||list.size()==0){
 			
 		<tr>
 			<td> <%= list.get(i).getCommentid() %><br><%=list.get(i).getCommentwdate() %>작성
-			<td rowspan="2"><input type="button" value="같이해요!">  </td>
+			<td rowspan="2">
+		<img src="image/like1.png" style="cursor: pointer;" onclick="location.href='CommunityControl?command=like&seq=<%=list.get(i).getCommentseq() %>'">	
+			</td>
 		</tr>
 		<tr>
 			<td><%=list.get(i).getCommentcontent() %> </td>
@@ -132,7 +160,7 @@ if(list==null||list.size()==0){
 						<input type="hidden" name="id" value="<%=mem.getId() %>">
 		 				<input type="hidden" name="command" value="commentAF">
 		 				<input type="hidden" name="parent" value="<%=seq %>">
-		 				<%System.out.println(seq); %>
+		 				
 					</td>
 				</tr>
 				
@@ -178,8 +206,7 @@ if(list==null||list.size()==0){
 			
 				<td	rowspan="2">
 				<div class="like">
-					<button type="button">좋아요</button><br>
-					<button type="button">싫어요</button>
+				<img src="image/like1.png" style="cursor: pointer;" onclick="location.href='CommunityControl?command=bbslike&seq=<%=list.get(0).getBbsseq() %>'">
 				</div>
 				</td>
 			
@@ -196,36 +223,85 @@ if(list==null||list.size()==0){
 			
 		</tr>
 	</table>
-<a href="CommunityControl?command=list">글목록</a>
-<a href="CommunityControl?command=update&seq=<%=list.get(0).getBbsseq() %>">수정</a>
-<a href="CommunityControl?command=delet&seq=<%=list.get(0).getBbsseq() %>">삭제</a>
+	<a href="CommunityControl?command=list">글목록</a><%
+		if(mem.getId().trim().equals(list.get(0).getBbsid().trim())){
+	%>
+	<a href="CommunityControl?command=update&seq=<%=seq%>">수정</a>
+	
+<a href="CommunityControl?command=delet&seq=<%=seq%>">삭제</a>
+
+<%
+		}
+%>
 <br>
 
 
 <table border="1">
-	<col width="400"> <col width="100">
+	<col width="400"> <col width="100"> <col width="100">
 	<%if(list==null||list.size()==0){
 				
 			%><tr>
-				<td colspan="2">등록된 댓글이 없습니다.</td>
+				<td colspan="3">등록된 댓글이 없습니다.</td>
 				</tr>
 				
 				
 				
 			<%
 	}else{
+		
 		for(int i = 0;i<list.size();i++){
+			
+			
+			System.out.println(list.toString());
+			if(list.get(i).getCommentdel()==1){
+			%>
+				<tr>
+					<td colspan="3">이댓글은 삭제되었습니다. </td>
+				</tr>
+			<%
+			}else if(list.get(i).getCommentdel()==0){
 			%>
 		
 	<tr>
 		<td> <%= list.get(i).getCommentid() %><br><%=list.get(i).getCommentwdate() %>작성
-		<td rowspan="2"><input type="button" value="같이해요!">  </td>
+		<td rowspan="2">
+			<img src="image/like1.png" style="cursor: pointer;" onclick="location.href='CommunityControl?command=commentlike&seq=<%=list.get(i).getCommentseq() %>&id=<%=list.get(i).getCommentid() %>&logid=<%=mem.getId() %>'">
+		</td>
+		<td rowspan="2">
+		<%
+		if(mem.getId().trim().equals(list.get(i).getCommentid().trim())){
+			
+			
+		%>
+				<input type="button" id="edit<%=list.get(i).getCommentseq() %>" class="btn btn-primary" onclick="edit('<%=list.get(i).getCommentseq() %>')" value="수정하기">
+               <input type="hidden" id="save<%=list.get(i).getCommentseq() %>" class="btn btn-primary" onclick="save('<%=list.get(i).getCommentseq() %>', '<%=list.get(0).getBbsparent() %>','<%=mem.getId() %>')" value="저장하기">
+				<button type="button" onclick="delcomment('<%=list.get(i).getCommentseq() %>','<%=list.get(0).getBbsparent()%>','<%=mem.getId() %>')">삭제</button>	
+			
+				
+				
+				
+
+
+		<%
+		}else{
+			%>
+				&nbsp;
+			<% 	
+		}
+		%>
+		
+		</td>
 	</tr>
 	<tr>
-		<td><%=list.get(i).getCommentcontent() %> </td>
+		<td><div class="content<%=list.get(i).getCommentseq() %>" name="content1"><%=list.get(i).getCommentcontent()%></div>
+			
+		 </td>
+		
+		
 	</tr>
 
 <%
+			}
 		}
 	}
 %>
@@ -279,14 +355,32 @@ $(document).ready(function() {
              focus: true                  // set focus to editable area after initializing summernote
      });
      
+     
+
 });
+
 </script>
 
+<script type="text/javascript">
+var edit = function(seq) {
+    $('.content'+seq).summernote({focus: true});
+    $('#edit'+seq).attr('type', 'hidden');
+    $('#save'+seq).attr('type', 'button');
+ };
 
+ var save = function(seq, parentseq, memid) {
+    var content = $('.content'+seq).summernote('code');
+    $('.content'+seq).summernote('destroy');
+    $('#edit'+seq).attr('type', 'button');
+    $('#save'+seq).attr('type', 'hidden');
+    location.href = "CommunityControl?command=commentup&commentseq=" + seq + "&parentseq=" + parentseq + "&upcontent=" + content+"&memid=" + memid;
+ };
 
+ function delcomment( seq,bonseq,memid ) {
+		location.href = "CommunityControl?command=delcomment&seq=" + seq+"&bonseq="+bonseq+"&memid="+memid;
+	}
 
-
-
+</script>
 
 
 </body>

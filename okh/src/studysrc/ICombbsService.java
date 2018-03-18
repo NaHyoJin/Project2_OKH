@@ -11,4 +11,6 @@ public interface ICombbsService {
 	public List<CombbsDto> getpagingComList(PagingBean paging, String searchWord, int search);
 	public List<CombbsDto> commentnull(int seq);
 	public void commentcount(int seq);
+	public void updatebbs(CombbsDto dto,int seq);
+	public void delbbs(int seq);
 }

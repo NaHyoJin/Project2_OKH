@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>study_communitybbscommentAF.jsp</title>
+<title>Insert title here</title>
 </head>
 <body>
 
@@ -35,21 +35,22 @@ int parent = Integer.parseInt(parents);
 ICombbsService service1 = CombbsService.getInstance();
 
 iCommentService service = CommentService.getInstance();
+service1.commentcount(parent);
 boolean isS =service.writecomment(dto);
 if(isS){
 %>
 <script type="text/javascript">
 
-alert("추가성공");
+
 
 location.href="CommunityControl?command=list";
-service1.commentcount(parent);
+
 </script>
 <%
 }else{
 %>
 <script type="text/javascript">
-alert("다시입력해주세요");
+
 location.href="CommunityControl?command=list";
 </script>
 <%

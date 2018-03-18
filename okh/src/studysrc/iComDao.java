@@ -12,4 +12,6 @@ public interface iComDao {
 	
 	public List<CombbsDto> commentnull(int seq);
 	public void commentcount(int seq);
+	public void delbbs(int seq);
+	public void updatebbs(CombbsDto dto,int seq);
 }

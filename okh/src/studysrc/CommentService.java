@@ -17,7 +17,15 @@ public class CommentService implements iCommentService {
 	public boolean writecomment(ComCommentDto dto) {
 		return commentdao.writecomment(dto);
 	}
-	
+	public void delcomment(int seq) {
+		commentdao.delcomment(seq);
+	}
+
+	@Override
+	public void updatecomment(String content, int seq) {
+		commentdao.updatecomment(content, seq);
+		
+	}
 	
 	
 	
