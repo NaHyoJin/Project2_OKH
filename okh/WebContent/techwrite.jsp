@@ -12,13 +12,16 @@ request.setCharacterEncoding("utf-8");
 <html>
 <head> 
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="_write.css?ver=1.37">
+
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/custom.css">
+	<link rel="stylesheet" type="text/css" href="_write.css?ver=1.44">
 <script type="text/javascript">
     
         var openWin;
@@ -38,7 +41,7 @@ request.setCharacterEncoding("utf-8");
  
    </script>
 </head>
-<body>
+<body bgcolor="#fcfbfb">
 <script type="text/javascript">
 	 function write1() {
 			document.getElementById('pdsjsp').submit();
@@ -149,11 +152,14 @@ List<PdsDto> pdslist=null;
 
 		});
 	</script>
+	<div class="titlediv"><h2>새글쓰기</h2><br>
+	</div>
 <div class="wrap">
+	
 	
 	 <form action="TechbbsController" method="post" id="pdsjsp">
 	 <div class="myinfo">
-	 	<h2>새글쓰기</h2>
+	 	
 	 	<p id="test" align="left"><%=mem.getId() %></p>
 		 <input type="hidden" name="id" value="<%=mem.getId()%>">
 		 <input type="hidden" name="command" value="techwriteAf">
@@ -165,18 +171,19 @@ List<PdsDto> pdslist=null;
 	 	<div id="tagdiv">
 	 		</div>
 	 	<textarea name="content" id="summernote"></textarea><br>
+		 <input type="button" class="btn btn-default btn-wide" onclick="gotobbs();" value="취소">
+	<button id="write" style="float: right" class="btn btn-success btn-wide" onclick="write1();">글추가</button>
 		</div>
 	 
 	 
-	  <div class="buttons">
-	 <input type="button" onclick="gotobbs();" value="취소">
-	<button id="write" onclick="write1();">글추가</button>
 	 
-	 </div>
+	
+	 
+	
 	 </form>
 	 <div class="height"></div>
 	 <div class="upload">
-	  <input type="button" value="첨부파일선택" onclick="openChild()"><br>
+	  <input type="button" class="btn btn-primary" value="첨부파일선택" onclick="openChild()"><br>
 	  <input type="text" value="첨부된 파일 " readonly="readonly" class="form-control">
 	 <textarea cols="5" rows="10" id="pInput" readonly="readonly" class="form-control"></textarea>
 	
