@@ -2,7 +2,6 @@
 <%@page import="techpds.PdsDto"%>
 <%@page import="techpds.PdsService"%>
 <%@page import="techpds.PdsServiceImpl"%>
-<%@page import="singleton.Singleton"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="java.util.List"%>
 <%@page import="java.io.File"%>
@@ -65,6 +64,9 @@ String id="";
 String filename="";
 String sseq="";
 String update="";
+String title="";
+String content="";
+String tagString="";
 boolean isMultipart=ServletFileUpload.isMultipartContent(request);
 if(isMultipart){
 	////////////파일용
@@ -92,6 +94,12 @@ if(isMultipart){
 				sseq=item.getString("utf-8");
 			}else if(item.getFieldName().equals("update")){	//content값이넘어온다
 				update=item.getString("utf-8");
+			}else if(item.getFieldName().equals("title")){	//content값이넘어온다
+				title=item.getString("utf-8");
+			}else if(item.getFieldName().equals("tagString")){	//content값이넘어온다
+				tagString=item.getString("utf-8");
+			}else if(item.getFieldName().equals("content")){	//content값이넘어온다
+				content=item.getString("utf-8");
 			}
 		}else{						//input의 file타입을받을때
 			if(item.getFieldName().equals("fileload")){
@@ -120,14 +128,18 @@ if(update.equals("update")){
 	System.out.println(id+"222222"+filename+parent);
 }
 if(isS){
+	System.out.println("성공");
+	System.out.println(title+content+tagString);
 	dto1=new PdsDto(id,filename,(parent+1));
 	request.setAttribute("pdsdto11", dto1);
-	pageContext.forward("techwrite.jsp?command11=addafter");
+	pageContext.forward("Child.jsp?command11=addafter");
 %>
 <%
 }else{
-	pageContext.forward("techwrite.jsp?command11=addafter");
+	System.out.println("실패");
+	pageContext.forward("Child.jsp?command11=faill");
 %>
+
 <%
 }
 %>

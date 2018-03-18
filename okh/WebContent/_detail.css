@@ -154,7 +154,7 @@ input.login {
  	background-color: #fff;
  }
  
-   .like{
+   #like{
     order:2;
 width: 200px;
     margin-bottom: 20px;
@@ -229,4 +229,7 @@ width: 200px;
  }
  #summer{
  width: 700px;
+ }
+ .gotobbs{
+ float: right;
  }

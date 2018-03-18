@@ -25,14 +25,14 @@ public class TechbbsDao implements iTechbbsDao {
 		
 		String sWord = "";		
 		if(search == 0) {	// 제목
-			sWord = " WHERE TITLE LIKE '%" + searchWord.trim() + "%' ";
+			sWord = " AND TITLE LIKE '%" + searchWord.trim() + "%' ";
 		}else if(search == 1) {	// ID
-			sWord = " WHERE ID='" + searchWord.trim() + "' ";
+			sWord = " AND ID='" + searchWord.trim() + "' ";
 		}else if(search == 2) {	// 내용
-			sWord = " WHERE CONTENT LIKE '%" + searchWord.trim() + "%' ";
+			sWord = " AND CONTENT LIKE '%" + searchWord.trim() + "%' ";
 		} 
 		else if(search == 3) {	// 태그네임
-			sWord = " WHERE TAGNAME LIKE '%" + searchWord.trim() + "%' ";
+			sWord = " AND TAGNAME LIKE '%" + searchWord.trim() + "%' ";
 		} 
 		
 		try {
@@ -40,7 +40,7 @@ public class TechbbsDao implements iTechbbsDao {
 			System.out.println("1/6 gettechBbsPagingList Success");
 			
 			// 글의 총수
-			String totalSql = " SELECT COUNT(SEQ) FROM TECHBBS " + sWord;
+			String totalSql = " SELECT COUNT(SEQ) FROM TECHBBS WHERE DEL=0 " + sWord;
 			psmt = conn.prepareStatement(totalSql);
 			rs = psmt.executeQuery();
 			System.out.println("2/6 gettechBbsPagingList Success");
@@ -54,12 +54,21 @@ public class TechbbsDao implements iTechbbsDao {
 			
 			psmt.close();
 			rs.close();
-			
+			if(search == 0) {	// 제목
+				sWord = " WHERE TITLE LIKE '%" + searchWord.trim() + "%' ";
+			}else if(search == 1) {	// ID
+				sWord = " WHERE ID='" + searchWord.trim() + "' ";
+			}else if(search == 2) {	// 내용
+				sWord = " WHERE CONTENT LIKE '%" + searchWord.trim() + "%' ";
+			} 
+			else if(search == 3) {	// 태그네임
+				sWord = " WHERE TAGNAME LIKE '%" + searchWord.trim() + "%' ";
+			} 
 			// row를 취득
 			String sql = " SELECT * FROM "
-						+ " (SELECT * FROM (SELECT * FROM TECHBBS " + sWord + " ORDER BY SEQ ASC)"
-						+ "  WHERE ROWNUM <=" + paging.getStartNum() + " ORDER BY SEQ DESC) "
-						+ " WHERE ROWNUM <=" + paging.getCountPerPage()+" AND DEL=0 ";
+						+ " (SELECT * FROM (SELECT * FROM TECHBBS " + sWord + " ORDER BY SEQ ASC) "
+						+ "  WHERE ROWNUM <= " + paging.getStartNum() + " AND DEL=0 ORDER BY SEQ DESC) "
+						+ " WHERE ROWNUM <= " + paging.getCountPerPage() + " AND DEL=0 ";
 			
 			System.out.println("paging.getStartNum() = " + paging.getStartNum());
 			
@@ -79,9 +88,10 @@ public class TechbbsDao implements iTechbbsDao {
 						rs.getInt(7),
 						rs.getInt(8),
 						rs.getInt(9),
-						rs.getInt(10),
-						rs.getInt(11),
-						rs.getInt(12)
+						rs.getString(10),
+						rs.getString(11),
+						rs.getInt(12),
+						rs.getInt(13)
 						);
 						// seq, id, title, content, wdate, del, readcount, likecount, scrapcount)
 				bbslist.add(dto);				
@@ -102,7 +112,7 @@ public class TechbbsDao implements iTechbbsDao {
 
 	@Override
 	public List<TechbbsDto> gettechBbsList() {
-		String sql = " SELECT SEQ, ID, TITLE,TAGNAME, CONTENT, WDATE, DEL, READCOUNT, LIKECOUNT,COMMENTCOUNT,POINT, SCRAPCOUNT "
+		String sql = " SELECT SEQ, ID, TITLE,TAGNAME, CONTENT, WDATE, DEL, READCOUNT, LIKECOUNT,LIKEID,DISLIKEID,COMMENTCOUNT, SCRAPCOUNT "
 				+ " FROM TECHBBS "
 				+ " ORDER BY SEQ DESC";
 		
@@ -133,9 +143,10 @@ public class TechbbsDao implements iTechbbsDao {
 						rs.getInt(7),
 						rs.getInt(8),
 						rs.getInt(9),
-						rs.getInt(10),
-						rs.getInt(11),
-						rs.getInt(12)
+						rs.getString(10),
+						rs.getString(11),
+						rs.getInt(12),
+						rs.getInt(13)
 						);
 		// seq, id, title, content, wdate, del, readcount, likecount, scrapcount)
 				list.add(dto);
@@ -170,9 +181,9 @@ public class TechbbsDao implements iTechbbsDao {
 		
 		String sql = " INSERT INTO TECHBBS(SEQ, ID, "
 				+ " TITLE, TAGNAME, CONTENT, WDATE, "
-				+ " DEL, READCOUNT,LIKECOUNT,COMMENTCOUNT,POINT,SCRAPCOUNT ) "
+				+ " DEL, READCOUNT,LIKECOUNT,LIKEID,DISLIKEID,COMMENTCOUNT,SCRAPCOUNT ) "
 				+ " VALUES(SEQ_TECHBBS.NEXTVAL, ?, ?, ?,?, "
-				+ " SYSDATE, 0,0,0,0,0,0) ";
+				+ " SYSDATE, 0,0,0,?,?,0,0) ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -190,6 +201,8 @@ public class TechbbsDao implements iTechbbsDao {
 			psmt.setString(2, bbs.getTitle());
 			psmt.setString(3, bbs.getTagname());
 			psmt.setString(4, bbs.getContent());
+			psmt.setString(5, "-admin");
+			psmt.setString(6, "-admin");
 			count = psmt.executeUpdate();
 			
 			System.out.println("3/6 writeBbs Success");
@@ -211,7 +224,7 @@ public class TechbbsDao implements iTechbbsDao {
 		TechbbsDto dto=null;
 		List<TechbbsDto> list=new ArrayList<>();
 		String sql1 = " SELECT SEQ,ID, TITLE,TAGNAME,CONTENT,WDATE,DEL,  "
-				+ " READCOUNT,LIKECOUNT,COMMENTCOUNT,POINT,SCRAPCOUNT "
+				+ " READCOUNT,LIKECOUNT,LIKEID,DISLIKEID,COMMENTCOUNT,SCRAPCOUNT "
 				+ "  FROM TECHBBS "
 				+ " WHERE SEQ=? ";
 		try {
@@ -232,12 +245,13 @@ public class TechbbsDao implements iTechbbsDao {
 			int del = rs.getInt(7);
 			int readcount = rs.getInt(8);
 			int likecount = rs.getInt(9);
-			int commentcount = rs.getInt(10);
-			int point = rs.getInt(11);
-			int scrapcount = rs.getInt(12);
+			String likeid = rs.getString(10);	
+			String dislikeid = rs.getString(11);	
+			int commentcount = rs.getInt(12);
+			int scrapcount = rs.getInt(13);
 			int pdsyn=2;
 			
-			dto = new TechbbsDto(seq1, id, title, tagname, content, wdate,del, readcount, commentcount, point, likecount, scrapcount,pdsyn);
+			dto = new TechbbsDto(seq1, id, title, tagname, content, wdate, del, readcount, commentcount, likecount, scrapcount, pdsyn);
 			list.add(dto);
 			
 		}
@@ -258,7 +272,7 @@ public class TechbbsDao implements iTechbbsDao {
 		List<TechbbsDto> list=new ArrayList<>();
 		TechbbsDto dto=null;
 		String sql = " SELECT B.SEQ,B.ID, B.TITLE,B.TAGNAME,B.CONTENT,B.WDATE, "
-				+ " B.READCOUNT,B.LIKECOUNT,B.COMMENTCOUNT,B.POINT,B.SCRAPCOUNT,P.SEQ,P.FILENAME,P.PARENT "
+				+ " B.READCOUNT,B.LIKECOUNT,B.LIKEID,B.DISLIKEID,B.COMMENTCOUNT,B.SCRAPCOUNT,P.SEQ,P.FILENAME,P.PARENT "
 				+ " FROM TECHBBS B,TECH_PDS P  "
 				+ " WHERE B.ID=P.ID AND B.SEQ=? AND B.SEQ=P.PARENT ";
 		
@@ -278,15 +292,16 @@ public class TechbbsDao implements iTechbbsDao {
 				String wdate = rs.getString(6);	
 				int readcount = rs.getInt(7);
 				int likecount = rs.getInt(8);
-				int commentcount = rs.getInt(9);
-				int point = rs.getInt(10);
-				int scrapcount = rs.getInt(11);
-				int pdsseq=rs.getInt(12);
-				String filename = rs.getString(13);	
-				int parent=rs.getInt(14);
+				String likeid = rs.getString(9);	
+				String dislikeid = rs.getString(10);
+				int commentcount = rs.getInt(11);
+				int scrapcount = rs.getInt(12);
+				int pdsseq=rs.getInt(13);
+				String filename = rs.getString(14);	
+				int parent=rs.getInt(15);
 				int pdsyn=1;
 				
-				dto = new TechbbsDto(seq1, id, title, tagname, content, wdate, readcount, commentcount, point, likecount, scrapcount, filename, parent, pdsseq,pdsyn);
+				dto = new TechbbsDto(seq1, id, title, tagname, content, wdate, readcount,likecount, likeid,dislikeid,commentcount, scrapcount, filename, parent, pdsseq,pdsyn);
 				list.add(dto);
 					
 				System.out.println("5/6 getdetail Success");			
@@ -310,7 +325,7 @@ public class TechbbsDao implements iTechbbsDao {
 		List<TechbbsDto> list=new ArrayList<>();
 		TechbbsDto dto=null;
 		String sql = " SELECT B.SEQ,B.ID, B.TITLE,B.TAGNAME,B.CONTENT,B.WDATE, "
-				+ " B.READCOUNT,B.LIKECOUNT,B.COMMENTCOUNT,B.POINT,B.SCRAPCOUNT,P.SEQ,P.FILENAME,P.PARENT "
+				+ " B.READCOUNT,B.LIKECOUNT,B.LIKEID,B.DISLIKEID,B.COMMENTCOUNT,B.SCRAPCOUNT,P.SEQ,P.FILENAME,P.PARENT "
 				+ " FROM TECHBBS B,TECH_PDS P  "
 				+ " WHERE B.ID=P.ID AND B.SEQ=? AND B.SEQ=P.PARENT ";
 		
@@ -330,16 +345,17 @@ public class TechbbsDao implements iTechbbsDao {
 				String wdate = rs.getString(6);	
 				int readcount = rs.getInt(7);
 				int likecount = rs.getInt(8);
-				int commentcount = rs.getInt(9);
-				int point = rs.getInt(10);
-				int scrapcount = rs.getInt(11);
-				int pdsseq=rs.getInt(12);
-				String filename = rs.getString(13);	
-				int parent=rs.getInt(14);
+				String likeid = rs.getString(9);	
+				String dislikeid = rs.getString(10);
+				int commentcount = rs.getInt(11);
+				int scrapcount = rs.getInt(12);
+				int pdsseq=rs.getInt(13);
+				String filename = rs.getString(14);	
+				int parent=rs.getInt(15);
 				int pdsyn=0;
 				pdsyn=dto!=null?1:2;	//자료있으면 1 자료없으면2
 				
-				dto = new TechbbsDto(seq1, id, title, tagname, content, wdate, readcount, commentcount, point, likecount, scrapcount, filename, parent, pdsseq,pdsyn);
+				dto = new TechbbsDto(seq1, id, title, tagname, content, wdate, readcount,likecount, likeid,dislikeid,commentcount, scrapcount, filename, parent, pdsseq,pdsyn);
 				list.add(dto);
 					
 				System.out.println("5/6 getBbsPagingList Success");			
@@ -357,23 +373,24 @@ public class TechbbsDao implements iTechbbsDao {
 		return dto!=null?true:false;
 	}
 	@Override
-	public void countplus(int seq,String whatcount) {
-		String sql = " UPDATE TECHBBS SET ?=?+1 "
+	public void likecountplus(int seq) {
+		String sql = " UPDATE TECHBBS SET LIKECOUNT=LIKECOUNT+1 "
 				+ " WHERE SEQ=? ";
 		Connection conn=null;
 		PreparedStatement psmt=null;
 		ResultSet rs=null;
-		
+		System.out.println(sql);
 		try {
 			conn = DBConnection.getConnection();	
 			psmt=conn.prepareStatement(sql);
-			psmt.setString(1, whatcount);
-			psmt.setString(2, whatcount);
-			psmt.setInt(3, seq);
-			
+			System.out.println("1/6 countplus Success");	
+			psmt.setInt(1, seq);
+			System.out.println(sql);
+			System.out.println("2/6 countplus Success");	
 			psmt.executeUpdate();			
 			
 		} catch (SQLException e) {
+			System.out.println("countplus fail");	
 			e.printStackTrace();
 		}finally{
 			DBClose.close(psmt, conn, rs);	
@@ -391,12 +408,14 @@ public class TechbbsDao implements iTechbbsDao {
 			conn = DBConnection.getConnection();	
 			psmt=conn.prepareStatement(sql);
 			psmt.setInt(1, seq);
-			
+			System.out.println("2/6 dislikecount Success");	
 			psmt.executeUpdate();			
 			
 		} catch (SQLException e) {
+			System.out.println(" dislikecount fail");	
 			e.printStackTrace();
 		}finally{
+			
 			DBClose.close(psmt, conn, rs);	
 		}		
 	}
@@ -508,6 +527,158 @@ public class TechbbsDao implements iTechbbsDao {
 		} finally {DBClose.close(pstmt, conn, null);}
 		
 		return count>0?true:false;
+	}
+
+	@Override
+	public void readcountplus(int seq) {
+		String sql = " UPDATE TECHBBS SET READCOUNT=READCOUNT+1 "
+				+ " WHERE SEQ=? ";
+		Connection conn=null;
+		PreparedStatement psmt=null;
+		ResultSet rs=null;
+		System.out.println(sql);
+		try {
+			conn = DBConnection.getConnection();	
+			psmt=conn.prepareStatement(sql);
+			System.out.println("1/6 readcountplus Success");	
+			psmt.setInt(1, seq);
+			System.out.println(sql);
+			System.out.println("2/6 readcountplus Success");	
+			psmt.executeUpdate();			
+			
+		} catch (SQLException e) {
+			System.out.println("readcountplus fail");	
+			e.printStackTrace();
+		}finally{
+			DBClose.close(psmt, conn, rs);	
+		}		
+	}
+
+	@Override
+	public void scrapcountplus(int seq) {
+		String sql = " UPDATE TECHBBS SET SCRAPCOUNT=SCRAPCOUNT+1 "
+				+ " WHERE SEQ=? ";
+		Connection conn=null;
+		PreparedStatement psmt=null;
+		ResultSet rs=null;
+		System.out.println(sql);
+		try {
+			conn = DBConnection.getConnection();	
+			psmt=conn.prepareStatement(sql);
+			System.out.println("1/6 scrapcountplus Success");	
+			psmt.setInt(1, seq);
+			System.out.println(sql);
+			System.out.println("2/6 scrapcountplus Success");	
+			psmt.executeUpdate();			
+			
+		} catch (SQLException e) {
+			System.out.println("scrapcountplus fail");	
+			e.printStackTrace();
+		}finally{
+			DBClose.close(psmt, conn, rs);	
+		}		
+	}
+
+	@Override
+	public void commentcountplus(int seq) {
+		String sql = " UPDATE TECHBBS SET COMMENTCOUNT=COMMENTCOUNT+1 "
+				+ " WHERE SEQ=? ";
+		Connection conn=null;
+		PreparedStatement psmt=null;
+		ResultSet rs=null;
+		System.out.println(sql);
+		try {
+			conn = DBConnection.getConnection();	
+			psmt=conn.prepareStatement(sql);
+			System.out.println("1/6 commentcountplus Success");	
+			psmt.setInt(1, seq);
+			System.out.println(sql);
+			System.out.println("2/6 commentcountplus Success");	
+			psmt.executeUpdate();			
+			
+		} catch (SQLException e) {
+			System.out.println("commentcountplus fail");	
+			e.printStackTrace();
+		}finally{
+			DBClose.close(psmt, conn, rs);	
+		}		
+	}
+
+	@Override
+	public void scrapcountminus(int seq) {
+		String sql = " UPDATE TECHBBS SET SCRAPCOUNT=SCRAPCOUNT-1 "
+				+ " WHERE SEQ=? ";
+		Connection conn=null;
+		PreparedStatement psmt=null;
+		ResultSet rs=null;
+		System.out.println(sql);
+		try {
+			conn = DBConnection.getConnection();	
+			psmt=conn.prepareStatement(sql);
+			System.out.println("1/6 scrapcountplus Success");	
+			psmt.setInt(1, seq);
+			System.out.println(sql);
+			System.out.println("2/6 scrapcountplus Success");	
+			psmt.executeUpdate();			
+			
+		} catch (SQLException e) {
+			System.out.println("scrapcountplus fail");	
+			e.printStackTrace();
+		}finally{
+			DBClose.close(psmt, conn, rs);	
+		}		
+	}
+
+	@Override
+	public void commentcountminus(int seq) {
+		String sql = " UPDATE TECHBBS SET COMMENTCOUNT=COMMENTCOUNT-1 "
+				+ " WHERE SEQ=? ";
+		Connection conn=null;
+		PreparedStatement psmt=null;
+		ResultSet rs=null;
+		try {
+			conn = DBConnection.getConnection();	
+			psmt=conn.prepareStatement(sql);
+			System.out.println("1/6 commentcountminus Success");	
+			psmt.setInt(1, seq);
+			System.out.println(sql);
+			System.out.println("2/6 commentcountminus Success");	
+			psmt.executeUpdate();			
+			
+		} catch (SQLException e) {
+			System.out.println("commentcountminus fail");	
+			e.printStackTrace();
+		}finally{
+			DBClose.close(psmt, conn, rs);	
+		}		
+	}
+
+	@Override
+	public boolean checkcomment(int seq) {
+		String sql = " SELECT COMMENTCOUNT FROM TECHBBS "
+				+ " WHERE SEQ=? ";
+		Connection conn=null;
+		PreparedStatement psmt=null;
+		ResultSet rs=null;
+		int commentcount=0;
+		try {
+			conn = DBConnection.getConnection();	
+			psmt=conn.prepareStatement(sql);
+			psmt.setInt(1, seq);
+			rs = psmt.executeQuery();
+			System.out.println("2/6 gettechBbsPagingList Success");
+			
+			rs.next();
+			commentcount = rs.getInt(1);	// row의 총 갯수
+			
+		} catch (SQLException e) {
+			System.out.println(" dislikecount fail");	
+			e.printStackTrace();
+		}finally{
+			
+			DBClose.close(psmt, conn, rs);	
+		}		
+		return commentcount>0?true:false;
 	}
 	
 	

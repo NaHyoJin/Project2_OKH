@@ -2,7 +2,6 @@
 <%@page import="techbbs.TechbbsService"%>
 <%@page import="techbbs.TechbbsServiceImpl"%>
 <%@page import="techbbs.TechbbsDto"%>
-<%@page import="singleton.Singleton"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="java.util.List"%>
 <%@page import="org.apache.commons.fileupload.disk.DiskFileItemFactory"%>
@@ -23,6 +22,17 @@
 <body>
 <%
 TechbbsDto techwritedto=(TechbbsDto)request.getAttribute("techwritedto");
+TechbbsDto return1=(TechbbsDto)request.getAttribute("return1");
+if(return1==null&&techwritedto==null){
+
+%>
+<script type="text/javascript">
+alert("제목과 내용을 입력해주세요");
+location.href="TechbbsController?command=techbbs1";
+</script>
+<%
+}else{
+
 TechbbsServiceImpl service=TechbbsService.getInstance();
 boolean isS=service.writeBbs(techwritedto);
 if(isS){
@@ -39,6 +49,7 @@ alert("다시입력해주세요");
 location.href="TechbbsController?command=techbbs";
 </script>
 <%
+}
 }
 %>
 <script type="text/javascript">

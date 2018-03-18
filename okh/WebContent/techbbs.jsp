@@ -5,7 +5,6 @@
 <%@page import="techbbs.TechbbsDto"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
-<%@page import="singleton.Singleton"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%
@@ -39,6 +38,8 @@ if(ologin == null){
 	return;
 }
 mem = (UserDto)ologin;
+
+
 %>
 
 <!-- 페이징 처리 정보 교환 -->
@@ -66,6 +67,7 @@ else if(choice.equals("tagname")) cho = 3;
 TechbbsServiceImpl tservice=TechbbsService.getInstance();
 
 techlist = tservice.gettechBbsPagingList(paging, findWord, cho);
+System.out.println(techlist.size()+"사이즈크기");
 %>
 
 	<!-- 인클루드 부분 -->
@@ -141,37 +143,43 @@ techlist = tservice.gettechBbsPagingList(paging, findWord, cho);
 			<%if(techlist==null||techlist.size()==0){
 				
 			%><tr>
-				<th colspan="5">리스트가없습니다</td>
+				<th colspan="5">리스트가없습니다</th>
 				</tr>
 			<%
 			}
 			
 			for(int i=0;i<techlist.size();i++){
 				TechbbsDto dto=techlist.get(i);
-				if(dto.getDel()==0){
-				
 				String[] tagnames=tservice.getTagName(dto.getTagname());	
-			%><tr>
+				
+				tservice=TechbbsService.getInstance();
+				boolean chekcomment=tservice.checkcomment(techlist.get(i).getSeq());
+				if(chekcomment){
+			%>
+			<tr>
 				<th>
+			<%
+			}else{
+			%>
+			<tr>
+				<th style="border-left: 5px solid #808080">
 					<span id="tag"><%=i+1 %></span>
 				
-			<%
+			<%}
 			for(int j=0;j<tagnames.length;j++){//추가시킬때무조건추가시킬거는 -없이해도되고 엔터치면 -그값을넣어준다
 			%>
 				<span><button name="tag<%=j%>" id="tag<%=j%>" onclick="searchBbs1(this)" value="<%=tagnames[j]%>"><%=tagnames[j] %></button></span>
 			<%
 			}
 			%>
-			<p><a href="TechbbsController?command=techdetail&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a></p>
+			<p><a href="TechbbsController?command=techdetail&likeid=<%=mem.getId() %>&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a></p>
 			</th>
 			<td><%=dto.getCommentcount() %></td>
 			<td><%=dto.getLikecount() %></td>
 			<td><%=dto.getReadcount() %></td>
-			<td><%=mem.getId() %></td>
+			<td><%=dto.getId() %></td>
 			</tr>
 			<%
-			}else{//del=1일떄표현
-			} 
 			}
 			%>
 		</table>

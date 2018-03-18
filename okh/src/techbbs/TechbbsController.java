@@ -19,7 +19,8 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-import singleton.Singleton;
+import likescrap.LikeScrapService;
+import likescrap.LikeScrapServiceImpl;
 import user.UserDao;
 
 public class TechbbsController extends HttpServlet {
@@ -41,11 +42,13 @@ public class TechbbsController extends HttpServlet {
 		
 		TechbbsServiceImpl tservice=TechbbsService.getInstance();
 		if(command.equals("techbbs")) {
-			
 			List<TechbbsDto> list=tservice.gettechBbsList();
 			request.setAttribute("techbbs", list);
 			dispatch("techbbs.jsp", request, response);
-		}else if(command.equals("techwrite")) {
+		}else if(command.equals("techbbs1")) {
+			response.sendRedirect("techwrite.jsp");
+		}
+		else if(command.equals("techwrite")) {
 			response.sendRedirect("techwrite.jsp");
 		}else if(command.equals("techwriteAf")) {
 			String tagname="TechTips&강좌-";
@@ -53,6 +56,18 @@ public class TechbbsController extends HttpServlet {
 			String id=request.getParameter("id");
 			String title=request.getParameter("title");
 			String content=request.getParameter("content");
+			System.out.println(title+"여기가문제였군"+content);
+			if (title==""||content=="") {
+				System.out.println("여기가문제였군2");
+				TechbbsDto dto1=null;
+				request.setAttribute("return1", dto1);
+				dispatch("techwriteAf.jsp", request, response);
+			}
+			if(tagnames==null) {
+				TechbbsDto dto=new TechbbsDto(id, title, tagname, content);
+				request.setAttribute("techwritedto", dto);
+				dispatch("techwriteAf.jsp", request, response);
+			}else {
 			for(int i=0;i<tagnames.length;i++){
 				tagname+=tagnames[i]+"-";
 			}
@@ -60,12 +75,36 @@ public class TechbbsController extends HttpServlet {
 			TechbbsDto dto=new TechbbsDto(id, title, tagname, content);
 			request.setAttribute("techwritedto", dto);
 			dispatch("techwriteAf.jsp", request, response);
+			}
 		}else if(command.equals("techdetail")) {
+			
+			LikeScrapServiceImpl lsservice=LikeScrapService.getInstance();
 			String sseq = request.getParameter("seq");
 			int seq = Integer.parseInt(sseq);
+			tservice.readcountplus(seq);
+			String likeid = request.getParameter("likeid");
+			TechbbsDto dto=null;
+			TechbbsDto dto1=null;
 			System.out.println(seq+"fdjnfd");
+			//좋아요유무 싫어요유무
+			boolean likeisS=lsservice.isitlikeid(seq, likeid);
+			boolean dislikeisS=lsservice.isitdislikeid(seq, likeid);
 			boolean b=tservice.getparent(seq);
 			List<TechbbsDto> list=new ArrayList<>();
+			if (likeisS) {
+				System.out.println("id찾았다");
+				dto=new TechbbsDto(1, 0);
+			}else {
+				System.out.println("id못찾았다");
+				dto=new TechbbsDto(2, 0);
+			}
+			if(dislikeisS) {
+				System.out.println("싫어요id찾았다");
+				dto1=new TechbbsDto(0, 1);
+			}else {
+				System.out.println("싫어요id못찾았다");
+				dto1=new TechbbsDto(0, 2);
+			}
 			if (b) {
 				list=tservice.getpdsdetail(seq);
 				System.out.println("자료있다");
@@ -73,6 +112,9 @@ public class TechbbsController extends HttpServlet {
 				list=tservice.getdetail(seq);
 				System.out.println("자료없다");
 			}
+			
+			request.setAttribute("fdislikeidyn", dto1);
+			request.setAttribute("flikeidyn", dto);
 			request.setAttribute("whatlist", list);
 			dispatch("techdetail.jsp", request, response);
 		}else if(command.equals("update")) {
@@ -123,25 +165,22 @@ public class TechbbsController extends HttpServlet {
 				dispatch("techbbs.jsp", request, response);
 			}
 		}
-		if(command1==null) {
+		/*if(command1==null) {
 			
 		}
 			
-		else if(command1!=null&&command1.equals("techdetail1")) { 
-			parent=(int)request.getAttribute("seq");
-			System.out.println(parent+"fdjnfd");
-			boolean b=tservice.getparent(parent);
-			List<TechbbsDto> list=new ArrayList<>();
-			if (b) {
-				list=tservice.getpdsdetail(parent);
-				System.out.println("자료있다");
-			}else {
-				list=tservice.getdetail(parent);
-				System.out.println("자료없다");
+		else if(command1!=null&&command1.equals("pdswrite")) { 
+			String tagname="TechTips&강좌-";
+			String[] tagnames=request.getParameterValues("tagnames");	//span태그안의value값다받아오기
+			String id=request.getParameter("id");
+			String title=request.getParameter("title");
+			String content=request.getParameter("content");
+			for(int i=0;i<tagnames.length;i++){
+				tagname+=tagnames[i]+"-";
 			}
-			request.setAttribute("whatlist", list);
-			dispatch("techdetail.jsp", request, response);
-		}
+			tagname=tagname.substring(0, tagname.lastIndexOf("-"));
+			System.out.println(tagname+id+title+command1+content);
+		}*/
 	}
 	public void dispatch(String urls, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		RequestDispatcher _dispatch=req.getRequestDispatcher(urls);

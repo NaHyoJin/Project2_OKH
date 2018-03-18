@@ -12,15 +12,75 @@ request.setCharacterEncoding("utf-8");
 <html>
 <head> 
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="_write.css?ver=1">
+<link rel="stylesheet" type="text/css" href="_write.css?ver=1.37">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+<script type="text/javascript">
+    
+        var openWin;
+    
+        function openChild()
+        {
+            // window.name = "부모창 이름"; 
+            window.name = "parentForm";
+            // window.open("open할 window", "자식창 이름", "팝업창 옵션");
+            openWin = window.open("pdsChild.jsp",
+                    "childForm", "width=570, height=350, resizable = no, scrollbars = no");    
+        }
+        
+        function gotobbs() {
+			location.href="TechbbsController?command=techbbs";
+		}
+ 
+   </script>
 </head>
 <body>
+<script type="text/javascript">
+	 function write1() {
+			document.getElementById('pdsjsp').submit();
+		}
+	 </script>
+<script type="text/javascript">
+history.pushState(null, document.title, location.href); window.addEventListener('popstate', function(event) { history.pushState(null, document.title, location.href); });
+$(document).ready(function() {
+    $('#summernote').summernote({
+            height: 300,                 // set editor height
+            minHeight: null,             // set minimum height of editor
+            maxHeight: null,             // set maximum height of editor
+            focus: true                  // set focus to editable area after initializing summernote
+    });
+});
+$(document).ready(function() {
+  $('#summernote').summernote();
+});
+
+$('input[type="text"]').keydown(function() {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+    }
+});
+$('#tagString').keydown(function() {
+    if (event.keyCode === 13) {
+    	eventonblur();
+    }
+});
+function checkSpace(str) { if(str.search(/\s/) != -1) { return true; } else { return false; } };
+
+function doSelect(elem) {
+	var deletspan=$(elem).attr('name');
+	$("#"+deletspan).remove();
+	$(elem).remove();
+}
+
+$("#pdsup").click(function() {
+	document.getElementById('pdscontrol').submit();
+});
+
+</script>
 <%
 UserDto mem = (UserDto)session.getAttribute("login");
 PdsDto pdsdto=null;
@@ -69,8 +129,20 @@ List<PdsDto> pdslist=null;
 				location.href="LifeBbs?command=life";
 			});
 			
+			
+	/* 
+			//columns
+			$("#").click(function() {
+				location.href="";
+			});
+	 */
 	 
-			//게시판5 나효진 jobs 부분.			
+			//게시판5 나효진 jobs 부분.
+/* 			$("#jobs").click(function() {
+				location.href="main.BBSHWCodingController";
+			});
+ */	 
+			
 			$("#jobs").click(function name() {
 				location.href="jobs";
 			});
@@ -78,53 +150,44 @@ List<PdsDto> pdslist=null;
 		});
 	</script>
 <div class="wrap">
-	<h2>새글쓰기</h2>
-	<div class="writeform">
-	 <form action="TechbbsController" method="post">
-	 	<table class="techinput">
-	 		<tr>
-	 		<td>
-	 			 <p id="test" align="left"><%=mem.getId() %></p>
-	 			 <input type="hidden" name="id" value="<%=mem.getId()%>">
-	 			 <input type="hidden" name="command" value="techwriteAf">
-	 		</td>
-	 		</tr>
-	 		<tr>
-	 		<td>
-	 			 <input type="text" name="title" value="" placeholder="제목을 입력해 주세요." class="form-control" id="title" />
-	 		</td>
-	 		</tr>
-	 		<tr>
-	 		<td>
-	 			 <input type="text" name="tagString" value="" placeholder="Tags," class="form-control" id="tagString" onblur="eventonblur()" />
-	 		<div id="tagdiv">
-	 		</div>
-	 		</td>
-	 		</tr>
-	 		<tr>
-	 		<td>
-	 			<textarea name="content" id="summernote"></textarea>
-	 		</td>
-	 		</tr>
-	    	<tr>
-	 		<td>
-	 			<input type="button" id="cancel" value="취소">
-	 			 <input type="submit" value="글올리기" >
-	 		</td>
-	 		</tr>
-			
-	     
-	     </table>
-	 </form>
-	 <form action="pdsupload.jsp" method="post" enctype="multipart/form-data">
-	 <input type="text" id="addya" readonly="readonly" value="첨부파일" class="form-control">
-	 	<input type="file" name="fileload" style="width: 400px">
-	 	  <input type="hidden" name="id2" value="<%=mem.getId()%>">
-	 	 <input type="submit" id="btn" value="파일올리기" >
-	 </form>
+	
+	 <form action="TechbbsController" method="post" id="pdsjsp">
+	 <div class="myinfo">
+	 	<h2>새글쓰기</h2>
+	 	<p id="test" align="left"><%=mem.getId() %></p>
+		 <input type="hidden" name="id" value="<%=mem.getId()%>">
+		 <input type="hidden" name="command" value="techwriteAf">
 	 </div>
+	 
+	 <div class="writearea">
+	 	<input type="text" name="title" value="" placeholder="제목을 입력해 주세요." class="form-control" id="title" /><br>
+	 	 <input type="text" name="tagString" value="" placeholder="Tags," class="form-control" id="tagString" onblur="eventonblur()" /><br>
+	 	<div id="tagdiv">
+	 		</div>
+	 	<textarea name="content" id="summernote"></textarea><br>
+		</div>
+	 
+	 
+	  <div class="buttons">
+	 <input type="button" onclick="gotobbs();" value="취소">
+	<button id="write" onclick="write1();">글추가</button>
+	 
+	 </div>
+	 </form>
+	 <div class="height"></div>
+	 <div class="upload">
+	  <input type="button" value="첨부파일선택" onclick="openChild()"><br>
+	  <input type="text" value="첨부된 파일 " readonly="readonly" class="form-control">
+	 <textarea cols="5" rows="10" id="pInput" readonly="readonly" class="form-control"></textarea>
+	
+	</div> 
+</div>
 
-</div>  
+
+
+
+	
+
 <%
 PdsServiceImpl pservice=PdsService.getInstance();
 
@@ -145,7 +208,7 @@ if(dto11==null||pdslist==null){
 %>
 <script type="text/javascript">
 var aa=document.getElementById("addya").value;
-$("#addya").val(aa+"<%=dto11.getFilename()%>");	
+$("#addya").val(aa+" - "+"<%=pdslist.get(0).getFilename()%>"+" ");	
 </script>   
 <%
 }else if(pdslist.size()>=1&&dto11!=null&&pdslist!=null){
@@ -155,8 +218,10 @@ $("#addya").val(aa+"<%=dto11.getFilename()%>");
 		 System.out.println("황준현22"+dto22.getFilename());
 %>
 <script type="text/javascript">
+   
+
 var aa=document.getElementById("addya").value;
-$("#addya").val(aa+"<%=dto22.getFilename()%>");	
+$("#addya").val(aa+" - "+"<%=pdslist.get(i).getFilename()%>"+" ");
 </script>  
 <%
 }
@@ -164,11 +229,16 @@ $("#addya").val(aa+"<%=dto22.getFilename()%>");
 %> 
 <script type="text/javascript">
 
-		// 뒤로가기 버튼 방지 
-		history.pushState(null, null, "#noback");
-		$(window).bind("hashchange", function(){
-  		history.pushState(null, null, "#noback");
-		});
+$('input[type="text"]').keydown(function() {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+    }
+});
+$('#tagString').keydown(function() {
+    if (event.keyCode === 13) {
+    	eventonblur();
+    }
+});
 		
 		// F5, ctrl + F5, ctrl + r 새로고침 막기
 		$(document).keydown(function (e) {
@@ -182,14 +252,6 @@ $("#addya").val(aa+"<%=dto22.getFilename()%>");
 		                return false;
 		            }
 		});  
-$(document).ready(function(){
-    $("#tagString").keypress(function (e) {
-     if (e.which == 13){
-    	 eventonblur();  // 실행할 이벤트
-     }
- });
-    
-});
 
 function createInputElement(type,name,value){
 	 if(!type){type='';}
@@ -211,17 +273,27 @@ function createInputElement(type,name,value){
 	
 function eventonblur() {
     var obj=$("#tagString").val();					//input tag text field에 값가져오기
+    if(obj==""){
+    	return;
+    }
 	$("#tagString").val("");						//input tag text field비워주기
 	var span = document.createElement("span")		//input 밑에 span(id=입력한이름)태그생성
-	var jbBtnText = document.createTextNode( obj );
+	var jbBtnText = document.createTextNode(" "+ obj+" " );
 	var inputNode = createInputElement('hidden','tagnames',obj);
-	span.style.background = "#ddeffb";
+	span.style.background = "#5bc1de";
 	span.style.display = "inline-block";
+	span.style.border=" 3px solid #fff";
 	span.id = obj;
-	
-	var button = document.createElement("button")	//span태그옆에 취소버튼(name=cancel)
+	var button = document.createElement("img")	//span태그옆에 취소버튼(name=cancel)
 	var BtnText = document.createTextNode( 'X' );
-	button.name="can"
+	button.name=obj;
+	button.src="image/x.PNG"
+		button.style.cursor="pointer";
+	button.onclick = function(){
+	doSelect(this);
+	}
+	button.style.background = "#5bc1de";
+	button.style.color = "#fff";
 	span.appendChild( jbBtnText );
 	span.appendChild( inputNode );
 	span.appendChild( button );
@@ -229,19 +301,10 @@ function eventonblur() {
 	$("#tagdiv").append(span);						
 	
   }
-  
-$(document).ready(function() {
-    $('#summernote').summernote({
-            height: 300,                 // set editor height
-            minHeight: null,             // set minimum height of editor
-            maxHeight: null,             // set maximum height of editor
-            focus: true                  // set focus to editable area after initializing summernote
-    });
-});
-$(document).ready(function() {
-  $('#summernote').summernote();
-});
+
+
 </script>  
+
 <!-- var formData = new FormData(); 
 	formData.append("id", $("input[name=id2]").val()); 
 	formData.append("fileload", $("input[name=fileload]")[0].files[0]); 

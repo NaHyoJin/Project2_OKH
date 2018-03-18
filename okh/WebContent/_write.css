@@ -102,14 +102,62 @@ input.login {
 	top: 600px;
  }
 .wrap{
-width:800px;
+	display: flex;
+   width: 1000px;
+   height:100%;
+ margin: 10px;
+ padding: 20px;
  position: relative;
  top: 30px;
  left: 300px;
 }
-.writeform{
- background-color: yellow;
-position: absolute;
-width: 800px;
-height: auto;
+.myinfo{
+  padding: 20px;
+  margin-bottom: 20px;
+  float: left;
+  border: 1px solid #bcbcbc;
+  width: 100%;
+    border-collapse: separate;
+    border-spacing: 2px;
+    text-align: left;
+    vertical-align: baseline;
+ 	background-color: #fff;
+ }
+.writearea{
+	order:1;
+  padding: 20px;
+  margin-bottom: 20px;
+  float: left;
+  border: 1px solid #bcbcbc;
+  width: 700px;
+    border-collapse: separate;
+    border-spacing: 2px;
+    text-align: left;
+    vertical-align: baseline;
+ 	background-color: #fff;
+ }
+ .upload{
+ order:2;
+ width: 300px;
+    margin-bottom: 20px;
+    float: right;
+    display:inline-block;
+    padding-top: 175px;
+ }
+ .buttons{
+ clear: both;
+width: 100%;
+ }
+ span {
+	border-radius: 5px;
+}
+.fileload{
+	display: inline-block;
+	float: left;
+}
+.btns{
+	position: absolute;
+	right: 40px;
+	height: 25px;
+	padding-top: 2px;
 }

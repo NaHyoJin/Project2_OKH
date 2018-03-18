@@ -23,8 +23,9 @@ CREATE TABLE TECHBBS(
 	DEL NUMBER(1) NOT NULL,
 	READCOUNT NUMBER(8) NOT NULL,
 	LIKECOUNT NUMBER(8) NOT NULL,
+	LIKEID VARCHAR2(1000),
+	DISLIKEID VARCHAR2(1000),
 	COMMENTCOUNT NUMBER(8) NOT NULL,
-	POINT NUMBER(8) NOT NULL,
 	SCRAPCOUNT NUMBER(8) NOT NULL
 );
 
@@ -56,9 +57,10 @@ public class TechbbsDto implements Serializable {
 	
 	private int del;	// 삭제
 	private int readcount;
-	private int commentcount;
-	private int point;
 	private int likecount;
+	private String likeid;
+	private String dislikeid;
+	private int commentcount;
 	private int scrapcount;
 	
 	private String filename;
@@ -66,9 +68,137 @@ public class TechbbsDto implements Serializable {
 	private int pdsseq;
 	private int pdsys;
 	
+	private int likeidyn;
+	private int dislikeidyn;
+	
+	
+	public TechbbsDto(int likeidyn, int dislikeidyn) {
+		super();
+		this.likeidyn = likeidyn;
+		this.dislikeidyn = dislikeidyn;
+	}
+
+	public TechbbsDto(int seq, String id, String title, String tagname, String content, String wdate, int del,
+			int readcount, int likecount, String likeid, String dislikeid, int likeidyn) {
+		super();
+		this.seq = seq;
+		this.id = id;
+		this.title = title;
+		this.tagname = tagname;
+		this.content = content;
+		this.wdate = wdate;
+		this.del = del;
+		this.readcount = readcount;
+		this.likecount = likecount;
+		this.likeid = likeid;
+		this.dislikeid = dislikeid;
+		this.likeidyn = likeidyn;
+	}
+	public TechbbsDto(int seq, String id, String title, String tagname, String content, String wdate,
+			int readcount, int likecount, String likeid, String dislikeid, int dislikeidyn) {
+		super();
+		this.seq = seq;
+		this.id = id;
+		this.title = title;
+		this.tagname = tagname;
+		this.content = content;
+		this.wdate = wdate;
+		this.del = del;
+		this.readcount = readcount;
+		this.likecount = likecount;
+		this.likeid = likeid;
+		this.dislikeid = dislikeid;
+		this.dislikeidyn = dislikeidyn;
+	}
+	public int getLikeidyn() {
+		return likeidyn;
+	}
+
+	public void setLikeidyn(int likeidyn) {
+		this.likeidyn = likeidyn;
+	}
+
+	public int getDislikeidyn() {
+		return dislikeidyn;
+	}
+
+	public void setDislikeidyn(int dislikeidyn) {
+		this.dislikeidyn = dislikeidyn;
+	}
+
+	public TechbbsDto(int seq, String likeid, String dislikeid) {
+		super();
+		this.seq = seq;
+		this.likeid = likeid;
+		this.dislikeid = dislikeid;
+	}
+
+	public TechbbsDto(int seq, String id, String title, String tagname, String content, String wdate, int readcount,
+			int likecount, String likeid, String dislikeid, int commentcount, int scrapcount, String filename,
+			int parent, int pdsseq, int pdsys) {
+		super();
+		this.seq = seq;
+		this.id = id;
+		this.title = title;
+		this.tagname = tagname;
+		this.content = content;
+		this.wdate = wdate;
+		this.readcount = readcount;
+		this.likecount = likecount;
+		this.likeid = likeid;
+		this.dislikeid = dislikeid;
+		this.commentcount = commentcount;
+		this.scrapcount = scrapcount;
+		this.filename = filename;
+		this.parent = parent;
+		this.pdsseq = pdsseq;
+		this.pdsys = pdsys;
+	}
+
+	public TechbbsDto(int seq, String id, String title, String tagname, String content, String wdate, int del,
+			int readcount, int likecount, String likeid, String dislikeid, int commentcount, int scrapcount) {
+		super();
+		this.seq = seq;
+		this.id = id;
+		this.title = title;
+		this.tagname = tagname;
+		this.content = content;
+		this.wdate = wdate;
+		this.del = del;
+		this.readcount = readcount;
+		this.likecount = likecount;
+		this.likeid = likeid;
+		this.dislikeid = dislikeid;
+		this.commentcount = commentcount;
+		this.scrapcount = scrapcount;
+	}
+
+	public TechbbsDto(int seq, String id, String title, String tagname, String content, String wdate, int del,
+			int readcount, int likecount, String likeid, String dislikeid, int commentcount, int scrapcount,
+			String filename, int parent, int pdsseq, int pdsys) {
+		super();
+		this.seq = seq;
+		this.id = id;
+		this.title = title;
+		this.tagname = tagname;
+		this.content = content;
+		this.wdate = wdate;
+		this.del = del;
+		this.readcount = readcount;
+		this.likecount = likecount;
+		this.likeid = likeid;
+		this.dislikeid = dislikeid;
+		this.commentcount = commentcount;
+		this.scrapcount = scrapcount;
+		this.filename = filename;
+		this.parent = parent;
+		this.pdsseq = pdsseq;
+		this.pdsys = pdsys;
+	}
+
 	//조인으로얻어온값들
 	public TechbbsDto(int seq, String id, String title, String tagname, String content, String wdate, 
-			int readcount, int commentcount, int point, int likecount, int scrapcount, String filename, int parent,
+			int readcount, int commentcount, int likecount, int scrapcount, String filename, int parent,
 			int pdsseq,int pdsys) {
 		super();
 		this.seq = seq;
@@ -79,7 +209,6 @@ public class TechbbsDto implements Serializable {
 		this.wdate = wdate;
 		this.readcount = readcount;
 		this.commentcount = commentcount;
-		this.point = point;
 		this.likecount = likecount;
 		this.scrapcount = scrapcount;
 		this.filename = filename;
@@ -90,7 +219,7 @@ public class TechbbsDto implements Serializable {
 
 	//자료유무판단
 	public TechbbsDto(int seq, String id, String title, String tagname, String content, String wdate, int del,
-			int readcount, int commentcount, int point, int likecount, int scrapcount, int pdsys) {
+			int readcount, int commentcount, int likecount, int scrapcount, int pdsys) {
 		super();
 		this.seq = seq;
 		this.id = id;
@@ -101,7 +230,6 @@ public class TechbbsDto implements Serializable {
 		this.del = del;
 		this.readcount = readcount;
 		this.commentcount = commentcount;
-		this.point = point;
 		this.likecount = likecount;
 		this.scrapcount = scrapcount;
 		this.pdsys = pdsys;
@@ -148,19 +276,11 @@ public class TechbbsDto implements Serializable {
 	}
 
 
-	public int getPoint() {
-		return point;
-	}
-
-
-	public void setPoint(int point) {
-		this.point = point;
-	}
 
 
 	//게시판dto
 	public TechbbsDto(int seq, String id, String title, String tagname, String content, String wdate, int del,
-			int readcount, int commentcount, int point, int likecount, int scrapcount) {
+			int readcount, int commentcount, int likecount, int scrapcount) {
 		super();
 		this.seq = seq;
 		this.id = id;
@@ -171,9 +291,24 @@ public class TechbbsDto implements Serializable {
 		this.del = del;
 		this.readcount = readcount;
 		this.commentcount = commentcount;
-		this.point = point;
 		this.likecount = likecount;
 		this.scrapcount = scrapcount;
+	}
+
+	public String getLikeid() {
+		return likeid;
+	}
+
+	public void setLikeid(String likeid) {
+		this.likeid = likeid;
+	}
+
+	public String getDislikeid() {
+		return dislikeid;
+	}
+
+	public void setDislikeid(String dislikeid) {
+		this.dislikeid = dislikeid;
 	}
 
 	//글쓰기할때dto

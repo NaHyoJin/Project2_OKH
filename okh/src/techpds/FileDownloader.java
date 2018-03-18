@@ -30,7 +30,6 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpUpgradeHandler;
 import javax.servlet.http.Part;
 
-import singleton.Singleton;
 
 public class FileDownloader extends HttpServlet {
 

@@ -11,17 +11,12 @@ DROP SEQUENCE SEQ_TECHREPBBS;
 CREATE TABLE TECHREPBBS(
 	SEQ NUMBER(8) PRIMARY KEY,
 	ID VARCHAR2(50) NOT NULL,
-	
-	REF NUMBER(8) NOT NULL,
-	STEP NUMBER(8) NOT NULL,
-	DEPTH NUMBER(8) NOT NULL,
 
 	CONTENT VARCHAR2(4000) NOT NULL,
 	WDATE DATE NOT NULL,
 	PARENT NUMBER(8) NOT NULL,
 	
-	DEL NUMBER(1) NOT NULL,
-	LIKECOUNT NUMBER(8)
+	DEL NUMBER(1) NOT NULL
 );
 
 CREATE SEQUENCE SEQ_TECHREPBBS
@@ -38,31 +33,21 @@ public class TechRepbbsDto implements Serializable {
 	private int seq;
 	private String id;
 	
-	private int ref;	// 그룹번호
-	private int step;	// 열번호
-	private int depth;	// 깊이
-	
 	private String content;
 	private String wdate;
 	private int parent;	// 부모글
 	
 	private int del;	// 삭제
-	private int likecount;
 	public TechRepbbsDto() {}
-
-	public TechRepbbsDto(int seq, String id, int ref, int step, int depth, String content, String wdate, int parent,
-			int del,int likecount) {
+	
+	public TechRepbbsDto(int seq, String id, String content, String wdate, int parent, int del) {
 		super();
 		this.seq = seq;
 		this.id = id;
-		this.ref = ref;
-		this.step = step;
-		this.depth = depth;
 		this.content = content;
 		this.wdate = wdate;
 		this.parent = parent;
 		this.del = del;
-		this.likecount = likecount;
 	}
 
 	public TechRepbbsDto(String id, String content,int parent) {
@@ -72,13 +57,6 @@ public class TechRepbbsDto implements Serializable {
 		this.parent = parent;
 	}
 	
-	public int getLikecount() {
-		return likecount;
-	}
-
-	public void setLikecount(int likecount) {
-		this.likecount = likecount;
-	}
 
 	public int getSeq() {
 		return seq;
@@ -94,30 +72,6 @@ public class TechRepbbsDto implements Serializable {
 
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	public int getRef() {
-		return ref;
-	}
-
-	public void setRef(int ref) {
-		this.ref = ref;
-	}
-
-	public int getStep() {
-		return step;
-	}
-
-	public void setStep(int step) {
-		this.step = step;
-	}
-
-	public int getDepth() {
-		return depth;
-	}
-
-	public void setDepth(int depth) {
-		this.depth = depth;
 	}
 
 	public String getContent() {

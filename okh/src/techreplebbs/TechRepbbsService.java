@@ -17,20 +17,13 @@ public class TechRepbbsService implements TechRepbbsServiceImpl{
 		// TODO Auto-generated method stub
 		return techrepbbsdao.getRepBbsList(seq);
 	}
-	@Override
-	public boolean answer(int seq, TechRepbbsDto bbs) {
-		// TODO Auto-generated method stub
-		return techrepbbsdao.answer(seq, bbs);
-	}
+	
 	@Override
 	public boolean writeBbs(TechRepbbsDto bbs) {
 		// TODO Auto-generated method stub
 		return techrepbbsdao.writeBbs(bbs);
 	}
-	@Override
-	public void likecountplus(int seq) {
-		techrepbbsdao.likecountplus(seq);
-	}
+	
 	@Override
 	public boolean repupdate(int seq, String content) {
 		// TODO Auto-generated method stub

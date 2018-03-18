@@ -168,7 +168,7 @@
 			
 			<tr>
 				<td colspan="2">
-					<input type="submit" value="글쓰기">
+					<input type="submit" value="글수정">
 				</td>
 			</tr>
 		</table>

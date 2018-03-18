@@ -38,8 +38,8 @@ public class TechbbsService implements TechbbsServiceImpl{
 	}
 	
 	@Override
-	public void countplus(int seq, String whatcount) {
-		techbbsdao.countplus(seq, whatcount);
+	public void likecountplus(int seq) {
+		techbbsdao.likecountplus(seq);
 	}
 	@Override
 	public void dislikecount(int seq) {
@@ -81,6 +81,36 @@ public class TechbbsService implements TechbbsServiceImpl{
 	public boolean repAlldelete(int seq) {
 		// TODO Auto-generated method stub
 		return techbbsdao.repAlldelete(seq);
+	}
+	@Override
+	public void readcountplus(int seq) {
+		// TODO Auto-generated method stub
+		techbbsdao.readcountplus(seq);
+	}
+	@Override
+	public void scrapcountplus(int seq) {
+		// TODO Auto-generated method stub
+		techbbsdao.scrapcountplus(seq);
+	}
+	@Override
+	public void commentcountplus(int seq) {
+		// TODO Auto-generated method stub
+		techbbsdao.commentcountplus(seq);
+	}
+	@Override
+	public void scrapcountminus(int seq) {
+		// TODO Auto-generated method stub
+		techbbsdao.scrapcountminus(seq);
+	}
+	@Override
+	public void commentcountminus(int seq) {
+		// TODO Auto-generated method stub
+		techbbsdao.commentcountminus(seq);
+	}
+	@Override
+	public boolean checkcomment(int seq) {
+		// TODO Auto-generated method stub
+		return techbbsdao.checkcomment(seq);
 	}
 	
 }
