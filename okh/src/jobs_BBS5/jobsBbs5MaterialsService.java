@@ -35,12 +35,15 @@ public class jobsBbs5MaterialsService implements jobsBbs5MaterialsServiceImpl {
 		return pdsdao.getPdsList(parent);
 	}
 
+	//자료실 글 쓰기 부분.
 	@Override
 	public boolean writePds(BbsMaterialsBeanDtoVO pds) {
 		// TODO Auto-generated method stub
-		return false;
+		System.out.println("jobsBbs5MaterialsService writePds");
+		return pdsdao.writePds(pds);
 	}
 
+	//다운로드 수.
 	@Override
 	public boolean downloadcount(int seq) {
 		// TODO Auto-generated method stub
@@ -53,15 +56,26 @@ public class jobsBbs5MaterialsService implements jobsBbs5MaterialsServiceImpl {
 		return null;
 	}
 
+	//디테일 부분.
 	@Override
 	public BbsMaterialsBeanDtoVO getPds(int seq) {
 		// TODO Auto-generated method stub
-		return null;
+		return pdsdao.getPds(seq);
 	}
 
+	//자료실 글 조회수
 	@Override
 	public void readcount(int seq) {
-		
+		pdsdao.readcount(seq);
+	}
+	
+	//글 수정.
+	public boolean updateBbs(BbsMaterialsBeanDtoVO bbs) {
+		return pdsdao.updateBbs(bbs);
+	}
+	//글 삭제.
+	public boolean deleteMaterials(int seq) {
+		return pdsdao.deleteMaterials(seq);
 	}
 
 }

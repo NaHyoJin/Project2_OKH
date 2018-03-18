@@ -23,4 +23,9 @@ public interface jobsBbs5MaterialsDaoImpl {
 	
 	//조회수 부분.
 	public void readcount(int seq);
+	
+	//글 수정.
+	public boolean updateBbs(BbsMaterialsBeanDtoVO bbs);
+	//글 삭제.
+	public boolean deleteMaterials(int seq);
 }

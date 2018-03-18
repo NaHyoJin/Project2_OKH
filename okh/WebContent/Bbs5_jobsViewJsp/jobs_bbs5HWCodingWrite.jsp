@@ -384,7 +384,8 @@
 			<tr>
 				<td colspan="2">
 					<input type="submit" value="글쓰기">
-					<input type="button" id="cancel" value="취소">
+					<input type="reset" id="cancel" value="취소" 
+					onclick="location.href='../BBSHWCodingController?command=HWBbs'">
 				</td>
 			</tr>
 		</table>
