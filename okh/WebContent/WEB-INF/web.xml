@@ -13,11 +13,11 @@ version="3.0">
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   <servlet>
-    <servlet-name>UserControler</servlet-name>
-    <servlet-class>user.UserControler</servlet-class>
+    <servlet-name>UserController</servlet-name>
+    <servlet-class>user.UserController</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>UserControler</servlet-name>
+    <servlet-name>UserController</servlet-name>
     <url-pattern>/User</url-pattern>
   </servlet-mapping>
   
@@ -29,6 +29,14 @@ version="3.0">
   <servlet-mapping>
     <servlet-name>LifeBbsController</servlet-name>
     <url-pattern>/LifeBbs</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>LifeBbssReplyController</servlet-name>
+    <servlet-class>lifeBbs.LifeBbssReplyController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LifeBbssReplyController</servlet-name>
+    <url-pattern>/LifeBbssReply</url-pattern>
   </servlet-mapping>
   
   

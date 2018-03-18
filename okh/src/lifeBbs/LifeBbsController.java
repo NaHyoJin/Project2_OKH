@@ -35,7 +35,7 @@ public class LifeBbsController extends HttpServlet {
 	
 	public void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html;charset=uTF-8");
+		response.setContentType("text/html;charset=UTF-8");
 		
 		String command = request.getParameter("command");
 		
@@ -45,6 +45,7 @@ public class LifeBbsController extends HttpServlet {
 		String content = request.getParameter("content");
 		String tag = request.getParameter("tag");
 		String filename = request.getParameter("filename");
+		String upid = request.getParameter("upid");
 		
 		ILifeBbsDao dao = LifeBbsDao.getInstance();
 		
@@ -71,6 +72,7 @@ public class LifeBbsController extends HttpServlet {
 				response.sendRedirect("lifeBbsList.jsp");
 			}
 		}else if(command.equals("updateAf")) {
+			System.out.println("tag in updateAf : " + tag);
 			boolean isS = dao.updateBbs(new LifeBbsDto(Integer.parseInt(seq), title, content, tag, filename));
 			
 			if(isS) {
@@ -80,7 +82,7 @@ public class LifeBbsController extends HttpServlet {
 			
 			System.out.println("FileDownloader doGet");
 			
-			filename = new String(request.getParameter("filename").getBytes("8859_1"), "KSC5601");
+			filename = new String(request.getParameter("filename").getBytes("UTF-8"), "UTF-8");
 			System.out.println("filename = " + filename);
 			
 			// download 회수를 증가

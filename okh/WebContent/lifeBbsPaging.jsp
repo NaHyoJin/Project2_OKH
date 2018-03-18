@@ -4,6 +4,7 @@
 <%
 String findWord = request.getParameter("findWord");
 String choice = request.getParameter("choice");
+System.out.println("findWord in paging = " + findWord);
 %>
 <%
 String actionPath = request.getParameter("actionPath");			// bbslist.jsp

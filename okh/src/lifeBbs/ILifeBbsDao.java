@@ -15,5 +15,11 @@ public interface ILifeBbsDao {
 	public boolean answer(int seq, LifeBbsDto bbs);
 	
 	public List<LifeBbsDto> getBbsPagingList(LifeBbsPagingDto paging, String searchWord, int search);
+	
+	public boolean writeCountReply(int seq, int countreply);
+	
+	public LifeBbsDto getupdownid(int seq);
+	public boolean updateupid(int seq, int up, String upid);
+	public boolean updatedownid(int seq, int up, String downid);
 
 }

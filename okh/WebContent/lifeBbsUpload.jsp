@@ -1,3 +1,6 @@
+<%@page import="user.UserService"%>
+<%@page import="user.IUserService"%>
+<%@page import="user.IUserDao"%>
 <%@page import="lifeBbs.LifeBbsDto"%>
 <%@page import="lifeBbs.LifeBbsDao"%>
 <%@page import="lifeBbs.ILifeBbsDao"%>
@@ -57,10 +60,12 @@ int yourMaxMemorySize = 100 * 1024;
 String id = "";
 String title = "";
 String content = "";
+String tagBf = "";
 String tag = "";
 
 // file data
 String filename = "";
+String filenames = "";
 
 boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 
@@ -75,15 +80,19 @@ if(isMultipart){
 	
 	ServletFileUpload upload = new ServletFileUpload(factory);
 	upload.setSizeMax(yourMaxRequestSize);							// 파일 업로드 최대 크기
+	upload.setHeaderEncoding("UTF-8");
 	
 	///////////////////////////
 	
 	List<FileItem> items = upload.parseRequest(request);
+	System.out.println("items in upload : " + items);
 	
 	Iterator<FileItem> it = items.iterator();
+	System.out.println("it in upload : " + it);
 	
 	while(it.hasNext()){
 		FileItem item = it.next();
+		item.getString("UTF-8");
 		if(item.isFormField()){
 			if(item.getFieldName().equals("id")){
 				id = item.getString("UTF-8");
@@ -92,13 +101,48 @@ if(isMultipart){
 			}else if(item.getFieldName().equals("content")){
 				content = item.getString("UTF-8");
 			}else if(item.getFieldName().equals("tag")){
-				tag = item.getString("UTF-8");
+				tagBf = item.getString("UTF-8");
+				tag = "사는얘기," + tagBf;
 			}
 		}else{														// file load
 			if(item.getFieldName().equals("fileload")){
 				filename = processUploadFile(item, fupload, out);
+				if(filenames.equals("")){
+					filenames += filename;
+				}else{
+					filenames += "," + filename;
+				}
+			}else if(item.getFieldName().equals("fileload1")){
+				filename = processUploadFile(item, fupload, out);
+				if(filenames.equals("")){
+					filenames += filename;
+				}else{
+					filenames += "," + filename;
+				}
+			}else if(item.getFieldName().equals("fileload2")){
+				filename = processUploadFile(item, fupload, out);
+				if(filenames.equals("")){
+					filenames += filename;
+				}else{
+					filenames += "," + filename;
+				}
+			}else if(item.getFieldName().equals("fileload3")){
+				filename = processUploadFile(item, fupload, out);
+				if(filenames.equals("")){
+					filenames += filename;
+				}else{
+					filenames += "," + filename;
+				}
+			}else if(item.getFieldName().equals("fileload4")){
+				filename = processUploadFile(item, fupload, out);
+				if(filenames.equals("")){
+					filenames += filename;
+				}else{
+					filenames += "," + filename;
+				}
 			}
 			System.out.println("filename : " + filename);
+			System.out.println("filenames : " + filenames);
 		}
 	}
 }else{
@@ -106,16 +150,23 @@ if(isMultipart){
 }
 
 ILifeBbsDao dao = LifeBbsDao.getInstance();
+IUserService service = UserService.getInstance();
 
-boolean isS = dao.writeBbs(new LifeBbsDto(id, title, content, tag, filename));
+boolean isS = dao.writeBbs(new LifeBbsDto(id, title, content, tag, filenames));
 
 if(isS){
-%>
-	<script type="text/javascript">
-	alert("파일 업로드 성공");
-	location.href = "lifeBbsList.jsp";
-	</script>
-<%
+	// score +5
+	int score = service.getScore(id);
+	score += 5;
+	boolean SS = service.updateScore(id, score);
+	if(SS){
+		%>
+		<script type="text/javascript">
+		alert("파일 업로드 성공");
+		location.href = "lifeBbsList.jsp";
+		</script>
+		<%
+	}
 }else{
 %>
 	<script type="text/javascript">

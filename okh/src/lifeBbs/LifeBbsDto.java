@@ -21,13 +21,16 @@ CREATE TABLE LIFEBBS(
 	TAG VARCHAR2(200),
 	FILENAME VARCHAR2(50),
 	UP NUMBER(8) NOT NULL,
-	DOWN NUMBER(8) NOT NULL,
+	UPID VARCHAR2(4000),
+	DOWNID VARCHAR2(4000),
 	WDATE DATE NOT NULL,
 	PARENT NUMBER(8) NOT NULL,
 	
 	DEL NUMBER(1) NOT NULL,
 	READCOUNT NUMBER(8) NOT NULL,
-	DOWNCOUNT NUMBER(8) NOT NULL
+	DOWNCOUNT NUMBER(8) NOT NULL,
+	
+	COUNTREPLY NUMBER(8) NOT NULL
 );
 
 CREATE SEQUENCE SEQ_LIFEBBS
@@ -52,19 +55,23 @@ public class LifeBbsDto implements Serializable {
 	private String tag;
 	private String filename;
 	private int up;			// 추천
-	private int down;		// 반대
+	private String upid;
+	private String downid;
 	private String wdate;	// 작성일
 	private int parent;		// 부모글
 	
 	private int del;		// 삭제여부 삭제X : 0 삭제O : 1
 	private int readcount;
 	private int downcount;
+
+	private int countreply;
 	
 	public LifeBbsDto() {
 	}
 
 	public LifeBbsDto(int seq, String id, int ref, int step, int depth, String title, String content, String tag,
-			String filename, int up, int down, String wdate, int parent, int del, int readcount, int downcount) {
+			String filename, int up, String upid, String downid, String wdate, int parent, int del, int readcount,
+			int downcount, int countreply) {
 		super();
 		this.seq = seq;
 		this.id = id;
@@ -76,7 +83,51 @@ public class LifeBbsDto implements Serializable {
 		this.tag = tag;
 		this.filename = filename;
 		this.up = up;
-		this.down = down;
+		this.upid = upid;
+		this.downid = downid;
+		this.wdate = wdate;
+		this.parent = parent;
+		this.del = del;
+		this.readcount = readcount;
+		this.downcount = downcount;
+		this.countreply = countreply;
+	}
+
+	public LifeBbsDto(int seq, String id, int ref, int step, int depth, String title, String content, String tag,
+			String filename, int up, String wdate, int parent, int del, int readcount, int downcount,
+			int countreply) {
+		super();
+		this.seq = seq;
+		this.id = id;
+		this.ref = ref;
+		this.step = step;
+		this.depth = depth;
+		this.title = title;
+		this.content = content;
+		this.tag = tag;
+		this.filename = filename;
+		this.up = up;
+		this.wdate = wdate;
+		this.parent = parent;
+		this.del = del;
+		this.readcount = readcount;
+		this.downcount = downcount;
+		this.countreply = countreply;
+	}
+
+	public LifeBbsDto(int seq, String id, int ref, int step, int depth, String title, String content, String tag,
+			String filename, int up, String wdate, int parent, int del, int readcount, int downcount) {
+		super();
+		this.seq = seq;
+		this.id = id;
+		this.ref = ref;
+		this.step = step;
+		this.depth = depth;
+		this.title = title;
+		this.content = content;
+		this.tag = tag;
+		this.filename = filename;
+		this.up = up;
 		this.wdate = wdate;
 		this.parent = parent;
 		this.del = del;
@@ -100,6 +151,13 @@ public class LifeBbsDto implements Serializable {
 		this.content = content;
 		this.tag = tag;
 		this.filename = filename;
+	}
+
+	public LifeBbsDto(int up, String upid, String downid) {
+		super();
+		this.up = up;
+		this.upid = upid;
+		this.downid = downid;
 	}
 
 	public int getSeq() {
@@ -182,14 +240,6 @@ public class LifeBbsDto implements Serializable {
 		this.up = up;
 	}
 
-	public int getDown() {
-		return down;
-	}
-
-	public void setDown(int down) {
-		this.down = down;
-	}
-
 	public String getWdate() {
 		return wdate;
 	}
@@ -230,12 +280,36 @@ public class LifeBbsDto implements Serializable {
 		this.downcount = downcount;
 	}
 
+	public int getCountreply() {
+		return countreply;
+	}
+
+	public void setCountreply(int countreply) {
+		this.countreply = countreply;
+	}
+
+	public String getUpid() {
+		return upid;
+	}
+
+	public void setUpid(String upid) {
+		this.upid = upid;
+	}
+
+	public String getDownid() {
+		return downid;
+	}
+
+	public void setDownid(String downid) {
+		this.downid = downid;
+	}
+
 	@Override
 	public String toString() {
 		return "LifeBbsDto [seq=" + seq + ", id=" + id + ", ref=" + ref + ", step=" + step + ", depth=" + depth
 				+ ", title=" + title + ", content=" + content + ", tag=" + tag + ", filename=" + filename + ", up=" + up
-				+ ", down=" + down + ", wdate=" + wdate + ", parent=" + parent + ", del=" + del + ", readcount="
-				+ readcount + ", downcount=" + downcount + "]";
+				+ ", upid=" + upid + ", downid=" + downid + ", wdate=" + wdate + ", parent=" + parent + ", del=" + del
+				+ ", readcount=" + readcount + ", downcount=" + downcount + ", countreply=" + countreply + "]";
 	}
 
 	

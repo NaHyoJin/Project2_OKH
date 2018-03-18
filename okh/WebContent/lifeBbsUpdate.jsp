@@ -109,7 +109,7 @@
 			<tr>
 				<td>Tag</td>
 				<td>
-					<input type="text" id="tag" value="<%=bbs.getTag() %>" data-role="tagsinput">
+					<input type="text" id="tag" name="tag" value="<%=bbs.getTag() %>" data-role="tagsinput">
 				</td>
 			</tr>
 			

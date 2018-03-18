@@ -1,3 +1,6 @@
+<%@page import="lifeBbs.LifeBbssReplyDao"%>
+<%@page import="lifeBbs.ILifeBbssReplyDao"%>
+<%@page import="lifeBbs.LifeBbssReplyDto"%>
 <%@page import="lifeBbs.LifeBbsDto"%>
 <%@page import="java.util.List"%>
 <%@page import="lifeBbs.LifeBbsDao"%>
@@ -30,6 +33,7 @@ if(choice == null){
 }
 if(findWord == null || findWord.equals("")){
 	choice = "title";
+	findWord = "";
 }
 %>
 
@@ -49,8 +53,7 @@ if(findWord == null || findWord.equals("")){
 		<input type="button" class="techbbs_hjh" id="techbbs">
 		<input type="button" class="bbs3">
 		<input type="button" class="bbs4">
-		<input type="button" class="bbs5" id="jobs">
-		<input type="button" class="bbs6" id="life">
+		<input type="button" class="bbs5" id="life">
 	</div>
 	<script type="text/javascript">
 	$(function() {
@@ -105,17 +108,18 @@ if(findWord == null || findWord.equals("")){
 		%>
 		
 		<%
-		if(findWord == null){
-			findWord = "";
-		}
+		if(findWord == null) findWord = "";
 		int cho = 0;
 		
-		if(choice == null) cho = 0;
-		else if(choice.equals("title")) cho = 0;
+		if(choice.equals("title")) cho = 0;
 		else if(choice.equals("writer")) cho = 1;
+		else if(choice.equals("content")) cho = 2;
 		
 		ILifeBbsDao dao = LifeBbsDao.getInstance();
+		ILifeBbssReplyDao rdao = LifeBbssReplyDao.getInstance();
+		
 		List<LifeBbsDto> bbslist = dao.getBbsPagingList(paging, findWord, cho);
+		List<LifeBbssReplyDto> replylist = rdao.reply();
 		%>
 		
 		<div>
@@ -144,9 +148,22 @@ if(findWord == null || findWord.equals("")){
 				%>
 				<td colspan="3" align="center">삭제된 글입니다.</td>
 				<%
-				}else{
+				}else if(bbs.getCountreply() == 0){
+					System.out.println(bbs.getTitle() + "의 counterreply : " + bbs.getCountreply());
 				%>
-				<td><%=i+1 %></td>
+				<td style="border-left: 5px solid gray;"><%=i+1 %></td>
+				<td>
+					<%=arrow(bbs.getDepth()) %>
+					<a href="LifeBbs?command=detail&seq=<%=bbs.getSeq() %>">
+						<%=bbs.getTitle() %>
+					</a>
+				</td>
+				<td><%=bbs.getId() %></td>
+				<%
+				}else{
+					System.out.println(bbs.getTitle() + "의 counterreply : " + bbs.getCountreply());
+				%>
+				<td style="border-left: 5px solid blue;"><%=i+1 %></td>
 				<td>
 					<%=arrow(bbs.getDepth()) %>
 					<a href="LifeBbs?command=detail&seq=<%=bbs.getSeq() %>">
@@ -165,6 +182,7 @@ if(findWord == null || findWord.equals("")){
 		<br>
 		<jsp:include page="lifeBbsPaging.jsp">
 			<jsp:param name="actionPath" value="lifeBbsList.jsp"/>
+			<jsp:param name="findWord" value="<%=findWord %>" />
 			<jsp:param name="nowPage" value="<%=String.valueOf(paging.getNowPage()) %>" />
 			<jsp:param name="totalCount" value="<%=String.valueOf(paging.getTotalCount()) %>" />
 			<jsp:param name="countPerPage" value="<%=String.valueOf(paging.getCountPerPage()) %>" />

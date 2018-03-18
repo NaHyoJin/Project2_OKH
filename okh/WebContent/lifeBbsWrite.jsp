@@ -33,7 +33,6 @@
 		<input type="button" class="techbbs_hjh" id="techbbs">
 		<input type="button" class="bbs3">
 		<input type="button" class="bbs4">
-		<input type="button" class="bbs5" id="jobs"><!-- 나효진 게시판5 -->
 		<input type="button" class="bbs5" id="life">
 	</div>
 	<script type="text/javascript">
@@ -44,11 +43,6 @@
 		$("#account").click(function() {
 			location.href = "User?command=join";
 		});
-		
-		$("#jobs").click(function() {
-			location.href = "jobs";
-		});
-		
 		$("#life").click(function() {
 			location.href = "LifeBbs?command=life";
 		});
@@ -76,6 +70,18 @@
 	             maxHeight: null,             // set maximum height of editor
 	             focus: true                  // set focus to editable area after initializing summernote
 	     });
+	});
+	</script>
+	
+	<script type="text/javascript">
+	$(document).ready(function() {
+		var i = 1;
+		$('#uploadBtn').click(function() {
+			$('#fileload' + i).attr('type', 'file');
+			if(i < 5){
+				i++;
+			}
+		});
 	});
 	</script>
 	
@@ -115,6 +121,12 @@
 				<td>파일 업로드</td>
 				<td>
 					<input type="file" name="fileload" style="widows: 400px">
+					<input type="hidden" id="fileload1" name="fileload1" style="widows: 400px">
+					<input type="hidden" id="fileload2" name="fileload2" style="widows: 400px">
+					<input type="hidden" id="fileload3" name="fileload3" style="widows: 400px">
+					<input type="hidden" id="fileload4" name="fileload4" style="widows: 400px">
+					<br>
+					<input type="button" id="uploadBtn" value="추가">
 				</td>
 			</tr>
 			

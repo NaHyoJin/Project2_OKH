@@ -136,4 +136,73 @@ public class UserDao implements IUserDao {
 		return count>0;
 	}
 
+	@Override
+	public int getScore(String userID) {
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		String sql = " SELECT SCORE FROM OKHMEM WHERE ID=? ";
+		
+		int score = 0;
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 getScore Success");
+			
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 getScore Success");
+			
+			psmt.setString(1, userID);
+			System.out.println("3/6 getScore Success");
+			
+			rs = psmt.executeQuery();
+			System.out.println("4/6 getScore Success");
+			
+			if(rs.next()) {
+				score = rs.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("getScore Fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+		return score;
+	}
+
+	@Override
+	public boolean updateScore(String userID, int score) {
+		String sql = " UPDATE OKHMEM SET SCORE=? WHERE ID=? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		
+		int count = 0;
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 updateScore Success");
+			
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 updateScore Success");
+			
+			psmt.setInt(1, score);
+			psmt.setString(2, userID);
+			
+			count = psmt.executeUpdate();
+			System.out.println("3/6 updateScore Success");
+			
+		} catch (SQLException e) {
+			System.out.println("updateScore Fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);
+		}
+		
+		return count>0;
+	}
+
 }
