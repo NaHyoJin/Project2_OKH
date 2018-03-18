@@ -76,7 +76,15 @@ version="3.0">
     <servlet-name>TechRepbbsController</servlet-name>
     <url-pattern>/TechRepbbsController</url-pattern>
   </servlet-mapping>
-  
+     <!-- 좋아요스크랩처리 -->
+  <servlet>
+    <servlet-name>LikeScrapController</servlet-name>
+    <servlet-class>likescrap.LikeScrapController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LikeScrapController</servlet-name>
+    <url-pattern>/LikeScrapController</url-pattern>
+  </servlet-mapping>
   <!-- qnabbs 게시판 -->
   <servlet>
   	<servlet-name>qnaServlet</servlet-name>

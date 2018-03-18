@@ -153,10 +153,11 @@ String choice=request.getParameter("choice");
 	         %>
 	         <li class="step">
 	            <a href="#" onclick="gotoPage('<%=nextPage %>')">&gt;</a>
+	            </li>
 	         <%
 	         }else{
 	         %>
-	            <li class="step"><a href="javascript:void(0)" >&gt;;</a></li>
+	            <li class="step"><a href="javascript:void(0)" >&gt;</a></li>
 	         <%
 	         }
 	         %>

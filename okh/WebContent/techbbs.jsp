@@ -31,7 +31,7 @@ String choice = request.getParameter("choice");
 
 <!-- 폰트  -->
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="_techbbs.css?ver=1.58">
+<link rel="stylesheet" type="text/css" href="_techbbs.css?ver=1.59">
 </head>
 <body bgcolor="#fcfbfb">
 <%//로그인한id가져오기
@@ -141,9 +141,20 @@ System.out.println(techlist.size()+"사이즈크기");
 
 		});
 	</script>
-	<div class="titlediv"><h2>기술게시판</h2><br>
+	<div class="titlediv"><span class="titi">기술게시판</span>
 	<button class="create btn btn-success btn-wide pull-right " type="button" id="techwrite">게시글쓰기</button></div>
+	
 <div class="wrap">
+<div class="sercharea">
+<select id="choice" style="height: 30px">
+		<option value="tagname" <%if(cho==3){ out.println("selected");}%>>선택하세요</option>
+		<option value="title" <%if(cho==0){ out.println("selected");}%>>제목</option>
+		<option value="writer" <%if(cho==1){ out.println("selected");}%>>작성자</option>
+		<option value="content" <%if(cho==2){ out.println("selected");}%>>내용</option>
+		</select>
+<input type="text" class="inputField" id="search" value="<%=findWord %>">
+<button name="search" id="serchbtn" class="input-group-btn" onclick="searchBbs()"><img alt="" src="image/serchbtn.PNG"></button>
+</div>
 	<div class="board">
 		<table border="1" class="techtable">
 		<col width="450"><col width="80"><col width="80"><col width="80"><col width="150">
@@ -233,16 +244,7 @@ System.out.println(techlist.size()+"사이즈크기");
 	<jsp:param name="countPerPage" value="<%=String.valueOf(paging.getCountPerPage()) %>" />
 	<jsp:param name="blockCount" value="<%=String.valueOf(paging.getBlockCount()) %>" />
 </jsp:include>
-<div class="sercharea">
-<select id="choice" style="height: 27px; margin-right: 15px;">
-		<option value="tagname" <%if(cho==3){ out.println("selected");}%>>선택하세요</option>
-		<option value="title" <%if(cho==0){ out.println("selected");}%>>제목</option>
-		<option value="writer" <%if(cho==1){ out.println("selected");}%>>작성자</option>
-		<option value="content" <%if(cho==2){ out.println("selected");}%>>내용</option>
-		</select>
-<input type="text" style="width: 304px" id="search" value="<%=findWord %>">
-<button name="search" class="btn btn-primary" onclick="searchBbs()">검색</button>
-</div>
+
 <script type="text/javascript">
 if(document.getElementById("choice").value=="tagname"){
 	$("#search").val("");
