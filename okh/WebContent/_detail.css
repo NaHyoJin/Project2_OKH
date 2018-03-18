@@ -15,15 +15,33 @@ time, mark, audio, video {
 	margin: 0;
 	padding: 0;
 	border: 0;
-	font-size: 100%;
-	font: inherit;
 	vertical-align: baseline;
+}
+body{
+	background-color: #fcfbfb;
+}
+h2{
+	font-family: 'Nanum Gothic', sans-serif;
 }
 .menu{
 position: fixed;
+top:0px;
 width: 240px;
 height: 100%;
 background-color: #0059ab;
+}
+.titlediv{
+	  width: 1000px;
+   height:100%;
+ margin-top:0;
+  margin-bottom:50px;
+ padding: 20px;
+ position: relative;
+ top: 20px;
+ left: 300px;
+}
+.titlediv button{
+	margin-right: 30px;
 }
 input.login {
         background: url(image/login.PNG) no-repeat;
@@ -98,22 +116,36 @@ input.login {
    position: absolute;
 	top: 600px;
  }
+ 
  .wrap{
    width: 940px;
    height:100%;
  margin: 10px;
- padding: 20px;
+ padding-bottom:15px;
  border: 1px solid #bcbcbc;
  position: relative;
  top: 30px;
  left: 300px;
+ background-color: #fff;
  }
- 
+ .hjhtag{
+	font-size:10px;
+	color:#fff;
+	background-color: #c0c0c0;
+	border: 1px solid #fff;
+	border-radius: 6px;
+	padding: 3px 10px 3px 10px;
+}
+#tag0{
+	font-size:10px;
+	color:#fff;
+	background-color: #5bc1de;
+	border: 1px solid #fff;
+	border-radius: 6px;
+}
  .myinfo{
   padding: 20px;
-  margin-bottom: 20px;
   float: left;
-  border: 1px solid #bcbcbc;
   width: 100%;
     border-collapse: separate;
     border-spacing: 2px;
@@ -129,8 +161,7 @@ input.login {
  display: flex;
   margin-bottom: 20px;
   float: left;
-  border: 1px solid #bcbcbc;
-  width:898px;
+  width:100%;
   height:100%;
     border-collapse: separate;
     border-spacing: 2px;
@@ -144,8 +175,7 @@ input.login {
   padding: 20px;
   margin-bottom: 20px;
   float: left;
-  border: 1px solid #bcbcbc;
-  width: 700px;
+  width: 100%;
     border-collapse: separate;
     border-spacing: 2px;
     border-bottom: 1px solid #DDD;
@@ -156,14 +186,29 @@ input.login {
  
    #like{
     order:2;
-width: 200px;
+width: 204px;
     margin-bottom: 20px;
     float: right;
-    border: 1px solid #bcbcbc;
+     border-bottom: 1px solid #DDD;
+      border-left: 1px solid #DDD;
+      text-align: center;
+ }
+ #cocoun{
+  display:inline-block;
+ border: 1px solid #c0c0c0;
+	border-radius: 6px;
+	padding: 0 15px 0 15px;
+	margin-left: 6px;
+ }
+ #changeli, #changedisli{
+ display:block;
+ 	padding-top: 20px;
+ }
+ #scrapimg{
+ padding-bottom: 20px;
  }
    .qna{
    clear: both;
-  border: 1px solid #bcbcbc;
 width: 100%;
  }
  
@@ -173,6 +218,7 @@ width: 100%;
     border: none;
     border-collapse: separate;
     border-spacing: 2px;
+   
 }
  
 .reptable th {
@@ -192,6 +238,14 @@ width: 100%;
     border-bottom: 1px solid #DDD;
     text-align: left;
     vertical-align: baseline;
+     padding-bottom: 15px;
+}
+#frm{
+	margin-bottom: 15px;
+}
+.buttons{
+	text-align: center;
+	margin: 5px;
 }
  .replistwrap{
  display: flex;
@@ -229,7 +283,4 @@ width: 200px;
  }
  #summer{
  width: 700px;
- }
- .gotobbs{
- float: right;
  }

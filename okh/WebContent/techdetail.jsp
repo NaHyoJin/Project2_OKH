@@ -18,7 +18,7 @@ request.setCharacterEncoding("utf-8");
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>techdetail.jsp</title>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<link rel="stylesheet" type="text/css" href="_detail.css?ver=1.36">
+
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
@@ -26,8 +26,8 @@ request.setCharacterEncoding("utf-8");
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 <script src="js/bootstrap.min.js"></script>
 	<script src="js/bootstrap.js"></script>
-	<link rel="stylesheet" href="css/bootstrap.css">
-	<link rel="stylesheet" href="css/custom.css">
+
+<link rel="stylesheet" type="text/css" href="_detail.css?ver=1.41">
 </head>
 <body>
 <script type="text/javascript">
@@ -134,6 +134,9 @@ List<TechRepbbsDto> replist=trservice.getRepBbsList(whatlist.get(0).getSeq());
 
 		});
 	</script>
+	<div class="titlediv"><h2>TechTips</h2><br>
+	<button onclick="location.href='TechbbsController?command=techbbs1'" class="create btn btn-success btn-wide pull-right ">새 글 쓰기</button>
+	</div>
 <div class="wrap">
 	<div class="myinfo"><%=mem.getId() %><%=whatlist.get(0).getWdate() %><br>
 		<p class="myinfo_icon">
@@ -143,18 +146,21 @@ List<TechRepbbsDto> replist=trservice.getRepBbsList(whatlist.get(0).getSeq());
 	</div>
 	<div class="contentareawrap">
 	<div class="contentarea">
+	<p>
+		#<%=whatlist.get(0).getSeq() %>
+		
 		<%for(int i=0;i<tagnames.length;i++){
 		%>
-			<%=tagnames[i] %>
+			<span class="hjhtag" id="tag<%=i%>"><%=tagnames[i] %></span>
 		<%
 		}
 		%>
-		
+	</p>	
 		<br>
 		<h2 class="title">
 		<%=whatlist.get(0).getTitle() %>
 		</h2>
-	
+	<hr>
 	<article class="content">
 		<%=whatlist.get(0).getContent() %>
 		
@@ -163,10 +169,11 @@ List<TechRepbbsDto> replist=trservice.getRepBbsList(whatlist.get(0).getSeq());
 	<div id="like">
 	<!-- 좋아요스크랩기능 -->
 		<a href="LikeScrapController?command=likeimg&likeid=<%=mem.getId() %>&seq=<%=whatlist.get(0).getSeq()%>" id="changeli"><img src="image/likeoff.PNG" id="likeimg"></a><br>
-		<%=whatlist.get(0).getLikecount() %><br>
+		<p style="font-size: 25px"><%=whatlist.get(0).getLikecount() %></p>
 		<a href="LikeScrapController?command=dislikeimg&dislikeid=<%=mem.getId() %>&seq=<%=whatlist.get(0).getSeq()%>"id="changedisli"><img src="image/dislikeoff.PNG" id="dislikeimg"></a><br>
 		<a href="LikeScrapController?command=scrapimg&scrapid=<%=mem.getId() %>&seq=<%=whatlist.get(0).getSeq()%>"><img src="image/scrap.PNG" id="scrapimg"></a><br>
-		<%=whatlist.get(0).getScrapcount()%>
+		<span id="cocoun"><%=whatlist.get(0).getScrapcount()%></span>
+		<br><br>
 		<%
 		System.out.println(whatlist.size()+"리스트사이즈");
 		if(whatlist.size()==1&&pdsyn==2){
@@ -184,8 +191,7 @@ List<TechRepbbsDto> replist=trservice.getRepBbsList(whatlist.get(0).getSeq());
 		}
 		if(mem.getId().equals(whatlist.get(0).getId())){
 		%>
-		<button type="button" onclick="updatebbs('<%=whatlist.get(0).getSeq() %>')">수정</button>
-		<button type="button" onclick="deletebbs('<%=whatlist.get(0).getSeq() %>')">삭제</button>	
+		<img alt="" src="image/settingbtn.PNG" style="cursor: pointer; padding-bottom: 20px;" id="btnPopover">
 		<%
 		}
 		%>
@@ -201,9 +207,11 @@ List<TechRepbbsDto> replist=trservice.getRepBbsList(whatlist.get(0).getSeq());
 	</div>
 	<!-- 답글게시판뿌리기 -->
 	<div class="qna">
+	<input type="text" value="댓글  <%=whatlist.get(0).getCommentcount() %>" readonly="readonly" class="form-control">
+
 	<form action="TechRepbbsController" id="upda">
 		<table border="1" class="reptable">
-
+		<col width="850"><col width="175">
 <%
 if(replist == null || replist.size() == 0){
 	%>	
@@ -217,7 +225,7 @@ if(replist == null || replist.size() == 0){
 	<%
 }else{
 	%>
-	<tr><td colspan="2"><h5>댓글 <span><%=whatlist.get(0).getCommentcount() %></span></h5></td></tr>
+	
 	<%
 for(int i = 0;i < replist.size(); i++){
 	TechRepbbsDto bbs = replist.get(i);
@@ -225,20 +233,19 @@ for(int i = 0;i < replist.size(); i++){
 	<tr>
 		
 		<td>
-			
-			
-			
 				<%=mem.getId() %>
 				<article class="content<%=bbs.getSeq() %>" name="content"><%=bbs.getContent() %></article>
-		</td>		
-			<td> 
+				
+		</td>
+		<td style="border-left: 1px solid #DDD">	
 				<%
 				if(mem.getId().equals(bbs.getId())){
 				%>
+				<div class="buttons">
 				<input type="button" id="edit<%=bbs.getSeq() %>" class="btn btn-primary" onclick="edit('<%=bbs.getSeq() %>')" value="수정하기">
                <input type="hidden" id="save<%=bbs.getSeq() %>" class="btn btn-primary" onclick="save('<%=bbs.getSeq() %>', '<%=bbs.getParent() %>','<%=mem.getId() %>')" value="저장하기">
-				<button type="button" onclick="redeletebbs('<%=bbs.getSeq() %>','<%=bbs.getParent()%>','<%=mem.getId() %>')">삭제</button>	
-			
+				<button type="button" class="btn btn-primary" onclick="redeletebbs('<%=bbs.getSeq() %>','<%=bbs.getParent()%>','<%=mem.getId() %>')">삭제</button>	
+				</div>
 			
 				<%
 				System.out.println(replist.get(i).getSeq());
@@ -269,6 +276,7 @@ var edit = function(seq) {
 </script>
 <form action="TechRepbbsController" id="frm">
 <table border="1" class="reptable">
+<col width="850"><col width="175">
 <tr>
 	<td class="form">
              <textarea name="content" id="summe" placeholder="댓글 쓰기" class="form-control" ></textarea>
@@ -277,14 +285,15 @@ var edit = function(seq) {
 			<input type="hidden" name="command" value="write">
 		</td>
 		<td>
-			<button id="write">등록</button>
+			<div class="buttons"><button class="btn btn-success btn-wide" id="write">등록</button></div>
 		</td>
 	</tr>	
 </table>
 </form>
-<button id="repcancel" onclick="location.href='TechbbsController?command=techdetail&likeid=<%=mem.getId() %>&seq=<%=whatlist.get(0).getSeq()%>'">댓글취소</button>
+	<button id="repcancel" class="btn btn-default btn-wide" onclick="location.href='TechbbsController?command=techdetail&likeid=<%=mem.getId() %>&seq=<%=whatlist.get(0).getSeq()%>'">댓글취소</button>
+	
 	</div>
-	<button onclick="location.href='TechbbsController?command=techbbs'" class="gotobbs">기술게시판가기</button>
+	
 
 </div>
 <script type="text/javascript">
@@ -464,6 +473,73 @@ if(li4==null){
 }
 }
 %>
+		
+<script>
+      $(function() {
+         // initialize popover with dynamic content
+         $('#btnPopover').popover({
+            placement: 'bottom',
+            container: 'body',
+            html: true,
+            trigger: 'hover',
+            content: '<button onclick="updatebbs(<%=whatlist.get(0).getSeq() %>)" type="button" class="btn btn-default popover-dismiss">수정</button><button onclick="deletebbs(<%=whatlist.get(0).getSeq() %>)" type="button" class="btn btn-default popover-dismiss">삭제</button>'
+         });
+         // prevent popover from being hidden on mouseout.
+         // only dismiss when explicity clicked (e.g. has .hide-popover)
+         $('#btnPopover').on('hide.bs.popover', function(evt) {
+            if(!$(evt.target).hasClass('hide-popover')) {
+               evt.preventDefault();
+               evt.stopPropagation();
+               evt.cancelBubble = true;
+            }
+         });
+         // reset helper class when dismissed
+         $('#btnPopover').on('hidden.bs.popover', function(evt) {
+            $(this).removeClass('hide-popover');
+         });
+         $('body').on('click', '.popover-dismiss', function() {
+            // add helper class to force dismissal
+            $('#btnPopover').addClass('hide-popover');
+            // call method to hide popover
+            $('#btnPopover').popover('hide');
+         });
+          
+          $('#btnPopover').data('overButton', false);
+          $('#btnPopover').data('overPopover', false);
+          $.fn.closePopover = function(){
+            var $this = $(this);
+            
+            if(!$this.data('overPopover') && !$this.data('overButton')){
+              $this.addClass('hide-popover');
+              $this.popover('hide');              
+            }
+          }
+          
+          //set flags when mouse enters the button or the popover.
+          //When the mouse leaves unset immediately, wait a second (to allow the mouse to enter again or enter the other) and then test to see if the mouse is no longer over either. If not, close popover.
+          $('#btnPopover').on('mouseenter', function(evt){
+            $(this).data('overButton', true);
+          });
+          $('#btnPopover').on('mouseleave', function(evt){
+            var $btn = $(this);
+            $btn.data('overButton', false);
+            
+            setTimeout(function() {$btn.closePopover();}, 200);
+            
+          });
+          $('#btnPopover').on('shown.bs.popover', function () {
+            var $btn = $(this);
+            $('.popover-content').on('mouseenter', function (evt){
+              $btn.data('overPopover', true);
+            });
+            $('.popover-content').on('mouseleave', function (evt){
+              $btn.data('overPopover', false);
+              
+              setTimeout(function() {$btn.closePopover();}, 200);
+            });
+          });
+        });
+   </script>
 </body>
 </html>
 

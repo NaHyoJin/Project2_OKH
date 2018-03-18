@@ -125,7 +125,7 @@ String choice=request.getParameter("choice");
 		<a href="#" onclick="gotoPage('<%=firstPage %>')">첫페이지</a>
 		</li>
 		<%if(prevPage > 0){ %>
-		<li class="step"><a href="#" onclick="gotoPage('<%=prevPage %>')"><img src="image/pre.png"></a></li>
+		<li class="step"><a href="#" onclick="gotoPage('<%=prevPage %>')">&lt;</a></li>
 		
 		<%}else{%>
 		<li class="step"><a href="javascript:void(0)" >&lt;</a></li>
@@ -149,13 +149,22 @@ String choice=request.getParameter("choice");
 			}			
 		}		
 		%>
-		<li>
-		<a href="#"  onclick="gotoPage('<%=nextPage %>')">&gt;</a>
-		</li>
-		<li><a href="#" onclick="gotoPage('<%=endPage %>')">끝페이지</a></li>
-		
-		
-			 </ul>							<!-- totalPage -->
+		<%if(nowPage != endPage){
+	         %>
+	         <li class="step">
+	            <a href="#" onclick="gotoPage('<%=nextPage %>')">&gt;</a>
+	         <%
+	         }else{
+	         %>
+	            <li class="step"><a href="javascript:void(0)" >&gt;;</a></li>
+	         <%
+	         }
+	         %>
+	         <%-- <a href="#" onclick="gotoPage('<%=endPage %>')">끝페이지</a> --%>         <!-- 10페이지 -->
+	         <li class="step">
+	             <a href="#" onclick="gotoPage('<%=totalPage %>')">끝페이지</a>      <!-- 14페이지 -->
+	          </li>
+	      </ul>				<!-- totalPage -->
 	</div>
 
 </form>

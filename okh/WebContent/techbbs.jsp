@@ -141,7 +141,7 @@ System.out.println(techlist.size()+"사이즈크기");
 
 		});
 	</script>
-	<div class="titlediv"><h2 style="font-family: 'Nanum Gothic', sans-serif ">기술게시판</h2><br>
+	<div class="titlediv"><h2>기술게시판</h2><br>
 	<button class="create btn btn-success btn-wide pull-right " type="button" id="techwrite">게시글쓰기</button></div>
 <div class="wrap">
 	<div class="board">

@@ -20,8 +20,8 @@ time, mark, audio, video {
 body{
 	background-color: #fcfbfb;
 }
-h3{
-	margin-top: 0;
+h2{
+	font-family: 'Nanum Gothic', sans-serif;
 }
 .menu{
 position: fixed;
@@ -116,6 +116,7 @@ input.login {
 	  width: 1000px;
    height:100%;
  margin-top:0;
+ margin-bottom:50px;
  padding: 20px;
  position: relative;
  top: 30px;
