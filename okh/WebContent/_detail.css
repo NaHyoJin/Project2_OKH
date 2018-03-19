@@ -15,7 +15,7 @@ time, mark, audio, video {
 	margin: 0;
 	padding: 0;
 	border: 0;
-	vertical-align: baseline;
+	
 }
 body{
 	background-color: #fcfbfb;
@@ -31,7 +31,7 @@ height: 100%;
 background-color: #0059ab;
 }
 .titlediv{
-	  width: 1000px;
+	  width: 940px;
    height:100%;
  margin-top:0;
   margin-bottom:50px;
@@ -156,6 +156,13 @@ input.login {
  }
  .myinfo_icon{
  	text-align: right;
+ 	vertical-align: top;
+ }
+  .myinfo_icon>span{
+  display:inline-block;
+  margin-left:10px;
+  margin-right:10px;
+ 	vertical-align: top;
  }
  .contentareawrap{
  display: flex;
@@ -284,3 +291,7 @@ width: 200px;
  #summer{
  width: 700px;
  }
+.downbtn input{
+	width: 100%;
+	cursor: pointer;
+}

@@ -11,7 +11,9 @@ import db.DBConnection;
 import db.DBClose;
 
 public class PdsDao implements iPdsDao {
-
+	public PdsDao() {
+		DBConnection.initConnection();
+	}
 	@Override
 	public boolean writePds(PdsDto pds) {
 		String sql = " INSERT INTO TECH_PDS( "

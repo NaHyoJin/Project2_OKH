@@ -31,59 +31,37 @@ String choice = request.getParameter("choice");
 
 <!-- 폰트  -->
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="_techbbs.css?ver=1.59">
+<link rel="stylesheet" type="text/css" href="_techbbs.css?ver=1.62">
+<link rel="stylesheet" type="text/css" href="_main.css?ver=1.3">
 </head>
 <body bgcolor="#fcfbfb">
 <%//로그인한id가져오기
 Object ologin = session.getAttribute("login");
 UserDto mem = null;
 List<TechbbsDto> techlist=(List<TechbbsDto>)request.getAttribute("techbbs");
-if(ologin == null){
-	%>
-	<script type="text/javascript">
-	alert("로그인해 주십시오");
-	location.href = "index.jsp";	
-	</script>	
-	<%
-	return;
-}
 mem = (UserDto)ologin;
-
-
 %>
-
-<!-- 페이징 처리 정보 교환 -->
-<%
-PagingBean paging = new PagingBean();
-if(request.getParameter("nowPage") == null){
-	paging.setNowPage(1);
-}else{
-	paging.setNowPage(Integer.parseInt(request.getParameter("nowPage")));
-}
-%>
-
-<%
-if(findWord == null){
-	findWord = "";
-}
-int cho = 0;
-
-if(choice == null) cho = 3;
-else if(choice.equals("title")) cho = 0;
-else if(choice.equals("writer")) cho = 1;
-else if(choice.equals("content")) cho = 2;
-else if(choice.equals("tagname")) cho = 3;
-
-TechbbsServiceImpl tservice=TechbbsService.getInstance();
-
-techlist = tservice.gettechBbsPagingList(paging, findWord, cho);
-System.out.println(techlist.size()+"사이즈크기");
-%>
-
-	<!-- 인클루드 부분 -->
+<!-- 인클루드 부분 -->
 	<div class="menu">
-		<input type="button" class="login" id="login">
-		<input type="button" class="account" id="account">
+		<%
+		if(ologin == null){	//로그인안한상태
+			%>
+			<input type="button" class="login" id="login">
+			<input type="button" class="account" id="account">
+
+				<%
+		}else{
+			
+		%>
+		<div class="actionlogin">
+			<span><%=mem.getId() %></span>
+			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
+			<img class="alarmbtn" alt="" src="image/alarm.PNG" style="cursor: pointer" id="btnPopover">	
+		</div>
+		<%
+		}
+		
+		%>
 		<input type="button" class="bbs1" id="qnabbs">
 		<input type="button" class="techbbs_hjh" id="techbbs">
 		<input type="button" class="bbs3" ><!-- 정재흥 -->
@@ -139,10 +117,54 @@ System.out.println(techlist.size()+"사이즈크기");
 				location.href="jobs";
 			});
 
+		
 		});
 	</script>
+<!-- 페이징 처리 정보 교환 -->
+<%
+PagingBean paging = new PagingBean();
+if(request.getParameter("nowPage") == null){
+	paging.setNowPage(1);
+}else{
+	paging.setNowPage(Integer.parseInt(request.getParameter("nowPage")));
+}
+%>
+
+<%
+if(findWord == null){
+	findWord = "";
+}
+int cho = 0;
+
+if(choice == null) cho = 3;
+else if(choice.equals("title")) cho = 0;
+else if(choice.equals("writer")) cho = 1;
+else if(choice.equals("content")) cho = 2;
+else if(choice.equals("tagname")) cho = 3;
+
+TechbbsServiceImpl tservice=TechbbsService.getInstance();
+
+techlist = tservice.gettechBbsPagingList(paging, findWord, cho);
+System.out.println(techlist.size()+"사이즈크기");
+%>
+
+	
 	<div class="titlediv"><span class="titi">기술게시판</span>
+	<%
+	if(ologin == null){
+			%>
+	
+	<button class="create btn btn-success btn-wide pull-right " type="button" id="loginhe">게시글쓰기</button></div>
+	
+	<%
+		}else{
+	%>
 	<button class="create btn btn-success btn-wide pull-right " type="button" id="techwrite">게시글쓰기</button></div>
+	
+	<%
+	}
+	%>
+	
 	
 <div class="wrap">
 <div class="sercharea">
@@ -190,8 +212,20 @@ System.out.println(techlist.size()+"사이즈크기");
 				<span><button class="hjhtag" name="tag<%=j%>" id="tag<%=j%>" onclick="searchBbs1(this)" value="<%=tagnames[j]%>"><%=tagnames[j] %></button></span>
 			<%
 			}
+			
+			if(ologin == null){
 			%>
-			<p style="font-size: 20px"><a href="TechbbsController?command=techdetail&likeid=<%=mem.getId() %>&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a></p>
+			
+			<p style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a></p>
+			
+			<%
+				}else{
+			%>
+			<p style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=<%=mem.getId() %>&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a></p>
+			
+			<%
+			}
+			%>
 			</th>
 			<%if(dto.getCommentcount()>0){
 			%>
@@ -286,7 +320,79 @@ $(function() {
 	$("#techwrite").click(function() {
 		location.href="TechbbsController?command=techwrite";
 	});
+	$("#loginhe").click(function() {
+		alert("로그인해주세요");
+		location.href="TechbbsController?command=techbbs";
+	});
 });
 </script>
+
+<script>
+      $(function() {
+         // initialize popover with dynamic content
+         $('#btnPopover').popover({
+            placement: 'right',
+            container: 'body',
+            html: true,
+            trigger: 'hover',
+            content: '<button onclick="logout()" type="button" class="btn btn-default popover-dismiss">logout</button><button onclick="upmydetail()" type="button" class="btn btn-default popover-dismiss">정보수정</button>'
+         });
+         // prevent popover from being hidden on mouseout.
+         // only dismiss when explicity clicked (e.g. has .hide-popover)
+         $('#btnPopover').on('hide.bs.popover', function(evt) {
+            if(!$(evt.target).hasClass('hide-popover')) {
+               evt.preventDefault();
+               evt.stopPropagation();
+               evt.cancelBubble = true;
+            }
+         });
+         // reset helper class when dismissed
+         $('#btnPopover').on('hidden.bs.popover', function(evt) {
+            $(this).removeClass('hide-popover');
+         });
+         $('body').on('click', '.popover-dismiss', function() {
+            // add helper class to force dismissal
+            $('#btnPopover').addClass('hide-popover');
+            // call method to hide popover
+            $('#btnPopover').popover('hide');
+         });
+          
+          $('#btnPopover').data('overButton', false);
+          $('#btnPopover').data('overPopover', false);
+          $.fn.closePopover = function(){
+            var $this = $(this);
+            
+            if(!$this.data('overPopover') && !$this.data('overButton')){
+              $this.addClass('hide-popover');
+              $this.popover('hide');              
+            }
+          }
+          
+          //set flags when mouse enters the button or the popover.
+          //When the mouse leaves unset immediately, wait a second (to allow the mouse to enter again or enter the other) and then test to see if the mouse is no longer over either. If not, close popover.
+          $('#btnPopover').on('mouseenter', function(evt){
+            $(this).data('overButton', true);
+          });
+          $('#btnPopover').on('mouseleave', function(evt){
+            var $btn = $(this);
+            $btn.data('overButton', false);
+            
+            setTimeout(function() {$btn.closePopover();}, 200);
+            
+          });
+          $('#btnPopover').on('shown.bs.popover', function () {
+            var $btn = $(this);
+            $('.popover-content').on('mouseenter', function (evt){
+              $btn.data('overPopover', true);
+            });
+            $('.popover-content').on('mouseleave', function (evt){
+              $btn.data('overPopover', false);
+              
+              setTimeout(function() {$btn.closePopover();}, 200);
+            });
+          });
+        });
+   </script>	
+
 </body>
 </html>

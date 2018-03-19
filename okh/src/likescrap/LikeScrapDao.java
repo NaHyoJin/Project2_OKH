@@ -14,7 +14,10 @@ import techpds.PdsDto;
 import db.DBClose;
 
 public class LikeScrapDao implements iLikeScrapDao {
-
+	public LikeScrapDao() {
+		DBConnection.initConnection();
+	}
+	
 	@Override
 	public boolean addLikeID(TechbbsDto bbs) {
 		String sql = " UPDATE TECHBBS SET LIKEID=? "

@@ -132,12 +132,12 @@ if(isS){
 	System.out.println(title+content+tagString);
 	dto1=new PdsDto(id,filename,(parent+1));
 	request.setAttribute("pdsdto11", dto1);
-	pageContext.forward("Child.jsp?command11=addafter");
+	pageContext.forward("pdsChild.jsp?command11=addafter");
 %>
 <%
 }else{
 	System.out.println("실패");
-	pageContext.forward("Child.jsp?command11=faill");
+	pageContext.forward("pdsChild.jsp?command11=faill");
 %>
 
 <%
