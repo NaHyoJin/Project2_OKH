@@ -1,3 +1,6 @@
+<%@page import="jobs_BBS5.newbbs5HWCodingVO"%>
+<%@page import="jobs_BBS5.newbbs5HWCodingService"%>
+<%@page import="jobs_BBS5.newbbs5HWCodingServiceImpl"%>
 <%@page import="techbbs.TechbbsDto"%>
 <%@page import="java.util.List"%>
 <%@page import="user.UserDto"%>
@@ -146,7 +149,30 @@ if(ologin == null){
 			게시판뿌려주기3
 		</div>
 		<div class="partition4">
-			게시판뿌려주기4
+			<table border="1">
+				<tr align="center" height="5">
+				<!-- tr,tf,td 어떻게 사용해야 되는지 모르겠네........................ -->
+					<th>제목</th>
+<td>
+				<%
+				//싱글톤 생성 부분. HW 생성해서 보여줘보자.
+				newbbs5HWCodingServiceImpl service = newbbs5HWCodingService.getInstance();//먼저 서비스를 불러야지...
+				
+				List<newbbs5HWCodingVO> hwbbs  = service.gettechBbsList();//전체글 가지고 오는건데...
+				//확인 부분.
+				for(byte b = 0; b < hwbbs.size(); b++){
+					System.out.println(hwbbs.get(b).toString());
+				%>
+				
+				<%=hwbbs.get(b).getTitle() %>
+				
+				<%
+				}
+				%>			
+</td>				
+				</tr>
+				
+				</table>
 		</div>
 	</div>
 	<%
