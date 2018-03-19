@@ -21,6 +21,8 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import likescrap.LikeScrapService;
 import likescrap.LikeScrapServiceImpl;
+import techpds.PdsService;
+import techpds.PdsServiceImpl;
 import user.UserDao;
 
 public class TechbbsController extends HttpServlet {
@@ -41,6 +43,7 @@ public class TechbbsController extends HttpServlet {
 		String command1=(String)request.getAttribute("command");
 		
 		TechbbsServiceImpl tservice=TechbbsService.getInstance();
+		PdsServiceImpl pservice=PdsService.getInstance();
 		if(command.equals("techbbs")) {
 			List<TechbbsDto> list=tservice.gettechBbsList();
 			request.setAttribute("techbbs", list);
@@ -49,6 +52,13 @@ public class TechbbsController extends HttpServlet {
 			response.sendRedirect("techwrite.jsp");
 		}
 		else if(command.equals("techwrite")) {
+			parent=pservice.getSeq()+1;
+			boolean iss=pservice.pdsdelete(parent);
+			if (iss) {
+				System.out.println("pds삭제성공");
+			}else {
+				System.out.println("pds삭제실패");
+			}
 			response.sendRedirect("techwrite.jsp");
 		}else if(command.equals("techwriteAf")) {
 			String tagname="TechTips&강좌-";

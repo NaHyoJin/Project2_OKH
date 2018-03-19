@@ -12,6 +12,10 @@ import db.DBConnection;
 import db.DBClose;
 
 public class TechbbsDao implements iTechbbsDao {
+	
+	public TechbbsDao() {
+		DBConnection.initConnection();
+	}
 
 	@Override
 	public List<TechbbsDto> gettechBbsPagingList(PagingBean paging, String searchWord, int search) {

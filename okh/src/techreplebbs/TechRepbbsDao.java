@@ -12,7 +12,9 @@ import db.DBConnection;
 import db.DBClose;
 
 public class TechRepbbsDao implements iTechRepbbsDao {
-
+	public TechRepbbsDao() {
+		DBConnection.initConnection();
+	}
 	@Override
 	public List<TechRepbbsDto> getRepBbsList(int seq) {
 		String sql = " SELECT SEQ, ID, "
