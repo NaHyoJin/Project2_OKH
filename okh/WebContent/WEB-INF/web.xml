@@ -40,6 +40,7 @@ version="3.0">
   </servlet-mapping>
   
   
+  
    <!-- 기술게시판파일업로드 -->
   <servlet>
     <servlet-name>PdsController</servlet-name>
@@ -124,16 +125,47 @@ version="3.0">
   
     
   <!-- BBSHWCodingController 컨트롤. 모든거 다 처리 하는.-->
-  <servlet>
+  <!-- <servlet> 기존코드 망한것.180319
   	<servlet-name>BBSHWCodingController</servlet-name>
   	<servlet-class>jobs_BBS5.Bbs5jobsHWCodingControllerServlet</servlet-class>
-  </servlet>
-  
+  </servlet> -->
+  <servlet>
+  	<servlet-name>BBSHWCodingController</servlet-name>
+  	<servlet-class>jobs_BBS5.newbbs5HWCodingControllerServlet</servlet-class>
+  </servlet>  
   <servlet-mapping>
   	<servlet-name>BBSHWCodingController</servlet-name>
-  	<url-pattern>/BBSHWCodingController</url-pattern>
-  	
+  	<url-pattern>/BBSHWCodingController</url-pattern>  	
   </servlet-mapping>
+  <!-- HW 답글 게시판 -->
+  <servlet>
+    <servlet-name>HWRepbbsController</servlet-name>
+    <servlet-class>jobs_BBS5.HWRepbbsController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HWRepbbsController</servlet-name>
+    <url-pattern>/HWRepbbsController</url-pattern>
+  </servlet-mapping>
+  <!-- HW좋아요 스크랩처리 -->
+  <servlet>
+    <servlet-name>HWLikeScrapController</servlet-name>
+    <servlet-class>jobs_BBS5.HWLikeScrapController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HWLikeScrapController</servlet-name>
+    <url-pattern>/HWLikeScrapController</url-pattern>
+  </servlet-mapping>
+  <!-- HW게시판 파일 다운 -->
+    <servlet>
+  	<servlet-name>hwfiledown</servlet-name>
+  	<servlet-class>jobs_BBS5.FileDownloader</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>hwfiledown</servlet-name>
+  	<url-pattern>/hwfiledown</url-pattern>
+  </servlet-mapping>
+  
+  
   
   
   <!-- BBSboardController 일반 게시판 컨트롤 -->

@@ -7,13 +7,37 @@ import qna.QnaDto;
 import studysrc.CombbsDto;
 import studysrc.PagingBean;
 import studysrc.comment_bbsDto;
+import techbbs.TechbbsDto;
 
 
 public interface jobsBbs5ModelServiceImpl {//서비스 부분. 
 	
 	//dto, bean, VO 다 같은말
 	
-
+/*
+	public List<TechbbsDto> gettechBbsList();
+	public List<TechbbsDto> gettechBbsPagingList(PagingBean paging, String searchWord, int search);
+	public String[] getTagName(String tagname);
+	public boolean writeBbs(TechbbsDto bbs);
+	
+	public List<TechbbsDto> getdetail(int seq);
+	public List<TechbbsDto> getpdsdetail(int seq);
+	public boolean getparent(int seq);
+	public void likecountplus(int seq);
+	public void dislikecount(int seq);
+	public boolean update(int seq,String title, String content);
+	public boolean delete(int seq);
+	public boolean pdsdelete(int seq);
+	public boolean repAlldelete(int seq);
+	
+	public void readcountplus(int seq);
+	public void scrapcountplus(int seq);
+	public void commentcountplus(int seq);
+	public void scrapcountminus(int seq);
+	public void commentcountminus(int seq);
+	
+	public boolean checkcomment(int seq);
+	*/
 	//게시판5. 하드웨어 코딩 부분 글 전체 가지고 오는것.
 	public List<BbsHWCodingBeanDtoVO> getBbsHWCodingBeanList();
 		//글 작성 부분.

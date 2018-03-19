@@ -27,7 +27,7 @@ public class mainJSPServlet extends HttpServlet {
 			throws IOException, ServletException {
 		
 		resp.setContentType("text/html; charset=utf-8");
-		PrintWriter out = resp.getWriter();
+//		PrintWriter out = resp.getWriter();
 		
 		req.setCharacterEncoding("utf-8");
 
