@@ -50,9 +50,9 @@ public class HWRepbbsController extends HttpServlet {
 		//두번째댓글은 두가지값이다넘어온다
 		System.out.println(command + "command?" + command1 + "command1");
 		HWRepbbsServiceImpl trservice = HWRepbbsService.getInstance();
-		TechbbsServiceImpl tservice = TechbbsService.getInstance();
+		newbbs5HWCodingServiceImpl tservice = newbbs5HWCodingService.getInstance();
 		if(command1 == null) {
-			command1="upcon11";
+			command1 = "upcon11";
 		}
 		if(command == null) {
 			command="";
