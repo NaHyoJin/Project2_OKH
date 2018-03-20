@@ -54,7 +54,7 @@ public class UserController extends HttpServlet {
 			if(userDto != null) {
 				request.getSession().setAttribute("messageType", "성공 메시지");
 				request.getSession().setAttribute("messageContent", "로그인에 성공했습니다.");
-				response.sendRedirect("index.jsp");
+				response.sendRedirect("main.jsp");
 			}else {
 				request.getSession().setAttribute("messageType", "오류 메시지");
 				request.getSession().setAttribute("messageContent", "아이디 비밀번호를 확인해주세요.");
