@@ -22,7 +22,7 @@ request.setCharacterEncoding("utf-8");
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/custom.css">
 	<link rel="stylesheet" type="text/css" href="_write.css?ver=1.46">
-<link rel="stylesheet" type="text/css" href="_main.css?ver=1.3">
+<link rel="stylesheet" type="text/css" href="_main.css?ver=1.31">
 <!-- 폰트  -->
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
 <script type="text/javascript">
@@ -35,7 +35,7 @@ request.setCharacterEncoding("utf-8");
             window.name = "parentForm";
             // window.open("open할 window", "자식창 이름", "팝업창 옵션");
             openWin = window.open("pdsChild.jsp",
-                    "childForm", "width=570, height=350, resizable = no, scrollbars = no");    
+                    "childForm", "location=0, width=570, height=350, resizable = no, scrollbars = no");    
         }
         
         function gotobbs() {
@@ -101,6 +101,7 @@ List<PdsDto> pdslist=null;
 			<%
 if(ologin == null){	//로그인안한상태
 	%>
+	<input type="button" class="homebtn" onclick="location.gref='index.jsp'">
 	<input type="button" class="login" id="login">
 	<input type="button" class="account" id="account">
 
@@ -108,10 +109,11 @@ if(ologin == null){	//로그인안한상태
 }else{
 	
 %>
+<input type="button" class="homebtn" id="homebtn">
 <div class="actionlogin">
+
 	<span><%=mem.getId() %></span>
 	<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
-	<img class="alarmbtn" alt="" src="image/alarm.PNG" style="cursor: pointer" id="btnPopover1">	
 </div>
 <%
 }
@@ -127,7 +129,9 @@ if(ologin == null){	//로그인안한상태
 	
 	<script type="text/javascript">
 		$(function() {//좌측 메뉴바 누르는 곳.
-
+			$("#homebtn").click(function() {
+				location.href="main.jsp";
+			});
 			$("#login").click(function() {
 				location.href="User?command=login";
 			});
@@ -340,7 +344,7 @@ function eventonblur() {
             container: 'body',
             html: true,
             trigger: 'hover',
-            content: '<hr><button onclick="logout()" type="button" class="btn btn-default popover-dismiss">logout</button><button onclick="upmydetail()" type="button" class="btn btn-default popover-dismiss">정보수정</button>'
+            content: '<button onclick="logout()" type="button" class="btn btn-default popover-dismiss">logout</button><button onclick="upmydetail()" type="button" class="btn btn-default popover-dismiss">MY페이지</button>'
          });
          // prevent popover from being hidden on mouseout.
          // only dismiss when explicity clicked (e.g. has .hide-popover)

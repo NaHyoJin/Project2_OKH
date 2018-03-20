@@ -31,10 +31,15 @@ String choice = request.getParameter("choice");
 
 <!-- 폰트  -->
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="_techbbs.css?ver=1.62">
-<link rel="stylesheet" type="text/css" href="_main.css?ver=1.3">
+<link rel="stylesheet" type="text/css" href="_techbbs.css?ver=1.64">
+<link rel="stylesheet" type="text/css" href="_main.css?ver=1.4">
 </head>
 <body bgcolor="#fcfbfb">
+<script type="text/javascript">
+function logout() {
+	location.href='index.jsp';
+}
+</script>
 <%//로그인한id가져오기
 Object ologin = session.getAttribute("login");
 UserDto mem = null;
@@ -46,6 +51,8 @@ mem = (UserDto)ologin;
 		<%
 		if(ologin == null){	//로그인안한상태
 			%>
+			
+		<input type="button" class="homebtn" onclick="location.gref='index.jsp'">
 			<input type="button" class="login" id="login">
 			<input type="button" class="account" id="account">
 
@@ -53,10 +60,10 @@ mem = (UserDto)ologin;
 		}else{
 			
 		%>
+		<input type="button" class="homebtn" id="homebtn">
 		<div class="actionlogin">
 			<span><%=mem.getId() %></span>
 			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
-			<img class="alarmbtn" alt="" src="image/alarm.PNG" style="cursor: pointer" id="btnPopover">	
 		</div>
 		<%
 		}
@@ -73,7 +80,9 @@ mem = (UserDto)ologin;
 	
 	<script type="text/javascript">
 		$(function() {//좌측 메뉴바 누르는 곳.
-
+			$("#homebtn").click(function() {
+				location.href="main.jsp";
+			});
 			$("#login").click(function() {
 				location.href="User?command=login";
 			});
@@ -136,7 +145,7 @@ if(findWord == null){
 }
 int cho = 0;
 
-if(choice == null) cho = 3;
+if(choice == null) cho = 4;
 else if(choice.equals("title")) cho = 0;
 else if(choice.equals("writer")) cho = 1;
 else if(choice.equals("content")) cho = 2;
@@ -144,8 +153,18 @@ else if(choice.equals("tagname")) cho = 3;
 
 TechbbsServiceImpl tservice=TechbbsService.getInstance();
 
-techlist = tservice.gettechBbsPagingList(paging, findWord, cho);
-System.out.println(techlist.size()+"사이즈크기");
+
+
+
+List<TechbbsDto> sortlist=(List<TechbbsDto>)request.getAttribute("sorthe");
+String whatsort=(String)request.getAttribute("whatsort");
+if(sortlist==null||whatsort==null||sortlist.size()==0){	//sort안했다
+	System.out.println("기본페이지");
+	techlist = tservice.gettechBbsPagingList(paging, findWord, cho);
+}else{
+	System.out.println("sort페이지");
+	techlist=tservice.gettechBbssortPagingList(paging, whatsort);
+}
 %>
 
 	
@@ -167,6 +186,16 @@ System.out.println(techlist.size()+"사이즈크기");
 	
 	
 <div class="wrap">
+<div class="sortingmenu">
+	 <ul class="list-sort pull-left">
+         <li><a onclick="location.href='TechbbsController?command=sorthe&whatthings=wdate'"  class="category-sort-link active">최신순</a></li>
+         <li><a onclick="location.href='TechbbsController?command=sorthe&whatthings=likecount'" class="category-sort-link">좋아요순</a></li>
+         <li><a onclick="location.href='TechbbsController?command=sorthe&whatthings=contentcount'" class="category-sort-link">댓글순</a></li>
+         <li><a onclick="location.href='TechbbsController?command=sorthe&whatthings=scrapcount'" class="category-sort-link">스크랩순</a></li>
+         <li><a onclick="location.href='TechbbsController?command=sorthe&whatthings=readcount'" class="category-sort-link">조회순</a></li>
+     </ul>
+	
+</div>
 <div class="sercharea">
 <select id="choice" style="height: 30px">
 		<option value="tagname" <%if(cho==3){ out.println("selected");}%>>선택하세요</option>
@@ -335,7 +364,7 @@ $(function() {
             container: 'body',
             html: true,
             trigger: 'hover',
-            content: '<button onclick="logout()" type="button" class="btn btn-default popover-dismiss">logout</button><button onclick="upmydetail()" type="button" class="btn btn-default popover-dismiss">정보수정</button>'
+            content: '<button onclick="logout()" type="button" class="btn btn-default popover-dismiss">logout</button><button onclick="upmydetail()" type="button" class="btn btn-default popover-dismiss">MY페이지</button>'
          });
          // prevent popover from being hidden on mouseout.
          // only dismiss when explicity clicked (e.g. has .hide-popover)
@@ -393,6 +422,17 @@ $(function() {
           });
         });
    </script>	
+ <script>
+            $(function() {
+                $('.category-sort-link').click(function(e) {
+                    $('#category-sort-input').val($(this).data('sort'));
+                    $('#category-order-input').val($(this).data('order'));
+                    e.preventDefault();
+                });
+
+            });
+            </script>
+        
 
 </body>
 </html>

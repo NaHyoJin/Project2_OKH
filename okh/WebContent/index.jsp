@@ -1,6 +1,3 @@
-<%@page import="jobs_BBS5.newbbs5HWCodingVO"%>
-<%@page import="jobs_BBS5.newbbs5HWCodingService"%>
-<%@page import="jobs_BBS5.newbbs5HWCodingServiceImpl"%>
 <%@page import="techbbs.TechbbsDto"%>
 <%@page import="java.util.List"%>
 <%@page import="user.UserDto"%>
@@ -19,7 +16,7 @@
 	
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/bootstrap.js"></script>
-	<link rel="stylesheet" type="text/css" href="_main.css?ver=1.1">
+	<link rel="stylesheet" type="text/css" href="_main.css?ver=1.2">
 </head>
 <body>
 
@@ -47,6 +44,7 @@ if(ologin == null){
 %> --%>
 	<!-- 인클루드 부분 -->
 	<div class="menu">
+		<input type="button" class="homebtn" id="homebtn">
 		<input type="button" class="login" id="login">
 		<input type="button" class="account" id="account">
 
@@ -57,11 +55,18 @@ if(ologin == null){
 		<input type="button" class="bbs5" id="jobs"><!-- 나효진 -->
 		<input type="button" class="bbs6" id="life"><!-- 병찬 사는얘기 -->
 	</div>	
-
-	
+<script type="text/javascript">
+// window.name = "부모창 이름"; 
+window.name = "parentForm";
+// window.open("open할 window", "자식창 이름", "팝업창 옵션");
+openWin = window.open("popup.jsp",
+        "childForm", "location=0, width=390, height=600, resizable = no, scrollbars = no,top=100,left=400");   
+</script>
 	<script type="text/javascript">
 		$(function() {//좌측 메뉴바 누르는 곳.
-
+			$("#homebtn").click(function() {
+				location.href="index.jsp";
+			});
 			$("#login").click(function() {
 				location.href="User?command=login";
 			});
@@ -100,10 +105,9 @@ if(ologin == null){
 				location.href="main.BBSHWCodingController";
 			});
  */	 
-
+			
 			$("#jobs").click(function name() {
-				location.href = "jobs";
-//				location.href = "BBSHWCodingController?command=techbbs";
+				location.href="jobs";
 			});
 
 		});
@@ -149,6 +153,7 @@ if(ologin == null){
 			게시판뿌려주기3
 		</div>
 		<div class="partition4">
+<<<<<<< HEAD
 			<table border="1">
 				<tr align="center" height="5">
 				<!-- tr,tf,td 어떻게 사용해야 되는지 모르겠네........................ -->
@@ -173,6 +178,9 @@ if(ologin == null){
 				</tr>
 				
 				</table>
+=======
+			게시판뿌려주기4
+>>>>>>> branch 'master' of https://github.com/NaHyoJin/Project2_OKH.git
 		</div>
 	</div>
 	<%
@@ -218,6 +226,22 @@ if(ologin == null){
 			session.removeAttribute("messageType");
 		}
 	%>
+	<!-- 
+	<script language="javascript">
+window.open("주소입력","MR","location=0,directoryies=0,resizable=0,staus=0,toolbar=nomemubar=0,width=이미지크기,height=이미지크기,top=0,left=0");
+</script>
+
+location : 주소표시줄
+directoryies : 연결
+resizable : 크기조절
+staus : 상태표시줄
+toolbar : 표시단추
+memubar : 메뉴
+width : 새창 너비
+height : 새창 높이
+left : 새창 왼쪽 위치
+top : 새창 위쪽 위치 
+	 -->
 <script>
       $(function() {
          // initialize popover with dynamic content
@@ -226,7 +250,7 @@ if(ologin == null){
             container: 'body',
             html: true,
             trigger: 'hover',
-            content: '<p>설정</p><hr><button onclick="logout()" type="button" class="btn btn-default popover-dismiss">logout</button><button onclick="upmydetail()" type="button" class="btn btn-default popover-dismiss">정보수정</button>'
+            content: '<button onclick="logout()" type="button" class="btn btn-default popover-dismiss">logout</button><button onclick="upmydetail()" type="button" class="btn btn-default popover-dismiss">my페이지</button>'
          });
          // prevent popover from being hidden on mouseout.
          // only dismiss when explicity clicked (e.g. has .hide-popover)
@@ -283,7 +307,7 @@ if(ologin == null){
             });
           });
         });
-   </script>
+   </script>	
 
 </body>
 </html>

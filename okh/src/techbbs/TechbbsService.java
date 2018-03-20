@@ -112,5 +112,10 @@ public class TechbbsService implements TechbbsServiceImpl{
 		// TODO Auto-generated method stub
 		return techbbsdao.checkcomment(seq);
 	}
+	@Override
+	public List<TechbbsDto> gettechBbssortPagingList(PagingBean paging, String whatsort) {
+		// TODO Auto-generated method stub
+		return techbbsdao.gettechBbssortPagingList(paging,whatsort);
+	}
 	
 }
