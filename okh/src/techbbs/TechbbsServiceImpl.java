@@ -26,4 +26,6 @@ public interface TechbbsServiceImpl {
 	public void commentcountminus(int seq);
 	
 	public boolean checkcomment(int seq);
+	
+	public List<TechbbsDto> gettechBbssortPagingList(PagingBean paging, String whatsort);
 }

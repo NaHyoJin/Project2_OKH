@@ -24,6 +24,15 @@ width: 240px;
 height: 100%;
 background-color: #0059ab;
 }
+.homebtn{
+	 background: url(image/homebtn.PNG) no-repeat;
+	background-position:center;
+	   cursor: pointer;
+        width: 240px;
+        height: 80px;
+		position: absolute;
+		border: none;
+}
 input.login {
         background: url(image/login.PNG) no-repeat;
         cursor: pointer;
@@ -31,7 +40,7 @@ input.login {
         height: 40px;
         border: 1px solid gray;
 		position: absolute;
-		top: 100px;
+		top: 120px;
       }
  input.account {
    background: url(image/account.PNG) no-repeat;
@@ -40,7 +49,7 @@ input.login {
    height: 40px;
    border: 1px solid gray;
    position: absolute;
-	top: 100px;
+	top: 120px;
 	left: 120px;
  }
  input.bbs1 {
@@ -143,7 +152,7 @@ height: 300px;
  width:240px;
  height:40px;
  	 position: absolute;
-	top: 100px;
+	top: 120px;
  }
  .settingbtn{
  display:inline-block;

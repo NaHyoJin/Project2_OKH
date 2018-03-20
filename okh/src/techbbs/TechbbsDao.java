@@ -16,7 +16,96 @@ public class TechbbsDao implements iTechbbsDao {
 	public TechbbsDao() {
 		DBConnection.initConnection();
 	}
-
+	@Override
+	public List<TechbbsDto> gettechBbssortPagingList(PagingBean paging, String whatsort) {
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		List<TechbbsDto> bbslist = new ArrayList<TechbbsDto>();
+		
+		
+		String sWord = "";		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 gettechBbssortPagingList Success");
+			
+			// 글의 총수
+			String totalSql = " SELECT COUNT(SEQ) FROM TECHBBS WHERE DEL=0 ";
+			psmt = conn.prepareStatement(totalSql);
+			rs = psmt.executeQuery();
+			System.out.println("2/6 gettechBbssortPagingList Success");
+			
+			int totalCount = 0;
+			rs.next();
+			totalCount = rs.getInt(1);	// row의 총 갯수
+			
+			paging.setTotalCount(totalCount);
+			paging = PagingUtil.setPagingInfo(paging);
+			
+			psmt.close();
+			rs.close();
+			if(whatsort.equals("wdate")) {	// 날짜
+				sWord = " SEQ ";
+			}else if(whatsort.equals("likecount")) {	// ID
+				sWord = " LIKECOUNT ";
+			}else if(whatsort.equals("contentcount")) {	// ID
+				sWord = " COMMENTCOUNT ";
+			}
+			else if(whatsort.equals("scrapcount")) {	// ID
+				sWord = " SCRAPCOUNT ";
+			}
+			else if(whatsort.equals("readcount")) {	// ID
+				sWord = " READCOUNT ";
+			}
+			
+			// row를 취득
+			String sql = " SELECT * FROM "
+						+ " (SELECT * FROM (SELECT * FROM TECHBBS ORDER BY "+ sWord +" ASC)  "
+						+ "  WHERE ROWNUM <= " + paging.getStartNum() + " AND DEL=0  ORDER BY "+ sWord +" DESC) "
+						+ " WHERE ROWNUM <= " + paging.getCountPerPage() + " AND DEL=0 ";
+			
+			System.out.println("paging.getStartNum() = " + paging.getStartNum());
+			
+			psmt = conn.prepareStatement(sql);
+			System.out.println("3/6 gettechBbssortPagingList Success");
+			
+			rs = psmt.executeQuery();
+			System.out.println("4/6 gettechBbssortPagingList Success");
+			
+			while(rs.next()) {
+				TechbbsDto dto = new TechbbsDto(rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getString(4),
+						rs.getString(5),
+						rs.getString(6),
+						rs.getInt(7),
+						rs.getInt(8),
+						rs.getInt(9),
+						rs.getString(10),
+						rs.getString(11),
+						rs.getInt(12),
+						rs.getInt(13)
+						);
+						// seq, id, title, content, wdate, del, readcount, likecount, scrapcount)
+				bbslist.add(dto);				
+			}
+			System.out.println("5/6 gettechBbssortPagingList Success");			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("gettechBbssortPagingList Fail");
+		} finally {
+			DBClose.close(psmt, conn, rs);
+			System.out.println("6/6 gettechBbsPagingList Success");	
+		}
+		
+		return bbslist;
+	}
+	
+	
 	@Override
 	public List<TechbbsDto> gettechBbsPagingList(PagingBean paging, String searchWord, int search) {
 		Connection conn = null;
@@ -36,9 +125,11 @@ public class TechbbsDao implements iTechbbsDao {
 			sWord = " AND CONTENT LIKE '%" + searchWord.trim() + "%' ";
 		} 
 		else if(search == 3) {	// 태그네임
+			sWord = " AND TAGNAME LIKE '%-" + searchWord.trim() + "-%' ";
+		} 
+		else if(search == 4) {	// 태그네임
 			sWord = " AND TAGNAME LIKE '%" + searchWord.trim() + "%' ";
 		} 
-		
 		try {
 			conn = DBConnection.getConnection();
 			System.out.println("1/6 gettechBbsPagingList Success");
@@ -66,6 +157,9 @@ public class TechbbsDao implements iTechbbsDao {
 				sWord = " WHERE CONTENT LIKE '%" + searchWord.trim() + "%' ";
 			} 
 			else if(search == 3) {	// 태그네임
+				sWord = " WHERE TAGNAME LIKE '%-" + searchWord.trim() + "-%' ";
+			} 
+			else if(search == 4) {	// 태그네임
 				sWord = " WHERE TAGNAME LIKE '%" + searchWord.trim() + "%' ";
 			} 
 			// row를 취득
@@ -118,7 +212,7 @@ public class TechbbsDao implements iTechbbsDao {
 	public List<TechbbsDto> gettechBbsList() {
 		String sql = " SELECT SEQ, ID, TITLE,TAGNAME, CONTENT, WDATE, DEL, READCOUNT, LIKECOUNT,LIKEID,DISLIKEID,COMMENTCOUNT, SCRAPCOUNT "
 				+ " FROM TECHBBS "
-				+ " ORDER BY SEQ DESC";
+				+ " ORDER BY SEQ DESC ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -684,6 +778,9 @@ public class TechbbsDao implements iTechbbsDao {
 		}		
 		return commentcount>0?true:false;
 	}
+
+
+
 	
 	
 }

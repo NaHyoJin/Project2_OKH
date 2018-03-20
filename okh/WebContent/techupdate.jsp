@@ -22,7 +22,7 @@
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 <link rel="stylesheet" type="text/css" href="_update.css?ver=1.33">
-<link rel="stylesheet" type="text/css" href="_main.css?ver=1.3">
+<link rel="stylesheet" type="text/css" href="_main.css?ver=1.32">
 </head>
 <body>
 <%
@@ -36,6 +36,7 @@ mem = (UserDto)ologin;
 				<%
 if(ologin == null){	//로그인안한상태
 	%>
+	<input type="button" class="homebtn" onclick="location.gref='index.jsp'">
 	<input type="button" class="login" id="login">
 	<input type="button" class="account" id="account">
 
@@ -43,10 +44,10 @@ if(ologin == null){	//로그인안한상태
 }else{
 	
 %>
+<input type="button" class="homebtn" id="homebtn">
 <div class="actionlogin">
 	<span><%=mem.getId() %></span>
 	<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
-	<img class="alarmbtn" alt="" src="image/alarm.PNG" style="cursor: pointer" id="btnPopover1">	
 </div>
 <%
 }
@@ -62,7 +63,9 @@ if(ologin == null){	//로그인안한상태
 	
 	<script type="text/javascript">
 		$(function() {//좌측 메뉴바 누르는 곳.
-
+			$("#homebtn").click(function() {
+				location.href="main.jsp";
+			});
 			$("#login").click(function() {
 				location.href="User?command=login";
 			});
@@ -200,7 +203,7 @@ if(ologin == null){	//로그인안한상태
             container: 'body',
             html: true,
             trigger: 'hover',
-            content: '<hr><button onclick="logout()" type="button" class="btn btn-default popover-dismiss">logout</button><button onclick="upmydetail()" type="button" class="btn btn-default popover-dismiss">정보수정</button>'
+            content: '<hr><button onclick="logout()" type="button" class="btn btn-default popover-dismiss">logout</button><button onclick="upmydetail()" type="button" class="btn btn-default popover-dismiss">MY페이지</button>'
          });
          // prevent popover from being hidden on mouseout.
          // only dismiss when explicity clicked (e.g. has .hide-popover)

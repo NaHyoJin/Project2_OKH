@@ -16,38 +16,35 @@
 	
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/bootstrap.js"></script>
-	<link rel="stylesheet" type="text/css" href="_main.css?ver=1.2">
+	<link rel="stylesheet" type="text/css" href="_main.css?ver=1.32">
 </head>
 <body>
 
-<%-- <%//로그인한id가져오기
+<%//로그인한id가져오기
 Object ologin = session.getAttribute("login");
 UserDto mem = null;
+List<TechbbsDto> techlist=(List<TechbbsDto>)request.getAttribute("techbbs");
 if(ologin == null){
-	%>	
+	%>
 	<script type="text/javascript">
-		$(".actionlogin").hide();
-	
-</script>
+	alert("로그인해 주십시오");
+	location.href = "index.jsp";	
+	</script>	
 	<%
-}else{
-	mem = (UserDto)ologin;
-%>
-	<script type="text/javascript">
-	alert("들어왔어?");
-	$("#login").hide();
-	$("#account").hide();
-	$("#btnPopover").show();
-	</script>
-<%
+	return;
 }
-%> --%>
+mem = (UserDto)ologin;
+
+
+%>
 	<!-- 인클루드 부분 -->
 	<div class="menu">
 		<input type="button" class="homebtn" id="homebtn">
-		<input type="button" class="login" id="login">
-		<input type="button" class="account" id="account">
-
+		<div class="actionlogin">
+			<span><%=mem.getId() %></span>
+			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
+			
+		</div>
 		<input type="button" class="bbs1" id="qnabbs">
 		<input type="button" class="techbbs_hjh" id="techbbs">
 		<input type="button" class="bbs3" ><!-- 정재흥 -->
@@ -56,16 +53,15 @@ if(ologin == null){
 		<input type="button" class="bbs6" id="life"><!-- 병찬 사는얘기 -->
 	</div>	
 <script type="text/javascript">
-// window.name = "부모창 이름"; 
-window.name = "parentForm";
-// window.open("open할 window", "자식창 이름", "팝업창 옵션");
-openWin = window.open("popup.jsp",
-        "childForm", "location=0, width=390, height=600, resizable = no, scrollbars = no,top=100,left=400");   
+function logout() {
+	location.href='index.jsp';
+}
 </script>
+	
 	<script type="text/javascript">
 		$(function() {//좌측 메뉴바 누르는 곳.
 			$("#homebtn").click(function() {
-				location.href="index.jsp";
+				location.href="main.jsp";
 			});
 			$("#login").click(function() {
 				location.href="User?command=login";
@@ -199,31 +195,15 @@ openWin = window.open("popup.jsp",
 			session.removeAttribute("messageType");
 		}
 	%>
-	<!-- 
-	<script language="javascript">
-window.open("주소입력","MR","location=0,directoryies=0,resizable=0,staus=0,toolbar=nomemubar=0,width=이미지크기,height=이미지크기,top=0,left=0");
-</script>
-
-location : 주소표시줄
-directoryies : 연결
-resizable : 크기조절
-staus : 상태표시줄
-toolbar : 표시단추
-memubar : 메뉴
-width : 새창 너비
-height : 새창 높이
-left : 새창 왼쪽 위치
-top : 새창 위쪽 위치 
-	 -->
 <script>
       $(function() {
          // initialize popover with dynamic content
          $('#btnPopover').popover({
-            placement: 'bottom',
+            placement: 'right',
             container: 'body',
             html: true,
             trigger: 'hover',
-            content: '<button onclick="logout()" type="button" class="btn btn-default popover-dismiss">logout</button><button onclick="upmydetail()" type="button" class="btn btn-default popover-dismiss">my페이지</button>'
+            content: '<button onclick="logout()" type="button" class="btn btn-default popover-dismiss">logout</button><button onclick="upmydetail()" type="button" class="btn btn-default popover-dismiss">MY페이지</button>'
          });
          // prevent popover from being hidden on mouseout.
          // only dismiss when explicity clicked (e.g. has .hide-popover)
@@ -281,6 +261,5 @@ top : 새창 위쪽 위치
           });
         });
    </script>	
-
 </body>
 </html>

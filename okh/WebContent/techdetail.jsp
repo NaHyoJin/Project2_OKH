@@ -29,7 +29,7 @@ request.setCharacterEncoding("utf-8");
 
 <link rel="stylesheet" type="text/css" href="_detail.css?ver=1.44">
 
-<link rel="stylesheet" type="text/css" href="_main.css?ver=1.3">
+<link rel="stylesheet" type="text/css" href="_main.css?ver=1.31">
 </head>
 <body>
 <script type="text/javascript">
@@ -84,6 +84,7 @@ List<TechRepbbsDto> replist=trservice.getRepBbsList(whatlist.get(0).getSeq());
 	<%
 if(ologin == null){	//로그인안한상태
 	%>
+	<input type="button" class="homebtn" onclick="location.gref='index.jsp'">
 	<input type="button" class="login" id="login">
 	<input type="button" class="account" id="account">
 
@@ -91,10 +92,10 @@ if(ologin == null){	//로그인안한상태
 }else{
 	
 %>
+<input type="button" class="homebtn" id="homebtn">
 <div class="actionlogin">
 	<span><%=mem.getId() %></span>
 	<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
-	<img class="alarmbtn" alt="" src="image/alarm.PNG" style="cursor: pointer" id="btnPopover1">	
 </div>
 <%
 }
@@ -110,7 +111,9 @@ if(ologin == null){	//로그인안한상태
 	
 	<script type="text/javascript">
 		$(function() {//좌측 메뉴바 누르는 곳.
-
+			$("#homebtn").click(function() {
+				location.href="main.jsp";
+			});
 			$("#login").click(function() {
 				location.href="User?command=login";
 			});
@@ -588,7 +591,7 @@ if(li4==null){
             container: 'body',
             html: true,
             trigger: 'hover',
-            content: '<button onclick="logout()" type="button" class="btn btn-default popover-dismiss">logout</button><button onclick="upmydetail()" type="button" class="btn btn-default popover-dismiss">정보수정</button>'
+            content: '<button onclick="logout()" type="button" class="btn btn-default popover-dismiss">logout</button><button onclick="upmydetail()" type="button" class="btn btn-default popover-dismiss">MY페이지</button>'
          });
          // prevent popover from being hidden on mouseout.
          // only dismiss when explicity clicked (e.g. has .hide-popover)
@@ -646,72 +649,7 @@ if(li4==null){
           });
         });
    </script>
-   <script>
-      $(function() {
-         // initialize popover with dynamic content
-         $('#btnPopover1').popover({
-            placement: 'right',
-            container: 'body',
-            html: true,
-            trigger: 'hover',
-            content: '<button onclick="updatebbs(<%=whatlist.get(0).getSeq() %>)" type="button" class="btn btn-default popover-dismiss">수정</button><button onclick="deletebbs(<%=whatlist.get(0).getSeq() %>)" type="button" class="btn btn-default popover-dismiss">삭제</button>'
-         });
-         // prevent popover from being hidden on mouseout.
-         // only dismiss when explicity clicked (e.g. has .hide-popover)
-         $('#btnPopover1').on('hide.bs.popover', function(evt) {
-            if(!$(evt.target).hasClass('hide-popover')) {
-               evt.preventDefault();
-               evt.stopPropagation();
-               evt.cancelBubble = true;
-            }
-         });
-         // reset helper class when dismissed
-         $('#btnPopover1').on('hidden.bs.popover', function(evt) {
-            $(this).removeClass('hide-popover');
-         });
-         $('body').on('click', '.popover-dismiss', function() {
-            // add helper class to force dismissal
-            $('#btnPopover').addClass('hide-popover');
-            // call method to hide popover
-            $('#btnPopover').popover('hide');
-         });
-          
-          $('#btnPopover1').data('overButton', false);
-          $('#btnPopover1').data('overPopover', false);
-          $.fn.closePopover = function(){
-            var $this = $(this);
-            
-            if(!$this.data('overPopover') && !$this.data('overButton')){
-              $this.addClass('hide-popover');
-              $this.popover('hide');              
-            }
-          }
-          
-          //set flags when mouse enters the button or the popover.
-          //When the mouse leaves unset immediately, wait a second (to allow the mouse to enter again or enter the other) and then test to see if the mouse is no longer over either. If not, close popover.
-          $('#btnPopover1').on('mouseenter', function(evt){
-            $(this).data('overButton', true);
-          });
-          $('#btnPopover1').on('mouseleave', function(evt){
-            var $btn = $(this);
-            $btn.data('overButton', false);
-            
-            setTimeout(function() {$btn.closePopover();}, 200);
-            
-          });
-          $('#btnPopover1').on('shown.bs.popover', function () {
-            var $btn = $(this);
-            $('.popover-content').on('mouseenter', function (evt){
-              $btn.data('overPopover', true);
-            });
-            $('.popover-content').on('mouseleave', function (evt){
-              $btn.data('overPopover', false);
-              
-              setTimeout(function() {$btn.closePopover();}, 200);
-            });
-          });
-        });
-   </script>
+  
    <script>
       $(function() {
          // initialize popover with dynamic content

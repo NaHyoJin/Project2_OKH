@@ -61,7 +61,7 @@ public class TechbbsController extends HttpServlet {
 			}
 			response.sendRedirect("techwrite.jsp");
 		}else if(command.equals("techwriteAf")) {
-			String tagname="TechTips&강좌-";
+			String tagname="-TechTips-";
 			String[] tagnames=request.getParameterValues("tagnames");	//span태그안의value값다받아오기
 			String id=request.getParameter("id");
 			String title=request.getParameter("title");
@@ -81,7 +81,6 @@ public class TechbbsController extends HttpServlet {
 			for(int i=0;i<tagnames.length;i++){
 				tagname+=tagnames[i]+"-";
 			}
-			tagname=tagname.substring(0, tagname.lastIndexOf("-"));
 			TechbbsDto dto=new TechbbsDto(id, title, tagname, content);
 			request.setAttribute("techwritedto", dto);
 			dispatch("techwriteAf.jsp", request, response);
@@ -174,23 +173,14 @@ public class TechbbsController extends HttpServlet {
 				request.setAttribute("techbbs", list);
 				dispatch("techbbs.jsp", request, response);
 			}
+		}else if(command.equals("sorthe")) {
+			List<TechbbsDto> list=tservice.gettechBbsList();
+			String whatsort=request.getParameter("whatthings");
+			System.out.println("sort해들어왔나?");
+			request.setAttribute("whatsort", whatsort);
+			request.setAttribute("sorthe", list);
+			dispatch("techbbs.jsp", request, response);
 		}
-		/*if(command1==null) {
-			
-		}
-			
-		else if(command1!=null&&command1.equals("pdswrite")) { 
-			String tagname="TechTips&강좌-";
-			String[] tagnames=request.getParameterValues("tagnames");	//span태그안의value값다받아오기
-			String id=request.getParameter("id");
-			String title=request.getParameter("title");
-			String content=request.getParameter("content");
-			for(int i=0;i<tagnames.length;i++){
-				tagname+=tagnames[i]+"-";
-			}
-			tagname=tagname.substring(0, tagname.lastIndexOf("-"));
-			System.out.println(tagname+id+title+command1+content);
-		}*/
 	}
 	public void dispatch(String urls, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		RequestDispatcher _dispatch=req.getRequestDispatcher(urls);
