@@ -14,7 +14,7 @@
 	
 </head>
 <body>
-	<div class="menu">
+	<div class="menu"><!--  -->
 		<input type="button" class="login" id="login">
 		<input type="button" class="account" id="account">
 		<input type="button" class="bbs1">
