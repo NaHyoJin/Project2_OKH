@@ -1,3 +1,6 @@
+<%@page import="jobs_BBS5.newbbs5HWCodingVO"%>
+<%@page import="jobs_BBS5.newbbs5HWCodingService"%>
+<%@page import="jobs_BBS5.newbbs5HWCodingServiceImpl"%>
 <%@page import="techbbs.TechbbsDto"%>
 <%@page import="java.util.List"%>
 <%@page import="user.UserDto"%>
