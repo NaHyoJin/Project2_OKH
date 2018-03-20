@@ -22,7 +22,6 @@
 		<input type="button" class="bbs3">
 		<input type="button" class="bbs4">
 		<input type="button" class="bbs5" id="jobs">
-		<input type="button" class="bbs6" id="">
 	</div>
 	<%
 	String userID = null;
@@ -78,7 +77,7 @@
 						<td style="width: 110px;"><h5>아이디</h5></td>
 						<td>
 							<input type="hidden" name="command" value="loginAf">
-							<input autofocus class="form-control" type="text" name="userID" maxlength="20" placeholder="아이디를 입력하세요.">
+							<input class="form-control" type="text" name="userID" maxlength="20" placeholder="아이디를 입력하세요.">
 						</td>
 					</tr>
 					<tr>
