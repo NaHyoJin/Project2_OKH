@@ -168,8 +168,8 @@ if(ologin == null){
 				
 				<%
 				}
-				%>			
-</td>				
+				%>
+</td>
 				</tr>
 				
 				</table>
