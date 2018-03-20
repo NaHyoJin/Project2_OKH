@@ -77,11 +77,13 @@ if(ologin != null){
 List<newbbs5HWCodingVO> whatlist = (List<newbbs5HWCodingVO>)request.getAttribute("whatlist");
 newbbs5HWCodingServiceImpl tservice = newbbs5HWCodingService.getInstance();
 String[] tagnames = tservice.getTagName(whatlist.get(0).getTagname());
-int pdsyn=0;
+
+int pdsyn = 0;
+
 if(whatlist.get(0).getPdsys() == 2){		//자료없으면
-	pdsyn=2;
+	pdsyn = 2;
 }else if(whatlist.get(0).getPdsys() == 1){	//자료있으면
-	pdsyn=1;
+	pdsyn = 1;
 }
 
 //답글 게시판 리스트불러오는 함수 작성
@@ -140,11 +142,20 @@ List<HWRepbbsDto> replist = trservice.getRepBbsList(whatlist.get(0).getSeq());
 	</script>
 	<div class="titlediv"><h2>HW & Coding Detail</h2><br>
 <!-- 	<button onclick="location.href='../BBSHWCodingController?command=techbbs1'"  -->
-	<button onclick="newWrite()" 
+<%
+	if(mem != null){
+%>
+<button onclick="newWrite()" 
 	class="create btn btn-success btn-wide pull-right ">새 글 쓰기</button>
+<%
+	}
+%>
+	
+	
 	</div>
 	
 	<script type="text/javascript">
+	
 	<%
 	ologin = session.getAttribute("login");
 	mem = null;//null로 초기화.
@@ -286,7 +297,9 @@ List<HWRepbbsDto> replist = trservice.getRepBbsList(whatlist.get(0).getSeq());
 			        var msg = "정말 삭제 하시겠습니까?";
 			        
 			        var delseq = seq;
-//			        var delid = <%=mem.getId() %>;
+			        
+					/* 아...본인글 삭제할때 아이디로 찾을려고했다가 넣기 힘들어서 내가 쓰다가 만거. */
+			        <%-- var delid = <%=mem.getId() %>; --%>
 			        if (confirm(msg)) {//confirm 이거 함수 사용해서 작동 완료.
 			              
 			        
@@ -469,12 +482,12 @@ var edit = function(seq) {
 		String un = "null";
 %>
 <button id="repcancel" class="btn btn-default btn-wide" 
-onclick="location.href='BBSHWCodingController?command=techdetail&likeid=<%=un %>&seq=<%=whatlist.get(0).getSeq()%>'">댓글취소</button>		
+onclick="location.href='BBSHWCodingController?command=hwdetail&likeid=<%=un %>&seq=<%=whatlist.get(0).getSeq()%>'">댓글취소</button>		
 <%	
 	}else{
 %>
 	<button id="repcancel" class="btn btn-default btn-wide" 
-	onclick="location.href='BBSHWCodingController?command=techdetail&likeid=<%=mem.getId() %>&seq=<%=whatlist.get(0).getSeq()%>'">댓글취소</button>
+	onclick="location.href='BBSHWCodingController?command=hwdetail&likeid=<%=mem.getId() %>&seq=<%=whatlist.get(0).getSeq()%>'">댓글취소</button>
 <%
 	}
 %>	

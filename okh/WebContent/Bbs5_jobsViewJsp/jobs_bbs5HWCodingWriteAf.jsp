@@ -28,7 +28,7 @@ if(return1 == null && techwritedto == null){
 %>
 <script type="text/javascript">
 alert("제목과 내용을 입력해주세요");
-location.href="../BBSHWCodingController?command=techbbs1";
+location.href = "../BBSHWCodingController?command=techbbs1";
 </script>
 <%
 }else{

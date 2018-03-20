@@ -747,22 +747,22 @@ public class newbbs5HWCodingDao implements newbbs5HWCodingDaoImpl {
 	public boolean checkcomment(int seq) {
 		String sql = " SELECT COMMENTCOUNT FROM newbbs5HWCodingVO "
 				+ " WHERE SEQ=? ";
-		Connection conn=null;
-		PreparedStatement psmt=null;
-		ResultSet rs=null;
-		int commentcount=0;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		int commentcount = 0;
 		try {
 			conn = DBConnection.getConnection();	
-			psmt=conn.prepareStatement(sql);
+			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, seq);
 			rs = psmt.executeQuery();
-			System.out.println("2/6 gettechBbsPagingList Success");
+			System.out.println("2/6 checkcomment Success");
 			
 			rs.next();
 			commentcount = rs.getInt(1);	// row의 총 갯수
 			
 		} catch (SQLException e) {
-			System.out.println(" dislikecount fail");	
+			System.out.println(" checkcomment fail");	
 			e.printStackTrace();
 		}finally{
 			

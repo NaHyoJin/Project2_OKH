@@ -35,11 +35,17 @@ public class HWRepbbsService implements HWRepbbsServiceImpl{
 		// TODO Auto-generated method stub
 		return techrepbbsdao.repupdate(seq, content);
 	}
+	
+	//덧글 삭제.
 	@Override
 	public boolean repdelete(int seq) {
 		// TODO Auto-generated method stub
 		return techrepbbsdao.repdelete(seq);
 	}
+	//글 삭제시 인간 쪽 점수 빼는 것. 나중에 시간 되면 만들어보자.
+		public boolean deleteBbsMemSCORE(byte score, int seq) {
+			return techrepbbsdao.deleteBbsMemSCORE(score, seq);
+		}
 
 	
 	

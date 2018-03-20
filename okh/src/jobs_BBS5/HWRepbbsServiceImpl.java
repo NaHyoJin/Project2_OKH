@@ -13,5 +13,6 @@ public interface HWRepbbsServiceImpl {
 	public boolean repupdate(int seq, String content);
 	//덧글 삭제 부분.
 	public boolean repdelete(int seq);
-	//덧글 삭제 시 점수 빼는 부분 시간 되면 만들자.
+	//글 삭제시 인간 쪽 점수 빼는 것. 나중에 시간 되면 만들어보자.
+		public boolean deleteBbsMemSCORE(byte score, int seq);
 }

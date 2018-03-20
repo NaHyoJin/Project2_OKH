@@ -165,32 +165,68 @@ public class HWRepbbsDao implements HWRepbbsDaoImpl {
 		return count>0?true:false;
 	}
 
+	//덧글 삭제.
 	@Override
 	public boolean repdelete(int seq) {
-		String sql=" UPDATE HWRepbbsDto SET "
+		String sql = " UPDATE HWRepbbsDto SET "
 				+ " DEL=1 "
 				+ " WHERE SEQ=? ";
 		
 		int count = 0;
-		Connection conn=null;
-		PreparedStatement psmt=null;
+		Connection conn = null;
+		PreparedStatement psmt = null;
 		
 		try {
 			conn = DBConnection.getConnection();			
-			psmt=conn.prepareStatement(sql);
+			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, seq);			
 			count = psmt.executeUpdate();
 			
 		} catch (SQLException e) {			
 			e.printStackTrace();
 		} finally{
-			DBClose.close(psmt, conn, null);			
-		}
-				
+			DBClose.close(psmt, conn, null);	
+			System.out.println("덧글 삭제 finally");
+		}				
 		return count>0?true:false;
 	}
 
-	
+	//글 삭제시 인간 쪽 점수 빼는 것. 나중에 시간 되면 만들어보자.
+			public boolean deleteBbsMemSCORE(byte score, int seq) {
+			//글 삭제 하면 -로. 쿼리문은 잘 작동한다.
+			String sql = " UPDATE OKHMEM "
+					+ " SET score=score-? "
+					+ " WHERE id=(select id from HWRepbbsDto where seq=?) ";
+			Connection conn = null;
+			PreparedStatement psmt = null;
+			
+			int count = 0;
+			
+			System.out.println(sql);
+			try {
+				conn = DBConnection.getConnection();	
+				psmt = conn.prepareStatement(sql);
+				System.out.println("1/6 deleteBbsMemSCORE Success");
+				
+				System.out.println("score : " + score);
+				psmt.setByte(1, score);
+				System.out.println("seq : " + seq);
+				psmt.setInt(2, seq);
+				
+				System.out.println(sql);
+				System.out.println("2/6 deleteBbsMemSCORE Success");	
+				count = psmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				System.out.println("deleteBbsMemSCORE fail");	
+				e.printStackTrace();
+			}finally{
+				DBClose.close(psmt, conn, null);
+				System.out.println("3/6 finally deleteBbsMemSCORE Success");	
+			}
+			
+			return count > 0 ? true : false;
+		}
 	
 }
 

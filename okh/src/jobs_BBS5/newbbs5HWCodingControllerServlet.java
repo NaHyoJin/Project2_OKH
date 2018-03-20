@@ -102,7 +102,7 @@ public class newbbs5HWCodingControllerServlet extends HttpServlet {
 			}
 			
 		//디테일 부분.
-		}else if(command.equals("techdetail")) {
+		}else if(command.equals("hwdetail")) {
 			
 			HWLikeScrapServiceImpl lsservice = HWLikeScrapService.getInstance();
 			String sseq = request.getParameter("seq");
@@ -121,19 +121,19 @@ public class newbbs5HWCodingControllerServlet extends HttpServlet {
 			boolean likeisS = lsservice.isitlikeid(seq, likeid);
 			boolean dislikeisS = lsservice.isitdislikeid(seq, likeid);
 			boolean b = tservice.getparent(seq);
-			List<newbbs5HWCodingVO> list = new ArrayList<>();
+			List<newbbs5HWCodingVO> list = new ArrayList<newbbs5HWCodingVO>();
 			if (likeisS) {
-				System.out.println("id 찾았다");
+				System.out.println("id 찾았다. 디테일 부분.");
 				dto = new newbbs5HWCodingVO(1, 0);
 			}else {
-				System.out.println("id 못찾았다");
+				System.out.println("id 못찾았다.");
 				dto = new newbbs5HWCodingVO(2, 0);
 			}
 			if(dislikeisS) {
-				System.out.println("싫어요 id찾았다");
+				System.out.println("싫어요 id찾았다.");
 				dto1 = new newbbs5HWCodingVO(0, 1);
 			}else {
-				System.out.println("싫어요 id못찾았다");
+				System.out.println("싫어요 id못찾았다.");
 				dto1 = new newbbs5HWCodingVO(0, 2);
 			}
 			if (b) {

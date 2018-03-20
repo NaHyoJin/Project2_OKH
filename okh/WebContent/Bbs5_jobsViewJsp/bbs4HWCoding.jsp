@@ -186,8 +186,15 @@ System.out.println(hwlist.size() + "사이즈크기");
 		<jsp:include page="BBS5TopMenuinclude.jsp" flush="false" />
 	</div>
  --%>
+<%
+	if(mem != null){
+%>
 <button class="create btn btn-success btn-wide pull-right " 
-type="button" id="techwrite">게시글 쓰기</button></div>
+type="button" id="techwrite">게시글 쓰기</button>
+<%
+	}
+%>
+</div>
 	
 	
 <div class="wrap">
@@ -236,7 +243,7 @@ type="button" id="techwrite">게시글 쓰기</button></div>
 					<th style="border-left: 5px solid #808080">
 					#<%=hwlist.get(i).getSeq() %>
 				<%}
-				for(int j=0; j < tagnames.length; j++){//추가시킬때무조건추가시킬거는 -없이해도되고 엔터치면 -그값을넣어준다
+				for(int j = 0; j < tagnames.length; j++){//추가시킬때무조건추가시킬거는 -없이해도되고 엔터치면 -그값을넣어준다
 				%>
 					<span><button class="hjhtag" name="tag<%=j%>" id="tag<%=j%>" 
 					onclick="searchBbs1(this)" value="<%=tagnames[j]%>"><%=tagnames[j] %></button></span>
@@ -246,18 +253,17 @@ type="button" id="techwrite">게시글 쓰기</button></div>
 				
 				<p style="font-size: 20px">
 				
-				<!-- 컨트롤러 부분 like 부분 일단 주석 처리 하고 해보자. -->
 				<%
 				//로그인 안하고 글 볼때 null 값으로.
 					if(mem == null){
 						String memNull = null;
 						%>
-	<a href="../BBSHWCodingController?command=techdetail&likeid=<%=memNull %>&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a>			
+<a href="../BBSHWCodingController?command=hwdetail&likeid=<%=memNull %>&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a>			
 				<%
 					}else{
 				%>
 				<%-- <a href="../BBSHWCodingController?command=techdetail&likeid=<%=mem.getId() %>&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a> --%>
-	<a href="../BBSHWCodingController?command=techdetail&likeid=<%=mem.getId() %>&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a>
+<a href="../BBSHWCodingController?command=hwdetail&likeid=<%=mem.getId() %>&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a>
 	 			<%
 					}
 	 			%>

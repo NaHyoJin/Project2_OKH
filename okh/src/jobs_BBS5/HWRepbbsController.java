@@ -213,12 +213,13 @@ public class HWRepbbsController extends HttpServlet {
 			}
 			
 		}else if(command.equals("delete")) {
-			//삭제후 디테일창가기위한 초기화
+			
+			//삭제후 디테일창 가기위한 초기화
 			HWLikeScrapServiceImpl lsservice = HWLikeScrapService.getInstance();
 			newbbs5HWCodingVO dto = null;
 			newbbs5HWCodingVO dto1 = null;
 			List<newbbs5HWCodingVO> list = new ArrayList<>();
-			//필요한거받아오기
+			//필요한거 받아오기
 			String memid = request.getParameter("memid");
 			String sseq = request.getParameter("seq");
 			int seq = Integer.parseInt(sseq);
@@ -263,17 +264,20 @@ public class HWRepbbsController extends HttpServlet {
 				request.setAttribute("fdislikeidyn", dto1);
 				request.setAttribute("flikeidyn", dto);
 				request.setAttribute("whatlist", list);
+				//삭제 패널티 점수.
+				byte score = 5;//5점 감점.
+				trservice.deleteBbsMemSCORE(score, seq);
 				dispatch("Bbs5_jobsViewJsp/jobs_bbs5HWCodingDetail.jsp", request, response);
 			}else {
-				System.out.println("rep댓글 삭제실패");
+				System.out.println("rep댓글 삭제 실패.");
 				boolean is = tservice.getparent(bonseq);
 				
 				if (is) {
 					list=tservice.getpdsdetail(bonseq);
-					System.out.println("자료있다");
+					System.out.println("덧글 자료 있다.");
 				}else {
 					list=tservice.getdetail(bonseq);
-					System.out.println("자료없다");
+					System.out.println("덧글 자료 없다.");
 				}
 				//값들보내주기 좋아요싫어요유무, 어떤리스트인지,
 				request.setAttribute("fdislikeidyn", dto1);
