@@ -1,6 +1,5 @@
-<%@page import="jobs_BBS5.newbbs5HWCodingVO"%>
-<%@page import="jobs_BBS5.newbbs5HWCodingService"%>
-<%@page import="jobs_BBS5.newbbs5HWCodingServiceImpl"%>
+<%@page import="techbbs.TechbbsService"%>
+<%@page import="techbbs.TechbbsServiceImpl"%>
 <%@page import="techbbs.TechbbsDto"%>
 <%@page import="java.util.List"%>
 <%@page import="user.UserDto"%>
@@ -15,43 +14,82 @@
 	<link rel="stylesheet" href="css/custom.css">
 	
 	<title>index.jsp</title>
-	
-	
+
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/bootstrap.js"></script>
-	<link rel="stylesheet" type="text/css" href="_main.css?ver=1.2">
+	<link rel="stylesheet" type="text/css" href="_main.css?ver=1.22">
+<link rel="stylesheet" type="text/css" href="_techbbs.css?ver=1.23">
+<!-- 쿠키용 -->
+<script type="text/javascript" src="js/jquery.cookie.js"></script>
+<script type="text/javascript">
+
+function getCookie(name){    
+var wcname = name + '=';
+var wcstart, wcend, end;
+var i = 0;    
+
+  while(i <= document.cookie.length) {            
+  	wcstart = i;  
+	wcend   = (i + wcname.length);            
+	if(document.cookie.substring(wcstart, wcend) == wcname) {                    
+		if((end = document.cookie.indexOf(';', wcend)) == -1)                           
+			end = document.cookie.length;                    
+		return document.cookie.substring(wcend, end);            
+  	}            
+
+	i = document.cookie.indexOf('', i) + 1;            
+  
+  	if(i == 0)                    
+		break;    
+  }    
+  return '';
+} 
+
+if(getCookie('okhpop') != 'rangs') {       
+ window.open("popup.jsp",
+	        "childForm", "location=0, width=390, height=600, resizable = no, scrollbars = no,top=100,left=400");   
+}
+</script>
+
+	
 </head>
 <body>
-<!-- 로그인 세션 -->
+
+<%-- <%//로그인한id가져오기
+Object ologin = session.getAttribute("login");
+UserDto mem = null;
+if(ologin == null){
+	%>	
+	<script type="text/javascript">
+		$(".actionlogin").hide();
+	
+</script>
 	<%
-	Object ologin = session.getAttribute("login");
-	UserDto mem = (UserDto)ologin;
-	%>
-<!-- 메뉴 -->
+}else{
+	mem = (UserDto)ologin;
+%>
+	<script type="text/javascript">
+	alert("들어왔어?");
+	$("#login").hide();
+	$("#account").hide();
+	$("#btnPopover").show();
+	</script>
+<%
+}
+%> --%>
+	<!-- 인클루드 부분 -->
 	<div class="menu">
-		<%
-		if(ologin == null){
-		%>
+		<input type="button" class="homebtn" id="homebtn">
 		<input type="button" class="login" id="login">
 		<input type="button" class="account" id="account">
-		<%
-		}else{
-		%>
-		<div class="actionlogin">
-			<span><%=mem.getId() %></span>
-			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
-			<img class="alarmbtn" alt="" src="image/alarm.PNG" style="cursor: pointer" id="btnPopover">	
-		</div>
-		<%
-		}
-		%>
-		<input type="button" class="bbs1" id="qnabbs">				<!-- 박형태 -->
-		<input type="button" class="techbbs_hjh" id="techbbs">		<!-- 황준현 -->
-		<input type="button" class="bbs3" >							<!-- 정재흥 -->
-		<input type="button" class="bbs4" >							<!-- 장문석 -->
-		<input type="button" class="bbs5" id="jobs">				<!-- 나효진 -->
-		<input type="button" class="bbs6" id="life">				<!-- 정병찬 -->
-	</div>
+
+		<input type="button" class="bbs1" id="qnabbs">
+		<input type="button" class="techbbs_hjh" id="techbbs">
+		<input type="button" class="bbs3" ><!-- 정재흥 -->
+		<input type="button" class="bbs4" >
+		<input type="button" class="bbs5" id="jobs"><!-- 나효진 -->
+		<input type="button" class="bbs6" id="life"><!-- 병찬 사는얘기 -->
+	</div>	
 	<script type="text/javascript">
 		$(function() {//좌측 메뉴바 누르는 곳.
 			$("#homebtn").click(function() {
@@ -60,63 +98,91 @@
 			$("#login").click(function() {
 				location.href="User?command=login";
 			});
+	
 			$("#account").click(function() {
 				location.href="User?command=join";
 			});
+			
+			//QNA
 			$("#qnabbs").click(function() {
 				location.href="qnaServlet?command=listQna";
 			});
+			
+			$("#second").click(function() {
+				location.href="second.jsp";
+			});
+	
 			$("#techbbs").click(function() {
 				location.href="TechbbsController?command=techbbs";
 			});
-			$("#jobs").click(function name() {
-				location.href="jobs";
-			});
+	
 			$("#life").click(function() {
 				location.href="LifeBbs?command=life";
 			});
+			
+			
+	/* 
+			//columns
+			$("#").click(function() {
+				location.href="";
+			});
+	 */
+	 
+			//게시판5 나효진 jobs 부분.
+/* 			$("#jobs").click(function() {
+				location.href="main.BBSHWCodingController";
+			});
+ */	 
+			
+			$("#jobs").click(function name() {
+				location.href="jobs";
+			});
+
 		});
 	</script>
-<script type="text/javascript">
-// window.name = "부모창 이름"; 
-window.name = "parentForm";
-// window.open("open할 window", "자식창 이름", "팝업창 옵션");
-openWin = window.open("popup.jsp",
-        "childForm", "location=0, width=390, height=600, resizable = no, scrollbars = no,top=100,left=400");   
-</script>
 	
 	<!-- 황준현 -->
 <!-- wrap로 메인페이지 섹션사이즈만들어준거고 그밑에 자식들 partition1~partition4로 테이블뿌리면된니다  -->
 	<div class="wrap" id="tableChange">
 		<div class="partition1">
-			게시판뿌려주기1
-			<table border="1">
-				<tr>
-					<td>황</td>
-					<td>준</td>
-					<td>현</td>
+			<h4 style="margin-bottom: 15px">Tech게시판 <a href="TechbbsController?command=techbbs"><img style="float: right" alt="" src="image/moresee.PNG"></a></h4>
+			<%
+			TechbbsServiceImpl tservice=TechbbsService.getInstance();
+			List<TechbbsDto> techlist=tservice.gettechBbsList();
+			%>
+			<table border="1" class="techtable">
+				<%if(techlist==null||techlist.size()==0){
+				
+			%><tr>
+				<th>리스트가없습니다</th>
 				</tr>
-				<tr>
-					<td>황</td>
-					<td>준</td>
-					<td>현</td>
-				</tr>
-				<tr>
-					<td>황</td>
-					<td>준</td>
-					<td>현</td>
-				</tr>
-				<tr>
-					<td>황</td>
-					<td>준</td>
-					<td>현</td>
-				</tr>
-				<tr>
-					<td>황</td>
-					<td>준</td>
-					<td>현</td>
-				</tr>
-			</table>
+			<%
+			}
+			
+			for(int i=0;i<techlist.size();i++){
+				TechbbsDto dto=techlist.get(i);
+				String[] tagnames=tservice.getTagName(dto.getTagname());	
+				
+				tservice=TechbbsService.getInstance();
+				boolean chekcomment=tservice.checkcomment(techlist.get(i).getSeq());
+				if(chekcomment){
+			%>
+			<tr>
+				<th style="padding: 0">
+				<p style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a></p>
+				<p style="text-align: right"><%=dto.getId() %></p>
+			<%
+			}else{
+			%>
+			<tr>
+				<th style="padding: 0; border-left: 5px solid #808080">
+				<p style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a></p>
+				<p style="text-align: right"><%=dto.getId() %></p>
+	
+			<%}
+			}
+			%>
+		</table>
 		</div>
 		<div class="partition2">
 			게시판뿌려주기2
@@ -125,34 +191,7 @@ openWin = window.open("popup.jsp",
 			게시판뿌려주기3
 		</div>
 		<div class="partition4">
-<<<<<<< HEAD
-			<table border="1">
-				<tr align="center" height="5">
-				<!-- tr,tf,td 어떻게 사용해야 되는지 모르겠네........................ -->
-					<th>제목</th>
-<td>
-				<%
-				//싱글톤 생성 부분. HW 생성해서 보여줘보자.
-				newbbs5HWCodingServiceImpl service = newbbs5HWCodingService.getInstance();//먼저 서비스를 불러야지...
-				
-				List<newbbs5HWCodingVO> hwbbs  = service.gettechBbsList();//전체글 가지고 오는건데...
-				//확인 부분.
-				for(byte b = 0; b < hwbbs.size(); b++){
-					System.out.println(hwbbs.get(b).toString());
-				%>
-				
-				<%=hwbbs.get(b).getTitle() %>
-				
-				<%
-				}
-				%>
-</td>
-				</tr>
-				
-				</table>
-=======
 			게시판뿌려주기4
->>>>>>> branch 'master' of https://github.com/NaHyoJin/Project2_OKH.git
 		</div>
 	</div>
 	<%
@@ -222,7 +261,7 @@ top : 새창 위쪽 위치
             container: 'body',
             html: true,
             trigger: 'hover',
-            content: '<p>설정</p><hr><button type="button" class="btn btn-default popover-dismiss" onclick="logout()">로그아웃</button><button type="button" class="btn btn-default popover-dismiss" onclick="mypage()">정보수정</button>'
+            content: '<button onclick="logout()" type="button" class="btn btn-default popover-dismiss">logout</button><button onclick="upmydetail()" type="button" class="btn btn-default popover-dismiss">my페이지</button>'
          });
          // prevent popover from being hidden on mouseout.
          // only dismiss when explicity clicked (e.g. has .hide-popover)
@@ -279,14 +318,7 @@ top : 새창 위쪽 위치
             });
           });
         });
-   </script>
-	<script type="text/javascript">
-	function logout() {
-		location.href ="User?command=logout";
-	}
-	function mypage() {
-		location.href ="User?command=mypage";
-	}
-	</script>
+   </script>	
+
 </body>
 </html>

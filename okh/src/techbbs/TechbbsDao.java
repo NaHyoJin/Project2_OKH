@@ -210,16 +210,18 @@ public class TechbbsDao implements iTechbbsDao {
 
 	@Override
 	public List<TechbbsDto> gettechBbsList() {
-		String sql = " SELECT SEQ, ID, TITLE,TAGNAME, CONTENT, WDATE, DEL, READCOUNT, LIKECOUNT,LIKEID,DISLIKEID,COMMENTCOUNT, SCRAPCOUNT "
-				+ " FROM TECHBBS "
-				+ " ORDER BY SEQ DESC ";
-		
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		List<TechbbsDto> list=new ArrayList<TechbbsDto>();
-		
+		int totalCount = 0;
 		try {
+		String sql = " SELECT * FROM  "
+				+ " (SELECT * FROM (SELECT * FROM TECHBBS ORDER BY SEQ ASC) "
+				+ "  WHERE ROWNUM >= 1 AND DEL=0 ORDER BY SEQ DESC) "
+				+ " WHERE ROWNUM <= 6 AND DEL=0 ";
+		
+		
 			conn=DBConnection.getConnection();
 			System.out.println(" (1/6) gettechBbsList Success");
 			psmt = conn.prepareStatement(sql);

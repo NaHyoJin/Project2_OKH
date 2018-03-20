@@ -1,3 +1,5 @@
+<%@page import="techbbs.TechbbsService"%>
+<%@page import="techbbs.TechbbsServiceImpl"%>
 <%@page import="techbbs.TechbbsDto"%>
 <%@page import="java.util.List"%>
 <%@page import="user.UserDto"%>
@@ -14,16 +16,47 @@
 	<title>index.jsp</title>
 	
 	
+	
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/bootstrap.js"></script>
 	<link rel="stylesheet" type="text/css" href="_main.css?ver=1.32">
+	<link rel="stylesheet" type="text/css" href="_techbbs.css?ver=1.23">
+<!-- 쿠키용 -->
+<script type="text/javascript" src="js/jquery.cookie.js"></script>
+<script type="text/javascript">
+function getCookie(name){    
+var wcname = name + '=';
+var wcstart, wcend, end;
+var i = 0;    
+
+  while(i <= document.cookie.length) {            
+  	wcstart = i;  
+	wcend   = (i + wcname.length);            
+	if(document.cookie.substring(wcstart, wcend) == wcname) {                    
+		if((end = document.cookie.indexOf(';', wcend)) == -1)                           
+			end = document.cookie.length;                    
+		return document.cookie.substring(wcend, end);            
+  	}            
+
+	i = document.cookie.indexOf('', i) + 1;            
+  
+  	if(i == 0)                    
+		break;    
+  }    
+  return '';
+} 
+
+if(getCookie('okhpop') != 'rangs') {       
+ window.open("popup.jsp",
+	        "childForm", "location=0, width=390, height=600, resizable = no, scrollbars = no,top=100,left=400");   
+}
+</script>
 </head>
 <body>
 
 <%//로그인한id가져오기
 Object ologin = session.getAttribute("login");
 UserDto mem = null;
-List<TechbbsDto> techlist=(List<TechbbsDto>)request.getAttribute("techbbs");
 if(ologin == null){
 	%>
 	<script type="text/javascript">
@@ -113,34 +146,44 @@ function logout() {
 <!-- wrap로 메인페이지 섹션사이즈만들어준거고 그밑에 자식들 partition1~partition4로 테이블뿌리면된니다  -->
 	<div class="wrap" id="tableChange">
 		<div class="partition1">
-			게시판뿌려주기1
-			<table border="1">
-				<tr>
-					<td>황</td>
-					<td>준</td>
-					<td>현</td>
+			<h4 style="margin-bottom: 15px">Tech게시판 <a href="TechbbsController?command=techbbs"><img style="float: right" alt="" src="image/moresee.PNG"></a></h4>
+			<%
+			TechbbsServiceImpl tservice=TechbbsService.getInstance();
+			List<TechbbsDto> techlist=tservice.gettechBbsList();
+			%>
+			<table border="1" class="techtable">
+				<%if(techlist==null||techlist.size()==0){
+				
+			%><tr>
+				<th>리스트가없습니다</th>
 				</tr>
-				<tr>
-					<td>황</td>
-					<td>준</td>
-					<td>현</td>
-				</tr>
-				<tr>
-					<td>황</td>
-					<td>준</td>
-					<td>현</td>
-				</tr>
-				<tr>
-					<td>황</td>
-					<td>준</td>
-					<td>현</td>
-				</tr>
-				<tr>
-					<td>황</td>
-					<td>준</td>
-					<td>현</td>
-				</tr>
-			</table>
+			<%
+			}
+			
+			for(int i=0;i<techlist.size();i++){
+				TechbbsDto dto=techlist.get(i);
+				String[] tagnames=tservice.getTagName(dto.getTagname());	
+				
+				tservice=TechbbsService.getInstance();
+				boolean chekcomment=tservice.checkcomment(techlist.get(i).getSeq());
+				if(chekcomment){
+			%>
+			<tr>
+				<th style="padding:0 0 0 10px">
+				<p style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a></p>
+				<p style="text-align: right; padding-right: 10px;"><%=dto.getId() %></p>
+			<%
+			}else{
+			%>
+			<tr>
+				<th style="padding:0 0 0 10px;  border-left: 5px solid #808080">
+				<p style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a></p>
+				<p style="text-align: right; padding-right: 10px;"><%=dto.getId() %></p>
+	
+			<%}
+			}
+			%>
+		</table>
 		</div>
 		<div class="partition2">
 			게시판뿌려주기2

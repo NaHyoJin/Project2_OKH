@@ -36,7 +36,7 @@ mem = (UserDto)ologin;
 				<%
 if(ologin == null){	//로그인안한상태
 	%>
-	<input type="button" class="homebtn" onclick="location.gref='index.jsp'">
+	<input type="button" class="homebtn" onclick="location.href='index.jsp'">
 	<input type="button" class="login" id="login">
 	<input type="button" class="account" id="account">
 
