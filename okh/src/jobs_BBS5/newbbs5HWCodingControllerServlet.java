@@ -34,6 +34,7 @@ public class newbbs5HWCodingControllerServlet extends HttpServlet {
 		doProcess(req, resp);
 	}
 	
+	//모든것 다 처리하기 위한 메소드.
 	public void doProcess(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		
@@ -46,6 +47,7 @@ public class newbbs5HWCodingControllerServlet extends HttpServlet {
 		
 		newbbs5HWCodingServiceImpl tservice = newbbs5HWCodingService.getInstance();
 		
+		
 		if(command.equals("techbbs")) {
 			
 			List<newbbs5HWCodingVO> list = tservice.gettechBbsList();
@@ -53,7 +55,12 @@ public class newbbs5HWCodingControllerServlet extends HttpServlet {
 			request.setAttribute("techbbs", list);
 			dispatch("Bbs5_jobsViewJsp/bbs4HWCoding.jsp", request, response);
 			
-		}else if(command.equals("techbbs1")) {
+			//메인 화면으로 가는것.
+		}else if(command.equals("main")) {
+			System.out.println("쓰기후 main 으로 들어왔나?");
+			response.sendRedirect("Bbs5_jobsViewJsp/bbs4HWCoding.jsp");
+		}		
+		else if(command.equals("techbbs1")) {
 			response.sendRedirect("Bbs5_jobsViewJsp/jobs_bbs5HWCodingWrite.jsp");
 		}
 		//글 작성 폼 부분. write
@@ -142,23 +149,27 @@ public class newbbs5HWCodingControllerServlet extends HttpServlet {
 			request.setAttribute("whatlist", list);
 			dispatch("Bbs5_jobsViewJsp/jobs_bbs5HWCodingDetail.jsp", request, response);
 			
+		//글 수정 부분.
 		}else if(command.equals("update")) {
 			String sseq = request.getParameter("seq");
 			int seq = Integer.parseInt(sseq);
 			request.setAttribute("seq", seq);
-			dispatch("techupdate.jsp", request, response);
+			dispatch("Bbs5_jobsViewJsp/jobs_bbs5HWCodingUpdate.jsp", request, response);
+			
+		//글 수정 완료 하는 부분.
 		}else if(command.equals("updateAf")) {
 			
 			String title = request.getParameter("title");
 			String content = request.getParameter("content");
 			String sseq = request.getParameter("seq");
 			int seq = Integer.parseInt(sseq);
-			boolean b=tservice.update(seq, title, content);
+			boolean b = tservice.update(seq, title, content);
 			if (b) {
-				System.out.println("업데이트성공");
+				System.out.println("업데이트 성공");
 				List<newbbs5HWCodingVO> list = tservice.gettechBbsList();
-				request.setAttribute("techbbs", list);
-				dispatch("techbbs.jsp", request, response);
+//				request.setAttribute("techbbs", list);
+//				dispatch("Bbs5_jobsViewJsp/bbs4HWCoding.jsp", request, response);
+				response.sendRedirect("Bbs5_jobsViewJsp/bbs4HWCoding.jsp");
 			}else {
 				System.out.println("업데이트실패");
 				request.setAttribute("seq", seq);
@@ -169,25 +180,35 @@ public class newbbs5HWCodingControllerServlet extends HttpServlet {
 			String sseq = request.getParameter("seq");
 			int seq = Integer.parseInt(sseq);
 			boolean b = tservice.delete(seq);
+			
 			if (b) {
-				System.out.println("게시판 지웠다");
-				boolean c= tservice.pdsdelete(seq);
+				System.out.println("HW 게시판 지웠다");
+				boolean c = tservice.pdsdelete(seq);
 				if (c) {
 					System.out.println("자료도 지웠다");
 					tservice.repAlldelete(seq);
-					List<newbbs5HWCodingVO> list=tservice.gettechBbsList();
-					request.setAttribute("techbbs", list);
-					dispatch("techbbs.jsp", request, response);
+					List<newbbs5HWCodingVO> list = tservice.gettechBbsList();
+					
+					//글 삭제하면 점수 - 부분.
+					byte score = 10;
+//					String writescoreid = request.getParameter("id");//아이디 못가지고 오니 그냥 seq로 찾아보자.
+					tservice.deleteBbsMemSCORE(score, seq);
+					
+					response.sendRedirect("Bbs5_jobsViewJsp/bbs4HWCoding.jsp");
 				}else {
-					List<newbbs5HWCodingVO> list=tservice.gettechBbsList();
-					request.setAttribute("techbbs", list);
-					dispatch("techbbs.jsp", request, response);
+					List<newbbs5HWCodingVO> list = tservice.gettechBbsList();
+					
+					//글 삭제하면 점수 - 부분.
+					byte score = 10;
+//					String writescoreid = request.getParameter("id");
+					tservice.deleteBbsMemSCORE(score, seq);
+					
+					response.sendRedirect("Bbs5_jobsViewJsp/bbs4HWCoding.jsp");
 				}
 				
 			}else {
 				List<newbbs5HWCodingVO> list = tservice.gettechBbsList();
-				request.setAttribute("techbbs", list);
-				dispatch("techbbs.jsp", request, response);
+				response.sendRedirect("Bbs5_jobsViewJsp/bbs4HWCoding.jsp");
 			}
 		}
 		/*if(command1==null) {
@@ -208,6 +229,7 @@ public class newbbs5HWCodingControllerServlet extends HttpServlet {
 		}*/
 	}
 	
+	//이동하는 메소드.
 	public void dispatch(String urls, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		RequestDispatcher _dispatch=req.getRequestDispatcher(urls);
 		_dispatch.forward(req, resp);

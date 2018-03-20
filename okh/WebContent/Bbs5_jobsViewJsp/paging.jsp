@@ -2,10 +2,12 @@
     pageEncoding="UTF-8"%>
     <head>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" 
+rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
-<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" 
+rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 	
 	</head>
@@ -22,10 +24,10 @@ System.out.println("sTotalCount:" + sTotalCount);
 System.out.println("sCountPerPage:" + sCountPerPage);
 System.out.println("sBlockCount:" + sBlockCount);
 
-int nowPage = (sNowPage==null||sNowPage.trim().equals(""))?1:Integer.parseInt(sNowPage);
-int totalCount = (sTotalCount==null||sTotalCount.trim().equals(""))?0:Integer.parseInt(sTotalCount);
-int countPerPage = (sCountPerPage==null||sCountPerPage.trim().equals(""))?1:Integer.parseInt(sCountPerPage);
-int countPerBlock = (sBlockCount==null||sBlockCount.trim().equals(""))?1:Integer.parseInt(sBlockCount);
+int nowPage = (sNowPage ==null||sNowPage.trim().equals(""))?1:Integer.parseInt(sNowPage);
+int totalCount = (sTotalCount ==null||sTotalCount.trim().equals(""))?0:Integer.parseInt(sTotalCount);
+int countPerPage = (sCountPerPage ==null||sCountPerPage.trim().equals(""))?1:Integer.parseInt(sCountPerPage);
+int countPerBlock = (sBlockCount ==null||sBlockCount.trim().equals(""))?1:Integer.parseInt(sBlockCount);
 
 // 페이지 수를 취득ㄹㅇㅇㄴ
 int totalPage = (int)((totalCount - 1) / countPerPage) + 1;
@@ -57,7 +59,7 @@ int nowBlock = (int)((nowPage - 1) / countPerBlock);
 		[11] ~ [14]
 */
 
-int firstPage = 0;
+int firstPage = 1;
 int prevPage = 0;
 int nextPage = 0;
 int lastPage = 0;
@@ -112,8 +114,8 @@ function gotoPage(pageNum) {
 </script>
 
 <%
-String findWord=request.getParameter("findWord");
-String choice=request.getParameter("choice");
+String findWord = request.getParameter("findWord");
+String choice = request.getParameter("choice");
 %>
 
 <form name="frmPaging" method="get" action="<%=actionPath %>">
@@ -126,6 +128,7 @@ String choice=request.getParameter("choice");
 		<li class="step">
 		<a href="#" onclick="gotoPage('<%=firstPage %>')">첫페이지</a>
 		</li>
+		
 		<%if(prevPage > 0){ %>
 		<li class="step"><a href="#" onclick="gotoPage('<%=prevPage %>')">&lt;</a></li>
 		
@@ -169,5 +172,4 @@ String choice=request.getParameter("choice");
 	          </li>
 	      </ul>				<!-- totalPage -->
 	</div>
-
 </form>

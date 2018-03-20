@@ -10,6 +10,7 @@ import techbbs.iTechbbsDao;
 
 public class newbbs5HWCodingService implements newbbs5HWCodingServiceImpl {
 
+	//싱글톤 부분.
 	private static newbbs5HWCodingService techbbsService = new newbbs5HWCodingService();
 	
 	public newbbs5HWCodingDaoImpl techbbsdao;
@@ -46,6 +47,11 @@ public class newbbs5HWCodingService implements newbbs5HWCodingServiceImpl {
 		return techbbsdao.writeBbs(bbs);
 	}
 	
+	//글 작성시 인간 쪽 점수 올라가는 것.
+	public boolean writeBbsMemSCORE(byte score, String writescoreid) {
+		return techbbsdao.writeBbsMemSCORE(score, writescoreid);
+	}
+	
 	@Override
 	public void likecountplus(int seq) {
 		techbbsdao.likecountplus(seq);
@@ -65,7 +71,14 @@ public class newbbs5HWCodingService implements newbbs5HWCodingServiceImpl {
 		// TODO Auto-generated method stub
 		return techbbsdao.delete(seq);
 	}
+	//글삭제하면 점수 빼는 작업.
+	@Override
+	public boolean deleteBbsMemSCORE(byte score, int seq) {
+		// TODO Auto-generated method stub
+		return techbbsdao.deleteBbsMemSCORE(score, seq);
+	}
 	
+	//디테일 부분.
 	@Override
 	public List<newbbs5HWCodingVO> getdetail(int seq) {
 		// TODO Auto-generated method stub
@@ -121,5 +134,7 @@ public class newbbs5HWCodingService implements newbbs5HWCodingServiceImpl {
 		// TODO Auto-generated method stub
 		return techbbsdao.checkcomment(seq);
 	}
+
+	
 
 }

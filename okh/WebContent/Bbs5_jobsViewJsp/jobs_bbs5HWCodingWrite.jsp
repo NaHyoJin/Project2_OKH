@@ -164,6 +164,7 @@ List<newbbs5HWCodingPDSVO> pdslist = null;
 	
 	
 	 <form action="../BBSHWCodingController" method="post" id="pdsjsp">
+	 
 	 <div class="myinfo">
 	 	
 	 	<p id="test" align="left"><%=mem.getId() %></p>

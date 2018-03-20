@@ -183,6 +183,8 @@ public class newbbs5HWCodingDao implements newbbs5HWCodingDaoImpl {
 		
 		return tagnames;
 	}
+	
+	//글 작성 하는 부분.
 	@Override
 	public boolean writeBbs(newbbs5HWCodingVO bbs) {
 		
@@ -223,6 +225,41 @@ public class newbbs5HWCodingDao implements newbbs5HWCodingDaoImpl {
 		
 		return count>0?true:false;
 	}
+	
+	//글 잘 작성 하면 인간에게 점수 주는 부분.
+	//글 작성시 인간 쪽 점수 올라가는 것. byte 형으로 점수 10점 들어온다.
+	public boolean writeBbsMemSCORE(byte score, String writescoreid) {
+		
+		String sql = " UPDATE OKHMEM "
+				+ " SET score=score+? "
+				+ " WHERE id=? ";
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		
+		int count = 0;
+		
+		System.out.println(sql);
+		try {
+			conn = DBConnection.getConnection();	
+			psmt=conn.prepareStatement(sql);
+			System.out.println("1/6 writeBbsMemSCORE Success");	
+			psmt.setByte(1, score);
+			psmt.setString(2, writescoreid);
+			
+			System.out.println(sql);
+			System.out.println("2/6 writeBbsMemSCORE Success");	
+			count = psmt.executeUpdate();			
+			
+		} catch (SQLException e) {
+			System.out.println("writeBbsMemSCORE fail");	
+			e.printStackTrace();
+		}finally{
+			DBClose.close(psmt, conn, null);
+			System.out.println("3/6 finally writeBbsMemSCORE Success");	
+		}
+		
+		return count>0?true:false;
+	}
 	@Override
 	public List<newbbs5HWCodingVO> getdetail(int seq) {
 		Connection conn = null;
@@ -232,11 +269,11 @@ public class newbbs5HWCodingDao implements newbbs5HWCodingDaoImpl {
 		List<newbbs5HWCodingVO> list = new ArrayList<>();
 		String sql1 = " SELECT SEQ, ID, TITLE, TAGNAME, CONTENT, WDATE, DEL, "
 				+ " READCOUNT, LIKECOUNT, LIKEID, DISLIKEID, COMMENTCOUNT, SCRAPCOUNT "
-				+ "  FROM newbbs5HWCodingVO "
+				+ " FROM newbbs5HWCodingVO "
 				+ " WHERE SEQ=? ";
 		try {
 			conn = DBConnection.getConnection();
-			System.out.println("1/6 getdetail Success");			
+			System.out.println("1/6 getdetail newbbs5HWCodingVO Success");			
 		psmt = conn.prepareStatement(sql1);	
 		
 		psmt.setInt(1, seq);			
@@ -272,6 +309,7 @@ public class newbbs5HWCodingDao implements newbbs5HWCodingDaoImpl {
 		}
 		return list;
 	}
+	
 	@Override
 	public List<newbbs5HWCodingVO> getpdsdetail(int seq) {
 		Connection conn = null;
@@ -305,10 +343,10 @@ public class newbbs5HWCodingDao implements newbbs5HWCodingDaoImpl {
 				String dislikeid = rs.getString(10);
 				int commentcount = rs.getInt(11);
 				int scrapcount = rs.getInt(12);
-				int pdsseq=rs.getInt(13);
+				int pdsseq = rs.getInt(13);
 				String filename = rs.getString(14);	
-				int parent=rs.getInt(15);
-				int pdsyn=1;
+				int parent = rs.getInt(15);
+				int pdsyn = 1;
 				
 				dto = new newbbs5HWCodingVO(seq1, id, title, tagname, content, wdate, readcount,likecount, likeid,dislikeid,commentcount, scrapcount, filename, parent, pdsseq,pdsyn);
 				list.add(dto);
@@ -326,13 +364,14 @@ public class newbbs5HWCodingDao implements newbbs5HWCodingDaoImpl {
 		}
 		return list;
 	}
+	
 	@Override
 	public boolean getparent(int seq) {
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
-		List<newbbs5HWCodingVO> list=new ArrayList<>();
-		newbbs5HWCodingVO dto=null;
+		List<newbbs5HWCodingVO> list = new ArrayList<>();
+		newbbs5HWCodingVO dto = null;
 		String sql = " SELECT B.SEQ,B.ID, B.TITLE, B.TAGNAME, B.CONTENT, B.WDATE, "
 				+ " B.READCOUNT, B.LIKECOUNT, B.LIKEID, B.DISLIKEID,"
 				+ " B.COMMENTCOUNT, B.SCRAPCOUNT, P.SEQ, P.FILENAME, P.PARENT "
@@ -380,8 +419,9 @@ public class newbbs5HWCodingDao implements newbbs5HWCodingDaoImpl {
 			DBClose.close(psmt, conn, rs);	
 		}
 		System.out.println(dto!=null?true:false);	
-		return dto!=null?true:false;
+		return dto != null ? true : false;
 	}
+	
 	@Override
 	public void likecountplus(int seq) {
 		String sql = " UPDATE newbbs5HWCodingVO SET LIKECOUNT=LIKECOUNT+1 "
@@ -404,8 +444,8 @@ public class newbbs5HWCodingDao implements newbbs5HWCodingDaoImpl {
 			e.printStackTrace();
 		}finally{
 			DBClose.close(psmt, conn, rs);	
-		}		
 		}
+	}
 	@Override
 	public void dislikecount(int seq) {
 		String sql = " UPDATE newbbs5HWCodingVO SET LIKECOUNT=LIKECOUNT-1 "
@@ -429,6 +469,7 @@ public class newbbs5HWCodingDao implements newbbs5HWCodingDaoImpl {
 			DBClose.close(psmt, conn, rs);	
 		}		
 	}
+	
 	@Override
 	public boolean update(int seq, String title, String content) {
 		String sql = " UPDATE newbbs5HWCodingVO SET "
@@ -465,7 +506,7 @@ public class newbbs5HWCodingDao implements newbbs5HWCodingDaoImpl {
 
 	@Override
 	public boolean delete(int seq) {
-		String sql=" UPDATE newbbs5HWCodingVO SET "
+		String sql = " UPDATE newbbs5HWCodingVO SET "
 				+ " DEL=1"
 				+ " WHERE SEQ=? ";
 		
@@ -486,6 +527,42 @@ public class newbbs5HWCodingDao implements newbbs5HWCodingDaoImpl {
 		}
 				
 		return count>0?true:false;
+	}
+	//글 삭제시 인간 쪽 점수 빼는 것. 나중에 시간 되면 만들어보자.
+		public boolean deleteBbsMemSCORE(byte score, int seq) {
+		//글 삭제 하면 -로. 쿼리문은 잘 작동한다.
+		String sql = " UPDATE OKHMEM "
+				+ " SET score=score-? "
+				+ " WHERE id=(select id from newbbs5HWCodingVO where seq=?) ";
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		
+		int count = 0;
+		
+		System.out.println(sql);
+		try {
+			conn = DBConnection.getConnection();	
+			psmt = conn.prepareStatement(sql);
+			System.out.println("1/6 deleteBbsMemSCORE Success");
+			
+			System.out.println("score : " + score);
+			psmt.setByte(1, score);
+			System.out.println("seq : " + seq);
+			psmt.setInt(2, seq);
+			
+			System.out.println(sql);
+			System.out.println("2/6 deleteBbsMemSCORE Success");	
+			count = psmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("deleteBbsMemSCORE fail");	
+			e.printStackTrace();
+		}finally{
+			DBClose.close(psmt, conn, null);
+			System.out.println("3/6 finally deleteBbsMemSCORE Success");	
+		}
+		
+		return count > 0 ? true : false;
 	}
 
 	@Override

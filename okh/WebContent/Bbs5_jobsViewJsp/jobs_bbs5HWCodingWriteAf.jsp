@@ -1,3 +1,4 @@
+<%@page import="user.UserDto"%>
 <%@page import="jobs_BBS5.newbbs5HWCodingServiceImpl"%>
 <%@page import="jobs_BBS5.newbbs5HWCodingService"%>
 <%@page import="jobs_BBS5.newbbs5HWCodingVO"%>
@@ -16,13 +17,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
-<title>jobs_bbs5HWCodingWriteAf</title>
+<title>jobs_bbs5HWCodingWriteAf.jsp</title>
 </head>
 <body>
 <%
 newbbs5HWCodingVO techwritedto = (newbbs5HWCodingVO)request.getAttribute("techwritedto");
 newbbs5HWCodingVO return1 = (newbbs5HWCodingVO)request.getAttribute("return1");
-if(return1 == null && techwritedto==null){
+if(return1 == null && techwritedto == null){
 
 %>
 <script type="text/javascript">
@@ -37,18 +38,41 @@ location.href="../BBSHWCodingController?command=techbbs1";
 	//글 작성 부분.
 boolean isS = service.writeBbs(techwritedto);
 
+	
+//로그인 정보 확인 부분. //로그인한id가져오기
+	Object ologin = session.getAttribute("login");
+
+	UserDto mem = null;//null로 초기화.
+	
+	if(ologin != null){
+		mem = (UserDto)ologin;
+		//로그인 정보 가지고 오나 확인 부분.
+		System.out.println("mem : " + mem.toString());
+	}else{
+		System.out.println("로그인한 정보 없음.");
+	}
+	
+
 if(isS){
 %>
 	<script type="text/javascript">
 	alert("HW 글 추가 성공");
-	location.href="BBSHWCodingController?command=techbbs";
+	
+	<%
+	//여기서 글 작성 하면 점수 올라가게 해주는 것 해보자. 정상적으로 글 작성 하면 점수 올라가는 것.
+		byte score = 10;//글 작성 하면 10점.
+		String writeID =  mem.getId();
+		service.writeBbsMemSCORE(score, writeID);
+	%>
+	
+	location.href = "BBSHWCodingController?command=main";
 	</script>
 <%
 }else{
 %>
 	<script type="text/javascript">
-	alert("다시입력해주세요");
-	location.href="BBSHWCodingController?command=techbbs";
+	alert("다시 입력해 주세요.");
+	location.href = "BBSHWCodingController?command=techbbs";
 	</script>
 <%
 }

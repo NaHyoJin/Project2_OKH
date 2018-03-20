@@ -52,8 +52,8 @@ public class HWLikeScrapController extends HttpServlet {
 			String likeid = request.getParameter("likeid");
 			//아이디유무확인
 			
-			boolean b=lsservice.isitlikeid(seq, likeid);
-			if (b) {	//id있다 -> 좋아요취소
+			boolean b = lsservice.isitlikeid(seq, likeid);
+			if (b) {	//id있다 -> 좋아요 취소
 				//카운트-1
 				tservice.dislikecount(seq);
 				//likeid있으면 1(취소) id없으면2(추가)
@@ -63,24 +63,24 @@ public class HWLikeScrapController extends HttpServlet {
 				boolean isS = lsservice.deleteLikeID(likeid, seq);
 				
 				if (isS) {
-					System.out.println("likeid아이디삭제성공");
+					System.out.println("likeid아이디 삭제 성공");
 					boolean is = tservice.getparent(seq);
 					List<newbbs5HWCodingVO> list = new ArrayList<>();
 					if (is) {
 						list = tservice.getpdsdetail(seq);
-						System.out.println("자료있다");
+						System.out.println("자료 있다.");
 					}else {
-						list=tservice.getdetail(seq);
-						System.out.println("자료없다");
+						list =tservice.getdetail(seq);
+						System.out.println("자료 없다.");
 					}
 					request.setAttribute("likeidyn", dto);
 					request.setAttribute("whatlist", list);
-					dispatch("techdetail.jsp", request, response);
+					dispatch("Bbs5_jobsViewJsp/jobs_bbs5HWCodingDetail.jsp", request, response);
 				}else {
 					System.out.println("아이디삭제fail");
 					List<newbbs5HWCodingVO> list = tservice.gettechBbsList();
 					request.setAttribute("techbbs", list);
-					dispatch("techbbs.jsp", request, response);
+					dispatch("Bbs5_jobsViewJsp/jobs_bbs5HWCodingDetail.jsp", request, response);
 				}
 			}else {		//id없다 -> 좋아요올려주기
 				
@@ -107,12 +107,12 @@ public class HWLikeScrapController extends HttpServlet {
 					}
 					request.setAttribute("likeidyn", dto);
 					request.setAttribute("whatlist", list);
-					dispatch("techdetail.jsp", request, response);
+					dispatch("Bbs5_jobsViewJsp/jobs_bbs5HWCodingDetail.jsp", request, response);
 				}else {
-					System.out.println("아이디추가fail");
+					System.out.println("아이디 추가 fail");
 					List<newbbs5HWCodingVO> list = tservice.gettechBbsList();
 					request.setAttribute("techbbs", list);
-					dispatch("techbbs.jsp", request, response);
+					dispatch("Bbs5_jobsViewJsp/jobs_bbs5HWCodingDetail.jsp", request, response);
 				}
 			}
 		}else if(command.equals("dislikeimg")) {
@@ -144,12 +144,12 @@ public class HWLikeScrapController extends HttpServlet {
 					}
 					request.setAttribute("dislikeidyn", dto);
 					request.setAttribute("whatlist", list);
-					dispatch("techdetail.jsp", request, response);
+					dispatch("Bbs5_jobsViewJsp/jobs_bbs5HWCodingDetail.jsp", request, response);
 				}else {
 					System.out.println("아이디삭제fail");
 					List<newbbs5HWCodingVO> list = tservice.gettechBbsList();
 					request.setAttribute("techbbs", list);
-					dispatch("techbbs.jsp", request, response);
+					dispatch("Bbs5_jobsViewJsp/jobs_bbs5HWCodingDetail.jsp", request, response);
 				}
 			}else {		//id없다 -> 좋아요올려주기
 				
@@ -175,18 +175,20 @@ public class HWLikeScrapController extends HttpServlet {
 					}
 					request.setAttribute("dislikeidyn", dto);
 					request.setAttribute("whatlist", list);
-					dispatch("techdetail.jsp", request, response);
+					dispatch("Bbs5_jobsViewJsp/jobs_bbs5HWCodingDetail.jsp", request, response);
 				}else {
 					System.out.println("아이디추가fail");
 					List<newbbs5HWCodingVO> list = tservice.gettechBbsList();
 					request.setAttribute("techbbs", list);
-					dispatch("techbbs.jsp", request, response);
+					dispatch("Bbs5_jobsViewJsp/jobs_bbs5HWCodingDetail.jsp", request, response);
 				}
 			}
 		}else if(command.equals("scrapimg")) {
 			
 		}
 	}
+	
+	//이동 부분. dispatch.
 	public void dispatch(String urls, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		RequestDispatcher _dispatch=req.getRequestDispatcher(urls);
 		_dispatch.forward(req, resp);

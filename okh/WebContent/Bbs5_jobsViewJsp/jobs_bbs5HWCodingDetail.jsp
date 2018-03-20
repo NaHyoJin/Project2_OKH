@@ -217,12 +217,12 @@ List<HWRepbbsDto> replist = trservice.getRepBbsList(whatlist.get(0).getSeq());
 		if(mem == null){
 			String Unknown = "null";
 	%>
-	<a href="../HWLikeScrapController?command=likeimg&likeid=<%=Unknown %>&seq=<%=whatlist.get(0).getSeq()%>" id="changeli">
+	<a href="HWLikeScrapController?command=likeimg&likeid=<%=Unknown %>&seq=<%=whatlist.get(0).getSeq()%>" id="changeli">
 	<img src="image/likeoff.PNG" id="likeimg"></a><br>	
 	<%	
 		}else{
 	%>
-		<a href="../HWLikeScrapController?command=likeimg&likeid=<%=mem.getId() %>&seq=<%=whatlist.get(0).getSeq()%>" id="changeli">
+		<a href="HWLikeScrapController?command=likeimg&likeid=<%=mem.getId() %>&seq=<%=whatlist.get(0).getSeq()%>" id="changeli">
 		<img src="image/likeoff.PNG" id="likeimg"></a><br>
 	<%
 		}
@@ -233,14 +233,14 @@ List<HWRepbbsDto> replist = trservice.getRepBbsList(whatlist.get(0).getSeq());
 		if(mem == null){
 			String unlogin = "null";
 	%>
-<a href="../HWLikeScrapController?command=dislikeimg&dislikeid=<%=unlogin %>&seq=<%=whatlist.get(0).getSeq()%>" id="changedisli"><img src="image/dislikeoff.PNG" id="dislikeimg"></a><br>
-<a href="../HWLikeScrapController?command=scrapimg&scrapid=<%=unlogin %>&seq=<%=whatlist.get(0).getSeq()%>"><img src="image/scrap.PNG" id="scrapimg"></a><br>	
+<a href="HWLikeScrapController?command=dislikeimg&dislikeid=<%=unlogin %>&seq=<%=whatlist.get(0).getSeq()%>" id="changedisli"><img src="image/dislikeoff.PNG" id="dislikeimg"></a><br>
+<a href="HWLikeScrapController?command=scrapimg&scrapid=<%=unlogin %>&seq=<%=whatlist.get(0).getSeq()%>"><img src="image/scrap.PNG" id="scrapimg"></a><br>	
 	<%
 		} else{
 	%>
 	
-		<a href="../HWLikeScrapController?command=dislikeimg&dislikeid=<%=mem.getId() %>&seq=<%=whatlist.get(0).getSeq()%>" id="changedisli"><img src="image/dislikeoff.PNG" id="dislikeimg"></a><br>
-		<a href="../HWLikeScrapController?command=scrapimg&scrapid=<%=mem.getId() %>&seq=<%=whatlist.get(0).getSeq()%>"><img src="image/scrap.PNG" id="scrapimg"></a><br>
+		<a href="HWLikeScrapController?command=dislikeimg&dislikeid=<%=mem.getId() %>&seq=<%=whatlist.get(0).getSeq()%>" id="changedisli"><img src="image/dislikeoff.PNG" id="dislikeimg"></a><br>
+		<a href="HWLikeScrapController?command=scrapimg&scrapid=<%=mem.getId() %>&seq=<%=whatlist.get(0).getSeq()%>"><img src="image/scrap.PNG" id="scrapimg"></a><br>
 <%
 		}
 %>
@@ -250,7 +250,7 @@ List<HWRepbbsDto> replist = trservice.getRepBbsList(whatlist.get(0).getSeq());
 		System.out.println(whatlist.size() + "리스트 사이즈");
 		if(whatlist.size() == 1 && pdsyn == 2){
 		}
-		else if(whatlist.size()>0&&pdsyn==1){
+		else if(whatlist.size() > 0 && pdsyn == 1){
 			System.out.println("자료있는 리스트");
 			for(int i = 0; i < whatlist.size(); i++){
 				newbbs5HWCodingVO alldto = whatlist.get(i);
@@ -267,7 +267,7 @@ List<HWRepbbsDto> replist = trservice.getRepBbsList(whatlist.get(0).getSeq());
 		if(mem != null && mem.getId().equals(whatlist.get(0).getId()) ){
 		%>
 		
-		<img alt="" src="image/settingbtn.PNG" style="cursor: pointer; 
+		<img alt="image/settingbtn.PNG 이미지 없음." src="image/settingbtn.PNG" style="cursor: pointer; 
 		padding-bottom: 20px;" id="btnPopover">
 		
 		<%
@@ -277,12 +277,53 @@ List<HWRepbbsDto> replist = trservice.getRepBbsList(whatlist.get(0).getSeq());
 	
 		<script type="text/javascript">
 			function updatebbs( seq ) {
-				location.href = "../BBSHWCodingController?command=update&seq=" + seq;
+				location.href = "BBSHWCodingController?command=update&seq=" + seq;
 			}
 			
-			function deletebbs( seq ) {
-				location.href = "../BBSHWCodingController?command=delete&seq=" + seq;
-			}
+			//삭제
+			function deletebbs(seq) {
+					 
+			        var msg = "정말 삭제 하시겠습니까?";
+			        
+			        var delseq = seq;
+//			        var delid = <%=mem.getId() %>;
+			        if (confirm(msg)) {//confirm 이거 함수 사용해서 작동 완료.
+			              
+			        
+			  /////////////////////////////////////////////// 글삭제 부분에서 시작 180227 
+
+			         <%
+			       //글 삭제하는 부분 실질적으로는 DB에 남아있고 보이지만 않게 한다.
+//			       response.sendRedirect("../BBSboardController?command=detele&seq="+seq);
+//			       location.href = "../BBSboardController?command=detele&seq=" + seq;
+//			        	boolean b = dao.bbsDelete(seq);
+
+//						if(b == true) {
+//							out.println("이 글은 성공적으로 삭제되었습니다.");
+					%>
+
+			            alert("성공적으로 글 삭제.");
+			            location.href = "BBSHWCodingController?command=delete&seq=" + seq;
+
+						
+					<%
+//						}else {
+					%>
+		/* 					alert("글 삭제 실패.");
+							location.href = "bbslist.jsp";
+		 */				
+						<%
+//							}
+			        	%>
+
+						
+			        } else {// 취소 누른 부분
+			            // no click
+//			         alert("글 삭제 취소");
+			            return;
+					}		
+			}// deletebbs
+			
 		</script>
 	
 	</div>
@@ -327,13 +368,24 @@ for(int i = 0;i < replist.size(); i++){
 	<tr>
 		
 		<td>
+		<%
+			if(mem == null){
+				String Unknown = "Unknown";
+		%>
+			<%=Unknown %>
+		<%
+			}else{
+		%>
 			<%=mem.getId() %>
+		<%
+			}
+		%>
 			<article class="content<%=bbs.getSeq() %>" name="content"><%=bbs.getContent() %></article>
 			
 		</td>
 		<td style="border-left: 1px solid #DDD">	
 				<%
-				if(mem.getId().equals(bbs.getId())){
+				if(mem != null && mem.getId().equals(bbs.getId())){
 				%>
 				<div class="buttons">
 				<input type="button" id="edit<%=bbs.getSeq() %>" 
@@ -368,39 +420,50 @@ var edit = function(seq) {
     $('.content' + seq).summernote('destroy');
     $('#edit' + seq).attr('type', 'button');
     $('#save' + seq).attr('type', 'hidden');
-    location.href = "../HWRepbbsController?command1=upcon&repseq=" + seq + "&seq=" + bbsseq + "&upcontent=" + content+"&memid=" + memid;
+    location.href = "HWRepbbsController?command1=upcon&repseq=" + seq + "&seq=" + bbsseq + "&upcontent=" + content+"&memid=" + memid;
  };
 </script>
-<form action="../HWRepbbsController" id="frm">
-<table border="1" class="reptable">
-<col width="850"><col width="175">
-<tr>
-	<td class="form">
-             <textarea name="content" id="summe" placeholder="댓글 쓰기" 
-             class="form-control" ></textarea>
-			<input type="hidden" name="mainseq" value="<%=whatlist.get(0).getSeq()%>">
-			<%
-				if(mem ==null){
-					String unlonin = "null";
-			%>
-			<input type="hidden" name="id" value="<%=unlonin %>">
-			<%
-				}else{
-			%>
-			<input type="hidden" name="id" value="<%=mem.getId()%>">
-			<%
-				}
-			%>
-			<input type="hidden" name="command" value="write">
-		</td>
-		<td>
-			<div class="buttons">
-			<button class="btn btn-success btn-wide" id="write">등록</button>
-			</div>
-		</td>
-	</tr>	
-</table>
+<form action="HWRepbbsController" id="frm">
+	<table border="1" class="reptable">
+	<col width="850"><col width="175">
+	<tr>
+		<td class="form">
+	             <textarea name="content" id="summe" placeholder="댓글 쓰기" 
+	             class="form-control" ></textarea>
+				<input type="hidden" name="mainseq" value="<%=whatlist.get(0).getSeq()%>">
+				<%
+					if(mem ==null){
+						String unlonin = "null";
+				%>
+				<input type="hidden" name="id" value="<%=unlonin %>">
+				<%
+					}else{
+				%>
+				<input type="hidden" name="id" value="<%=mem.getId()%>">
+				<%
+					}
+				%>
+				<input type="hidden" name="command" value="write">
+			</td>
+			<td>
+				<div class="buttons">
+				
+				<%	//null 아닐때만 보여주는 부분.
+					if(mem != null){
+				%>
+				
+				<button class="btn btn-success btn-wide" id="write">등록</button>
+				
+				<%
+					}
+				%>
+				</div>
+			</td>
+		</tr>	
+	</table>
+
 </form>
+
 <%
 	if(mem == null){
 		String un = "null";
@@ -431,6 +494,7 @@ $('#summe').click(function () {
 	 $('#summernote').summernote();
 });
 
+// 글 작성 하는 부분 스크립트
 $(function() {
 	$('#write').click(function () {
 		document.getElementById('frm').submit();
@@ -438,7 +502,9 @@ $(function() {
 });
 
 
-</script>  
+</script>
+
+
 <script type="text/javascript">	
 
 		function redeletebbs( seq,bonseq,memid ) {
@@ -481,8 +547,9 @@ $(function() {
 			 $('.uploadbtn').hide();
 		});
 			
-			</script>
-		<!-- /* 계속리프래쉬하는거 다운누르면 바로바로올라가게하는거 */ -->	
+</script>
+		<!-- /* 계속리프래쉬하는거 다운누르면 바로바로올라가게하는거 */ -->
+
 <script type="text/javascript">
 
 
@@ -553,14 +620,14 @@ if(li2 == null){
 %>
 
 <%
-//디테일창처음들어왔을때 id못찾으면2->불꺼줘야함 찾으면1->불켜야함
+//디테일창 처음들어왔을때 id못 찾으면2->불꺼줘야함 찾으면1->불켜야함
 newbbs5HWCodingVO li3 = (newbbs5HWCodingVO)request.getAttribute("flikeidyn");
 int flikeidyn = 0;
 if(li3 == null){
 	
 }else{
 	flikeidyn = li3.getLikeidyn();
-	if(flikeidyn == 2){		//라이크에불끄기 
+	if(flikeidyn == 2){		//라이크에 불끄기 
 %>
 	<script type="text/javascript">
 	
@@ -613,7 +680,8 @@ $(function() {
        container: 'body',
        html: true,
        trigger: 'hover',
-       content: '<button onclick="logout()" type="button" class="btn btn-default popover-dismiss">logout</button><button onclick="upmydetail()" type="button" class="btn btn-default popover-dismiss">정보수정</button>'
+       //content: '<button onclick="logout()" type="button" class="btn btn-default popover-dismiss">로그 아웃</button><button onclick="upmydetail()" type="button" class="btn btn-default popover-dismiss">마이 페이지</button>'
+       content: '<button onclick="updatebbs(<%=whatlist.get(0).getSeq() %>)" type="button" class="btn btn-default popover-dismiss">내 글 수정</button><button onclick="deletebbs(<%=whatlist.get(0).getSeq() %>)" type="button" class="btn btn-default popover-dismiss">내 글 삭제</button>'
     });
     // prevent popover from being hidden on mouseout.
     // only dismiss when explicity clicked (e.g. has .hide-popover)

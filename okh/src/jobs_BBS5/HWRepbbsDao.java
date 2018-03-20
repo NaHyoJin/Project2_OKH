@@ -98,6 +98,39 @@ public class HWRepbbsDao implements HWRepbbsDaoImpl {
 		
 		return count>0?true:false;
 	}
+	
+	//글 작성시 인간 쪽 점수 올라가는 것.
+		public boolean writeBbsMemSCORE(byte score, String writescoreid) {
+			String sql = " UPDATE OKHMEM "
+					+ " SET score=score+? "
+					+ " WHERE id=? ";
+			Connection conn = null;
+			PreparedStatement psmt = null;
+			
+			int count = 0;
+			
+			System.out.println(sql);
+			try {
+				conn = DBConnection.getConnection();	
+				psmt=conn.prepareStatement(sql);
+				System.out.println("1/6 HWRepbbsDao writeBbsMemSCORE Success");	
+				psmt.setByte(1, score);
+				psmt.setString(2, writescoreid);
+				
+				System.out.println(sql);
+				System.out.println("2/6 HWRepbbsDao writeBbsMemSCORE Success");	
+				count = psmt.executeUpdate();			
+				
+			} catch (SQLException e) {
+				System.out.println("HWRepbbsDao writeBbsMemSCORE fail");	
+				e.printStackTrace();
+			}finally{
+				DBClose.close(psmt, conn, null);
+				System.out.println("3/6 finally HWRepbbsDao writeBbsMemSCORE Success");	
+			}
+			
+			return count>0?true:false;
+		}
 
 	@Override
 	public boolean repupdate(int seq, String content) {

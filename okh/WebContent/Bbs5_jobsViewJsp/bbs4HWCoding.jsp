@@ -51,7 +51,7 @@ rel="stylesheet">
 
 <!-- 폰트  -->
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="../_techbbs.css?ver=1.59"><!-- ../경로 설정 유념-->
+<link rel="stylesheet" type="text/css" href="../_jobsbbs.css?ver=1.59"><!-- ../경로 설정 유념-->
 </head>
 <body bgcolor="#fcfbfb">
 
@@ -96,17 +96,15 @@ mem = (UserDto)ologin;
 %>
  --%>
 
-<!-- 페이징 처리 정보 교환 -->
-<%
-techlist = (List<newbbs5HWCodingVO>)request.getAttribute("techbbs");
-
-PagingBean paging = new PagingBean();
-if(request.getParameter("nowPage") == null){
-	paging.setNowPage(1);
-}else{
-	paging.setNowPage(Integer.parseInt(request.getParameter("nowPage")));
-}
-%>
+			<!-- 페이징 처리 정보 교환 -->
+			<%
+			PagingBean paging = new PagingBean();
+			if(request.getParameter("nowPage") == null){
+				paging.setNowPage(1);
+			}else{
+				paging.setNowPage(Integer.parseInt(request.getParameter("nowPage")));
+			}
+			%>
 
 <%
 if(findWord == null){
@@ -193,142 +191,143 @@ type="button" id="techwrite">게시글 쓰기</button></div>
 	
 	
 <div class="wrap">
-<div class="sercharea">
-<select id="choice" style="height: 30px">
-		<option value="tagname" <%if(cho==3){ out.println("selected");}%>>선택하세요</option>
-		<option value="title" <%if(cho==0){ out.println("selected");}%>>제목</option>
-		<option value="writer" <%if(cho==1){ out.println("selected");}%>>작성자</option>
-		<option value="content" <%if(cho==2){ out.println("selected");}%>>내용</option>
+	<div class="sercharea">
+		<select id="choice" style="height: 30px">
+			<option value="tagname" <%if(cho == 3){ out.println("selected");}%>>선택하세요</option>
+			<option value="title" <%if(cho == 0){ out.println("selected");}%>>제목</option>
+			<option value="writer" <%if(cho == 1){ out.println("selected");}%>>작성자</option>
+			<option value="content" <%if(cho == 2){ out.println("selected");}%>>내용</option>
 		</select>
-<input type="text" class="inputField" id="search" value="<%=findWord %>">
-<button name="search" id="serchbtn" class="input-group-btn" onclick="searchBbs()">
-<img alt="" src="../image/serchbtn.PNG"></button>
-</div>
-	<div class="board">
-		<table border="1" class="techtable">
-		<col width="450"><col width="80"><col width="80"><col width="80"><col width="150">
-			
-			<%
-				if(hwlist == null || hwlist.size() == 0) {
-				
-			%>
-			<tr>
-				<th colspan="5">리스트가없습니다</th>
-				</tr>
-				
-			<%
-			}
-			
-			for(int i=0; i < hwlist.size(); i++){
-				newbbs5HWCodingVO dto = hwlist.get(i);
-				String[] tagnames = dao.getTagName(dto.getTagname());	
-				
-				dao = newbbs5HWCodingService.getInstance();
-				boolean chekcomment = dao.checkcomment(hwlist.get(i).getSeq());
-				if(chekcomment){
-			%>
-			<tr>
-				<th>
-				#<%=hwlist.get(i).getSeq() %>
-			<%
-			}else{
-			%>
-			<tr>
-				<th style="border-left: 5px solid #808080">
-				#<%=hwlist.get(i).getSeq() %>
-			<%}
-			for(int j=0; j < tagnames.length; j++){//추가시킬때무조건추가시킬거는 -없이해도되고 엔터치면 -그값을넣어준다
-			%>
-				<span><button class="hjhtag" name="tag<%=j%>" id="tag<%=j%>" 
-				onclick="searchBbs1(this)" value="<%=tagnames[j]%>"><%=tagnames[j] %></button></span>
-			<%
-			}
-			%>
-			
-			<p style="font-size: 20px">
-			
-			<!-- 컨트롤러 부분 like 부분 일단 주석 처리 하고 해보자. -->
-			<%
-			//로그인 안하고 글 볼때 null 값으로.
-				if(mem == null){
-					String memNull = null;
-					%>
-<a href="../BBSHWCodingController?command=techdetail&likeid=<%=memNull %>&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a>			
-			<%
-				}else{
-			%>
-			<%-- <a href="../BBSHWCodingController?command=techdetail&likeid=<%=mem.getId() %>&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a> --%>
-<a href="../BBSHWCodingController?command=techdetail&likeid=<%=mem.getId() %>&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a>
- 			<%
-				}
- 			%>
- 			
- 			</p>
-			</th>
-			<%if(dto.getCommentcount() > 0){
-			%>
-			<td><img src="../image/repleon.PNG"><span class="textalig"> <%=dto.getCommentcount() %></span></td>
-			<%
-			}else{
-			%>
-			<td><img src="../image/repleoff.png"><span class="textalig"> <%=dto.getCommentcount() %></span></td>
-			<%
-			}
-			%>
-			<%if(dto.getLikecount() > 0){
-			%>
-			<td style="padding-top: 3px"><img src="../image/likeeon.png"><span class="textalig"> <%=dto.getLikecount() %></span></td>
-			<%
-			}else{
-			%>
-			<td style="padding-top: 3px"><img src="../image/likeeoff.png"><span class="textalig"> <%=dto.getLikecount() %></span></td>
-			<%
-			}
-			%>
-			<%if(dto.getReadcount() > 0){
-			%>
-			
-			<td><img src="../image/readcounton.PNG"><span class="textalig"> <%=dto.getReadcount() %></span></td>
-			
-			<%
-			}else{
-			%>
-			<td><img src="../image/readcountoff.png"><span class="textalig"> <%=dto.getReadcount() %></span></td>
-			<%
-			}
-			%>
-			
-			<td>
-			<%=dto.getId() %>
-			<p style="font-size: 10px"><%=dto.getWdate() %></p>
-			</td>
-			</tr>
-			<%
-			}
-			%>
-		</table>
-		<br>
-		
-<%-- 	페이징 부분 어디가 문제인지 --%>
-<jsp:include page="paging.jsp">
-	<jsp:param name="actionPath" value="Bbs5_jobsViewJsp/bbs4HWCoding.jsp"/>
-	<jsp:param name="findWord" value="<%=findWord %>"/>
-	<jsp:param name="choice" value="<%=choice %>"/>
-	<jsp:param name="nowPage" value="<%=String.valueOf(paging.getNowPage()) %>" />
-	<jsp:param name="totalCount" value="<%=String.valueOf(paging.getTotalCount()) %>" />
-	<jsp:param name="countPerPage" value="<%=String.valueOf(paging.getCountPerPage()) %>" />
-	<jsp:param name="blockCount" value="<%=String.valueOf(paging.getBlockCount()) %>" />
-</jsp:include>
-
-
-<script type="text/javascript">
-if(document.getElementById("choice").value == "tagname"){
-	$("#search").val("");
-}
-</script>
-
+		<input type="text" class="inputField" id="search" value="<%=findWord %>">
+		<button name="search" id="serchbtn" class="input-group-btn" onclick="searchBbs()">
+	
+	<img alt="" src="../image/serchbtn.PNG"></button>
 	</div>
-</div>
+		<div class="board">
+			<table border="1" class="techtable">
+			<col width="450"><col width="80"><col width="80"><col width="80"><col width="150">
+				
+				<%
+					if(hwlist == null || hwlist.size() == 0) {
+					
+				%>
+				<tr>
+					<th colspan="5">리스트가없습니다</th>
+					</tr>
+					
+				<%
+				}
+				
+				for(int i=0; i < hwlist.size(); i++){
+					newbbs5HWCodingVO dto = hwlist.get(i);
+					String[] tagnames = dao.getTagName(dto.getTagname());	
+					
+					dao = newbbs5HWCodingService.getInstance();
+					boolean chekcomment = dao.checkcomment(hwlist.get(i).getSeq());
+					if(chekcomment){
+				%>
+				<tr>
+					<th>
+					#<%=hwlist.get(i).getSeq() %>
+				<%
+				}else{
+				%>
+				<tr>
+					<th style="border-left: 5px solid #808080">
+					#<%=hwlist.get(i).getSeq() %>
+				<%}
+				for(int j=0; j < tagnames.length; j++){//추가시킬때무조건추가시킬거는 -없이해도되고 엔터치면 -그값을넣어준다
+				%>
+					<span><button class="hjhtag" name="tag<%=j%>" id="tag<%=j%>" 
+					onclick="searchBbs1(this)" value="<%=tagnames[j]%>"><%=tagnames[j] %></button></span>
+				<%
+				}
+				%>
+				
+				<p style="font-size: 20px">
+				
+				<!-- 컨트롤러 부분 like 부분 일단 주석 처리 하고 해보자. -->
+				<%
+				//로그인 안하고 글 볼때 null 값으로.
+					if(mem == null){
+						String memNull = null;
+						%>
+	<a href="../BBSHWCodingController?command=techdetail&likeid=<%=memNull %>&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a>			
+				<%
+					}else{
+				%>
+				<%-- <a href="../BBSHWCodingController?command=techdetail&likeid=<%=mem.getId() %>&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a> --%>
+	<a href="../BBSHWCodingController?command=techdetail&likeid=<%=mem.getId() %>&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a>
+	 			<%
+					}
+	 			%>
+	 			
+	 			</p>
+				</th>
+				<%if(dto.getCommentcount() > 0){
+				%>
+				<td><img src="../image/repleon.PNG"><span class="textalig"> <%=dto.getCommentcount() %></span></td>
+				<%
+				}else{
+				%>
+				<td><img src="../image/repleoff.png"><span class="textalig"> <%=dto.getCommentcount() %></span></td>
+				<%
+				}
+				%>
+				<%if(dto.getLikecount() > 0){
+				%>
+				<td style="padding-top: 3px"><img src="../image/likeeon.png"><span class="textalig"> <%=dto.getLikecount() %></span></td>
+				<%
+				}else{
+				%>
+				<td style="padding-top: 3px"><img src="../image/likeeoff.png"><span class="textalig"> <%=dto.getLikecount() %></span></td>
+				<%
+				}
+				%>
+				<%if(dto.getReadcount() > 0){
+				%>
+				
+				<td><img src="../image/readcounton.PNG"><span class="textalig"> <%=dto.getReadcount() %></span></td>
+				
+				<%
+				}else{
+				%>
+				<td><img src="../image/readcountoff.png"><span class="textalig"> <%=dto.getReadcount() %></span></td>
+				<%
+				}
+				%>
+				
+				<td>
+				<%=dto.getId() %>
+				<p style="font-size: 10px"><%=dto.getWdate() %></p>
+				</td>
+				</tr>
+				<%
+				}
+				%>
+			</table>
+			<br>
+			
+	<%-- 	페이징 부분 어디가 문제인지 --%>
+	<jsp:include page="paging.jsp">
+		<jsp:param name="actionPath" value="bbs4HWCoding.jsp"/>
+		<jsp:param name="findWord" value="<%=findWord %>"/>
+		<jsp:param name="choice" value="<%=choice %>"/>
+		<jsp:param name="nowPage" value="<%=String.valueOf(paging.getNowPage()) %>" />
+		<jsp:param name="totalCount" value="<%=String.valueOf(paging.getTotalCount()) %>" />
+		<jsp:param name="countPerPage" value="<%=String.valueOf(paging.getCountPerPage()) %>" />
+		<jsp:param name="blockCount" value="<%=String.valueOf(paging.getBlockCount()) %>" />
+	</jsp:include>
+	
+	
+	<script type="text/javascript">
+	if(document.getElementById("choice").value == "tagname"){
+		$("#search").val("");
+	}
+	</script>
+	
+		</div>
+</div><!-- 게시판 전체 다이브 -->
 
 
 <%
@@ -380,26 +379,27 @@ if(document.getElementById("choice").value == "tagname"){
 <script type="text/javascript">
 function searchBbs() {
 	
-	if(document.getElementById("choice").value=="tagname"){
+	if(document.getElementById("choice").value == "tagname"){
 		alert("선택해주세요");
 		$("#search").val("");
 		return;
 	}
 	
-	if(document.getElementById("search").value==""){//빈문자열에서검색시
-		location.href = "techbbs.jsp?findWord=TechTips&choice=tagname";	
+	if(document.getElementById("search").value==""){//빈문자열에서 검색시
+		location.href = "bbs4HWCoding.jsp?findWord=TechTips&choice=tagname";	
 		return;
 	}
 	var word = document.getElementById("search").value;
 	var choice = document.getElementById("choice").value;
 	$("#select_id").val("<%=cho%>").prop("selected", true);
-	location.href = "techbbs.jsp?findWord=" + word + "&choice=" + choice;	
+	location.href = "bbs4HWCoding.jsp?findWord=" + word + "&choice=" + choice;	
 }
+
 function searchBbs1(e) {
 	$("#search").val("");
 	var word = e.value;
 	var choice = document.getElementById("choice").value;
-	location.href = "techbbs.jsp?findWord=" + word + "&choice=tagname";	
+	location.href = "bbs4HWCoding.jsp?findWord=" + word + "&choice=tagname";	
 	
 }
 
@@ -408,7 +408,7 @@ $(function() {
 	
 	
 	$("#techbbs").click(function() {
-		location.href="TechbbsController?command=techbbs";
+		location.href = "TechbbsController?command=techbbs";
 	});//////////////techbbs
 	
 	

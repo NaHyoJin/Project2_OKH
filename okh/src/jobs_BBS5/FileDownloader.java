@@ -71,9 +71,9 @@ public class FileDownloader extends HttpServlet {
 					resp.sendRedirect("pdslist.jsp");
 				}
 		*/		
-				//받아 오는 부분.
-				BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream());
-				String filePath = "";
+		//받아 오는 부분.
+		BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream());
+		String filePath = "";
 				
 				if(pdsseq != null) {//pdsseq안넘어 왔다는건 파일 없다.
 					
