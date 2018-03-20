@@ -40,7 +40,7 @@ public class LifeBbsController extends HttpServlet {
 		String command = request.getParameter("command");
 		
 		String seq = request.getParameter("seq");
-		String id = request.getParameter("id");
+		String id = (String)request.getSession().getAttribute("id");
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
 		String tag = request.getParameter("tag");
@@ -60,7 +60,9 @@ public class LifeBbsController extends HttpServlet {
 		}else if(command.equals("update")) {
 			response.sendRedirect("lifeBbsUpdate.jsp?seq=" + seq);
 		}else if(command.equals("answerAf")) {
-			boolean isS = dao.answer(Integer.parseInt(seq), new LifeBbsDto(id, title, content, tag, filename));
+			String tagAf = "사는얘기," + tag;
+			
+			boolean isS = dao.answer(Integer.parseInt(seq), new LifeBbsDto(id, title, content, tagAf, filename));
 			
 			if(isS) {
 				response.sendRedirect("lifeBbsList.jsp");

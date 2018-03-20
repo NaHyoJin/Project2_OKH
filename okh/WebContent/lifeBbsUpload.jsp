@@ -162,7 +162,6 @@ if(isS){
 	if(SS){
 		%>
 		<script type="text/javascript">
-		alert("파일 업로드 성공");
 		location.href = "lifeBbsList.jsp";
 		</script>
 		<%
@@ -170,7 +169,10 @@ if(isS){
 }else{
 %>
 	<script type="text/javascript">
-	alert("파일 업로드 실패");
+	request.getSession().setAttribute("messageType", "오류 메시지");
+	request.getSession().setAttribute("messageContent", "새 글 쓰기 오류.");
+	response.sendRedirect("lifeBbsList.jsp");
+	return;
 	</script>
 <%
 }

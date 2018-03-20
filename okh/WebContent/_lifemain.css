@@ -17,14 +17,9 @@ time, mark, audio, video {
 	border: 0;
 	vertical-align: baseline;
 }
-body{
-	background-color: #fcfbfb;
-}
-h2{
-	font-family: 'Nanum Gothic', sans-serif;
-}
 .menu{
 position: fixed;
+top:0px;
 width: 240px;
 height: 100%;
 background-color: #0059ab;
@@ -102,69 +97,62 @@ input.login {
    position: absolute;
 	top: 600px;
  }
-
-.wrap{
-	display: flex;
-   width: 1000px;
+ .wrap{
+width: 880px;
    height:100%;
  margin-top:0;
- padding: 20px;
+ padding-left: 20px;
  position: relative;
  left: 300px;
-}
-.titlediv{
-	  width: 1000px;
-   height:100%;
- margin-top:0;
- margin-bottom:50px;
- padding: 20px;
- position: relative;
- top: 30px;
+ }
+ .partition1{
+ background-color: yellow;
+ 	position: absolute;
+ 	top: 100px;
+ 	left: 20px;
+ 	width: 375px;
+ 	height: 300px;
+ }
+  .partition2{
+ background-color: yellow;
+position: absolute;
+top: 100px;
+right:0;
+width: 375px;
+height: 300px;
  left: 300px;
-}
-.myinfo{
-  padding: 20px;
-  float: left;
-  border: 1px solid #bcbcbc;
-  width: 100%;
-    border-collapse: separate;
-    border-spacing: 2px;
-    text-align: left;
-    vertical-align: baseline;
-    background-color: #fff;
  }
-.writearea{
-	order:1;
-  padding: 20px;
-  margin-bottom: 20px;
-  float: left;
-  border: 1px solid #bcbcbc;
-  width: 700px;
-    border-collapse: separate;
-    border-spacing: 2px;
-    text-align: left;
-    vertical-align: baseline;
- 	background-color: #fff;
+   .partition3{
+ background-color: yellow;
+position: absolute;
+top: 420px;
+left: 20px;
+width: 375px;
+height: 300px;
  }
- .upload{
- order:2;
- width: 300px;
-    margin-bottom: 20px;
-    float: right;
-    display:inline-block;
-    padding-top: 175px;
+   .partition4{
+ background-color: yellow;
+position: absolute;
+top: 420px;
+right: 0;
+width: 375px;
+height: 300px;
  }
- .buttons{
- clear: both;
-width: 100%;
+ .actionlogin{
+ width:240px;
+ height:40px;
+ 	 position: absolute;
+	top: 100px;
  }
- span {
-	border-radius: 5px;
-}
-.fileload{
-	display: inline-block;
-	float: left;
-}
-.btn btn-success btn-wide{
-	float: right;
-}
+ .settingbtn{
+ display:inline-block;
+ 	 position: absolute;
+	left: 200px;
+ }
+ .alarmbtn{
+ display:inline-block;
+ 	 position: absolute;
+	left: 200px;
+	top: 30px;
+ }
+ 

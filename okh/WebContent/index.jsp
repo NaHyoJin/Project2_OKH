@@ -22,49 +22,36 @@
 	<link rel="stylesheet" type="text/css" href="_main.css?ver=1.2">
 </head>
 <body>
-
-<%-- <%//로그인한id가져오기
-Object ologin = session.getAttribute("login");
-UserDto mem = null;
-if(ologin == null){
-	%>	
-	<script type="text/javascript">
-		$(".actionlogin").hide();
-	
-</script>
+<!-- 로그인 세션 -->
 	<%
-}else{
-	mem = (UserDto)ologin;
-%>
-	<script type="text/javascript">
-	alert("들어왔어?");
-	$("#login").hide();
-	$("#account").hide();
-	$("#btnPopover").show();
-	</script>
-<%
-}
-%> --%>
-	<!-- 인클루드 부분 -->
+	Object ologin = session.getAttribute("login");
+	UserDto mem = (UserDto)ologin;
+	%>
+<!-- 메뉴 -->
 	<div class="menu">
-		<input type="button" class="homebtn" id="homebtn">
+		<%
+		if(ologin == null){
+		%>
 		<input type="button" class="login" id="login">
 		<input type="button" class="account" id="account">
-
-		<input type="button" class="bbs1" id="qnabbs">
-		<input type="button" class="techbbs_hjh" id="techbbs">
-		<input type="button" class="bbs3" ><!-- 정재흥 -->
-		<input type="button" class="bbs4" >
-		<input type="button" class="bbs5" id="jobs"><!-- 나효진 -->
-		<input type="button" class="bbs6" id="life"><!-- 병찬 사는얘기 -->
-	</div>	
-<script type="text/javascript">
-// window.name = "부모창 이름"; 
-window.name = "parentForm";
-// window.open("open할 window", "자식창 이름", "팝업창 옵션");
-openWin = window.open("popup.jsp",
-        "childForm", "location=0, width=390, height=600, resizable = no, scrollbars = no,top=100,left=400");   
-</script>
+		<%
+		}else{
+		%>
+		<div class="actionlogin">
+			<span><%=mem.getId() %></span>
+			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
+			<img class="alarmbtn" alt="" src="image/alarm.PNG" style="cursor: pointer" id="btnPopover">	
+		</div>
+		<%
+		}
+		%>
+		<input type="button" class="bbs1" id="qnabbs">				<!-- 박형태 -->
+		<input type="button" class="techbbs_hjh" id="techbbs">		<!-- 황준현 -->
+		<input type="button" class="bbs3" >							<!-- 정재흥 -->
+		<input type="button" class="bbs4" >							<!-- 장문석 -->
+		<input type="button" class="bbs5" id="jobs">				<!-- 나효진 -->
+		<input type="button" class="bbs6" id="life">				<!-- 정병찬 -->
+	</div>
 	<script type="text/javascript">
 		$(function() {//좌측 메뉴바 누르는 곳.
 			$("#homebtn").click(function() {
@@ -73,48 +60,30 @@ openWin = window.open("popup.jsp",
 			$("#login").click(function() {
 				location.href="User?command=login";
 			});
-	
 			$("#account").click(function() {
 				location.href="User?command=join";
 			});
-			
-			//QNA
 			$("#qnabbs").click(function() {
 				location.href="qnaServlet?command=listQna";
 			});
-			
-			$("#second").click(function() {
-				location.href="second.jsp";
-			});
-	
 			$("#techbbs").click(function() {
 				location.href="TechbbsController?command=techbbs";
 			});
-	
-			$("#life").click(function() {
-				location.href="LifeBbs?command=life";
-			});
-			
-			
-	/* 
-			//columns
-			$("#").click(function() {
-				location.href="";
-			});
-	 */
-	 
-			//게시판5 나효진 jobs 부분.
-/* 			$("#jobs").click(function() {
-				location.href="main.BBSHWCodingController";
-			});
- */	 
-			
 			$("#jobs").click(function name() {
 				location.href="jobs";
 			});
-
+			$("#life").click(function() {
+				location.href="LifeBbs?command=life";
+			});
 		});
 	</script>
+<script type="text/javascript">
+// window.name = "부모창 이름"; 
+window.name = "parentForm";
+// window.open("open할 window", "자식창 이름", "팝업창 옵션");
+openWin = window.open("popup.jsp",
+        "childForm", "location=0, width=390, height=600, resizable = no, scrollbars = no,top=100,left=400");   
+</script>
 	
 	<!-- 황준현 -->
 <!-- wrap로 메인페이지 섹션사이즈만들어준거고 그밑에 자식들 partition1~partition4로 테이블뿌리면된니다  -->
@@ -253,7 +222,7 @@ top : 새창 위쪽 위치
             container: 'body',
             html: true,
             trigger: 'hover',
-            content: '<button onclick="logout()" type="button" class="btn btn-default popover-dismiss">logout</button><button onclick="upmydetail()" type="button" class="btn btn-default popover-dismiss">my페이지</button>'
+            content: '<p>설정</p><hr><button type="button" class="btn btn-default popover-dismiss" onclick="logout()">로그아웃</button><button type="button" class="btn btn-default popover-dismiss" onclick="mypage()">정보수정</button>'
          });
          // prevent popover from being hidden on mouseout.
          // only dismiss when explicity clicked (e.g. has .hide-popover)
@@ -310,7 +279,14 @@ top : 새창 위쪽 위치
             });
           });
         });
-   </script>	
-
+   </script>
+	<script type="text/javascript">
+	function logout() {
+		location.href ="User?command=logout";
+	}
+	function mypage() {
+		location.href ="User?command=mypage";
+	}
+	</script>
 </body>
 </html>

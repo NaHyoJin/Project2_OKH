@@ -20,6 +20,14 @@ version="3.0">
     <servlet-name>UserController</servlet-name>
     <url-pattern>/User</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>UserProfileController</servlet-name>
+    <servlet-class>user.UserProfileController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserProfileController</servlet-name>
+    <url-pattern>/UserProfile</url-pattern>
+  </servlet-mapping>
   
 <!-- 사는얘기 게시판 -->
   <servlet>

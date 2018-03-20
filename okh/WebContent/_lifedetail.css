@@ -1,0 +1,298 @@
+@charset "UTF-8";
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	vertical-align: baseline;
+}
+body{
+	background-color: #fcfbfb;
+}
+h2{
+	font-family: 'Nanum Gothic', sans-serif;
+}
+.menu{
+position: fixed;
+top:0px;
+width: 240px;
+height: 100%;
+background-color: #0059ab;
+}
+.titlediv{
+	  width: 1000px;
+   height:100%;
+ margin-top:0;
+  margin-bottom:50px;
+ padding: 20px;
+ position: relative;
+ top: 20px;
+ left: 300px;
+}
+.titlediv button{
+	margin-right: 30px;
+}
+input.login {
+        background: url(image/login.PNG) no-repeat;
+        cursor: pointer;
+        width: 120px;
+        height: 40px;
+        border: 1px solid gray;
+		position: absolute;
+		top: 100px;
+      }
+ input.account {
+   background: url(image/account.PNG) no-repeat;
+   cursor: pointer;
+   width: 120px;
+   height: 40px;
+   border: 1px solid gray;
+   position: absolute;
+	top: 100px;
+	left: 120px;
+ }
+ input.bbs1 {
+   background: url(image/bbs1.PNG) no-repeat;
+   border: none;
+   cursor: pointer;
+   width: 240px;
+   height: 60px;
+   position: absolute;
+	top: 200px;
+ }
+ .techbbs_hjh {
+   background: url(image/bbs2.png) no-repeat;
+   border: none;
+   cursor: pointer;
+   width: 240px;
+   height: 60px;
+   position: absolute;
+	top: 280px;
+ }
+ input.bbs3 {
+   background: url(image/bbs3.PNG) no-repeat;
+   border: none;
+   cursor: pointer;
+   width: 240px;
+   height: 60px;
+   position: absolute;
+	top: 360px;
+ }
+ input.bbs4 {
+   background: url(image/bbs4.png) no-repeat;
+   border: none;
+   cursor: pointer;
+   width: 240px;
+   height: 60px;
+   position: absolute;
+	top: 440px;
+ }
+ input.bbs5 {
+   background: url(image/bbs5.png) no-repeat;
+   border: none;
+   cursor: pointer;
+   width: 240px;
+   height: 60px;
+   position: absolute;
+	top: 520px;
+ }
+ input.bbs6 {
+   background: url(image/bbs6.png) no-repeat;
+   border: none;
+   cursor: pointer;
+   width: 240px;
+   height: 60px;
+   position: absolute;
+	top: 600px;
+ }
+ 
+ .wrap{
+   width: 940px;
+   height:100%;
+ margin: 10px;
+ padding-bottom:15px;
+ border: 1px solid #bcbcbc;
+ position: relative;
+ top: 30px;
+ left: 300px;
+ background-color: #fff;
+ }
+ .hjhtag{
+	font-size:10px;
+	color:#fff;
+	background-color: #c0c0c0;
+	border: 1px solid #fff;
+	border-radius: 6px;
+	padding: 3px 10px 3px 10px;
+}
+#tag0{
+	font-size:10px;
+	color:#fff;
+	background-color: #5bc1de;
+	border: 1px solid #fff;
+	border-radius: 6px;
+}
+ .myinfo{
+  padding: 20px;
+  float: left;
+  width: 100%;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-bottom: 1px solid #DDD;
+    text-align: left;
+    vertical-align: baseline;
+ 	background-color: #fff;
+ }
+ .myinfo_icon{
+ 	text-align: right;
+ }
+ .contentareawrap{
+ display: flex;
+  margin-bottom: 20px;
+  float: left;
+  width:100%;
+  height:100%;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-bottom: 1px solid #DDD;
+    text-align: left;
+    vertical-align: baseline;
+ 	background-color: #fff;
+ }
+ .contentarea{
+ order:1;
+  padding: 20px;
+  margin-bottom: 20px;
+  float: left;
+  width: 100%;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-bottom: 1px solid #DDD;
+    text-align: left;
+    vertical-align: baseline;
+ 	background-color: #fff;
+ }
+ 
+ #like{
+ order:2;
+width: 204px;
+    margin-bottom: 20px;
+    float: right;
+     border-bottom: 1px solid #DDD;
+      border-left: 1px solid #DDD;
+      text-align: center;
+ }
+ #cocoun{
+  display:inline-block;
+ border: 1px solid #c0c0c0;
+	border-radius: 6px;
+	padding: 0 15px 0 15px;
+	margin-left: 6px;
+ }
+ #changeli, #changedisli{
+ display:block;
+ 	padding-top: 20px;
+ }
+ #scrapimg{
+ padding-bottom: 20px;
+ }
+   .qna{
+   clear: both;
+width: 100%;
+ }
+ 
+ /* 테이블 */
+ .reptable {
+    width: 100%;
+    border: none;
+    border-collapse: separate;
+    border-spacing: 2px;
+   
+}
+ 
+.reptable th {
+    padding: 15px;
+    border: none;
+    border-left: 5px solid #C03;
+    border-bottom: 1px solid #DDD;
+    background: #FCF0F3;
+    font-weight: normal;
+    text-align:left;
+    text-shadow: 0 1px #FFF;
+   vertical-align: middle;
+}
+ 
+.reptable td {
+    border: none;
+    border-bottom: 1px solid #DDD;
+    text-align: left;
+    vertical-align: baseline;
+     padding-bottom: 15px;
+}
+#frm{
+	margin-bottom: 15px;
+}
+.buttons{
+	text-align: center;
+	margin: 5px;
+}
+ .replistwrap{
+ display: flex;
+  margin-bottom: 20px;
+  float: left;
+  border: 1px solid #bcbcbc;
+  width:898px;
+  height:100%;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-bottom: 1px solid #DDD;
+    text-align: left;
+    vertical-align: baseline;
+ 	background-color: #fff;
+ }
+ .replist{
+ order:1;
+  float: left;
+  border: 1px solid #bcbcbc;
+  width: 700px;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-bottom: 1px solid #DDD;
+    text-align: left;
+    vertical-align: baseline;
+ 	background-color: #fff;
+ }
+ 
+   .replike{
+    order:2;
+width: 200px;
+    margin-bottom: 20px;
+    float: right;
+    border: 1px solid #bcbcbc;
+ }
+ #summer{
+ width: 700px;
+ }
+ #upBtn{
+ background: url(image/likeoff.png) no-repeat;
+ border: none;
+ position: relative;
+ left:61px;
+ }
+ #downBtn{
+ background: url(image/likeoff.png) no-repeat;
+ border: none;
+ position: relative;
+ left:61px;
+ }

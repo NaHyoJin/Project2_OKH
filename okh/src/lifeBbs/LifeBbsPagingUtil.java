@@ -3,7 +3,7 @@ package lifeBbs;
 public class LifeBbsPagingUtil {
 	
 	public static LifeBbsPagingDto setPagingInfo(LifeBbsPagingDto paging) {
-		paging.setCountPerPage(3);
+		paging.setCountPerPage(10);
 		paging.setBlockCount(10);
 		
 		paging.setStartNum(

@@ -36,5 +36,22 @@ public class UserService implements IUserService {
 	public boolean updateScore(String userID, int score) {
 		return userDao.updateScore(userID, score);
 	}
+	@Override
+	public UserDto getUser(String userID) {
+		return userDao.getUser(userID);
+	}
+	@Override
+	public boolean update(String userID, String userPassword, String userName, String age, String gender, String email,
+			String auth, String profile) {
+		return userDao.update(userID, userPassword, userName, age, gender, email, auth, profile);
+	}
+	@Override
+	public boolean profile(String userID, String userProfile) {
+		return userDao.profile(userID, userProfile);
+	}
+	@Override
+	public String getProfile(String userID) {
+		return userDao.getProfile(userID);
+	}
 
 }

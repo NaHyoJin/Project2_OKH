@@ -14,7 +14,9 @@ public class LifeBbsDao implements ILifeBbsDao {
 	
 	private static LifeBbsDao lifeBbsDao = new LifeBbsDao();
 	
-	public LifeBbsDao() {}
+	public LifeBbsDao() {
+		DBConnection.initConnection();
+	}
 	
 	public static LifeBbsDao getInstance() {
 		return lifeBbsDao;
@@ -66,6 +68,8 @@ public class LifeBbsDao implements ILifeBbsDao {
 		
 		Connection conn = null; 
 		PreparedStatement psmt = null;
+		
+		System.out.println("bbs in dao : " + bbs.toString());
 		
 		int count = 0;
 		
@@ -486,7 +490,7 @@ public class LifeBbsDao implements ILifeBbsDao {
 			System.out.println("1/6 getBbsPagingList Success");
 			
 			// 글의 총수
-			String totalSql = " SELECT COUNT(SEQ) FROM LIFEBBS " + sWord;
+			String totalSql = " SELECT COUNT(SEQ) FROM LIFEBBS " + sWord + "AND DEL=0";
 			psmt = conn.prepareStatement(totalSql);
 			rs = psmt.executeQuery();
 			System.out.println("2/6 getBbsPagingList Success");
@@ -505,7 +509,7 @@ public class LifeBbsDao implements ILifeBbsDao {
 			String sql = " SELECT * FROM "
 						+ " (SELECT * FROM (SELECT * FROM LIFEBBS " + sWord + " ORDER BY REF ASC, STEP DESC)"
 						+ "  WHERE ROWNUM <=" + paging.getStartNum() + " ORDER BY REF DESC, STEP ASC) "
-						+ "WHERE ROWNUM <=" + paging.getCountPerPage();
+						+ "WHERE ROWNUM <=" + paging.getCountPerPage() + "AND DEL=0";
 			
 			psmt = conn.prepareStatement(sql);
 			System.out.println("3/6 getBbsPagingList Success");

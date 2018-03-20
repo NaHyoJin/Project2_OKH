@@ -15,6 +15,7 @@ public class LifeBbssReplyDao implements ILifeBbssReplyDao {
 	private static LifeBbssReplyDao lifebbsreplydao = new LifeBbssReplyDao();
 	
 	public LifeBbssReplyDao() {
+		DBConnection.initConnection();
 	}
 	
 	public static LifeBbssReplyDao getInstance() {

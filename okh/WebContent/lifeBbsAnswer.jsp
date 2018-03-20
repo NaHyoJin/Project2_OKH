@@ -8,14 +8,25 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="_main.css">
+	<link rel="stylesheet" type="text/css" href="_lifewrite.css?ver=1.1">
 	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/bootstrap-tagsinput.css">
 	<link rel="stylesheet" href="css/custom.css">
 	<title>Insert title here</title>
-	<link rel="stylesheet" type="text/css" href="_main.css">
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/bootstrap.js"></script>
+	<script src="js/bootstrap-tagsinput.js"></script>
+	
+	<!-- include libraries(jQuery, bootstrap) -->
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+	
+	<!-- include summernote css/js -->
+	<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 </head>
 <body>
 	<div class="menu">
@@ -54,6 +65,16 @@
 	}
 	mem = (UserDto)ologin;
 	%>
+	<script type="text/javascript">
+	$(document).ready(function() {
+	     $('#summernote').summernote({
+	             height: 300,                 // set editor height
+	             minHeight: null,             // set minimum height of editor
+	             maxHeight: null,             // set maximum height of editor
+	             focus: true                  // set focus to editable area after initializing summernote
+	     });
+	});
+	</script>
 	<%
 	String sseq = request.getParameter("seq");
 	int seq = Integer.parseInt(sseq.trim());
@@ -100,43 +121,24 @@
 				</td>
 			</tr>
 		</table>
-		<h2>답글달기</h2>
-		
-		<form action="LifeBbs" method="post">
-		<input type="hidden" name="seq" value="<%=bbs.getSeq() %>">
-		<table border="1">
-			<col width="200"><col width="500">
-			<tr>
-				<td>아이디</td>
-				<td>
-					<input type="hidden" name="command" value="answerAf">
-					<input type="text" name="id" size="50" readonly="readonly" value="<%=mem.getId() %>">
-				</td>
-			</tr>
+		<div class="titlediv"><h2>답글 쓰기</h2>
+		</div>
+		<div class="wrap">
+			<div class="myinfo">
+				<p id="test" align="left"><%=mem.getId() %></p>
+			</div>
+			<div class="writearea">
+			<form action="lifeBbsUpload.jsp" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="id" value="<%=mem.getId() %>">
+				<input type="text" class="form-control" id="title" name="title" placeholder="제목를 입력해 주세요."><br>
+				<input type="text" id="tag" name="tag" value="" placeholder="Tags," class="form-control" data-role="tagsinput" onclick="make_tag()"><br><br>
+				<textarea name="content" id="summernote"></textarea><br>
+			 	<input type="button" class="btn btn-default btn-wide" onclick="gotobbs();" value="취소">
+				<input type="submit" style="float: right" class="btn btn-success btn-wide" value="글추가">
+			</form>
+			</div>
 			
-			<tr>
-				<td>제목</td>
-				<td>
-					<input type="text" name="title" size="50">
-				</td>
-			</tr>
-			
-			<tr>
-				<td>내용</td>
-				<td>
-					<textarea rows="10" cols="50" name="content"></textarea>
-				</td>
-			</tr>
-			
-			<tr>
-				<td colspan="2">
-					<input type="submit" value="답글">
-				</td>
-			</tr>
-		</table>
-		</form>
-			
-		<a href="bbslist.jsp">글 목록</a>
+		</div>
 	</div>
 
 </body>

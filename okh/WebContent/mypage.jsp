@@ -1,23 +1,35 @@
+<%@page import="user.UserService"%>
+<%@page import="user.IUserService"%>
 <%@page import="user.UserDto"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="css/bootstrap.css">
-	<link rel="stylesheet" href="css/custom.css">
-	<title>login.jsp</title>
-	<link rel="stylesheet" type="text/css" href="_lifemain.css">
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<title>LifeBBSDetail</title>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+	<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/bootstrap.js"></script>
+	<link rel="stylesheet" type="text/css" href="_lifedetail.css?ver=1.1">
 </head>
 <body>
 <!-- 로그인 세션 -->
 	<%
 	Object ologin = session.getAttribute("login");
 	UserDto mem = (UserDto)ologin;
+
+	IUserService service = UserService.getInstance();
+	
+	String profile = null;
+	if(ologin != null){
+		profile = service.getProfile(mem.getId());
+	}
 	%>
 <!-- 메뉴 -->
 	<div class="menu">
@@ -31,8 +43,8 @@
 		%>
 		<div class="actionlogin">
 			<span><%=mem.getId() %></span>
-			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
-			<img class="alarmbtn" alt="" src="image/alarm.PNG" style="cursor: pointer" id="btnPopover">	
+			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="membtnPopover">
+			<img class="alarmbtn" alt="" src="image/alarm.PNG" style="cursor: pointer" id="alarmbtnPopover">	
 		</div>
 		<%
 		}
@@ -63,37 +75,7 @@
 		});
 	});
 	</script>
-<!-- View -->
-	<div class="wrap">
-		<form action="User" method="post">
-			<table class="table table-bordered table-hover" style="text-align: center; border: 1px solid #dddddd">
-				<thead>
-					<th colspan="2"><h4>로그인 양식</h4></th>
-				</thead>
-				<tbody>
-					<tr>
-						<td style="width: 110px;"><h5>아이디</h5></td>
-						<td>
-							<input type="hidden" name="command" value="loginAf">
-							<input class="form-control" type="text" name="userID" maxlength="20" placeholder="아이디를 입력하세요.">
-						</td>
-					</tr>
-					<tr>
-						<td style="width: 110px;"><h5>비밀번호</h5></td>
-						<td>
-							<input class="form-control" type="password" name="userPassword" maxlength="20" placeholder="비밀번호를 입력하세요.">
-						</td>
-					</tr>
-					<tr>
-						<td style="text-align: left" colspan="2">
-							<input class="btn btn-primary pull-right" type="submit" value="로그인">
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</form>
-	</div>
-<!-- Modal -->
+<!-- modal -->
 	<%
 	String messageContent = null;
 	if(session.getAttribute("messageContent") != null){
@@ -115,11 +97,11 @@
 							<span class="sr-only">Close</span>
 						</button>
 						<h4 class="modal-title">
-							<%=messageType %>
+							<%=messageType.trim() %>
 						</h4>
 					</div>
 					<div class="modal-body">
-						<%=messageContent %>
+						<%=messageContent.trim() %>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
@@ -135,29 +117,24 @@
 	session.removeAttribute("messageContent");
 	session.removeAttribute("messageType");
 	}
-	%>
-	<div class="modal fade" id="checkModal" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="vertical-alignment-helper">
-			<div class="modal-dialog vertical-align-center">
-				<div id="checkType" class="modal-content panel-info">
-					<div class="modal-header panel-heading">
-						<button type="button" class="close" data-dismiss="modal">
-							<span aria-hidden="true">&times</span>
-							<span class="sr-only">Close</span>
-						</button>
-						<h4 class="modal-title">
-							확인 메시지
-						</h4>
-					</div>
-					<div id="checkMessage" class="modal-body">
-						<%=messageContent %>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
-					</div>
+	%><!-- View -->
+	<div class="titlediv">
+		<h2>내 정보</h2>
+	</div>
+	<div class="wrap">
+		<div class="myinfo">
+			<br>
+			<p class="myinfo_icon">
+				<div>
+					<img src="<%=profile %>" class="media-object img-circle" style="max-width: 50px; margin: 0 auto;">
+					아이디 : <%=mem.getId() %><br>
+					활동점수 : <%=mem.getScore() %>
+					<button onclick="location.href='loginProfileUpdate.jsp'">프로필 수정</button>
+					<button onclick="location.href='loginUpdate.jsp'">회원 정보 수정</button>
 				</div>
-			</div>
+			</p>
 		</div>
 	</div>
+
 </body>
 </html>

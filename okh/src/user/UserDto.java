@@ -12,7 +12,7 @@ CREATE TABLE OKHMEM(
 	NAME VARCHAR2(50) NOT NULL,
 	AGE NUMBER(3) NOT NULL,
 	GENDER VARCHAR2(50) NOT NULL,
-	EMAIL VARCHAR2(50) UNIQUE,
+	EMAIL VARCHAR2(50) NOT NULL,
 	AUTH NUMBER(1) NOT NULL,
 	PROFILE VARCHAR2(50),
 	SCORE NUMBER(10) NOT NULL
@@ -30,6 +30,9 @@ public class UserDto implements Serializable {
 	private int auth;
 	private String profile;
 	private int score;
+	
+	public UserDto() {
+	}
 	
 	public UserDto(String id, String pwd, String name, int age, String gender, String email, int auth, String profile,
 			int score) {
