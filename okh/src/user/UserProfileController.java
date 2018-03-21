@@ -38,7 +38,7 @@ public class UserProfileController extends HttpServlet {
 		} catch (Exception e) {
 			request.getSession().setAttribute("messageType", "오류 메시지");
 			request.getSession().setAttribute("messageContent", "파일 크기는 10MB를 넘을 수 없습니다");
-			response.sendRedirect("loginProfileUpdate.jsp.jsp");
+			response.sendRedirect("loginProfileUpdate.jsp");
 			return;
 		}
 		String userID = multi.getParameter("userID");
