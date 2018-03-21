@@ -1,5 +1,4 @@
 <%@page import="java.util.ArrayList"%>
-<%@page import="totalbbs.totalbbsdto"%>
 <%@page import="techbbs.TechbbsService"%>
 <%@page import="techbbs.TechbbsServiceImpl"%>
 <%@page import="techbbs.TechbbsDto"%>
