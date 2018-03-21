@@ -2,9 +2,7 @@ package qna;
 
 import java.util.List;
 
-
-
-
+import qna.PagingBean;
 
 public interface QnaBbsDaoImpl {
 
@@ -14,10 +12,29 @@ public interface QnaBbsDaoImpl {
 	
 	public List<QnaDto> getBbsPagingList(PagingBean paging);
 	
-//	public List<QnaDto> getQnaPagingList(PagingBean paging, String searchWord, int search);
+	public List<QnaDto> getQnaPagingList(PagingBean paging, String searchWord, int search);
 	
 	public QnaDto getBbs(int seq);
 	public void readcount(int seq);
+		
+	public boolean qnaupdate(QnaDto dto); //detail에서 update사용
+	
+	public boolean answer(int seq, QnaDto dto);
 	
 	public String RemoveHTMLTag(String changeStr);	
+	public String[] getTagName(String tagname);
+	public boolean checkcomment(int seq);
+	
+	public List<QnaDto> getqnaBbssortPagingList(PagingBean paging, String whatsort);
+	public void likecountplus(int seq) ;
+	public void dislikecount(int seq);
+	public boolean delete(int seq);
+	public void readcountplus(int seq);
+	public void commentcountplus(int seq);
+	public void commentcountminus(int seq);
+	
+	
+	// like
+	
+	
 }
