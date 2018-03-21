@@ -9,6 +9,11 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import db.DBConnection;
+import totalbbs.CombbsDto;
+import totalbbs.LifeBbsDto;
+import totalbbs.QnaDto;
+import totalbbs.newbbs5HWCodingVO;
+import totalbbs.totalbbsdto;
 import db.DBClose;
 
 public class TechbbsDao implements iTechbbsDao {
@@ -779,6 +784,454 @@ public class TechbbsDao implements iTechbbsDao {
 			DBClose.close(psmt, conn, rs);	
 		}		
 		return commentcount>0?true:false;
+	}
+	@Override
+	public List<LifeBbsDto> getlifeBbsList() {
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		List<LifeBbsDto> list=new ArrayList<LifeBbsDto>();
+		int totalCount = 0;
+		try {
+		String sql = " SELECT * FROM  "
+				+ " (SELECT * FROM (SELECT * FROM LIFEBBS ORDER BY SEQ ASC) "
+				+ "  WHERE ROWNUM >= 1 AND DEL=0 ORDER BY SEQ DESC) "
+				+ " WHERE ROWNUM <= 6 AND DEL=0 ";
+		
+		
+			conn=DBConnection.getConnection();
+			System.out.println(" (1/6) getlifeBbsList Success");
+			psmt = conn.prepareStatement(sql);
+			
+			System.out.println(" (2/6) getlifeBbsList Success");
+				
+		
+			
+			rs = psmt.executeQuery();
+			System.out.println(" (3/6) getlifeBbsList Success");
+			while(rs.next()){
+				
+				LifeBbsDto dto = new LifeBbsDto
+						(rs.getInt(1),
+						rs.getString(2),
+						rs.getInt(3),
+						rs.getInt(4),
+						rs.getInt(5),
+						rs.getString(6),
+						rs.getString(7),
+						rs.getString(8),
+						rs.getString(9),
+						rs.getInt(10),
+						rs.getString(11),
+						rs.getString(12),
+						rs.getString(13),
+						rs.getInt(14),
+						rs.getInt(15),
+						rs.getInt(16),
+						rs.getInt(17),
+						rs.getInt(18)
+						);
+		// seq, id, title, content, wdate, del, readcount, likecount, scrapcount)
+				list.add(dto);
+			}	
+			System.out.println(" (4/6) getlifeBbsList Success");
+			
+		} catch (SQLException e) {
+			System.out.println("getlifeBbsList fail");
+			e.printStackTrace();
+		}finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+		return list;
+	}
+	@Override
+	public List<newbbs5HWCodingVO> getbbs5BbsList() {
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		List<newbbs5HWCodingVO> list=new ArrayList<newbbs5HWCodingVO>();
+		int totalCount = 0;
+		try {
+		String sql = " SELECT * FROM  "
+				+ " (SELECT * FROM (SELECT * FROM newbbs5HWCodingVO ORDER BY SEQ ASC) "
+				+ "  WHERE ROWNUM >= 1 AND DEL=0 ORDER BY SEQ DESC) "
+				+ " WHERE ROWNUM <= 6 AND DEL=0 ";
+		
+		
+			conn=DBConnection.getConnection();
+			System.out.println(" (1/6) getbbs5BbsList Success");
+			psmt = conn.prepareStatement(sql);
+			
+			System.out.println(" (2/6) getbbs5BbsList Success");
+				
+		
+			
+			rs = psmt.executeQuery();
+			System.out.println(" (3/6) getbbs5BbsList Success");
+			while(rs.next()){
+				
+				newbbs5HWCodingVO dto = new newbbs5HWCodingVO
+						(rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getString(4),
+						rs.getString(5),
+						rs.getString(6),
+						rs.getInt(7),
+						rs.getInt(8),
+						rs.getInt(9),
+						rs.getString(10),
+						rs.getString(11),
+						rs.getInt(12),
+						rs.getInt(13)
+						);
+		// seq, id, title, content, wdate, del, readcount, likecount, scrapcount)
+				list.add(dto);
+			}	
+			System.out.println(" (4/6) getbbs5BbsList Success");
+			
+		} catch (SQLException e) {
+			System.out.println("getbbs5BbsList fail");
+			e.printStackTrace();
+		}finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+		return list;
+	}
+	@Override
+	public List<QnaDto> getqnaBbsList() {
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		List<QnaDto> list=new ArrayList<QnaDto>();
+		int totalCount = 0;
+		try {
+		String sql = " SELECT * FROM  "
+				+ " (SELECT * FROM (SELECT * FROM QNA ORDER BY SEQ ASC) "
+				+ "  WHERE ROWNUM >= 1 AND DEL=0 ORDER BY SEQ DESC) "
+				+ " WHERE ROWNUM <= 6 AND DEL=0 ";
+		
+		
+			conn=DBConnection.getConnection();
+			System.out.println(" (1/6) getqnaBbsList Success");
+			psmt = conn.prepareStatement(sql);
+			
+			System.out.println(" (2/6) getqnaBbsList Success");
+				
+		
+			
+			rs = psmt.executeQuery();
+			System.out.println(" (3/6) getqnaBbsList Success");
+			while(rs.next()){
+				
+				QnaDto dto = new QnaDto
+						(rs.getInt(1),
+						rs.getString(2),
+						rs.getInt(3),
+						rs.getInt(4),
+						rs.getInt(5),
+						rs.getString(6),
+						rs.getString(7),
+						rs.getString(8),
+						rs.getString(9),
+						rs.getInt(10),
+						rs.getInt(11),
+						rs.getInt(12),
+						rs.getInt(13),
+						rs.getInt(14),
+						rs.getInt(15)
+						);
+		// seq, id, title, content, wdate, del, readcount, likecount, scrapcount)
+				list.add(dto);
+			}	
+			System.out.println(" (4/6) getqnaBbsList Success");
+			
+		} catch (SQLException e) {
+			System.out.println("getqnaBbsList fail");
+			e.printStackTrace();
+		}finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+		return list;
+	}
+	@Override
+	public List<TechbbsDto> alltechBbsList() {
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		List<TechbbsDto> list=new ArrayList<TechbbsDto>();
+		int totalCount = 0;
+		try {
+			String sql = " SELECT * FROM TECHBBS "
+					+ "  WHERE DEL=0 ORDER BY SEQ DESC ";
+		
+		
+			conn=DBConnection.getConnection();
+			System.out.println(" (1/6) gettechBbsList Success");
+			psmt = conn.prepareStatement(sql);
+			
+			System.out.println(" (2/6) gettechBbsList Success");
+				
+		
+			
+			rs = psmt.executeQuery();
+			System.out.println(" (3/6) gettechBbsList Success");
+			while(rs.next()){
+				
+				TechbbsDto dto = new TechbbsDto(rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getString(4),
+						rs.getString(5),
+						rs.getString(6),
+						rs.getInt(7),
+						rs.getInt(8),
+						rs.getInt(9),
+						rs.getString(10),
+						rs.getString(11),
+						rs.getInt(12),
+						rs.getInt(13)
+						);
+		// seq, id, title, content, wdate, del, readcount, likecount, scrapcount)
+				list.add(dto);
+			}	
+			System.out.println(" (4/6) gettechBbsList Success");
+			
+		} catch (SQLException e) {
+			System.out.println("gettechBbsList fail");
+			e.printStackTrace();
+		}finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+		return list;
+	}
+	@Override
+	public List<LifeBbsDto> alllifeBbsList() {
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		List<LifeBbsDto> list=new ArrayList<LifeBbsDto>();
+		int totalCount = 0;
+		try {
+			String sql = " SELECT * FROM LIFEBBS "
+					+ "  WHERE DEL=0 ORDER BY SEQ DESC ";
+		
+		
+			conn=DBConnection.getConnection();
+			System.out.println(" (1/6) getlifeBbsList Success");
+			psmt = conn.prepareStatement(sql);
+			
+			System.out.println(" (2/6) getlifeBbsList Success");
+				
+		
+			
+			rs = psmt.executeQuery();
+			System.out.println(" (3/6) getlifeBbsList Success");
+			while(rs.next()){
+				
+				LifeBbsDto dto = new LifeBbsDto
+						(rs.getInt(1),
+						rs.getString(2),
+						rs.getInt(3),
+						rs.getInt(4),
+						rs.getInt(5),
+						rs.getString(6),
+						rs.getString(7),
+						rs.getString(8),
+						rs.getString(9),
+						rs.getInt(10),
+						rs.getString(11),
+						rs.getString(12),
+						rs.getString(13),
+						rs.getInt(14),
+						rs.getInt(15),
+						rs.getInt(16),
+						rs.getInt(17),
+						rs.getInt(18)
+						);
+		// seq, id, title, content, wdate, del, readcount, likecount, scrapcount)
+				list.add(dto);
+			}	
+			System.out.println(" (4/6) getlifeBbsList Success");
+			
+		} catch (SQLException e) {
+			System.out.println("getlifeBbsList fail");
+			e.printStackTrace();
+		}finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+		return list;
+	}
+	@Override
+	public List<newbbs5HWCodingVO> allbbs5BbsList() {
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		List<newbbs5HWCodingVO> list=new ArrayList<newbbs5HWCodingVO>();
+		int totalCount = 0;
+		try {
+		String sql = " SELECT * FROM newbbs5HWCodingVO "
+					+ "  WHERE DEL=0 ORDER BY SEQ DESC ";
+			
+		
+			conn=DBConnection.getConnection();
+			System.out.println(" (1/6) getbbs5BbsList Success");
+			psmt = conn.prepareStatement(sql);
+			
+			System.out.println(" (2/6) getbbs5BbsList Success");
+				
+		
+			
+			rs = psmt.executeQuery();
+			System.out.println(" (3/6) getbbs5BbsList Success");
+			while(rs.next()){
+				
+				newbbs5HWCodingVO dto = new newbbs5HWCodingVO
+						(rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getString(4),
+						rs.getString(5),
+						rs.getString(6),
+						rs.getInt(7),
+						rs.getInt(8),
+						rs.getInt(9),
+						rs.getString(10),
+						rs.getString(11),
+						rs.getInt(12),
+						rs.getInt(13)
+						);
+		// seq, id, title, content, wdate, del, readcount, likecount, scrapcount)
+				list.add(dto);
+			}	
+			System.out.println(" (4/6) getbbs5BbsList Success");
+			
+		} catch (SQLException e) {
+			System.out.println("getbbs5BbsList fail");
+			e.printStackTrace();
+		}finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+		return list;
+	}
+	@Override
+	public List<QnaDto> allqnaBbsList() {
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		List<QnaDto> list=new ArrayList<QnaDto>();
+		int totalCount = 0;
+		try {
+		String sql = " SELECT * FROM QNA "
+				+ "  WHERE DEL=0 ORDER BY SEQ DESC ";
+		
+		
+			conn=DBConnection.getConnection();
+			System.out.println(" (1/6) allqnaBbsList Success");
+			psmt = conn.prepareStatement(sql);
+			
+			System.out.println(" (2/6) allqnaBbsList Success");
+				
+		
+			
+			rs = psmt.executeQuery();
+			System.out.println(" (3/6) allqnaBbsList Success");
+			while(rs.next()){
+				
+				QnaDto dto = new QnaDto
+						(rs.getInt(1),
+						rs.getString(2),
+						rs.getInt(3),
+						rs.getInt(4),
+						rs.getInt(5),
+						rs.getString(6),
+						rs.getString(7),
+						rs.getString(8),
+						rs.getString(9),
+						rs.getInt(10),
+						rs.getInt(11),
+						rs.getInt(12),
+						rs.getInt(13),
+						rs.getInt(14),
+						rs.getInt(15)
+						);
+		// seq, id, title, content, wdate, del, readcount, likecount, scrapcount)
+				list.add(dto);
+			}	
+			System.out.println(" (4/6) allqnaBbsList Success");
+			
+		} catch (SQLException e) {
+			System.out.println("allqnaBbsList fail");
+			e.printStackTrace();
+		}finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+		return list;
+	}
+	@Override
+	public List<CombbsDto> allcomBbsList() {
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		List<CombbsDto> list=new ArrayList<CombbsDto>();
+		int totalCount = 0;
+		try {
+		String sql = " SELECT * FROM COMBBS "
+				+ "  WHERE DEL=0 ORDER BY SEQ DESC ";
+		
+		
+			conn=DBConnection.getConnection();
+			System.out.println(" (1/6) allcomBbsList Success");
+			psmt = conn.prepareStatement(sql);
+			
+			System.out.println(" (2/6) allcomBbsList Success");
+				
+		
+			
+			rs = psmt.executeQuery();
+			System.out.println(" (3/6) allcomBbsList Success");
+			while(rs.next()){
+				
+				CombbsDto dto = new CombbsDto
+						(rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getString(4),
+						rs.getString(5),
+						rs.getInt(6),
+						rs.getInt(7),
+						rs.getInt(8),
+						rs.getString(9),
+						rs.getInt(10),
+						rs.getInt(11),
+						rs.getString(12),
+						rs.getString(13)
+						);
+		// seq, id, title, content, wdate, del, readcount, likecount, scrapcount)
+				list.add(dto);
+			}	
+			System.out.println(" (4/6) allcomBbsList Success");
+			
+		} catch (SQLException e) {
+			System.out.println("allcomBbsList fail");
+			e.printStackTrace();
+		}finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+		return list;
+	}
+	@Override
+	public List<totalbbsdto> gettotalBbsList() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

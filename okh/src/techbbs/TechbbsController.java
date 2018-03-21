@@ -45,7 +45,7 @@ public class TechbbsController extends HttpServlet {
 		TechbbsServiceImpl tservice=TechbbsService.getInstance();
 		PdsServiceImpl pservice=PdsService.getInstance();
 		if(command.equals("techbbs")) {
-			List<TechbbsDto> list=tservice.gettechBbsList();
+			List<TechbbsDto> list=new ArrayList<>();
 			request.setAttribute("techbbs", list);
 			dispatch("techbbs.jsp", request, response);
 		}else if(command.equals("techbbs1")) {

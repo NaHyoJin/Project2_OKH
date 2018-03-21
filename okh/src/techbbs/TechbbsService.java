@@ -1,6 +1,12 @@
 package techbbs;
 import java.util.List;
 
+import totalbbs.CombbsDto;
+import totalbbs.LifeBbsDto;
+import totalbbs.QnaDto;
+import totalbbs.newbbs5HWCodingVO;
+import totalbbs.totalbbsdto;
+
 
 
 public class TechbbsService implements TechbbsServiceImpl{
@@ -117,5 +123,51 @@ public class TechbbsService implements TechbbsServiceImpl{
 		// TODO Auto-generated method stub
 		return techbbsdao.gettechBbssortPagingList(paging,whatsort);
 	}
+	@Override
+	public List<LifeBbsDto> getlifeBbsList() {
+		// TODO Auto-generated method stub
+		return techbbsdao.getlifeBbsList();
+	}
+	@Override
+	public List<newbbs5HWCodingVO> getbbs5BbsList() {
+		// TODO Auto-generated method stub
+		return techbbsdao.getbbs5BbsList();
+	}
+	@Override
+	public List<QnaDto> getqnaBbsList() {
+		// TODO Auto-generated method stub
+		return techbbsdao.getqnaBbsList();
+	}
+	@Override
+	public List<TechbbsDto> alltechBbsList() {
+		// TODO Auto-generated method stub
+		return techbbsdao.alltechBbsList();
+	}
+	@Override
+	public List<LifeBbsDto> alllifeBbsList() {
+		// TODO Auto-generated method stub
+		return techbbsdao.alllifeBbsList();
+	}
+	@Override
+	public List<newbbs5HWCodingVO> allbbs5BbsList() {
+		// TODO Auto-generated method stub
+		return techbbsdao.allbbs5BbsList();
+	}
+	@Override
+	public List<QnaDto> allqnaBbsList() {
+		// TODO Auto-generated method stub
+		return techbbsdao.allqnaBbsList();
+	}
+	@Override
+	public List<CombbsDto> allcomBbsList() {
+		// TODO Auto-generated method stub
+		return techbbsdao.allcomBbsList();
+	}
+	@Override
+	public List<totalbbsdto> gettotalBbsList() {
+		// TODO Auto-generated method stub
+		return techbbsdao.gettotalBbsList();
+	}
+	
 	
 }

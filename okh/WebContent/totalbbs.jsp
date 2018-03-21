@@ -1,13 +1,13 @@
-<%@page import="techbbs.PagingBean"%>
-<%@page import="user.UserDto"%>
-<%@page import="techbbs.TechbbsService"%>
-<%@page import="techbbs.TechbbsServiceImpl"%>
-<%@page import="techbbs.TechbbsDto"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="techbbs.TechbbsServiceImpl"%>
+<%@page import="techbbs.TechbbsService"%>
+<%@page import="techbbs.PagingBean"%>
+<%@page import="totalbbs.totalbbsdto"%>
 <%@page import="java.util.List"%>
+<%@page import="user.UserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%
+        <%
 request.setCharacterEncoding("utf-8");
 %>
 <%
@@ -19,7 +19,6 @@ String choice = request.getParameter("choice");
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
- 
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
@@ -34,7 +33,7 @@ String choice = request.getParameter("choice");
 <link rel="stylesheet" type="text/css" href="_techbbs.css?ver=1.64">
 <link rel="stylesheet" type="text/css" href="_main.css?ver=1.4">
 </head>
-<body bgcolor="#fcfbfb">
+<body>
 <script type="text/javascript">
 function logout() {
 	location.href='index.jsp';
@@ -43,7 +42,7 @@ function logout() {
 <%//로그인한id가져오기
 Object ologin = session.getAttribute("login");
 UserDto mem = null;
-List<TechbbsDto> techlist=(List<TechbbsDto>)request.getAttribute("techbbs");
+
 mem = (UserDto)ologin;
 %>
 <!-- 인클루드 부분 -->
@@ -129,15 +128,6 @@ mem = (UserDto)ologin;
 		
 		});
 	</script>
-<!-- 페이징 처리 정보 교환 -->
-<%
-PagingBean paging = new PagingBean();
-if(request.getParameter("nowPage") == null){
-	paging.setNowPage(1);
-}else{
-	paging.setNowPage(Integer.parseInt(request.getParameter("nowPage")));
-}
-%>
 
 <%
 if(findWord == null){
@@ -150,22 +140,34 @@ else if(choice.equals("title")) cho = 0;
 else if(choice.equals("writer")) cho = 1;
 else if(choice.equals("content")) cho = 2;
 else if(choice.equals("tagname")) cho = 3;
-
+List<totalbbsdto> totallist=new ArrayList<>();
 TechbbsServiceImpl tservice=TechbbsService.getInstance();
-List<TechbbsDto> sortlist=(List<TechbbsDto>)request.getAttribute("sorthe");
+List<totalbbsdto> sortlist=(List<totalbbsdto>)request.getAttribute("sorthe");
 String whatsort=(String)request.getAttribute("whatsort");
+List<totalbbsdto> serchlist=(List<totalbbsdto>)request.getAttribute("serch");
 if(sortlist==null||whatsort==null||sortlist.size()==0){	//sort안했다
 	System.out.println("기본페이지");
-	techlist = tservice.gettechBbsPagingList(paging, findWord, cho);
+	totallist=(List<totalbbsdto>)request.getAttribute("totallist");
 }else{
 	System.out.println("sort페이지");
-	techlist=tservice.gettechBbssortPagingList(paging, whatsort);
+	totallist=sortlist;
+}
+String serchyn=(String)request.getAttribute("serchyn");
+if(serchyn==null){
+	
+}
+else if(serchlist==null||serchlist.size()==0){	//검색된결과가없을때인데 처음들어올때도비워있으니문제가된다
+	
+%>
+<script type="text/javascript">
+alert("검색된결과가없습니다");
+</script>
+<%
+}else if(serchlist!=null){
+	totallist=serchlist;
 }
 %>
-
-
-	
-	<div class="titlediv"><span class="titi">기술게시판</span>
+<div class="titlediv"><span class="titi">전체게시판</span>
 	<%
 	if(ologin == null){
 			%>
@@ -185,11 +187,10 @@ if(sortlist==null||whatsort==null||sortlist.size()==0){	//sort안했다
 <div class="wrap">
 <div class="sortingmenu">
 	 <ul class="list-sort pull-left">
-         <li><a onclick="location.href='TechbbsController?command=sorthe&whatthings=wdate'"  class="category-sort-link active">최신순</a></li>
-         <li><a onclick="location.href='TechbbsController?command=sorthe&whatthings=likecount'" class="category-sort-link">좋아요순</a></li>
-         <li><a onclick="location.href='TechbbsController?command=sorthe&whatthings=contentcount'" class="category-sort-link">댓글순</a></li>
-         <li><a onclick="location.href='TechbbsController?command=sorthe&whatthings=scrapcount'" class="category-sort-link">스크랩순</a></li>
-         <li><a onclick="location.href='TechbbsController?command=sorthe&whatthings=readcount'" class="category-sort-link">조회순</a></li>
+         <li><a onclick="location.href='TotalController?command=sorthe&whatthings=wdate'"  class="category-sort-link active">최신순</a></li>
+         <li><a onclick="location.href='TotalController?command=sorthe&whatthings=likecount'" class="category-sort-link">좋아요순</a></li>
+         <li><a onclick="location.href='TotalController?command=sorthe&whatthings=contentcount'" class="category-sort-link">댓글순</a></li>
+         <li><a onclick="location.href='TotalController?command=sorthe&whatthings=readcount'" class="category-sort-link">조회순</a></li>
      </ul>
 	
 </div>
@@ -207,7 +208,7 @@ if(sortlist==null||whatsort==null||sortlist.size()==0){	//sort안했다
 		<table border="1" class="techtable">
 		<col width="450"><col width="80"><col width="80"><col width="80"><col width="150">
 			
-			<%if(techlist==null||techlist.size()==0){
+			<%if(totallist==null||totallist.size()==0){
 				
 			%><tr>
 				<th colspan="5">리스트가없습니다</th>
@@ -215,51 +216,67 @@ if(sortlist==null||whatsort==null||sortlist.size()==0){	//sort안했다
 			<%
 			}
 			
-			for(int i=0;i<techlist.size();i++){
-				TechbbsDto dto=techlist.get(i);
-				String[] tagnames=tservice.getTagName(dto.getTagname());	
-				
+			for(int i=0;i<15;i++){
+				totalbbsdto dto=totallist.get(i);
 				tservice=TechbbsService.getInstance();
-				boolean chekcomment=tservice.checkcomment(techlist.get(i).getSeq());
-				if(chekcomment){
+				if(dto.getComentcount()>0){
 			%>
 			<tr>
 				<th>
-				#<%=techlist.get(i).getSeq() %>
+				<%=totallist.get(i).getWhatbbs() %>
 			<%
 			}else{
 			%>
 			<tr>
 				<th style="border-left: 5px solid #808080">
-				#<%=techlist.get(i).getSeq() %>
+				<%=totallist.get(i).getWhatbbs() %>
 			<%}
-			for(int j=0;j<tagnames.length;j++){//추가시킬때무조건추가시킬거는 -없이해도되고 엔터치면 -그값을넣어준다
-			%>
-				<span><button class="hjhtag" name="tag<%=j%>" id="tag<%=j%>" onclick="searchBbs1(this)" value="<%=tagnames[j]%>"><%=tagnames[j] %></button></span>
-			<%
-			}
-			
 			if(ologin == null){
 			%>
-			
-			<p style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a></p>
+			<%//컨트롤러다따로 디테일 뿌려줘야한다
+			if(dto.getWhatbbs().equals("기술게시판")){
+			%>
+			<p style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=&seq=<%=dto.getParent()%>"><%=dto.getTitle() %></a></p>
+			<%
+			}else if(dto.getWhatbbs().equals("사는얘기")){
+			%>
+			<!-- 병찬이컨트롤러  -->
+			<p style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=&seq=<%=dto.getParent()%>"><%=dto.getTitle() %></a></p>
+			<%
+			}else if(dto.getWhatbbs().equals("QnA게시판")){
+			%>
+			<!-- 형태형컨트롤러  -->
+			<p style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=&seq=<%=dto.getParent()%>"><%=dto.getTitle() %></a></p>
+			<%
+			}else if(dto.getWhatbbs().equals("커뮤니티게시판")){
+			%>
+			<!-- 문석이컨트롤러  -->
+			<p style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=&seq=<%=dto.getParent()%>"><%=dto.getTitle() %></a></p>
+			<%
+			}else if(dto.getWhatbbs().equals("HW게시판")){
+			%>
+			<!-- 효진형컨트롤러  -->
+			<p style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=&seq=<%=dto.getParent()%>"><%=dto.getTitle() %></a></p>
+			<%
+			}
+			%>
 			
 			<%
 				}else{
 			%>
-			<p style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=<%=mem.getId() %>&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a></p>
+			<p style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=<%=mem.getId() %>&seq=<%=dto.getParent()%>"><%=dto.getTitle() %></a></p>
 			
 			<%
 			}
 			%>
 			</th>
-			<%if(dto.getCommentcount()>0){
+			<%if(dto.getComentcount()>0){
 			%>
-			<td><img src="image/repleon.PNG"><span class="textalig"> <%=dto.getCommentcount() %></span></td>
+			<td><img src="image/repleon.PNG"><span class="textalig"> <%=dto.getComentcount() %></span></td>
 			<%
 			}else{
 			%>
-			<td><img src="image/repleoff.png"><span class="textalig"> <%=dto.getCommentcount() %></span></td>
+			<td><img src="image/repleoff.png"><span class="textalig"> <%=dto.getComentcount() %></span></td>
 			<%
 			}
 			%>
@@ -285,8 +302,8 @@ if(sortlist==null||whatsort==null||sortlist.size()==0){	//sort안했다
 			%>
 			
 			<td>
-			<%=dto.getId() %>
-			<p style="font-size: 10px"><%=dto.getWdate() %></p>
+			
+			<h4><%=dto.getId() %></h4>
 			</td>
 			</tr>
 			<%
@@ -295,15 +312,6 @@ if(sortlist==null||whatsort==null||sortlist.size()==0){	//sort안했다
 		</table>
 		<br>
 		
-		<jsp:include page="paging.jsp">
-	<jsp:param name="actionPath" value="techbbs.jsp"/>
-	<jsp:param name="findWord" value="<%=findWord %>"/>
-	<jsp:param name="choice" value="<%=choice %>"/>
-	<jsp:param name="nowPage" value="<%=String.valueOf(paging.getNowPage()) %>" />
-	<jsp:param name="totalCount" value="<%=String.valueOf(paging.getTotalCount()) %>" />
-	<jsp:param name="countPerPage" value="<%=String.valueOf(paging.getCountPerPage()) %>" />
-	<jsp:param name="blockCount" value="<%=String.valueOf(paging.getBlockCount()) %>" />
-</jsp:include>
 
 <script type="text/javascript">
 if(document.getElementById("choice").value=="tagname"){
@@ -322,19 +330,19 @@ function searchBbs() {
 		return;
 	}
 	if(document.getElementById("search").value==""){//빈문자열에서검색시
-		location.href = "techbbs.jsp?findWord=TechTips&choice=tagname";	
+		location.href = "totalbbs.jsp?findWord=TechTips&choice=tagname";	
 		return;
 	}
 	var word = document.getElementById("search").value;
 	var choice = document.getElementById("choice").value;
-	$("#select_id").val("<%=cho%>").prop("selected", true);
-	location.href = "techbbs.jsp?findWord=" + word + "&choice=" + choice;	
+	$("#select_id").val("<%=cho %>").prop("selected", true);
+	location.href = "TotalController?command=serch&findWord=" + word + "&choice=" + choice;	
 }
 function searchBbs1(e) {
 	$("#search").val("");
 	var word = e.value;
 	var choice = document.getElementById("choice").value;
-	location.href = "techbbs.jsp?findWord=" + word + "&choice=tagname";	
+	location.href = "totalbbs.jsp?findWord=" + word + "&choice=tagname";	
 	
 }
 

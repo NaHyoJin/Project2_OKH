@@ -84,12 +84,13 @@ public class LikeScrapController extends HttpServlet {
 				
 				//저장되있는 id찾아서 거기에추가하기
 				String origin=lsservice.getLikeID(seq);
-				likeid=origin+"-"+likeid+"-";
+				String addlikeid="";
+				addlikeid=origin+likeid+"-";
 				//카운트+1
 				tservice.likecountplus(seq);
 				//likeid있으면 1(취소) id없으면2(추가)
 				dto=new TechbbsDto(2, 0);//아이디추가
-				boolean isS=lsservice.addLikeID(new TechbbsDto(seq, likeid, ""));
+				boolean isS=lsservice.addLikeID(new TechbbsDto(seq, addlikeid, ""));
 				
 				if (isS) {
 					System.out.println("likeid아이디추가성공");
@@ -153,12 +154,13 @@ public class LikeScrapController extends HttpServlet {
 				
 				//저장되있는 id찾아서 거기에추가하기
 				String origin=lsservice.getDisLikeID(seq);
-				dislikeid=origin+"-"+dislikeid+"-";
+				String adddislikeid="";
+				adddislikeid=origin+dislikeid+"-";
 				//카운트-1
 				tservice.dislikecount(seq);
 				//dislikeid있으면 1(취소) id없으면2(추가)
 				dto=new TechbbsDto(0, 2);//아이디추가
-				boolean isS=lsservice.addDisLikeID(new TechbbsDto(seq, "", dislikeid));
+				boolean isS=lsservice.addDisLikeID(new TechbbsDto(seq, "", adddislikeid));
 				
 				if (isS) {
 					System.out.println("dislikeid아이디추가성공");

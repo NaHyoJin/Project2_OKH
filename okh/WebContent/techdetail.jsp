@@ -208,7 +208,7 @@ if(ologin == null){	//로그인안한상태
 			<%
 if(ologin == null){	//로그인안한상태
 	%>
-<a href="javascript:void(0)" id="changeli"><img src="image/likeoff.PNG" id="likeimg"></a><br>
+<a href="javascript:void(0)"  id="changeli"><img src="image/likeoff.PNG" id="likeimg"></a><br>
 		<%
 }else{
 %>

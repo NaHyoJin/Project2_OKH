@@ -1,6 +1,5 @@
-<%@page import="jobs_BBS5.newbbs5HWCodingVO"%>
-<%@page import="jobs_BBS5.newbbs5HWCodingService"%>
-<%@page import="jobs_BBS5.newbbs5HWCodingServiceImpl"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="totalbbs.totalbbsdto"%>
 <%@page import="techbbs.TechbbsService"%>
 <%@page import="techbbs.TechbbsServiceImpl"%>
 <%@page import="techbbs.TechbbsDto"%>
@@ -20,8 +19,8 @@
 
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/bootstrap.js"></script>
-	<link rel="stylesheet" type="text/css" href="_main.css?ver=1.22">
-<link rel="stylesheet" type="text/css" href="_techbbs.css?ver=1.23">
+	<link rel="stylesheet" type="text/css" href="_main.css?ver=1.25">
+<link rel="stylesheet" type="text/css" href="_totalbbs.css?ver=1.24">
 <!-- 쿠키용 -->
 <script type="text/javascript" src="js/jquery.cookie.js"></script>
 <script type="text/javascript">
@@ -80,6 +79,7 @@ if(ologin == null){
 <%
 }
 %> --%>
+	
 	<!-- 인클루드 부분 -->
 	<div class="menu">
 		<input type="button" class="homebtn" id="homebtn">
@@ -88,7 +88,7 @@ if(ologin == null){
 
 		<input type="button" class="bbs1" id="qnabbs">
 		<input type="button" class="techbbs_hjh" id="techbbs">
-		<input type="button" class="bbs3"  id="column"><!-- 정재흥 -->		
+		<input type="button" class="bbs3" ><!-- 정재흥 -->
 		<input type="button" class="bbs4" >
 		<input type="button" class="bbs5" id="jobs"><!-- 나효진 -->
 		<input type="button" class="bbs6" id="life"><!-- 병찬 사는얘기 -->
@@ -124,10 +124,12 @@ if(ologin == null){
 			});
 			
 			
-		//  정재흥 column 부분
-			$("column").click(function name() {
-				location.href="Controller?command=column"
+	/* 
+			//columns
+			$("#").click(function() {
+				location.href="";
 			});
+	 */
 	 
 			//게시판5 나효진 jobs 부분.
 /* 			$("#jobs").click(function() {
@@ -141,12 +143,66 @@ if(ologin == null){
 
 		});
 	</script>
-	
+	<%
+	String findWord = request.getParameter("findWord"); 
+	String choice = request.getParameter("choice"); 
+if(findWord == null){
+	findWord = "";
+}
+int cho = 0;
+
+if(choice == null) cho = 4;
+else if(choice.equals("title")) cho = 0;
+else if(choice.equals("writer")) cho = 1;
+else if(choice.equals("content")) cho = 2;
+else if(choice.equals("tagname")) cho = 3;
+%>
 	<!-- 황준현 -->
 <!-- wrap로 메인페이지 섹션사이즈만들어준거고 그밑에 자식들 partition1~partition4로 테이블뿌리면된니다  -->
 	<div class="wrap" id="tableChange">
+	<div class="sercharea">
+	<button class="btn btn-success btn-wide" onclick="location.href='TotalController?command=totalbbs'">전체게시판</button>
+<select id="choice" style="margin-left: 30px">
+		<option value="tagname">선택하세요</option>
+		<option value="title" >제목</option>
+		<option value="writer" >작성자</option>
+		<option value="content" >내용</option>
+		</select>
+<input type="text" placeholder="전체글 검색어" class="inputField" id="search" value="<%=findWord %>">
+<button name="search" id="serchbtn" class="input-group-btn" onclick="searchBbs()"><img alt="" src="image/serchbtn.PNG"></button>
+</div>
+<script type="text/javascript">
+function searchBbs() {
+	if(document.getElementById("choice").value=="tagname"){
+		alert("선택해주세요");
+		$("#search").val("");
+		return;
+	}
+	if(document.getElementById("search").value==""){//빈문자열에서검색시
+		location.href = "totalbbs.jsp?findWord=TechTips&choice=tagname";	
+		return;
+	}
+	var word = document.getElementById("search").value;
+	var choice = document.getElementById("choice").value;
+	$("#select_id").val("<%=cho %>").prop("selected", true);
+	location.href = "TotalController?command=serch&findWord=" + word + "&choice=" + choice;	
+}
+function searchBbs1(e) {
+	$("#search").val("");
+	var word = e.value;
+	var choice = document.getElementById("choice").value;
+	location.href = "totalbbs.jsp?findWord=" + word + "&choice=tagname";	
+	
+}
+</script>
 		<div class="partition1">
-			<h4 style="margin-bottom: 15px">Tech게시판 <a href="TechbbsController?command=techbbs"><img style="float: right" alt="" src="image/moresee.PNG"></a></h4>
+			
+			
+			
+		</div>
+		<div class="partition2">
+			
+		<h4 style="margin-bottom: 15px">Tech게시판 <a href="TechbbsController?command=techbbs"><img style="float: right" alt="" src="image/moresee.PNG"></a></h4>
 			<%
 			TechbbsServiceImpl tservice=TechbbsService.getInstance();
 			List<TechbbsDto> techlist=tservice.gettechBbsList();
@@ -155,22 +211,23 @@ if(ologin == null){
 				<%if(techlist==null||techlist.size()==0){
 				
 			%><tr>
-				<th>리스트가 없습니다.</th>
+				<th>리스트가없습니다</th>
 				</tr>
 			<%
 			}
 			
-			for(int i = 0; i < techlist.size(); i++){
-				TechbbsDto dto = techlist.get(i);
-				String[] tagnames = tservice.getTagName(dto.getTagname());	
+			for(int i=0;i<techlist.size();i++){
+				TechbbsDto dto=techlist.get(i);
+				String[] tagnames=tservice.getTagName(dto.getTagname());	
 				
+	
 				tservice=TechbbsService.getInstance();
 				boolean chekcomment=tservice.checkcomment(techlist.get(i).getSeq());
 				if(chekcomment){
 			%>
 			<tr>
 				<th style="padding: 0">
-				<p style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a></p>
+				<p style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=>&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a></p>
 				<p style="text-align: right"><%=dto.getId() %></p>
 			<%
 			}else{
@@ -185,108 +242,11 @@ if(ologin == null){
 			%>
 		</table>
 		</div>
-		
-		<div class="partition2">
-			게시판뿌려주기2
-		</div>
-		
 		<div class="partition3">
 			게시판뿌려주기3
 		</div>
-		
 		<div class="partition4">
-
-		
-			<h4 style="margin-bottom: 15px">H/W & Coding 게시판 <a href="BBSHWCodingController?command=main"><img style="float: right" alt="" src="image/moresee.PNG"></a></h4>
-			<%
-			newbbs5HWCodingServiceImpl hwservice = newbbs5HWCodingService.getInstance();
-			List<newbbs5HWCodingVO> hwlist = hwservice.gettechBbsList();
-			%>
-			<table border="1" class="techtable">
-				<%
-				if(hwlist == null || hwlist.size() == 0){
-				
-			%><tr>
-				<th>H/W & Coding 글이 없습니다.</th>
-				</tr>
-			<%
-			}
-			
-			for(int i = 0; i < hwlist.size(); i++){
-				newbbs5HWCodingVO hwdto = hwlist.get(i);
-				String[] tagnames = hwservice.getTagName(hwdto.getTagname());	
-				
-				hwservice = newbbs5HWCodingService.getInstance();
-				boolean chekcomment = hwservice.checkcomment(hwlist.get(i).getSeq());
-				if(chekcomment){
-			%>
-			<tr>
-				<th style="padding: 0">
-						<%      
-						//로그인 정보 확인 부분. //로그인한id가져오기
-							Object ologin = session.getAttribute("login");
-						
-						 	UserDto mem = null;//null로 초기화.
-						 	if(ologin != null){
-								mem = (UserDto)ologin;
-								//로그인 정보 가지고 오나 확인 부분.
-								System.out.println("mem : " + mem.toString());
-							}else{
-								System.out.println("로그인한 정보 없음.");
-							}
-							%>
-							<%
-							//로그인 안하고 글 볼때 null 값으로.
-								if(mem == null){
-									String memNull = null;
-							%>
-				<p style="font-size: 15px; margin-top: 5px;"><a href="BBSHWCodingController?command=techdetail&likeid=<%=memNull %>&seq=<%=hwdto.getSeq()%>"><%=hwdto.getTitle() %></a></p>
-						<%
-							}else{//로그인 하고 글 볼때.
-						%>
-				<p style="font-size: 15px; margin-top: 5px;"><a href="BBSHWCodingController?command=techdetail&likeid=<%=mem.getId() %>&seq=<%=hwdto.getSeq()%>"><%=hwdto.getTitle() %></a></p>		
-						<%
-							}
-			 			%>
-				<p style="text-align: right"><%=hwdto.getId() %></p>
-			<%
-			}else{
-			%>
-			<tr>
-				<th style="padding: 0; border-left: 5px solid #808080">
-				<%      
-						//로그인 정보 확인 부분. //로그인한id가져오기
-							Object ologin = session.getAttribute("login");
-						
-						 	UserDto mem = null;//null로 초기화.
-						 	if(ologin != null){
-								mem = (UserDto)ologin;
-								//로그인 정보 가지고 오나 확인 부분.
-								System.out.println("mem : " + mem.toString());
-							}else{
-								System.out.println("로그인한 정보 없음.");
-							}
-							%>
-				<%
-							//로그인 안하고 글 볼때 null 값으로.
-								if(mem == null){
-									String memNull = null;
-							%>
-				<p style="font-size: 15px; margin-top: 5px;"><a href="BBSHWCodingController?command=hwdetail&likeid=<%=memNull %>&seq=<%=hwdto.getSeq()%>"><%=hwdto.getTitle() %></a></p>
-						<%
-							}else{//로그인 하고 글 볼때.
-						%>
-				<p style="font-size: 15px; margin-top: 5px;"><a href="BBSHWCodingController?command=hwdetail&likeid=<%=mem.getId() %>&seq=<%=hwdto.getSeq()%>"><%=hwdto.getTitle() %></a></p>		
-						<%
-							}
-			 			%>
-				<p style="text-align: right"><%=hwdto.getId() %></p>
-	
-			<%}
-			}
-			%>
-		</table>
-		
+			게시판뿌려주기4
 		</div>
 	</div>
 	<%
