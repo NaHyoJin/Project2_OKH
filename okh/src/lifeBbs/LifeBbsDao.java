@@ -551,4 +551,104 @@ public class LifeBbsDao implements ILifeBbsDao {
 		return bbslist;
 	}
 
+	@Override
+	public List<LifeBbsDto> getBbsSortingPagingList(LifeBbsPagingDto paging, String searchWord, int search, String sort) {
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		List<LifeBbsDto> bbslist = new ArrayList<LifeBbsDto>();
+		
+		System.out.println("search = " + search);
+		
+		String sWord = "";		
+		if(search == 0) {	// 제목
+			sWord = " WHERE TITLE LIKE '%" + searchWord.trim() + "%' ";
+		}else if(search == 1) {	// 작성자
+			sWord = " WHERE ID='" + searchWord.trim() + "' ";
+		}else if(search == 2) {	// 내용
+			sWord = " WHERE CONTENT LIKE '%" + searchWord.trim() + "%' ";
+		}
+		
+		String Sorting = "";
+		if(sort.equals("wdate")) {
+			Sorting = " SEQ ";
+			System.out.println("sorting : " + Sorting);
+		}else if(sort.equals("up")) {
+			Sorting = " UP ";
+			System.out.println("sorting : " + Sorting);
+		}else if(sort.equals("countreply")) {
+			Sorting = " COUNTREPLY ";
+			System.out.println("sorting : " + Sorting);
+		}else if(sort.equals("readcount")) {
+			Sorting = " READCOUNT ";
+			System.out.println("sorting : " + Sorting);
+		}
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 getBbsPagingList Success");
+			
+			// 글의 총수
+			String totalSql = " SELECT COUNT(SEQ) FROM LIFEBBS " + sWord + "AND DEL=0";
+			psmt = conn.prepareStatement(totalSql);
+			rs = psmt.executeQuery();
+			System.out.println("2/6 getBbsPagingList Success");
+			
+			int totalCount = 0;
+			rs.next();
+			totalCount = rs.getInt(1);	// row의 총 갯수
+			
+			paging.setTotalCount(totalCount);
+			paging = LifeBbsPagingUtil.setPagingInfo(paging);
+			
+			psmt.close();
+			rs.close();
+			
+			// row를 취득
+			String sql = " SELECT * FROM "
+						+ " (SELECT * FROM (SELECT * FROM LIFEBBS " + sWord + " ORDER BY " + Sorting + " DESC) "
+						+ "  WHERE ROWNUM <=" + paging.getStartNum() + " ORDER BY " + Sorting + " DESC) "
+						+ "WHERE ROWNUM <=" + paging.getCountPerPage() + "AND DEL=0";
+			
+			psmt = conn.prepareStatement(sql);
+			System.out.println("3/6 getBbsPagingList Success");
+			
+			rs = psmt.executeQuery();
+			System.out.println("4/6 getBbsPagingList Success");
+			
+			while(rs.next()) {
+				LifeBbsDto dto = new LifeBbsDto(rs.getInt(1),			// seq
+												rs.getString(2),		// id
+												rs.getInt(3),			// ref
+												rs.getInt(4),			// step
+												rs.getInt(5),			// depth
+												rs.getString(6),		// title
+												rs.getString(7),		// content
+												rs.getString(8),		// tag
+												rs.getString(9),		// filename
+												rs.getInt(10),			// up
+												rs.getString(11),		// upid
+												rs.getString(12),		// downid
+												rs.getString(13),		// wdate
+												rs.getInt(14),			// parent
+												rs.getInt(15),			// del
+												rs.getInt(16),			// readcount
+												rs.getInt(17),			// downcount
+												rs.getInt(18));			// countreply
+				bbslist.add(dto);				
+			}
+			System.out.println("5/6 getBbsPagingList Success");			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("getBbsPagingList Fail");
+		} finally {
+			DBClose.close(psmt, conn, rs);
+			System.out.println("6/6 getBbsPagingList Success");	
+		}
+		
+		return bbslist;
+	}
+
 }

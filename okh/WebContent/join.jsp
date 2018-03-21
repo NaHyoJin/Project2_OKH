@@ -45,29 +45,23 @@
 		<input type="button" class="bbs6" id="life">				<!-- 정병찬 -->
 	</div>
 	<script type="text/javascript">
-		$(function() {//좌측 메뉴바 누르는 곳.
-			$("#homebtn").click(function() {
-				location.href="index.jsp";
-			});
-			$("#login").click(function() {
-				location.href="User?command=login";
-			});
-			$("#account").click(function() {
-				location.href="User?command=join";
-			});
-			$("#qnabbs").click(function() {
-				location.href="qnaServlet?command=listQna";
-			});
-			$("#techbbs").click(function() {
-				location.href="TechbbsController?command=techbbs";
-			});
-			$("#jobs").click(function name() {
-				location.href="jobs";
-			});
-			$("#life").click(function() {
-				location.href="LifeBbs?command=life";
-			});
+	$(function() {
+		$("#login").click(function() {
+			location.href = "User?command=login";
 		});
+		$("#account").click(function() {
+			location.href = "User?command=join";
+		});
+		$("#qnabbs").click(function() {
+			location.href="qnaServlet?command=listQna";
+		});	
+		$("#techbbs").click(function() {
+			location.href="TechbbsController?command=techbbs";
+		});
+		$("#life").click(function() {
+			location.href = "LifeBbs?command=life";
+		});
+	});
 	</script>
 <!-- View -->
 	<div class="wrap">

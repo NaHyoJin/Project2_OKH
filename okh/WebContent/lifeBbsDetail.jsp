@@ -160,33 +160,63 @@ public String arrow(int depth){
 	if(ologin != null){
 		profile = service.getProfile(mem.getId());
 	}
-	%>
-<%-- 
-<!-- 좋아요 버튼 활성화 제어 -->
-	<%
-	LifeBbsDto upBbs = dao.getupdownid(Integer.parseInt(sseq));
-	
-	String upArraySplit[] = null;
-	String downArraySplit[] = null;
-	
-	if(upBbs.getUpid() != null && mem != null){
-		upArraySplit = upBbs.getUpid().split(",");
-		for(int i = 0; i < upArraySplit.length; i++){
-			if(upArraySplit[i].equals(mem.getId())){
-				%>
-				<script type="text/javascript">
-				upActive();
-				</script>
-				<%
+ 	
+	String upIdSplit[] = null;
+	boolean findUpId = false;
+	if(bbs.getUpid() != null && mem != null){
+		upIdSplit = bbs.getUpid().split(",");
+		for(int i = 0; i < upIdSplit.length; i++){
+			if(upIdSplit[i].equals(mem.getId())){
+				findUpId = true;
+				break;
 			}
 		}
 	}
+	String downIdSplit[] = null;
+	boolean findDownId = false;
+	if(bbs.getDownid() != null && mem != null){
+		downIdSplit = bbs.getDownid().split(",");
+		for(int i = 0; i < downIdSplit.length; i++){
+			if(downIdSplit[i].equals(mem.getId())){
+				findDownId = true;
+				break;
+			}
+		}
+	}
+	System.out.println("findUpId in detail1 : " + findUpId);
+	System.out.println("findDownId in detail1 : " + findDownId);
 	%>
- --%>
 	<script type="text/javascript">
-	function upActive() {
+	function upon() {
 		$('#likeimg').attr('src', 'image/likeon.PNG');
 	}
+	function upoff() {
+		$('#likeimg').attr('src', 'image/likeoff.PNG');
+	}
+	function downon() {
+		$('#dislikeimg').attr('src', 'image/dislikeon.PNG');
+	}
+	function downoff() {
+		$('#dislikeimg').attr('src', 'image/dislikeoff.PNG');
+	}
+<%-- 	
+	$(document).ready(function() {
+		$('#likeimg').click(function() {
+			if(<%=findUpId %>){
+				$('#likeimg').attr('src', 'image/likeoff.PNG');
+			}else{
+				$('#likeimg').attr('src', 'image/likeon.PNG');
+			}
+		});
+		$('#dislikeimg').click(function() {
+			if(<%=findDownId %>){
+				$('#dislikeimg').attr('src', 'image/dislikeoff.PNG');
+			}else{
+				$('#dislikeimg').attr('src', 'image/dislikeon.PNG');
+			}
+		});
+	});
+	 --%>
 	</script>
 <!-- View -->
 	<div class="titlediv">
@@ -239,7 +269,11 @@ public String arrow(int depth){
 				<%
 				if(ologin == null){
 				%>
-				<a href="javascript:void(0)" id="changeli"><img src="image/likeoff.PNG" id="likeimg"></a><br>
+				<a href="javascript:void(0)" id="changeli"><img src="image/likeoff.PNG"></a><br>
+				<%
+				}else if(findUpId){
+				%>
+				<button  id="upBtn" style="display: block; padding-top: 20px;"><img src="image/likeon.PNG" id="likeimg"></button><br>
 				<%
 				}else{
 				%>
@@ -251,8 +285,13 @@ public String arrow(int depth){
 				<%
 				if(ologin == null){
 				%>
-				<a href="javascript:void(0)"id="changedisli"><img src="image/dislikeoff.PNG" id="dislikeimg"></a><br>
+				<a href="javascript:void(0)"id="changedisli"><img src="image/dislikeoff.PNG"></a><br>
 				<a href="javascript:void(0)"><img src="image/scrap.PNG" id="scrapimg"></a><br>
+				<%
+				}else if(findDownId){
+				%>
+				<button id="downBtn" style="display: block; padding-top: 20px;"><img src="image/dislikeon.PNG" id="dislikeimg"></button><br>
+				<a href="LikeScrapController?command=scrapimg"><img src="image/scrap.PNG" id="scrapimg"></a><br>
 				<%
 				}else{
 				%>
@@ -404,6 +443,25 @@ public String arrow(int depth){
 				}
 			});
 		});
+		$('#upBtn').click(function() {
+			$.ajax({
+				type:"POST",
+				url:"lifeBbsUpImg.jsp",
+				data:{
+					seq: <%=bbs.getSeq() %>
+				},
+				success:function(data){
+					if(data.trim() == "true"){
+						$('#likeimg').attr('src', 'image/likeoff.PNG');
+					}else{
+						$('#likeimg').attr('src', 'image/likeon.PNG');
+					}
+				},
+				error:function(){
+					alert("좋아요 실패");
+				}
+			});
+		});
 		$('#downBtn').click(function() {
 			$.ajax({
 				type:"POST",
@@ -415,6 +473,25 @@ public String arrow(int depth){
 				},
 				success:function(data){
 					$("#upVal").html(data.trim());
+				},
+				error:function(){
+					alert("좋아요 실패");
+				}
+			});
+		});
+		$('#downBtn').click(function() {
+			$.ajax({
+				type:"POST",
+				url:"lifeBbsDownImg.jsp",
+				data:{
+					seq: <%=bbs.getSeq() %>
+				},
+				success:function(data){
+					if(data.trim() == "true"){
+						$('#dislikeimg').attr('src', 'image/dislikeoff.PNG');
+					}else{
+						$('#dislikeimg').attr('src', 'image/dislikeon.PNG');
+					}			
 				},
 				error:function(){
 					alert("좋아요 실패");

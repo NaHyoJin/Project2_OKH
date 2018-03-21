@@ -58,10 +58,6 @@
 		$("#techbbs").click(function() {
 			location.href="TechbbsController?command=techbbs";
 		});
-		//게시판5 버튼 작동 부분.
-		$("#jobs").click(function() {
-			location.href = "jobs";
-		});
 		$("#life").click(function() {
 			location.href = "LifeBbs?command=life";
 		});
@@ -79,7 +75,7 @@
 						<td style="width: 110px;"><h5>아이디</h5></td>
 						<td>
 							<input type="hidden" name="command" value="loginAf">
-							<input autofocus="autofocus" class="form-control" type="text" name="userID" maxlength="20" placeholder="아이디를 입력하세요.">
+							<input class="form-control" type="text" name="userID" maxlength="20" placeholder="아이디를 입력하세요.">
 						</td>
 					</tr>
 					<tr>

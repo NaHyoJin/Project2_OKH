@@ -36,7 +36,7 @@ String upArraySplit[] = null;
 int up = downBbs.getUp();
 
 if(downBbs.getDownid() != null && upBbs.getUpid() == null){
-	System.out.println("1");
+	System.out.println("d1");
 	boolean findId = false;
 	int findIndex = 0;
 	downArraySplit = upBbs.getDownid().split(",");
@@ -45,13 +45,14 @@ if(downBbs.getDownid() != null && upBbs.getUpid() == null){
 	}
 	
 	for(int i = 0; i < downSplit.size(); i++){
-		if(downSplit.get(i).equals(mem.getId())){
+		if(downSplit.get(i).trim().equals(mem.getId().trim())){
 			findId = true;
 			findIndex = i;
 		}
 	}
 
 	if(findId){
+		System.out.println("d1-1");
 		// score +3
 		int score = service.getScore(id);
 		score += 3;
@@ -59,14 +60,16 @@ if(downBbs.getDownid() != null && upBbs.getUpid() == null){
 		
 		up++;
 		downSplit.remove(findIndex);
-		String addDownId = "";
+		while (downSplit.remove(null));
+		String addDownId = " ";
 		for(int j = 0; j < downSplit.size(); j++){
 			addDownId += downSplit.get(j).toString();
 		}
-		dao.updatedownid(Integer.parseInt(seq), up, addDownId);
+		dao.updatedownid(Integer.parseInt(seq), up, addDownId.trim());
 		downBbs = dao.getupdownid(Integer.parseInt(seq));
 		out.println(downBbs.getUp());
 	}else{
+		System.out.println("d1-2");
 		// score -3
 		int score = service.getScore(id);
 		score -= 3;
@@ -80,7 +83,7 @@ if(downBbs.getDownid() != null && upBbs.getUpid() == null){
 	}
 
 }else if(downBbs.getDownid() == null && upBbs.getUpid() != null){
-	System.out.println("2");
+	System.out.println("d2");
 	boolean findId = false;
 	upArraySplit = upBbs.getUpid().split(",");
 	for(int i = 0; i < upArraySplit.length; i++){
@@ -88,15 +91,17 @@ if(downBbs.getDownid() != null && upBbs.getUpid() == null){
 	}
 	
 	for(int i = 0; i < upSplit.size(); i++){
-		if(upSplit.get(i).equals(mem.getId())){
+		if(upSplit.get(i).trim().equals(mem.getId().trim())){
 			findId = true;
 		}
 	}
 
 	if(findId){
+		System.out.println("d2-1");
 		downBbs = dao.getupdownid(Integer.parseInt(seq));
 		out.println(downBbs.getUp());
 	}else{
+		System.out.println("d2-2");
 		// score -3
 		int score = service.getScore(id);
 		score -= 3;
@@ -110,7 +115,7 @@ if(downBbs.getDownid() != null && upBbs.getUpid() == null){
 	}
 	
 }else if(downBbs.getDownid() != null && upBbs.getUpid() != null){
-	System.out.println("3");
+	System.out.println("d3");
 	int findId = 0;
 	int findIndex = 0;
 	downArraySplit = upBbs.getDownid().split(",");
@@ -123,19 +128,21 @@ if(downBbs.getDownid() != null && upBbs.getUpid() == null){
 	}
 	
 	for(int i = 0; i < downSplit.size(); i++){
-		if(!(downSplit.get(i).equals(mem.getId())) && upSplit.get(i).equals(mem.getId())){
+		if(!(downSplit.get(i).trim().equals(mem.getId().trim())) && upSplit.get(i).trim().equals(mem.getId().trim())){
 			findId = 1;
-		}else if(downSplit.get(i).equals(mem.getId()) && !(upSplit.get(i).equals(mem.getId()))){
-			findId = 2;
-			findIndex = i;
-		}else if(!(downSplit.get(i).equals(mem.getId())) && !(upSplit.get(i).equals(mem.getId()))){
+		}else if(downSplit.get(i).trim().equals(mem.getId().trim()) && !(upSplit.get(i).trim().equals(mem.getId().trim()))){
+				findId = 2;
+				findIndex = i;
+		}else if(!(downSplit.get(i).trim().equals(mem.getId().trim())) && !(upSplit.get(i).trim().equals(mem.getId().trim()))){
 			findId = 3;
 		}
 	}
 	if(findId == 1){
+		System.out.println("d3-1");
 		downBbs = dao.getupdownid(Integer.parseInt(seq));
 		out.println(downBbs.getUp());
 	}else if(findId == 2){
+		System.out.println("d3-2");
 		// score +3
 		int score = service.getScore(id);
 		score += 3;
@@ -143,14 +150,16 @@ if(downBbs.getDownid() != null && upBbs.getUpid() == null){
 		
 		up++;
 		downSplit.remove(findIndex);
-		String addDownId = "";
+		while (downSplit.remove(null));
+		String addDownId = "))))))))))))))))))))))))))))";
 		for(int j = 0; j < downSplit.size(); j++){
 			addDownId += downSplit.get(j).toString();
 		}
-		dao.updatedownid(Integer.parseInt(seq), up, addDownId);
+		dao.updatedownid(Integer.parseInt(seq), up, addDownId.trim());
 		downBbs = dao.getupdownid(Integer.parseInt(seq));
 		out.println(downBbs.getUp());
 	}else if(findId ==3){
+		System.out.println("d3-3");
 		// score -3
 		int score = service.getScore(id);
 		score -= 3;
@@ -163,7 +172,7 @@ if(downBbs.getDownid() != null && upBbs.getUpid() == null){
 		out.println(downBbs.getUp());
 	}
 }else{
-	System.out.println("4");
+	System.out.println("d4");
 	// score -3
 	int score = service.getScore(id);
 	score -= 3;

@@ -30,7 +30,7 @@ public String arrow(int depth){
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>LifeBBSList</title>
 	<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="_lifebbs.css?ver-1.3">
+	<link rel="stylesheet" type="text/css" href="_lifebbs.css?ver-1.5">
 	<link rel="stylesheet" type="text/css" href="_lifemain.css?ver-1.62">
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 </head>
@@ -160,7 +160,17 @@ public String arrow(int depth){
 	ILifeBbsDao dao = LifeBbsDao.getInstance();
 	ILifeBbssReplyDao rdao = LifeBbssReplyDao.getInstance();
 	
-	List<LifeBbsDto> bbslist = dao.getBbsPagingList(paging, findWord, cho);
+	String sort = request.getParameter("sort");
+	List<LifeBbsDto> bbslist = null;
+	
+	if(sort == null){
+		bbslist = dao.getBbsPagingList(paging, findWord, cho);
+		System.out.println("null sort");
+	}else{
+		bbslist = dao.getBbsSortingPagingList(paging, findWord, cho, sort);
+		System.out.println("not null sort");
+	}
+	
 	List<LifeBbssReplyDto> replylist = rdao.reply();
 	%>
 
@@ -180,7 +190,14 @@ public String arrow(int depth){
 			%>
 		</div>
 	<div class="wrap">
-		
+		<div class="sortingmenu">
+			<ul class="list-sort pull-left">
+				<li><a onclick="location.href='lifeBbsList.jsp?sort=wdate'" class="category-sort-link active">최신순</a></li>
+				<li><a onclick="location.href='lifeBbsList.jsp?sort=up'" class="category-sort-link active">추천순</a></li>
+				<li><a onclick="location.href='lifeBbsList.jsp?sort=countreply'" class="category-sort-link active">댓글순</a></li>
+				<li><a onclick="location.href='lifeBbsList.jsp?sort=readcount'" class="category-sort-link active">조회순</a></li>
+			</ul>
+		</div>
 		<div class="sercharea">
 			<select id="choice" style="height: 30px;">
 				<option value="title" <%if(choice.equals("title")) out.println("selected");%>>제목</option>
@@ -223,7 +240,7 @@ public String arrow(int depth){
 						<%
 						}
 						%>
-						<p style="font-size: 20px">
+						<p style="font-size: 15px">
 							<%=arrow(bbs.getDepth()) %>
 							<a href="LifeBbs?command=detail&seq=<%=bbs.getSeq() %>">
 								<%=bbs.getTitle() %>

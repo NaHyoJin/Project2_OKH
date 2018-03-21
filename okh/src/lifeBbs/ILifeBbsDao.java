@@ -15,6 +15,7 @@ public interface ILifeBbsDao {
 	public boolean answer(int seq, LifeBbsDto bbs);
 	
 	public List<LifeBbsDto> getBbsPagingList(LifeBbsPagingDto paging, String searchWord, int search);
+	public List<LifeBbsDto> getBbsSortingPagingList(LifeBbsPagingDto paging, String searchWord, int search, String sort);
 	
 	public boolean writeCountReply(int seq, int countreply);
 	
