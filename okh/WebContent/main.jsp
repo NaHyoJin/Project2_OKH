@@ -80,7 +80,7 @@ mem = (UserDto)ologin;
 		</div>
 		<input type="button" class="bbs1" id="qnabbs">
 		<input type="button" class="techbbs_hjh" id="techbbs">
-		<input type="button" class="bbs3" ><!-- 정재흥 -->
+		<input type="button" class="bbs3"  id="column"><!-- 정재흥 -->		
 		<input type="button" class="bbs4" >
 		<input type="button" class="bbs5" id="jobs"><!-- 나효진 -->
 		<input type="button" class="bbs6" id="life"><!-- 병찬 사는얘기 -->
@@ -121,13 +121,11 @@ function logout() {
 				location.href="LifeBbs?command=life";
 			});
 			
-			
-	/* 
-			//columns
-			$("#").click(function() {
-				location.href="";
+		//  정재흥 column 부분
+			$("column").click(function name() {
+				location.href="Controller?command=column"
 			});
-	 */
+
 	 
 			//게시판5 나효진 jobs 부분.
 /* 			$("#jobs").click(function() {

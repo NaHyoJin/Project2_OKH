@@ -212,6 +212,17 @@ version="3.0">
   	<url-pattern>/mainJSP</url-pattern>
   </servlet-mapping>
   
+      <!-- column게시판 정재흥 -->
+    <servlet>
+  	<servlet-name>Controller</servlet-name>
+  	<servlet-class>columnBbs.ColumnbbsController</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>Controller</servlet-name>
+    <url-pattern>/Controller</url-pattern>
+  </servlet-mapping>
+  
   
   
 </web-app>
