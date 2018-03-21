@@ -22,7 +22,8 @@ public class UserDao implements IUserDao {
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		
-		String sql = " SELECT ID, NAME, AGE, GENDER, EMAIL, AUTH, PROFILE, SCORE FROM OKHMEM WHERE ID=? AND PWD=? ";
+		String sql = " SELECT ID, NAME, AGE, GENDER, EMAIL, AUTH, PROFILE, SCORE "
+				+ " FROM OKHMEM WHERE ID=? AND PWD=? ";
 		
 		try {
 			conn = DBConnection.getConnection();

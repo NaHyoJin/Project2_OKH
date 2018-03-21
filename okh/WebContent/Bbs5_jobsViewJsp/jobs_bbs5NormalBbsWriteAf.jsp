@@ -1,6 +1,4 @@
-<%@page import="jobs_BBS5.jobsBbs5ModelService"%>
-<%@page import="jobs_BBS5.jobsBbs5ModelServiceImpl"%>
-<%@page import="jobs_BBS5.BbsBoardBeanDtoVO"%>
+
 <%@page import="user.UserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>

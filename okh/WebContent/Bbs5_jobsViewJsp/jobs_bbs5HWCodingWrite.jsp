@@ -5,7 +5,7 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-        <%
+    <%
 	request.setCharacterEncoding("utf-8");
 	%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -23,6 +23,7 @@ rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/custom.css">
+	<link rel="stylesheet" type="text/css" href="../_main.css?ver=1.32"><!-- 메인 상단 버튼 부분. -->
 	<link rel="stylesheet" type="text/css" href="../_write.css?ver=1.45">
 <!-- 폰트  -->
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
@@ -93,30 +94,67 @@ $("#pdsup").click(function() {
 });
 
 </script>
-<%
-UserDto mem = (UserDto)session.getAttribute("login");
-//자료실 dto 부분.
-newbbs5HWCodingPDSVO pdsdto = null;
-List<newbbs5HWCodingPDSVO> pdslist = null;
+	<%
+	UserDto mem = (UserDto)session.getAttribute("login");
+	//자료실 dto 부분.
+	newbbs5HWCodingPDSVO pdsdto = null;
+	List<newbbs5HWCodingPDSVO> pdslist = null;
+	%>
+
+
+	<%
+//mem 에 로그인 한건가 안한건가 확인해서 좌측 메뉴 보여주는것.
+	if(mem == null){
 %>
-
-
 	<!-- 인클루드 부분 -->
 	<div class="menu">
 		<input type="button" class="login" id="login">
 		<input type="button" class="account" id="account">
 		<input type="button" class="bbs1" id="qnabbs">
 		<input type="button" class="techbbs_hjh" id="techbbs">
-		<input type="button" class="bbs3" ><!-- 정재흥 -->
-		<input type="button" class="bbs4" >
+		<input type="button" class="bbs3" id="column"><!-- 정재흥 -->		
+		<input type="button" class="bbs4" id="combbs"> <!-- 장문석 study -->
+		<input type="button" class="bbs5" id="jobs"><!-- 나효진 HW코딩 부분으로 가는것.-->
+		<input type="button" class="bbs6" id="life"><!-- 병찬 사는얘기 -->
+	</div>		
+<%
+	}else{
+%>
+	<!-- 인클루드 부분 -->
+	<div class="menu">
+		<input type="button" class="homebtn" id="homebtn">
+		<div class="actionlogin">
+			<span><%=mem.getId() %></span>
+			<img class="settingbtn" alt="" src="../image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
+			
+		</div>
+		<input type="button" class="bbs1" id="qnabbs">
+		<input type="button" class="techbbs_hjh" id="techbbs">
+		<input type="button" class="bbs3" id="column"><!-- 정재흥 -->		
+		<input type="button" class="bbs4" id="combbs"><!-- 장문석 -->
 		<input type="button" class="bbs5" id="jobs"><!-- 나효진 -->
 		<input type="button" class="bbs6" id="life"><!-- 병찬 사는얘기 -->
 	</div>	
+	
+	
+	<script type="text/javascript">
+		function logout() {
+			location.href = 'index.jsp';
+		}
+	</script>
+<%
+	}
+%>
 
+	
 	
 	<script type="text/javascript">
 		$(function() {//좌측 메뉴바 누르는 곳.
 
+			$("#homebtn").click(function() {
+				location.href="index.jsp";
+			});
+		
 			$("#login").click(function() {
 				location.href="User?command=login";
 			});
@@ -210,9 +248,9 @@ newbbs5HWCodingPDSServiceImpl pservice = newbbs5HWCodingPDSService.getInstance()
 
 newbbs5HWCodingPDSVO dto11= (newbbs5HWCodingPDSVO)request.getAttribute("pdsdto11");
 String command11=request.getParameter("command11");
-if(dto11 != null&&command11!=null&&command11.equals("addafter")){
-	System.out.println(command11+"황준현"+dto11.getParent());
-	System.out.println("리스트생성");
+if(dto11 != null && command11 != null && command11.equals("addafter")){
+	System.out.println(command11 + "황준현" + dto11.getParent());
+	System.out.println("리스트 생성");
 	 pdslist = pservice.getpdsList(dto11.getParent());
 }
 %>

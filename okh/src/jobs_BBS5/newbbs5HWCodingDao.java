@@ -116,12 +116,19 @@ public class newbbs5HWCodingDao implements newbbs5HWCodingDaoImpl {
 		return bbslist;
 	}
 
+	//페이징 없이 글 다 가지고 오는 것.
 	@Override
 	public List<newbbs5HWCodingVO> gettechBbsList() {
+/*		
 		String sql = " SELECT SEQ, ID, TITLE, TAGNAME, CONTENT, WDATE, "
 				+ " DEL, READCOUNT, LIKECOUNT, LIKEID, DISLIKEID, COMMENTCOUNT, SCRAPCOUNT "
 				+ " FROM newbbs5HWCodingVO "
 				+ " ORDER BY SEQ DESC";
+*/		
+		String sql = " SELECT * FROM  "
+				+ " (SELECT * FROM (SELECT * FROM newbbs5HWCodingVO ORDER BY SEQ ASC) "
+				+ "  WHERE ROWNUM >= 1 AND DEL=0 ORDER BY SEQ DESC) "
+				+ " WHERE ROWNUM <= 6 AND DEL=0 ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;

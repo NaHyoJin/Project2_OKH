@@ -49,7 +49,7 @@ version="3.0">
   
   
   
-   <!-- 기술게시판파일업로드 -->
+   <!-- 기술게시판 파일 업로드 -->
   <servlet>
     <servlet-name>PdsController</servlet-name>
     <servlet-class>techpds.PdsController</servlet-class>
@@ -58,7 +58,7 @@ version="3.0">
     <servlet-name>PdsController</servlet-name>
     <url-pattern>/PdsController</url-pattern>
   </servlet-mapping>
-    <!-- 기술게시판파일다운 -->
+    <!-- 기술게시판 파일 다운 -->
     <servlet>
   	<servlet-name>techfiledown</servlet-name>
   	<servlet-class>techpds.FileDownloader</servlet-class>
