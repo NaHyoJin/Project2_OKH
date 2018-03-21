@@ -178,7 +178,7 @@ List<HWRepbbsDto> replist = trservice.getRepBbsList(whatlist.get(0).getSeq());
 
 			//좌측 화면 상단 이미지 클릭시 인덱스로
 			$("#homebtn").click(function() {
-				location.href = "mainJSP";
+				location.href = "../mainJSP?command=main";
 			});
 		
 			$("#login").click(function() {
@@ -191,15 +191,12 @@ List<HWRepbbsDto> replist = trservice.getRepBbsList(whatlist.get(0).getSeq());
 			
 			//QNA
 			$("#qnabbs").click(function() {
-				location.href="qnaServlet?command=listQna";
+				location.href = "qnaServlet?command=listQna";
 			});
 			
-			$("#second").click(function() {
-				location.href="second.jsp";
-			});
-	
+			//황준현 테크 게시판.
 			$("#techbbs").click(function() {
-				location.href="TechbbsController?command=techbbs";
+				location.href = "TechbbsController?command=techbbs";
 			});
 	
 			//병찬 사는 이야기.
@@ -220,14 +217,14 @@ List<HWRepbbsDto> replist = trservice.getRepBbsList(whatlist.get(0).getSeq());
 	 
 			//게시판5 나효진 jobs 부분.
 			$("#jobs").click(function () {
-				location.href="jobs";
+				location.href = "jobs";
 			});
 
 	 
 		});
 	</script>
 	
-	<div class="titlediv"><h2>HW & Coding Detail</h2><br>
+	<div class="titlediv"><h2>HW & Coding Detail;</h2><br>
 <!-- 	<button onclick="location.href='../BBSHWCodingController?command=techbbs1'"  -->
 <%
 	if(mem != null){
@@ -355,11 +352,12 @@ List<HWRepbbsDto> replist = trservice.getRepBbsList(whatlist.get(0).getSeq());
 				newbbs5HWCodingVO alldto = whatlist.get(i);
 				System.out.println(alldto.getFilename() + "11" + alldto.getFilename() + "22"+alldto.getPdsseq());
 		%>
-		
+<div class="downbtn">		
 		<!-- 파일 다운로드 부분. -->
 		<input type="button" name="btnDown" id="btnDown" value="<%=alldto.getFilename()%>" 
 			onclick="location.href='hwfiledown?filename=<%=alldto.getFilename()%>&seq=<%=alldto.getPdsseq()%>'">
 		<!-- onclick 부분 ../ 경로 빼줘야 한다. -->
+</div>		
 		<%
 			}
 		}
@@ -469,18 +467,24 @@ for(int i = 0;i < replist.size(); i++){
 	<tr>
 		
 		<td>
+<%-- 		
 		<%
 			if(mem == null){
 				String Unknown = "Unknown";
 		%>
+		
 			<%=Unknown %>
+			
 		<%
 			}else{
 		%>
+		
 			<%=mem.getId() %>
+			
 		<%
 			}
-		%>
+		%> --%>
+		<%=bbs.getId()%>
 			<article class="content<%=bbs.getSeq() %>" name="content"><%=bbs.getContent() %></article>
 			
 		</td>
@@ -533,7 +537,7 @@ var edit = function(seq) {
 	             class="form-control" ></textarea>
 				<input type="hidden" name="mainseq" value="<%=whatlist.get(0).getSeq()%>">
 				<%
-					if(mem ==null){
+					if(mem == null){
 						String unlonin = "null";
 				%>
 				<input type="hidden" name="id" value="<%=unlonin %>">

@@ -24,6 +24,7 @@
 		<%
 		if(ologin == null){
 		%>
+		<!-- <input type="button" class="homebtn" id="homebtn"> 넣으면 CSS 이상하게 된다. 보류.-->
 		<input type="button" class="login" id="login">
 		<input type="button" class="account" id="account">
 		<%
@@ -61,6 +62,11 @@
 		$("#life").click(function() {
 			location.href = "LifeBbs?command=life";
 		});
+		
+		//게시판5 나효진 jobs 부분.
+		$("#jobs").click(function name() {
+						location.href = "jobs";
+					});
 	});
 	</script>
 <!-- View -->

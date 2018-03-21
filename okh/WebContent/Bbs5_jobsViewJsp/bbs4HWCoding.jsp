@@ -77,26 +77,6 @@ rel="stylesheet">
 	%>
 
 
-<%-- 
- <%//로그인한id가져오기
-//로그인 정보 확인 부분. //로그인한id가져오기
-	Object ologin = session.getAttribute("login");
-
- 	UserDto mem = null;//null로 초기화.
-	List<newbbs5HWCodingVO> techlist = (List<newbbs5HWCodingVO>)request.getAttribute("techbbs");
-if(ologin == null){
-	%>
-	<script type="text/javascript">
-	alert("로그인해 주십시오");
-	location.href = "index.jsp";	
-	</script>	
-	<%
-	return;
-}
-mem = (UserDto)ologin;
-%>
- --%>
-
 
 <!-- modal -->
 	<%
@@ -197,6 +177,7 @@ else if(choice.equals("tagname")) cho = 3;
 			<%//로그인 안할경우.
 			if(mem == null){
 			%>
+		<input type="button" class="homebtn" id="homebtn">
 		<input type="button" class="login" id="login">
 		<input type="button" class="account" id="account">
 			<%
@@ -222,7 +203,7 @@ else if(choice.equals("tagname")) cho = 3;
 	
 	<script type="text/javascript">
 		function logout() {
-			location.href = '../mainJSP';
+			location.href = '../User?command=logout';
 		}
 	</script>
 
@@ -232,17 +213,7 @@ else if(choice.equals("tagname")) cho = 3;
 //mem 에 로그인 한건가 안한건가 확인해서 좌측 메뉴 보여주는것.
 	if(mem == null){
 %>
-	<!-- 인클루드 부분 -->
-	<div class="menu">
-		<input type="button" class="login" id="login">
-		<input type="button" class="account" id="account">
-		<input type="button" class="bbs1" id="qnabbs">
-		<input type="button" class="techbbs_hjh" id="techbbs">
-		<input type="button" class="bbs3" id="column"><!-- 정재흥 -->		
-		<input type="button" class="bbs4" id="combbs"> <!-- 장문석 study -->
-		<input type="button" class="bbs5" id="jobs"><!-- 나효진 HW코딩 부분으로 가는것.-->
-		<input type="button" class="bbs6" id="life"><!-- 병찬 사는얘기 -->
-	</div>		
+	
 <%
 	}else{
 %>
@@ -274,9 +245,61 @@ else if(choice.equals("tagname")) cho = 3;
 	<script type="text/javascript">
 		$(function() {//좌측 메뉴바 누르는 곳.
 
-			//좌측 화면 상단 이미지 클릭시 인덱스로
+		
+			//좌측 화면 상단 이미지 클릭시 인덱스로 로그인 한경우. 안한 경우 다르게 설정해줄려는것.
 			$("#homebtn").click(function() {
-				location.href="../mainJSP";
+				
+				var memcheck = null;
+				<%
+				ologin = session.getAttribute("login");
+
+			 	mem = null;//null로 초기화.
+			 	
+			 	if(ologin != null){
+					mem = (UserDto)ologin;
+					String memID = mem.getId();
+					//로그인 정보 가지고 오나 확인 부분.
+					System.out.println("mem : " + mem.toString());
+				%>
+				memcheck = "<%=memID %>";/* ""이거 로 묶어줘야지 자바스크립트 안으로 들어간다...십할................................... */
+//				alert(memcheck);
+				<%
+				}else{
+					System.out.println("OKH 그림 버튼 누르면 작동하는 것 만드는 테스트.");
+				}
+				%>
+<%-- 				
+				if(<%=mem %> == null){
+					location.href = "../mainJSP?command=index";		
+				}else if(<%=mem %> != null){
+					memckeck = <%=mem %>;
+					if(memckeck.value != null){
+						location.href = "../mainJSP?command=main";
+					}
+				}
+ --%>				
+ 				
+				if(memcheck != null){
+					location.href = "../mainJSP?command=main";
+				}
+				else{
+					location.href = "../mainJSP?command=index";	
+				}
+
+				<%-- var memcheck = null;
+				
+				if(mem != null){
+					memcheck = <%=mem.getId() %>;
+				}
+				
+				alert("memcheck : " + memcheck);//인간 null인지 확인 하는 코드.
+				
+				if(memcheck == null){
+					location.href = "../mainJSP?command=index";
+				}else{
+					location.href = "../mainJSP?command=main";
+				} --%>
+				
 			});
 		
 			$("#login").click(function() {

@@ -62,11 +62,11 @@ public class TechbbsController extends HttpServlet {
 			response.sendRedirect("techwrite.jsp");
 		}else if(command.equals("techwriteAf")) {
 			String tagname = "-TechTips-";
-			String[] tagnames=request.getParameterValues("tagnames");	//span태그안의value값다받아오기
-			String id=request.getParameter("id");
-			String title=request.getParameter("title");
-			String content=request.getParameter("content");
-			System.out.println(title+"여기가문제였군"+content);
+			String[] tagnames = request.getParameterValues("tagnames");	//span태그안의value값다받아오기
+			String id = request.getParameter("id");
+			String title = request.getParameter("title");
+			String content = request.getParameter("content");
+			System.out.println(title + "여기가 문제였군" + content);
 			if (title==""||content=="") {
 				System.out.println("여기가문제였군2");
 				TechbbsDto dto1=null;

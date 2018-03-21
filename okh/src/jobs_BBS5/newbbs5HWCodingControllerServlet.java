@@ -70,12 +70,11 @@ public class newbbs5HWCodingControllerServlet extends HttpServlet {
 			
 		//실제 글 작성 부분.
 		}else if(command.equals("techwriteAf")) {
-			String tagname = "HW & Coding";
+			String tagname = "-HW & Coding-";
 			String[] tagnames = request.getParameterValues("tagnames");	//span태그안의value값다받아오기
 			String id = request.getParameter("id");
 			String title = request.getParameter("title");
 			String content = request.getParameter("content");
-			System.out.println(title+"여기가 문제였군"+content);
 			
 			//제목 내용 공백일 경우.
 			if (title == "" || content == "") {

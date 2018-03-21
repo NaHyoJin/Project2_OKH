@@ -24,6 +24,7 @@
 		<%
 		if(ologin == null){
 		%>
+		<!-- <input type="button" class="homebtn" id="homebtn"> -->
 		<input type="button" class="login" id="login">
 		<input type="button" class="account" id="account">
 		<%
@@ -46,6 +47,11 @@
 	</div>
 	<script type="text/javascript">
 	$(function() {
+/* 		
+		$("#homebtn").click(function() {
+			location.href = "index.jsp";
+		});
+		 */
 		$("#login").click(function() {
 			location.href = "User?command=login";
 		});
@@ -61,6 +67,11 @@
 		$("#life").click(function() {
 			location.href = "LifeBbs?command=life";
 		});
+		
+		//게시판5 나효진 jobs 부분.
+		$("#jobs").click(function name() {
+						location.href = "jobs";
+					});
 	});
 	</script>
 <!-- View -->

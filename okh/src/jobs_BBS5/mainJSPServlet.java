@@ -30,9 +30,17 @@ public class mainJSPServlet extends HttpServlet {
 //		PrintWriter out = resp.getWriter();
 		
 		req.setCharacterEncoding("utf-8");
+		
+		String command = req.getParameter("command");
 
+		System.out.println("받은 command : " + command);
+		
+		if(command.equals("index")) {
 		//Home누르면 그냥 메인 화면으로 가게 한것.
 		resp.sendRedirect("index.jsp");
+		}else if(command.equals("main")){
+			resp.sendRedirect("main.jsp");
+		}
 	}
 
 	

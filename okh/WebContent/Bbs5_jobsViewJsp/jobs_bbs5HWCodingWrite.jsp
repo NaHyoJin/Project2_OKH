@@ -139,7 +139,7 @@ $("#pdsup").click(function() {
 	
 	<script type="text/javascript">
 		function logout() {
-			location.href = 'index.jsp';
+			location.href = '../User?command=logout';
 		}
 	</script>
 <%
@@ -152,7 +152,9 @@ $("#pdsup").click(function() {
 		$(function() {//좌측 메뉴바 누르는 곳.
 
 			$("#homebtn").click(function() {
-				location.href="index.jsp";
+				
+					location.href = "../mainJSP?command=main";
+				
 			});
 		
 			$("#login").click(function() {
@@ -219,7 +221,7 @@ $("#pdsup").click(function() {
 	 		</div>
 	 	<textarea name="content" id="summernote"></textarea><br>
 		 <input type="button" class="btn btn-default btn-wide" onclick="gotobbs();" value="취소">
-	<button id="write" style="float: right" class="btn btn-success btn-wide" onclick="write1();">글추가</button>
+	<button id="write" style="float: right" class="btn btn-success btn-wide" onclick="write1();">글 추가</button>
 		</div>
 	 
 	 
@@ -360,7 +362,67 @@ function eventonblur() {
   }
 
 
-</script>  
+</script>
+
+<!-- 로그아웃, 정보수정 popover -->
+	<script>
+      $(function() {
+         $('#btnPopover').popover({
+            placement: 'right',
+            container: 'body',
+            html: true,
+            trigger: 'hover',
+            content: '<button onclick="logout()" type="button" class="btn btn-default popover-dismiss">logout</button><button onclick="upmydetail()" type="button" class="btn btn-default popover-dismiss">정보수정</button>'
+         });
+         $('#btnPopover').on('hide.bs.popover', function(evt) {
+            if(!$(evt.target).hasClass('hide-popover')) {
+               evt.preventDefault();
+               evt.stopPropagation();
+               evt.cancelBubble = true;
+            }
+         });
+         $('#btnPopover').on('hidden.bs.popover', function(evt) {
+            $(this).removeClass('hide-popover');
+         });
+         $('body').on('click', '.popover-dismiss', function() {
+            $('#btnPopover').addClass('hide-popover');
+            $('#btnPopover').popover('hide');
+         });
+          
+          $('#btnPopover').data('overButton', false);
+          $('#btnPopover').data('overPopover', false);
+          $.fn.closePopover = function(){
+            var $this = $(this);
+            
+            if(!$this.data('overPopover') && !$this.data('overButton')){
+              $this.addClass('hide-popover');
+              $this.popover('hide');              
+            }
+          }
+          
+          $('#btnPopover').on('mouseenter', function(evt){
+            $(this).data('overButton', true);
+          });
+          $('#btnPopover').on('mouseleave', function(evt){
+            var $btn = $(this);
+            $btn.data('overButton', false);
+            
+            setTimeout(function() {$btn.closePopover();}, 200);
+            
+          });
+          $('#btnPopover').on('shown.bs.popover', function () {
+            var $btn = $(this);
+            $('.popover-content').on('mouseenter', function (evt){
+              $btn.data('overPopover', true);
+            });
+            $('.popover-content').on('mouseleave', function (evt){
+              $btn.data('overPopover', false);
+              
+              setTimeout(function() {$btn.closePopover();}, 200);
+            });
+          });
+        });
+   </script>
 
 <!-- var formData = new FormData(); 
 	formData.append("id", $("input[name=id2]").val()); 

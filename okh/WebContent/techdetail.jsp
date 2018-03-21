@@ -234,11 +234,11 @@ if(ologin == null){	//로그인안한상태
 		
 		<br><br>
 		<%
-		System.out.println(whatlist.size()+"리스트사이즈");
+		System.out.println(whatlist.size() + "리스트 사이즈");
 		if(whatlist.size()==1&&pdsyn==2){
 		}
-		else if(whatlist.size()>0&&pdsyn==1){
-			System.out.println("자료있는리스트");
+		else if(whatlist.size()>0 && pdsyn==1){
+			System.out.println("자료 있는 리스트");
 		%>
 		<input type="text" value="첨부된 파일" readonly="readonly" class="form-control">
 		<%

@@ -138,7 +138,7 @@ if(ologin == null){
 /* 			$("#jobs").click(function() {
 				location.href="main.BBSHWCodingController";
 			});
- */	 
+ */
 			
 			$("#jobs").click(function name() {
 				location.href = "jobs";
