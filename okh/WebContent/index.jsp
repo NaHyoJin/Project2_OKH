@@ -1,3 +1,6 @@
+<%@page import="jobs_BBS5.newbbs5HWCodingVO"%>
+<%@page import="jobs_BBS5.newbbs5HWCodingService"%>
+<%@page import="jobs_BBS5.newbbs5HWCodingServiceImpl"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="totalbbs.totalbbsdto"%>
 <%@page import="techbbs.TechbbsService"%>
@@ -245,9 +248,100 @@ function searchBbs1(e) {
 		<div class="partition3">
 			게시판뿌려주기3
 		</div>
+		
 		<div class="partition4">
-			게시판뿌려주기4
+			<h4 style="margin-bottom: 15px">H/W & Coding 게시판 <a href="BBSHWCodingController?command=main"><img style="float: right" alt="" src="image/moresee.PNG"></a></h4>
+			<%
+			newbbs5HWCodingServiceImpl hwservice = newbbs5HWCodingService.getInstance();
+			List<newbbs5HWCodingVO> hwlist = hwservice.gettechBbsList();
+			%>
+			<table border="1" class="techtable">
+				<%
+				if(hwlist == null || hwlist.size() == 0){
+				
+			%><tr>
+				<th>H/W & Coding 글이 없습니다.</th>
+				</tr>
+			<%
+			}
+			
+			for(int i = 0; i < hwlist.size(); i++){
+				newbbs5HWCodingVO hwdto = hwlist.get(i);
+				String[] tagnames = hwservice.getTagName(hwdto.getTagname());	
+				
+				hwservice = newbbs5HWCodingService.getInstance();
+				boolean chekcomment = hwservice.checkcomment(hwlist.get(i).getSeq());
+				if(chekcomment){
+			%>
+			<tr>
+				<th style="padding: 0">
+						<%      
+						//로그인 정보 확인 부분. //로그인한id가져오기
+							Object ologin = session.getAttribute("login");
+						
+							UserDto mem = null;//null로 초기화.
+						 	if(ologin != null){
+								mem = (UserDto)ologin;
+								//로그인 정보 가지고 오나 확인 부분.
+								System.out.println("mem : " + mem.toString());
+							}else{
+								System.out.println("로그인한 정보 없음.");
+							}
+							%>
+							<%
+							//로그인 안하고 글 볼때 null 값으로.
+								if(mem == null){
+									String memNull = null;
+							%>
+				<p style="font-size: 15px; margin-top: 5px;"><a href="BBSHWCodingController?command=techdetail&likeid=<%=memNull %>&seq=<%=hwdto.getSeq()%>"><%=hwdto.getTitle() %></a></p>
+						<%
+							}else{//로그인 하고 글 볼때.
+						%>
+				<p style="font-size: 15px; margin-top: 5px;"><a href="BBSHWCodingController?command=techdetail&likeid=<%=mem.getId() %>&seq=<%=hwdto.getSeq()%>"><%=hwdto.getTitle() %></a></p>		
+						<%
+							}
+			 			%>
+				<p style="text-align: right"><%=hwdto.getId() %></p>
+			<%
+			}else{
+			%>
+			<tr>
+				<th style="padding: 0; border-left: 5px solid #808080">
+				<%      
+				//로그인 정보 확인 부분. //로그인한id가져오기
+				Object ologin = session.getAttribute("login");
+			
+				UserDto mem = null;//null로 초기화.
+						 	if(ologin != null){
+								mem = (UserDto)ologin;
+								//로그인 정보 가지고 오나 확인 부분.
+								System.out.println("mem : " + mem.toString());
+							}else{
+								System.out.println("로그인한 정보 없음.");
+							}
+							%>
+				<%
+							//로그인 안하고 글 볼때 null 값으로.
+								if(mem == null){
+									String memNull = null;
+							%>
+				<p style="font-size: 15px; margin-top: 5px;"><a href="BBSHWCodingController?command=hwdetail&likeid=<%=memNull %>&seq=<%=hwdto.getSeq()%>"><%=hwdto.getTitle() %></a></p>
+						<%
+							}else{//로그인 하고 글 볼때.
+						%>
+				<p style="font-size: 15px; margin-top: 5px;"><a href="BBSHWCodingController?command=hwdetail&likeid=<%=mem.getId() %>&seq=<%=hwdto.getSeq()%>"><%=hwdto.getTitle() %></a></p>		
+						<%
+							}
+			 			%>
+				<p style="text-align: right"><%=hwdto.getId() %></p>
+	
+			<%
+			}
+			}
+			%>
+		</table>
 		</div>
+		
 	</div>
 	<%
 	String messageContent = null;

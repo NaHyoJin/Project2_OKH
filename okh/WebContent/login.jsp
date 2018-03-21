@@ -75,7 +75,7 @@
 						<td style="width: 110px;"><h5>아이디</h5></td>
 						<td>
 							<input type="hidden" name="command" value="loginAf">
-							<input class="form-control" type="text" name="userID" maxlength="20" placeholder="아이디를 입력하세요.">
+							<input autofocus="autofocus" class="form-control" type="text" name="userID" maxlength="20" placeholder="아이디를 입력하세요.">
 						</td>
 					</tr>
 					<tr>
