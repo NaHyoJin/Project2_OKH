@@ -90,7 +90,6 @@ System.out.println("asdsadsadsajoiner"+joiner);
 
 <tr>
 	<td colspan="2" align="center">
-		<input type="button" value="수정" onclick="location.href='calupdate.jsp?seq=<%=dto.getSeq() %>&year=<%=year %>&month=<%=month %>&day=<%=day %>'">
 	</td>
 </tr>
 

@@ -58,7 +58,7 @@ public class LikeScrapDao implements iLikeScrapDao {
 
 	@Override
 	public String[] getids(String serchid) {
-		StringTokenizer st= new StringTokenizer(serchid, "-");
+		StringTokenizer st= new StringTokenizer(serchid, ",");
 		
 		int len=st.countTokens();	//split.length
 		System.out.println(len); 
@@ -126,7 +126,7 @@ public class LikeScrapDao implements iLikeScrapDao {
 		String sql1 = " SELECT SEQ,ID,TITLE,CONTENT,WDATE,DEL,READCOUNT, "
 				+ " COMMENTCOUNT, TAGNAME,PARENT,JOINERCOUNT,JOINDATE,JOINNER "
 				+ "  FROM COMBBS "
-				+ " WHERE SEQ=? AND JOINNER LIKE '%-" + serchlikeid.trim() + "-%' ";
+				+ " WHERE SEQ=? AND JOINNER LIKE '%," + serchlikeid.trim() + ",%' ";
 		try {
 			conn = DBConnection.getConnection();
 			System.out.println("1/6 isitlikeid Success");			

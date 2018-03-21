@@ -9,7 +9,7 @@ request.setCharacterEncoding("utf-8");
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>OKH:스터디모임글쓰기</title>
-<link rel="stylesheet" type="text/css" href="_main.css">
+<link rel="stylesheet" type="text/css" href="_studymain.css">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 

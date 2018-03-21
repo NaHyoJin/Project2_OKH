@@ -21,4 +21,5 @@ public interface ICombbsService {
 	public void commentdiscount(int seq);
 	public int getSeq();
 	public boolean writecalendar(CombbsDto dto,int child);
+	public boolean deletecalendar(int child);
 }

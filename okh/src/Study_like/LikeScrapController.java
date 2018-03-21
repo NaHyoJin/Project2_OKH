@@ -19,10 +19,13 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import studysrc.CalendarDao;
+import studysrc.CalendarDto;
 import studysrc.CombbsDto;
 import studysrc.CombbsService;
 import studysrc.ICombbsService;
 import studysrc.comment_bbsDto;
+import studysrc.iCalendar;
 import user.UserDao;
 
 public class LikeScrapController extends HttpServlet {
@@ -43,17 +46,28 @@ public class LikeScrapController extends HttpServlet {
 		
 		LikeScrapServiceImpl lsservice=LikeScrapService.getInstance();
 		ICombbsService cservice=CombbsService.getInstance();
+		
+		
+		
 		if(command.equals("likeimg")) {
 			CombbsDto dto=null;
 			//처음받아오는값 본게시판 seq랑 좋아요누른아이디
 			String sseq = request.getParameter("seq");
 			int seq = Integer.parseInt(sseq);
+			String content = request.getParameter("content");
+			String title = request.getParameter("title");
+			String tag = request.getParameter("tag");
+			String joindate = request.getParameter("joindate");
+			
 			String likeid = request.getParameter("likeid");
-			//아이디유무확인
+			
+			
 			
 			boolean b=lsservice.isitlikeid(seq, likeid);
 			if (b) {	//id있다 -> 좋아요취소
 				//카운트-1
+				boolean delcal = cservice.deletecalendar(seq);
+				if(delcal) {
 				cservice.dislikecount(seq);
 				//likeid있으면 1(취소) id없으면2(추가)
 				dto=new CombbsDto(1);
@@ -84,9 +98,14 @@ public class LikeScrapController extends HttpServlet {
 					System.out.println("아이디삭제fail");
 					dispatch("study_communitybbs.jsp", request, response);
 				}
-			}else {		//id없다 -> 좋아요올려주기
+			}
+		}
+				else {		//id없다 -> 좋아요올려주기
 				
-				
+				CombbsDto dto1 = new CombbsDto(likeid,title,content,tag,joindate);
+				//아이디유무확인
+				boolean calwrite =cservice.writecalendar(dto1, seq);
+				if(calwrite) {
 				/*
 				
 				String origin=lsservice.getLikeID(seq);
@@ -102,7 +121,7 @@ public class LikeScrapController extends HttpServlet {
 				//저장되있는 id찾아서 거기에추가하기
 				String origin=lsservice.getLikeID(seq);
 				String addlikeid="";
-				addlikeid=origin+"-"+likeid+"-";
+				addlikeid=origin+","+likeid+",";
 				//카운트+1
 				cservice.likecountplus(seq);
 				//likeid있으면 1(취소) id없으면2(추가)
@@ -128,9 +147,11 @@ public class LikeScrapController extends HttpServlet {
 					request.setAttribute("seq", seq);
 					request.setAttribute("likeidyn", dto);
 					dispatch("study_communitybbsdetail.jsp", request, response);
-				}else {
+				}
+				else {
 					System.out.println("아이디추가fail");
 					dispatch("study_communitybbs.jsp", request, response);
+					}
 				}
 			}
 		}

@@ -162,7 +162,7 @@ ICombbsService service = CombbsService.getInstance();
 LikeScrapServiceImpl lsservice=LikeScrapService.getInstance();
 String origin=lsservice.getLikeID(seq);
 
-System.out.println("디테일창넘어온다음?"+list1.get(0).getLikeidyn());
+
 if(list==null||list.size()==0){
 	%>
 	
@@ -199,7 +199,8 @@ if(list==null||list.size()==0){
 	<!-- 좋아요스크랩기능 -->
 	<%if(list1.get(0).getJoinercount()<5){ %>
 	
-		<a href="LikeScrapController?command=likeimg&likeid=<%=mem.getId() %>&seq=<%=seq%>" id="changeli"><img src="image/join1.png" id="likeimg"></a>
+		<a href="Study_likeLikeScrapController?command=likeimg&likeid=<%=mem.getId() %>&seq=<%=seq%>&tag=<%=list1.get(0).getTagname() %>&content=<%=list1.get(0).getContent() %>&title=<%=list1.get(0).getTitle() %>&joindate=<%=list1.get(0).getJoindate() %>" id="changeli">
+			<img src="image/join1.png" id="likeimg"></a>
 		<p style="font-size: 25px"><%=list1.get(0).getJoinercount() %></p>
 		<br><br>
 		<%
@@ -362,13 +363,22 @@ if(list==null||list.size()==0){
 			<article class="content">
 					<%=list.get(0).getBbscontent()%><br>
 				모임날짜 <%=list.get(0).getBbsjoindate() %>
+					모이는사람 <%=origin %>
 				</article>
 	</div>
 	<div id="like">
 	<!-- 좋아요스크랩기능 -->
-		<a href="LikeScrapController?command=likeimg&likeid=<%=mem.getId() %>&seq=<%=seq%>" id="likeimg"><img src="image/join.png" id="likeimg"></a><br>
+	<%if(list.get(0).getBbsjoinercount()<5){ %>
+		<a href="Study_likeLikeScrapController?command=likeimg&likeid=<%=mem.getId() %>&seq=<%=seq%>&tag=<%=list.get(0).getBbstagname() %>&content=<%=list.get(0).getBbscontent() %>&title=<%=list.get(0).getBbstitle() %>&joindate=<%=list.get(0).getBbsjoindate() %>" id="likeimg"><img src="image/join.png" id="likeimg"></a><br>
 		<p style="font-size: 25px"><%=list.get(0).getBbsjoinercount() %></p>
 		<br><br>
+	<%
+	}else if(list.get(0).getBbsjoinercount()==5){
+	%>
+		마감되었습니다
+	<%
+	}
+	%>
 	<%
 		if(mem.getId().trim().equals(list.get(0).getBbsid().trim())){
 		
@@ -416,7 +426,6 @@ if(list==null||list.size()==0){
 		for(int i = 0;i<list.size();i++){
 			
 			
-			System.out.println(list.toString());
 			if(list.get(i).getCommentdel()==1){
 			%>
 				<tr>

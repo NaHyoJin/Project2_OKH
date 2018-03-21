@@ -21,4 +21,5 @@ public interface iComDao {
 	public boolean getparent(int seq);
 	public boolean checkjoiner(int seq);
 	public boolean writecalendar(CombbsDto dto,int child);
+	public boolean deletecalendar(int child);
 }

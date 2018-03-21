@@ -35,16 +35,15 @@
 // 날짜를 클릭하면 그날의 일정을 모두 보이게 하는 calllist.jsp 로 이동시키는 함수
 	public String calllist(int year, int month, int day){
 		String s = "";
-		s += String.format("<a href='%s?year=%d&month=%d&day=%d'>",
-					"calllist.jsp", year, month, day);
+		
 		
 		s += String.format("%2d",day);	//1 2 ~ 9 10
-		s += "</a>";
+		
 		return s;
 	}
 
 //일정 기입하기위해서 pen이미지를 클릭하면, calwrite.jsp 로 이동
-public String showPen(int year, int month, int day){
+/* public String showPen(int year, int month, int day){
 	String s = "";
 	String url = "calwrite.jsp";
 	String image = "<img src='image/pen.gif'>";
@@ -53,7 +52,7 @@ public String showPen(int year, int month, int day){
 	
 	return s;
 	
-}
+} */
 // 1글자를 2글자로 1 > 01
 public String two(String msg){
 	return msg.trim().length()<2?"0"+msg:msg.trim();
@@ -82,9 +81,9 @@ public String makeTable(int year, int month, int day, List<CalendarDto> list){
 		if(dto.getRdate().substring(0,8).equals(dates)){
 			s += "<tr bgcolor='yellow'>";
 			s += "<td>";
-			s += "<a href='caldetail.jsp?seq="+dto.getSeq()+"&child="+dto.getChild()+"'>";
+			s += "<a href='CommunityControl?command=detail&seq="+dto.getChild()+"&likeid="+dto.getId()+"'>";
 			s += "<font style='font-size:8; color:red'>";
-			s += dot3(dto.getTitle());
+			s += "#"+dto.getChild();
 			s += "</font>";
 			s += "</a>";
 			s += "</td>";
@@ -151,7 +150,7 @@ List<CalendarDto> list = dao.getCalendarList(user.getId(), year+two(month+""));
 
 <table border="1">
 	<col width="100"><col width="100"><col width="100"><col width="100"><col width="100"><col width="100"><col width="100">
-	<tr height="100" bgcolor="gray">
+	<tr height="80" bgcolor="gray">
 		<td colspan="7" align="center">
 			<%=pp %>&nbsp;&nbsp;<%=p %>&nbsp;
 			<font color="black" style="font-size: 50">
@@ -161,7 +160,7 @@ List<CalendarDto> list = dao.getCalendarList(user.getId(), year+two(month+""));
 		</td>
 	</tr> 
 	
-	<tr height="100">
+	<tr height="80">
 		<td align="center"> 일 </td>
 		<td align="center"> 월 </td>
 		<td align="center"> 화 </td>
@@ -170,7 +169,7 @@ List<CalendarDto> list = dao.getCalendarList(user.getId(), year+two(month+""));
 		<td align="center"> 금 </td>
 		<td align="center"> 토 </td>
 	</tr>
-	<tr height="100" align="left" valign="top">
+	<tr height="80" align="left" valign="top">
 	<%
 	//위쪽의 빈칸
 		for(int i=1;i<dayOfWeek;i++){
@@ -184,7 +183,7 @@ List<CalendarDto> list = dao.getCalendarList(user.getId(), year+two(month+""));
 	for(int i = 1;i <= lastDay;i++){
 	%>
 		<td>
-			<%=calllist(year, month, i)%> &nbsp;<%=showPen(year, month, i) %> <%=makeTable(year, month, i, list) %>
+			<%=calllist(year, month, i)%> &nbsp; <%=makeTable(year, month, i, list) %>
 		</td>
 	<%
 		if((i+dayOfWeek-1)%7==0 && i != lastDay){

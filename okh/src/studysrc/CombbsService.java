@@ -92,6 +92,10 @@ public class CombbsService implements ICombbsService {
 		
 		return comdao.writecalendar(dto, child);
 	}
+	@Override
+	public boolean deletecalendar(int child) {
+		return comdao.deletecalendar(child);
+	}
 	
 	
 	

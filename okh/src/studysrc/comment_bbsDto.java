@@ -202,6 +202,16 @@ public class comment_bbsDto {
 		this.commentdel = commentdel;
 		this.commentchild = commentchild;
 	}
+	@Override
+	public String toString() {
+		return "comment_bbsDto [bbsseq=" + bbsseq + ", bbsid=" + bbsid + ", bbstitle=" + bbstitle + ", bbscontent="
+				+ bbscontent + ", bbswdate=" + bbswdate + ", bbsdel=" + bbsdel + ", bbsreadcount=" + bbsreadcount
+				+ ", bbscommentcount=" + bbscommentcount + ", bbstagname=" + bbstagname + ", bbsparent=" + bbsparent
+				+ ", bbsjoinercount=" + bbsjoinercount + ", bbsjoindate=" + bbsjoindate + ", bbsjoinner=" + bbsjoinner
+				+ ", commentseq=" + commentseq + ", commentid=" + commentid + ", commentcontent=" + commentcontent
+				+ ", commentwdate=" + commentwdate + ", commentdel=" + commentdel + ", commentchild=" + commentchild
+				+ ", commentinorout=" + commentinorout + "]";
+	}
 	
 	
 	

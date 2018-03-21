@@ -69,22 +69,22 @@ public class ComDao implements iComDao {
 								int bbsseq = rs.getInt(1);//	bbsseq,
 									String bbsid = rs.getString(2);//bbsid, 
 									String bbstitle = rs.getString(3);//bbstitle, 
-									String bbscontent = rs.getString(3);//bbscontent,
-									String bbswdate = rs.getString(4);//bbswdate, 
-									int bbsdel = rs.getInt(5);//bbsdel,
-									int bbsreadcount = rs.getInt(6);//bbsreadcount, 
-									int bbscommentcount = rs.getInt(7);//bbscommentcount,
-									String bbstagname = rs.getString(8);//bbstagname, 
-									int bbsparent = rs.getInt(9);//bbsparent, 
-									int bbsjoinercount = rs.getInt(10);//bbsjoinercount, 
-									String bbsjoindate = rs.getString(11);//bbsjoindate,
-									String bbsjoinner = rs.getString(12); //bbsjoiner
-									int commentseq = rs.getInt(13);//commentseq, 
-									String commentid = rs.getString(14);//commentid, 
-									String commentcontent=rs.getString(15);//commentcontent, 
-									String commentwdate=rs.getString(16);//commentwdate, 
-									int commentdel = rs.getInt(17);//commentdel, 
-									int commentchild=rs.getInt(18);//commentchild);
+									String bbscontent = rs.getString(4);//bbscontent,
+									String bbswdate = rs.getString(5);//bbswdate, 
+									int bbsdel = rs.getInt(6);//bbsdel,
+									int bbsreadcount = rs.getInt(7);//bbsreadcount, 
+									int bbscommentcount = rs.getInt(8);//bbscommentcount,
+									String bbstagname = rs.getString(9);//bbstagname, 
+									int bbsparent = rs.getInt(10);//bbsparent, 
+									int bbsjoinercount = rs.getInt(11);//bbsjoinercount, 
+									String bbsjoindate = rs.getString(12);//bbsjoindate,
+									String bbsjoinner = rs.getString(13); //bbsjoiner
+									int commentseq = rs.getInt(14);//commentseq, 
+									String commentid = rs.getString(15);//commentid, 
+									String commentcontent=rs.getString(16);//commentcontent, 
+									String commentwdate=rs.getString(17);//commentwdate, 
+									int commentdel = rs.getInt(18);//commentdel, 
+									int commentchild=rs.getInt(19);//commentchild);
 						//seq id title content wdate del readcount commentcount tagname parent joindate joiner
 						// seq id content wdate del child
 						
@@ -92,7 +92,7 @@ public class ComDao implements iComDao {
 						commentinorout=dto!=null?1:2;
 						
 						dto = new comment_bbsDto(bbsseq, bbsid, bbstitle, bbscontent, bbswdate, bbsdel, bbsreadcount, bbscommentcount, bbstagname, bbsparent, bbsjoinercount, bbsjoindate, bbsjoinner, commentseq, commentid, commentcontent, commentwdate, commentdel, commentchild, commentinorout);
-						System.out.println("dto?" +dto);
+						System.out.println("dto?" +dto.toString());
 						
 						list.add(dto);
 				
@@ -477,7 +477,7 @@ public boolean writeBbs(CombbsDto dto) {
 			+ " TITLE, TAGNAME, CONTENT,JOINDATE,WDATE, "
 			+ " DEL, READCOUNT,JOINERCOUNT,COMMENTCOUNT,PARENT,JOINNER ) "
 			+ " VALUES(SEQ_COMBBS.NEXTVAL, ?, ?, ?,?,?, "
-			+ " SYSDATE, 0,0,0,0,SEQ_COMBBS.NEXTVAL,?) ";
+			+ " SYSDATE, 0,0,1,0,SEQ_COMBBS.NEXTVAL,?) ";
 	
 	Connection conn = null;
 	PreparedStatement psmt = null;
@@ -496,7 +496,7 @@ public boolean writeBbs(CombbsDto dto) {
 		psmt.setString(3, dto.getTagname());
 		psmt.setString(4, dto.getContent());
 		psmt.setString(5, dto.getJoindate());
-		psmt.setString(6, "-admin");
+		psmt.setString(6, "글쓴이-,"+dto.getId()+",");
 		
 		
 		
@@ -771,7 +771,32 @@ public boolean writecalendar(CombbsDto dto,int child) {
 	
 	return count>0?true:false;
 }
+@Override
+public boolean deletecalendar(int child) {
+	boolean b = false;
+	String sql = " DELETE FROM CALENDAR WHERE CHILD=?  ";
+	Connection conn = null;
+	PreparedStatement psmt = null;
+	ResultSet rs = null;
 	
+	try {
+		conn = DBConnection.getConnection();
+		psmt = conn.prepareStatement(sql);
+		System.out.println("1/6 deletecalendar Success");
+		psmt.setInt(1, child);
+		System.out.println("2/6 deletecalendar Success");
+		rs= psmt.executeQuery();
+		System.out.println("3/6 deletecalendar Success");
+		b = true;
+	} catch (SQLException e) {
+		System.out.println(" deletecalendar fail");
+		e.printStackTrace();
+	}finally {
+		DBClose.close(psmt, conn, rs);
+	}
+	
+	return b;
+}
 
 
 
