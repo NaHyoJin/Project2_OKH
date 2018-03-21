@@ -286,6 +286,7 @@ function searchBbs1(e) {
 			session.removeAttribute("messageType");
 		}
 	%>
+	
 <script>
       $(function() {
          // initialize popover with dynamic content
