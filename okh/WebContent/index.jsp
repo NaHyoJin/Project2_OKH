@@ -141,7 +141,7 @@ if(ologin == null){
  */	 
 			
 			$("#jobs").click(function name() {
-				location.href="jobs";
+				location.href = "jobs";
 			});
 
 		});

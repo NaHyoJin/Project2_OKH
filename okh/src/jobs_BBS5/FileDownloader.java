@@ -81,7 +81,7 @@ public class FileDownloader extends HttpServlet {
 //					filePath = mConfig.getServletContext().getRealPath("/upload");//업로드 부분에서와 매치 시켜야 한다.
 					
 					//개인 폴더, 드라이브
-					filePath = "E:\\tmp";//프로젝트 진행시에는 폴더로 저장해놓자.			
+					filePath = "C:\\NAS";//프로젝트 진행시에는 폴더로 저장해놓자.			
 				}
 				
 				try {

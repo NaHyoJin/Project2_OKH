@@ -206,7 +206,6 @@ else if(choice.equals("tagname")) cho = 3;
 			<div class="actionlogin">
 				<span><%=mem.getId() %></span>
 				<img class="settingbtn" alt="" src="../image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
-				<img class="alarmbtn" alt="" src="../image/alarm.PNG" style="cursor: pointer" id="btnPopover">	
 			</div>
 		<%
 		}
@@ -298,7 +297,7 @@ else if(choice.equals("tagname")) cho = 3;
 			});
 	
 			$("#techbbs").click(function() {
-				location.href="../TechbbsController?command=techbbs";
+				location.href="TechbbsController?command=techbbs";
 			});
 	
 			//병찬 사는 이야기.
@@ -308,7 +307,7 @@ else if(choice.equals("tagname")) cho = 3;
 			
 		//  정재흥 column 부분
 			$("column").click(function() {
-				alert("정재흥 버튼.");
+//				alert("정재흥 버튼.");
 				location.href = "../Controller?command=column"
 			});
 			

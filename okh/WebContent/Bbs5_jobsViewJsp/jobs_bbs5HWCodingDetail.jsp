@@ -108,7 +108,6 @@ List<HWRepbbsDto> replist = trservice.getRepBbsList(whatlist.get(0).getSeq());
 			<div class="actionlogin">
 				<span><%=mem.getId() %></span>
 				<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="membtnPopover">
-				<img class="alarmbtn" alt="" src="image/alarm.PNG" style="cursor: pointer" id="alarmbtnPopover">	
 			</div>
 		<%
 		}
@@ -259,13 +258,8 @@ List<HWRepbbsDto> replist = trservice.getRepBbsList(whatlist.get(0).getSeq());
 	%>
 	
 	function newWrite() {
-		if(<%=mem %> == null){
-			alert("로그인을 해주세요.");
-			return;
-		}else{
-			location.href="../BBSHWCodingController?command=techbbs1";
-		}
-		
+//		alert("새 글 쓰기 알람.");
+		location.href = "BBSHWCodingController?command=hwdetailwrite";		
 	}
 	
 	</script>
@@ -310,41 +304,46 @@ List<HWRepbbsDto> replist = trservice.getRepBbsList(whatlist.get(0).getSeq());
 		
 	</article>
 	</div>
-	<div id="like">
+	
+<div id="like">
 	<!-- 좋아요스크랩기능 -->
 	<%
-		if(mem == null){
+		if(mem != null){
 			String Unknown = "null";
 	%>
-	<a href="HWLikeScrapController?command=likeimg&likeid=<%=Unknown %>&seq=<%=whatlist.get(0).getSeq()%>" id="changeli">
-	<img src="image/likeoff.PNG" id="likeimg"></a><br>	
-	<%	
-		}else{
-	%>
-		<a href="HWLikeScrapController?command=likeimg&likeid=<%=mem.getId() %>&seq=<%=whatlist.get(0).getSeq()%>" id="changeli">
+	
+	<a href="HWLikeScrapController?command=likeimg&likeid=<%=mem.getId() %>&seq=<%=whatlist.get(0).getSeq()%>" id="changeli">
 		<img src="image/likeoff.PNG" id="likeimg"></a><br>
-	<%
+	
+	<%	
 		}
-	%>		
-		<p style="font-size: 25px"><%=whatlist.get(0).getLikecount() %></p>
+	%>
 	
 	<%
-		if(mem == null){
+		if(mem != null){
+			String Unknown = "null";
+	%>
+	<!-- 좋아요 숫자 부분. -->
+		<p style="font-size: 25px"><%=whatlist.get(0).getLikecount() %></p>
+
+<%	
+		}
+	%>
+	
+	
+	<%
+		if(mem != null){
 			String unlogin = "null";
 	%>
-<a href="HWLikeScrapController?command=dislikeimg&dislikeid=<%=unlogin %>&seq=<%=whatlist.get(0).getSeq()%>" id="changedisli"><img src="image/dislikeoff.PNG" id="dislikeimg"></a><br>
-<a href="HWLikeScrapController?command=scrapimg&scrapid=<%=unlogin %>&seq=<%=whatlist.get(0).getSeq()%>"><img src="image/scrap.PNG" id="scrapimg"></a><br>	
+<%-- <a href="HWLikeScrapController?command=dislikeimg&dislikeid=<%=unlogin %>&seq=<%=whatlist.get(0).getSeq()%>" id="changedisli"><img src="image/dislikeoff.PNG" id="dislikeimg"></a><br> --%>
+<%-- <a href="HWLikeScrapController?command=scrapimg&scrapid=<%=unlogin %>&seq=<%=whatlist.get(0).getSeq()%>"><img src="image/scrap.PNG" id="scrapimg"></a><br>	 --%>
+<a href="HWLikeScrapController?command=dislikeimg&dislikeid=<%=mem.getId() %>&seq=<%=whatlist.get(0).getSeq()%>" id="changedisli"><img src="image/dislikeoff.PNG" id="dislikeimg"></a><br>	
 	<%
-		} else{
+		}
 	%>
 	
-		<a href="HWLikeScrapController?command=dislikeimg&dislikeid=<%=mem.getId() %>&seq=<%=whatlist.get(0).getSeq()%>" id="changedisli"><img src="image/dislikeoff.PNG" id="dislikeimg"></a><br>
-<!-- 스크랩 부분 삭제. -->
-<%-- 		<a href="HWLikeScrapController?command=scrapimg&scrapid=<%=mem.getId() %>&seq=<%=whatlist.get(0).getSeq()%>"><img src="image/scrap.PNG" id="scrapimg"></a><br> --%>
-<%
-		}
-%>
-		<span id="cocoun"><%=whatlist.get(0).getScrapcount()%></span>
+<!-- 스크랩 부분 숫자 삭제. -->
+		<%-- <span id="cocoun"><%=whatlist.get(0).getScrapcount()%></span> --%>
 		<br><br>
 		<%
 		System.out.println(whatlist.size() + "리스트 사이즈");
@@ -387,7 +386,7 @@ List<HWRepbbsDto> replist = trservice.getRepBbsList(whatlist.get(0).getSeq());
 			        
 			        var delseq = seq;
 			        
-					/* 아...본인글 삭제할때 아이디로 찾을려고했다가 넣기 힘들어서 내가 쓰다가 만거. */
+					/* 아...본인글 삭제할때 아이디로 찾을려고 했다가 넣기 힘들어서 내가 쓰다가 만거. */
 			        <%-- var delid = <%=mem.getId() %>; --%>
 			        if (confirm(msg)) {//confirm 이거 함수 사용해서 작동 완료.
 			              

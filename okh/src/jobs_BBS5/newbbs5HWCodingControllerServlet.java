@@ -60,7 +60,7 @@ public class newbbs5HWCodingControllerServlet extends HttpServlet {
 			System.out.println("쓰기후 main 으로 들어왔나?");
 			response.sendRedirect("Bbs5_jobsViewJsp/bbs4HWCoding.jsp");
 		}		
-		else if(command.equals("techbbs1")) {
+		else if(command.equals("hwdetailwrite")) {
 			response.sendRedirect("Bbs5_jobsViewJsp/jobs_bbs5HWCodingWrite.jsp");
 		}
 		//글 작성 폼 부분. write
@@ -91,8 +91,8 @@ public class newbbs5HWCodingControllerServlet extends HttpServlet {
 				request.setAttribute("techwritedto", dto);
 				dispatch("Bbs5_jobsViewJsp/jobs_bbs5HWCodingWriteAf.jsp", request, response);
 			}else {
-			for(int i = 0; i<tagnames.length; i++){
-				tagname+=tagnames[i]+"-";
+			for(int i = 0; i < tagnames.length; i++){
+				tagname += tagnames[i] + "-";
 			}
 			
 			tagname = tagname.substring(0, tagname.lastIndexOf("-"));
