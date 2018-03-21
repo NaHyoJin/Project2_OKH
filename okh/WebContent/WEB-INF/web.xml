@@ -94,6 +94,15 @@ version="3.0">
     <servlet-name>LikeScrapController</servlet-name>
     <url-pattern>/LikeScrapController</url-pattern>
   </servlet-mapping>
+   <!-- 전체게시판 -->
+  <servlet>
+    <servlet-name>TotalController</servlet-name>
+    <servlet-class>totalbbs.TotalController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TotalController</servlet-name>
+    <url-pattern>/TotalController</url-pattern>
+  </servlet-mapping>
   <!-- qnabbs 게시판 -->
   <servlet>
   	<servlet-name>qnaServlet</servlet-name>
