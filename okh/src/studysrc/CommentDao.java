@@ -13,8 +13,8 @@ public class CommentDao implements iCommentDao {
 	@Override
 	public boolean writecomment(ComCommentDto dto) {
 		String sql = " INSERT INTO SCOMMENT(SEQ, ID, "
-				+ " CONTENT, WDATE, DEL,CHILD,JOINER) "
-				+ " VALUES(SEQ_SCOMMENT.NEXTVAL, ?, ?, SYSDATE,0,?,0) ";
+				+ " CONTENT, WDATE, DEL,CHILD) "
+				+ " VALUES(SEQ_SCOMMENT.NEXTVAL, ?, ?, SYSDATE,0,?) ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;

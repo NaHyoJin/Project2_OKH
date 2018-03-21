@@ -124,6 +124,14 @@ version="3.0">
     <url-pattern>/CommunityControl</url-pattern>
   </servlet-mapping>
   
+   <servlet>
+    <servlet-name>Study_likeLikeScrapController</servlet-name>
+    <servlet-class>Study_like.LikeScrapController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Study_likeLikeScrapController</servlet-name>
+    <url-pattern>/Study_likeLikeScrapController</url-pattern>
+  </servlet-mapping>
   
   
   <!-- BBS5 jobs 컨트롤러  -->

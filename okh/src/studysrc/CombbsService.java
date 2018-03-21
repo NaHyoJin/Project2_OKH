@@ -57,6 +57,43 @@ public class CombbsService implements ICombbsService {
 	public void delbbs(int seq) {
 		comdao.delbbs(seq);
 	}
+	@Override
+	public void likecountplus(int seq) {
+		comdao.likecountplus(seq);
+	}
+	@Override
+	public void dislikecount(int seq) {
+		comdao.dislikecount(seq);
+	}
+	@Override
+	public boolean checkcomment(int seq) {
+		return comdao.checkcomment(seq);
+	}
+	@Override
+	public boolean getparent(int seq) {
+		
+		return comdao.getparent(seq);
+	}
+	@Override
+	public boolean checkjoiner(int seq) {
+		return comdao.checkjoiner(seq);
+	}
+	@Override
+	public void commentdiscount(int seq) {
+		comdao.commentdiscount(seq);
+		
+	}
+	@Override
+	public int getSeq() {
+		return comdao.getSeq();
+	}
+	@Override
+	public boolean writecalendar(CombbsDto dto, int child) {
+		
+		return comdao.writecalendar(dto, child);
+	}
+	
+	
 	
 	
 	

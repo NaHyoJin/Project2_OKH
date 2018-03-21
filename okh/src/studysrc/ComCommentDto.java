@@ -14,10 +14,7 @@ CREATE TABLE SCOMMENT(
 	CONTENT VARCHAR2(4000) NOT NULL,
 	WDATE DATE NOT NULL,
 	DEL NUMBER(1) NOT NULL,
-	CHILD NUMBER(8) NOT NULL,
-	JOINER NUMBER(8)
-	LIKEINNER VARCHAR2(50)
-	
+	CHILD NUMBER(8) NOT NULL
 );
 
 CREATE SEQUENCE SEQ_SCOMMENT
@@ -34,21 +31,22 @@ public class ComCommentDto {
 	private String id;
 	private String content;
 	private String wdate;
-	private int joiner;
-	private int child;
 	private int del;
+	private int child;
 	
-	public ComCommentDto(int seq, String id, String content, String wdate, int joiner, int child,
-			int del) {
+	
+	
+
+	public ComCommentDto(int seq, String id, String content, String wdate, int del, int child) {
 		super();
 		this.seq = seq;
 		this.id = id;
 		this.content = content;
 		this.wdate = wdate;
-		this.joiner = joiner;
-		this.child = child;
 		this.del = del;
+		this.child = child;
 	}
+	
 	
 	public ComCommentDto(String id, String content, int child) {
 		super();
@@ -56,6 +54,7 @@ public class ComCommentDto {
 		this.content = content;
 		this.child = child;
 	}
+
 
 	public int getSeq() {
 		return seq;
@@ -81,12 +80,6 @@ public class ComCommentDto {
 	public void setWdate(String wdate) {
 		this.wdate = wdate;
 	}
-	public int getJoiner() {
-		return joiner;
-	}
-	public void setJoiner(int joiner) {
-		this.joiner = joiner;
-	}
 	public int getChild() {
 		return child;
 	}
@@ -102,9 +95,10 @@ public class ComCommentDto {
 
 	@Override
 	public String toString() {
-		return "ComCommentDto [seq=" + seq + ", id=" + id + ", content=" + content + ", wdate=" + wdate + ", joiner="
-				+ joiner + ", child=" + child + ", del=" + del + "]";
+		return "ComCommentDto [seq=" + seq + ", id=" + id + ", content=" + content + ", wdate=" + wdate + ", child="
+				+ child + ", del=" + del + "]";
 	}
+
 	
 	
 	

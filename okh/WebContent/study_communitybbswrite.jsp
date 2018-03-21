@@ -19,7 +19,11 @@ request.setCharacterEncoding("utf-8");
 
 <link rel="stylesheet" href="css/bootstrap-tagsinput.css">
 <script src="js/bootstrap-tagsinput.js"></script>
-
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="_Studybbs.css?ver=1.59">
+<link rel="stylesheet" type="text/css" href="_studywrite.css?ver=1.48">
+<!-- 폰트  -->
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
 
 <%
 Object ologin = session.getAttribute("login");
@@ -42,24 +46,30 @@ mem = (UserDto)ologin;
 </head>
 <body>
 <%// UserDto mem = (UserDto)session.getAttribute("login");%>
-<div class="menu">
+<!-- 인클루드 부분 -->
+	<div class="menu">
 		<input type="button" class="login" id="login">
 		<input type="button" class="account" id="account">
-		<input type="button" class="bbs1">
+		<input type="button" class="bbs1" id="qnabbs">
 		<input type="button" class="techbbs_hjh" id="techbbs">
-		<input type="button" class="bbs3">
+		<input type="button" class="bbs3" ><!-- 정재흥 -->
 		<input type="button" class="bbs4" id="combbs">
-		<input type="button" class="bbs5">
-</div>
-<div align="center">
-	<h2>게시글 작성</h2>
-	<form action="CommunityControl">
+		<input type="button" class="bbs5" id="jobs"><!-- 나효진 -->
+		<input type="button" class="bbs6" id="life"><!-- 병찬 사는얘기 -->
+	</div>	
+	<div class="titlediv"><h2>새글쓰기</h2><br>
+	</div>
+<div class="wrap">
+
+	<div class="writearea">
+	<form action="CommunityControl" method="post">
+			
 		<table>
-			<col width="100"> <col width="700">
+			<col width="100"> <col width="800">
 			<tr>
 				<td>작성자</td>
 				<td>
-					<input type="text" id="id" readonly="readonly" value="<%=mem.getId() %>" size="100">
+					<input type="text" class="form-control" id="id" readonly="readonly" value="<%=mem.getId() %>" size="100">
 					<input type="hidden" name="id" value="<%=mem.getId() %>">
 	 				<input type="hidden" name="command" value="ComwriteAF">
 				</td>
@@ -68,16 +78,16 @@ mem = (UserDto)ologin;
 			<tr>
 				<td>제목</td>
 				<td>
-					<input type="text" id="title" name="title" size="100">
+					<input type="text" class="form-control" placeholder="제목을 입력해 주세요." id="title" name="title" size="100">
 				</td>
 			</tr>
 			<tr>
 				<td>날짜</td>
 				<td>
-					<input type="button" value="날짜선택 호출" onclick="opendate();" />
-					<input type="text" id="pdate" name="date" value="">
+					<input type="button" class="form-control" style="text-align: left" value="날짜선택 호출" onclick="opendate();" />
+					<input type="text" class="form-control" readonly="readonly" id="pdate" name="date" value="">
 					<select name="hour">
-				<option value="시"> 시
+				<option value="12"> 12
 				<%
 				
 				for(int i = 0; i<24;i++){
@@ -89,7 +99,7 @@ mem = (UserDto)ologin;
 				%>
 			</select>시
 			<select name="min">
-				<option value="분"> 분
+				<option value="30"> 30
 				<%
 				
 				for(int i = 0; i<60;i++){
@@ -118,13 +128,15 @@ mem = (UserDto)ologin;
 			</tr>
 			<tr>
 		 		<td>
-		 			<input type="button" id="cancel" value="취소">
-		 			 <input type="submit" value="글올리기" >
+		 			
+		 			 <input type="submit" class="btn btn-success btn-wide" value="글올리기" >
+		 				<input type="button" id="cancel" class="btn btn-success btn-wide" onclick="cancel()" value="게시판으로">
 		 		</td>
 	 		</tr>
-			
 		</table>
+		
 	</form>
+</div>
 </div>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -210,7 +222,13 @@ function eventonblur() {
         }
  
    </script>
-
-
+<script type="text/javascript">
+$(function () {
+	$("#cancel").click(function () {
+		location.href = "CommunityControl?command=list";
+	});
+	
+});
+</script>
 </body>
 </html>

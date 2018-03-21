@@ -82,7 +82,7 @@ public String makeTable(int year, int month, int day, List<CalendarDto> list){
 		if(dto.getRdate().substring(0,8).equals(dates)){
 			s += "<tr bgcolor='yellow'>";
 			s += "<td>";
-			s += "<a href='caldetail.jsp?seq="+dto.getSeq()+"'>";
+			s += "<a href='caldetail.jsp?seq="+dto.getSeq()+"&child="+dto.getChild()+"'>";
 			s += "<font style='font-size:8; color:red'>";
 			s += dot3(dto.getTitle());
 			s += "</font>";

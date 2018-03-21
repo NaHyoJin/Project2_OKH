@@ -14,6 +14,7 @@ public class comment_bbsDto {
 	private int bbsparent;		//부모글
 	private int bbsjoinercount;	// 좋아요
 	private String bbsjoindate;	// 모임날
+	private String bbsjoinner;
 	
 	private int commentseq;
 	private String commentid;
@@ -21,14 +22,25 @@ public class comment_bbsDto {
 	private String commentwdate;
 	private int commentdel;
 	private int commentchild;
-	private int commentjoiner;
+	
+	private int commentinorout;
 	
 	
 	
+	public comment_bbsDto(int commentinorout) {
+		super();
+		this.commentinorout = commentinorout;
+	}
+	public int getCommentinorout() {
+		return commentinorout;
+	}
+	public void setCommentinorout(int commentinorout) {
+		this.commentinorout = commentinorout;
+	}
 	public comment_bbsDto(int bbsseq, String bbsid, String bbstitle, String bbscontent, String bbswdate, int bbsdel,
 			int bbsreadcount, int bbscommentcount, String bbstagname, int bbsparent, int bbsjoinercount,
-			String bbsjoindate, int commentseq, String commentid, String commentcontent, String commentwdate,
-			int commentdel, int commentchild, int commentjoiner) {
+			String bbsjoindate, String bbsjoinner, int commentseq, String commentid, String commentcontent,
+			String commentwdate, int commentdel, int commentchild, int commentinorout) {
 		super();
 		this.bbsseq = bbsseq;
 		this.bbsid = bbsid;
@@ -42,13 +54,14 @@ public class comment_bbsDto {
 		this.bbsparent = bbsparent;
 		this.bbsjoinercount = bbsjoinercount;
 		this.bbsjoindate = bbsjoindate;
+		this.bbsjoinner = bbsjoinner;
 		this.commentseq = commentseq;
 		this.commentid = commentid;
 		this.commentcontent = commentcontent;
 		this.commentwdate = commentwdate;
 		this.commentdel = commentdel;
 		this.commentchild = commentchild;
-		this.commentjoiner = commentjoiner;
+		this.commentinorout = commentinorout;
 	}
 	public int getBbsseq() {
 		return bbsseq;
@@ -122,6 +135,12 @@ public class comment_bbsDto {
 	public void setBbsjoindate(String bbsjoindate) {
 		this.bbsjoindate = bbsjoindate;
 	}
+	public String getBbsjoinner() {
+		return bbsjoinner;
+	}
+	public void setBbsjoinner(String bbsjoinner) {
+		this.bbsjoinner = bbsjoinner;
+	}
 	public int getCommentseq() {
 		return commentseq;
 	}
@@ -146,11 +165,11 @@ public class comment_bbsDto {
 	public void setCommentwdate(String commentwdate) {
 		this.commentwdate = commentwdate;
 	}
-	public int getCommentjoiner() {
-		return commentjoiner;
+	public int getCommentdel() {
+		return commentdel;
 	}
-	public void setCommentjoiner(int commentjoiner) {
-		this.commentjoiner = commentjoiner;
+	public void setCommentdel(int commentdel) {
+		this.commentdel = commentdel;
 	}
 	public int getCommentchild() {
 		return commentchild;
@@ -158,24 +177,31 @@ public class comment_bbsDto {
 	public void setCommentchild(int commentchild) {
 		this.commentchild = commentchild;
 	}
-	public int getCommentdel() {
-		return commentdel;
-	}
-	public void setCommentdel(int commentdel) {
+	public comment_bbsDto(int bbsseq, String bbsid, String bbstitle, String bbscontent, String bbswdate, int bbsdel,
+			int bbsreadcount, int bbscommentcount, String bbstagname, int bbsparent, int bbsjoinercount,
+			String bbsjoindate, String bbsjoinner, int commentseq, String commentid, String commentcontent,
+			String commentwdate, int commentdel, int commentchild) {
+		super();
+		this.bbsseq = bbsseq;
+		this.bbsid = bbsid;
+		this.bbstitle = bbstitle;
+		this.bbscontent = bbscontent;
+		this.bbswdate = bbswdate;
+		this.bbsdel = bbsdel;
+		this.bbsreadcount = bbsreadcount;
+		this.bbscommentcount = bbscommentcount;
+		this.bbstagname = bbstagname;
+		this.bbsparent = bbsparent;
+		this.bbsjoinercount = bbsjoinercount;
+		this.bbsjoindate = bbsjoindate;
+		this.bbsjoinner = bbsjoinner;
+		this.commentseq = commentseq;
+		this.commentid = commentid;
+		this.commentcontent = commentcontent;
+		this.commentwdate = commentwdate;
 		this.commentdel = commentdel;
+		this.commentchild = commentchild;
 	}
-	@Override
-	public String toString() {
-		return "comment_bbsDto [bbsseq=" + bbsseq + ", bbsid=" + bbsid + ", bbstitle=" + bbstitle + ", bbscontent="
-				+ bbscontent + ", bbswdate=" + bbswdate + ", bbsdel=" + bbsdel + ", bbsreadcount=" + bbsreadcount
-				+ ", bbscommentcount=" + bbscommentcount + ", bbstagname=" + bbstagname + ", bbsparent=" + bbsparent
-				+ ", bbsjoinercount=" + bbsjoinercount + ", bbsjoindate=" + bbsjoindate + ", commentseq=" + commentseq
-				+ ", commentid=" + commentid + ", commentcontent=" + commentcontent + ", commentwdate=" + commentwdate
-				+ ", commentjoiner=" + commentjoiner + ", commentchild=" + commentchild + ", commentdel=" + commentdel
-				+ "]";
-	}
-	
-	
 	
 	
 	

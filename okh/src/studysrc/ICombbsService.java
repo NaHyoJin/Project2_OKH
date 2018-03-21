@@ -13,4 +13,12 @@ public interface ICombbsService {
 	public void commentcount(int seq);
 	public void updatebbs(CombbsDto dto,int seq);
 	public void delbbs(int seq);
+	public boolean checkcomment(int seq);
+	public void likecountplus(int seq);
+	public void dislikecount(int seq);
+	public boolean getparent(int seq);
+	public boolean checkjoiner(int seq);
+	public void commentdiscount(int seq);
+	public int getSeq();
+	public boolean writecalendar(CombbsDto dto,int child);
 }

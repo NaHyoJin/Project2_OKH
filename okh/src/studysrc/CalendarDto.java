@@ -16,7 +16,8 @@ import java.io.Serializable;
 		TITLE VARCHAR2(200) NOT NULL,
 		CONTENT VARCHAR2(4000) NOT NULL,
 		RDATE VARCHAR2(12) NOT NULL,
-		WDATE DATE NOT NULL
+		WDATE DATE NOT NULL,
+		CHILD NUMBER(8) NOTNULL
 	);
 	
 	CREATE SEQUENCE SEQ_CAL
@@ -34,8 +35,55 @@ public class CalendarDto implements Serializable {
 	private String content;
 	private String rdate;		// 약속한날
 	private String wdate;		// 작성날
+	private int child;
+	/*private String joiner;
+	
+	public CalendarDto(int seq, String id, String title, String content, String rdate, String wdate, String joiner) {
+		super();
+		this.seq = seq;
+		this.id = id;
+		this.title = title;
+		this.content = content;
+		this.rdate = rdate;
+		this.wdate = wdate;
+		this.joiner = joiner;
+	}
+
+	public String getJoiner() {
+		return joiner;
+	}
+
+	public void setJoiner(String joiner) {
+		this.joiner = joiner;
+	}*/
+
+	
 	
 	public CalendarDto () {
+	}
+
+	public CalendarDto(int child) {
+		super();
+		this.child = child;
+	}
+
+	public int getChild() {
+		return child;
+	}
+
+	public void setChild(int child) {
+		this.child = child;
+	}
+
+	public CalendarDto(int seq, String id, String title, String content, String rdate, String wdate, int child) {
+		super();
+		this.seq = seq;
+		this.id = id;
+		this.title = title;
+		this.content = content;
+		this.rdate = rdate;
+		this.wdate = wdate;
+		this.child = child;
 	}
 
 	public CalendarDto(int seq, String id, String title, String content, String rdate, String wdate) {
@@ -109,5 +157,11 @@ public class CalendarDto implements Serializable {
 		return "CalendarDto [seq=" + seq + ", id=" + id + ", title=" + title + ", content=" + content + ", rdate="
 				+ rdate + ", wdate=" + wdate + "]";
 	}
+
+	/*public CalendarDto(String joiner) {
+		super();
+		this.joiner = joiner;
+	}*/
+	
 	
 }

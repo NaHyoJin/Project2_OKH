@@ -1,3 +1,5 @@
+<%@page import="studysrc.iCalendar"%>
+<%@page import="studysrc.CalendarDao"%>
 <%@page import="user.UserDto"%>
 <%@page import="studysrc.CombbsService"%>
 <%@page import="studysrc.ICombbsService"%>
@@ -31,15 +33,23 @@ mem = (UserDto)ologin;
 <%
 CombbsDto dto = (CombbsDto)request.getAttribute("comwritedto");
 ICombbsService service = CombbsService.getInstance();
+int child =service.getSeq()+1;
+iCalendar dao = CalendarDao.getInstance();
+
+
 boolean isS = service.writeBbs(dto);
 if(isS){
+	boolean calisS = service.writecalendar(dto, child);
+	if(calisS){
 %>
+
 <script type="text/javascript">
 alert("추가성공");
 location.href="CommunityControl?command=list";
 </script>
 <%
-}else{
+	}
+		}else{
 %>
 <script type="text/javascript">
 alert("다시입력해주세요");

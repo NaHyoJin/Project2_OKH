@@ -8,7 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="_main.css">
+<link rel="stylesheet" type="text/css" href="_studymain.css">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
@@ -18,24 +18,113 @@
 
 <link rel="stylesheet" href="css/bootstrap-tagsinput.css">
 <script src="js/bootstrap-tagsinput.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="_Studybbs.css?ver=1.59">
+<link rel="stylesheet" type="text/css" href="_studyupdate.css?ver=1.33">
+<link rel="stylesheet" type="text/css" href="_studymain.css?ver=1.3">
 
 
+
+</head>
+<body>
 <%
 Object ologin = session.getAttribute("login");
 UserDto mem = null;
-if(ologin == null){
-	%>
-	<script type="text/javascript">
-	alert("로그인해 주십시오");
-	location.href = "index.jsp";	
-	</script>	
-	<%
-	return;
-}
 mem = (UserDto)ologin;
 %>
-</head>
-<body>
+
+	<!-- 인클루드 부분 -->
+	<div class="menu">
+				<%
+if(ologin == null){	//로그인안한상태
+	%>
+	<input type="button" class="login" id="login">
+	<input type="button" class="account" id="account">
+
+		<%
+}else{
+	
+%>
+<div class="actionlogin">
+	<span><%=mem.getId() %></span>
+	<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
+	<img class="alarmbtn" alt="" src="image/alarm.PNG" style="cursor: pointer" id="btnPopover1">	
+</div>
+<%
+}
+%>
+		<input type="button" class="bbs1" id="qnabbs">
+		<input type="button" class="techbbs_hjh" id="techbbs">
+		<input type="button" class="bbs3" ><!-- 정재흥 -->
+		<input type="button" class="bbs4" id="combbs">
+		<input type="button" class="bbs5" id="jobs"><!-- 나효진 -->
+		<input type="button" class="bbs6" id="life"><!-- 병찬 사는얘기 -->
+	</div>	
+
+	
+	<script type="text/javascript">
+		$(function() {//좌측 메뉴바 누르는 곳.
+
+			$("#login").click(function() {
+				location.href="User?command=login";
+			});
+	
+			$("#account").click(function() {
+				location.href="User?command=join";
+			});
+			
+			//QNA
+			$("#qnabbs").click(function() {
+				location.href="qnaServlet?command=listQna";
+			});
+			
+			$("#second").click(function() {
+				location.href="second.jsp";
+			});
+	
+			$("#techbbs").click(function() {
+				location.href="TechbbsController?command=techbbs";
+			});
+	
+			$("#life").click(function() {
+				location.href="LifeBbs?command=life";
+			});
+			$("#combbs").click(function() {
+				location.href = "CommunityControl?command=list";
+			});
+			
+	/* 
+			//columns
+			$("#").click(function() {
+				location.href="";
+			});
+	 */
+	 
+			//게시판5 나효진 jobs 부분.
+/* 			$("#jobs").click(function() {
+				location.href="main.BBSHWCodingController";
+			});
+ */	 
+			
+			$("#jobs").click(function name() {
+				location.href="jobs";
+			});
+
+		});
+	</script>
+	
+	<%
+	if(ologin == null){
+		%>
+		<script type="text/javascript">
+		alert("로그인해 주십시오");
+		location.href = "index.jsp";	
+		</script>	
+		<%
+		return;
+	}
+	mem = (UserDto)ologin;
+	%>
 <%
 String sseq = request.getParameter("seq");
 int seq=Integer.parseInt(sseq);
@@ -44,15 +133,16 @@ List<CombbsDto> list=(List<CombbsDto>)request.getAttribute("list");
 System.out.println(list.get(0).getId());
 
 %>
-<div align="center">
-	<h2>게시글 수정</h2>
-	<form action="CommunityControl">
+<div class="titlediv"><h2>글 수정</h2><br>
+	</div>
+	<div class="wrap">
+	<form action="CommunityControl" method="post">
 		<table>
-			<col width="100"> <col width="700">
+			<col width="200"> <col width="500">
 			<tr>
 				<td>작성자</td>
 				<td>
-					<input type="text" id="id" readonly="readonly" value="<%=mem.getId() %>" size="100">
+					<input type="text" class="form-control" id="id" readonly="readonly" value="<%=mem.getId() %>" size="100">
 					<input type="hidden" name="id" value="<%=mem.getId() %>">
 	 				<input type="hidden" name="command" value="updateAF">
 	 				<input type="hidden" name="seq" value="<%=seq %>">
@@ -62,16 +152,16 @@ System.out.println(list.get(0).getId());
 			<tr>
 				<td>제목</td>
 				<td>
-					<input type="text" id="title" name="title" size="100" value="<%=list.get(0).getTitle() %>">
+					<input type="text" class="form-control" placeholder="제목을 입력해 주세요." id="title" name="title" size="100" value="<%=list.get(0).getTitle() %>">
 				</td>
 			</tr>
 			<tr>
 				<td>날짜</td>
 				<td>
 					<input type="button" value="날짜선택 호출" onclick="opendate();" />
-					<input type="text" id="pdate" name="date" value="<%=list.get(0).getJoindate() %>">
+					<input type="text" id="pdate" name="date" readonly="readonly" value="<%=list.get(0).getJoindate() %>">
 					<select name="hour">
-				<option value="시"> 시
+				<option value="12"> 12
 				<%
 				
 				for(int i = 0; i<24;i++){
@@ -83,7 +173,7 @@ System.out.println(list.get(0).getId());
 				%>
 			</select>시
 			<select name="min">
-				<option value="분"> 분
+				<option value="30"> 30
 				<%
 				
 				for(int i = 0; i<60;i++){
@@ -107,13 +197,14 @@ System.out.println(list.get(0).getId());
 			<tr>
 				<td>내 용</td>
 				<td>
-					<textarea name="content" id="summernote" ><%=list.get(0).getContent() %></textarea>
+					<textarea rows="10" cols="60" name="content" id="summernote" ><%=list.get(0).getContent() %></textarea>
 				</td>
 			</tr>
 			<tr>
-		 		<td>
-		 			<input type="button" id="cancel" value="취소">
-		 			 <input type="submit" value="글올리기" >
+		 		<td> 
+		 		<input type="submit" value="글올리기" class="btn btn-success btn-wide">
+		 			<input type="button" id="cancel" class="btn btn-success btn-wide" onclick="cancel(<%=seq %>)" value="취소">
+		 			
 		 		</td>
 	 		</tr>
 			
@@ -203,9 +294,18 @@ function eventonblur() {
                     "childForm", "width=570, height=350, resizable = no, scrollbars = no");    
         }
  
+        
+        
    </script>
 
-
+<script type="text/javascript">
+$(function () {
+	$("#cancel").click(function () {
+		location.href = "CommunityControl?command=detail&seq=<%=seq %>";
+	});
+	
+});
+</script>
 
 
 </body>

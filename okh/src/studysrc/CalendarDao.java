@@ -87,7 +87,7 @@ public class CalendarDao implements iCalendar{
 
 	@Override
 	public CalendarDto getDay(int seq) {
-		String sql = " SELECT SEQ, ID, TITLE, CONTENT, RDATE, WDATE FROM CALENDAR WHERE SEQ=? ";
+		String sql = " SELECT SEQ, ID, TITLE, CONTENT, RDATE, WDATE, CHILD FROM CALENDAR WHERE SEQ=? ";
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
@@ -113,6 +113,7 @@ public class CalendarDao implements iCalendar{
 				dto.setContent(rs.getString(4));
 				dto.setRdate(rs.getString(5));
 				dto.setWdate(rs.getString(6));
+				dto.setChild(rs.getInt(7));
 				
 				System.out.println("4/6 getDay Success");
 				b = true;
@@ -137,7 +138,7 @@ public class CalendarDao implements iCalendar{
 
 	@Override
 	public List<CalendarDto> getDayList(String id, String rdate) {
-		String sql = " SELECT SEQ, ID, TITLE, CONTENT, RDATE, WDATE FROM CALENDAR WHERE ID=? AND RDATE LIKE '%"+rdate+"%' ";
+		String sql = " SELECT SEQ, ID, TITLE, CONTENT, RDATE, WDATE,CHILD FROM CALENDAR WHERE ID=? AND RDATE LIKE '%"+rdate+"%' ";
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
@@ -163,6 +164,7 @@ public class CalendarDao implements iCalendar{
 				dto.setContent(rs.getString(4));
 				dto.setRdate(rs.getString(5));
 				dto.setWdate(rs.getString(6));
+				dto.setChild(rs.getInt(7));
 				list.add(dto);
 				System.out.println("4/6 getDayList Success");
 				
@@ -189,9 +191,9 @@ public class CalendarDao implements iCalendar{
 	@Override
 	public List<CalendarDto> getCalendarList(String id, String yyyyMM) {
 
-		String sql = " SELECT SEQ, ID, TITLE, CONTENT, RDATE, WDATE "
+		String sql = " SELECT SEQ, ID, TITLE, CONTENT, RDATE, WDATE, CHILD "
 				+ " FROM ( SELECT ROW_NUMBER() OVER(PARTITION BY SUBSTR(RDATE, 1, 8) ORDER BY RDATE ASC ) RN, "
-				+ " 		SEQ, ID, TITLE, CONTENT, RDATE, WDATE "
+				+ " 		SEQ, ID, TITLE, CONTENT, RDATE, WDATE, CHILD "
 				+ " 		FROM CALENDAR "
 				+ " 		WHERE ID=? AND SUBSTR(RDATE,1,6)=?) "
 				+ " WHERE RN BETWEEN 1 AND 5 ";
@@ -220,6 +222,7 @@ public class CalendarDao implements iCalendar{
 			dto.setContent(rs.getString(4));
 			dto.setRdate(rs.getString(5));
 			dto.setWdate(rs.getString(6));
+			dto.setChild(rs.getInt(7));
 			list.add(dto);
 			System.out.println("4/6 getCalendarList Success");
 			
@@ -244,9 +247,9 @@ public class CalendarDao implements iCalendar{
 	@Override
 	public boolean writecalendar(CalendarDto cal) {
 		
-		String sql = " INSERT INTO CALENDAR(SEQ, ID, TITLE, CONTENT, RDATE, WDATE) "
+		String sql = " INSERT INTO CALENDAR(SEQ, ID, TITLE, CONTENT, RDATE, WDATE,CHILD) "
 				+ " VALUES(SEQ_CAL.NEXTVAL, ?, "
-				+ " ?, ?, ?, SYSDATE) ";
+				+ " ?, ?, ?, SYSDATE,?) ";
 				
 		
 		Connection conn = null;
@@ -265,6 +268,7 @@ public class CalendarDao implements iCalendar{
 			psmt.setString(2, cal.getTitle());
 			psmt.setString(3, cal.getContent());
 			psmt.setString(4, cal.getRdate());
+			psmt.setInt(5, cal.getChild());
 			count = psmt.executeUpdate();
 			
 			System.out.println("3/6 writecalendar Success");
@@ -278,6 +282,8 @@ public class CalendarDao implements iCalendar{
 		
 		return count>0?true:false;
 	}
+
+	
 	
 	
 	

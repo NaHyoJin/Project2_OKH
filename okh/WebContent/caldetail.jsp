@@ -1,3 +1,5 @@
+<%@page import="Study_like.LikeScrapService"%>
+<%@page import="Study_like.LikeScrapServiceImpl"%>
 <%@page import="studysrc.CalendarDao"%>
 <%@page import="studysrc.CalendarDto"%>
 <%@page import="studysrc.iCalendar"%>
@@ -36,12 +38,16 @@ public String toOne(String msg){	// 08 -> 8
 <%
 String sseq = request.getParameter("seq");
 int seq = Integer.parseInt(sseq);
-
+String childd = request.getParameter("child");
+int child = Integer.parseInt(childd);
+LikeScrapServiceImpl lsservice=LikeScrapService.getInstance();
 iCalendar dao = CalendarDao.getInstance();
-
+CalendarDto dto1 = new CalendarDto();
 CalendarDto dto = new CalendarDto();
 dto = dao.getDay(seq);
+String joiner = lsservice.getLikeID(child);
 
+System.out.println("asdsadsadsajoiner"+joiner);
 %>
 
 
@@ -73,6 +79,11 @@ dto = dao.getDay(seq);
 	<td>내용</td>
 	<td>
 		<%=dto.getContent() %>
+		
+		<br>
+		모이는 사람 <%=joiner %>
+		<br>
+		모임날짜 : <%=toDates(dto.getRdate()) %>
 		
 	</td>
 </tr>

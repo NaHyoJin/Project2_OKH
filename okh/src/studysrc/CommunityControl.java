@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.ws.Dispatch;
 
 
+
 public class CommunityControl extends HttpServlet {
 
 	@Override
@@ -64,24 +65,54 @@ public class CommunityControl extends HttpServlet {
 			tagname = tagname.substring(0, tagname.lastIndexOf("-"));
 			System.out.println(id+title+content+tagname+date);
 			CombbsDto dto = new CombbsDto(id, title, content, tagname, date);
+			
+			
+			
 			request.setAttribute("comwritedto", dto);
 			dispatch("study_communitywriteAF.jsp", request, response);
 		}else if(command.equals("detail")) {
+			Study_like.LikeScrapServiceImpl lsservice=Study_like.LikeScrapService.getInstance();
 			String sseq = request.getParameter("seq");
 		
 			int seq = Integer.parseInt(sseq);
+			String likeid=request.getParameter("likeid");
 			ICombbsService service = CombbsService.getInstance();
 			List<comment_bbsDto> list = service.detailbbs(seq);
+			
+			
+			boolean likeisS=lsservice.isitlikeid(seq, likeid);
+			System.out.println("컨트롤러seq?" +seq);
+			System.out.println("컨트롤러어디로?");
+			boolean b=service.getparent(seq);
 			if(list==null||list.size()==0) {
 				List<CombbsDto> list1 = service.commentnull(seq);
-				System.out.println("코맨트없는 리스트1");
+				CombbsDto dto = null;
+				if (likeisS) {
+					System.out.println("id찾았다");
+					dto=new CombbsDto(1);
+					request.setAttribute("flikeidyn", dto);
+				}else {
+					System.out.println("id못찾았다");
+					dto=new CombbsDto(2);
+					request.setAttribute("flikeidyn", dto);
+				}
 				request.setAttribute("detail1", list1);
 				
 			}else {
-				System.out.println("listdel:"+list.get(0).getCommentdel());
-				request.setAttribute("detail", list);
-				System.out.println("코맨트있는 리스트");
+				if (b) {
+					list=service.detailbbs(seq);
+					System.out.println("자료있다");
+					request.setAttribute("detail", list);
+				}else {
+					List<CombbsDto> list1 = null;
+					list1=service.commentnull(seq);
+					System.out.println("자료없다");
+					request.setAttribute("detail1", list1);
+				}
 				
+				request.setAttribute("detail", list);
+				System.out.println("컨트롤러코맨트있는 리스트");
+				System.out.println("컨트롤러여기?코멘트있는리스트");
 			}
 			service.readcount(seq);
 			request.setAttribute("seq", seq);
@@ -142,7 +173,7 @@ public class CommunityControl extends HttpServlet {
 			service.updatebbs(dto, seq);
 			dispatch("study_communitybbs.jsp", request, response);
 			
-		}else if(command.equals("delet")) {
+		}else if(command.equals("delete")) {
 			String sseq = request.getParameter("seq");
 			int seq=Integer.parseInt(sseq);
 			System.out.println("seq:                  "+ seq);
@@ -155,6 +186,8 @@ public class CommunityControl extends HttpServlet {
 			int seq=Integer.parseInt(sseq);
 			iCommentService service = CommentService.getInstance();
 			service.delcomment(seq);
+			ICombbsService service1 = CombbsService.getInstance();
+			service1.commentdiscount(seq);
 			dispatch("study_communitybbs.jsp", request, response);
 		}else if(command.equals("commentup")) {
 			String sseq = request.getParameter("commentseq");

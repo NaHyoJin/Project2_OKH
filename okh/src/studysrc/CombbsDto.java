@@ -21,8 +21,8 @@ CREATE TABLE COMBBS(
 	TAGNAME VARCHAR2(50) NOT NULL,
 	PARENT NUMBER(8) NOT NULL,
 	JOINERCOUNT NUMBER(8),
-	JOINDATE VARCHAR2 (50) NOT NULL,
-	LIKEINNER VARCHAR2(50)
+	JOINDATE VARCHAR2(50) NOT NULL,
+	JOINNER VARCHAR2(4000)
 );
 
 CREATE SEQUENCE SEQ_COMBBS
@@ -46,9 +46,11 @@ public class CombbsDto implements Serializable{
 	private int commentcount;		//댓글수 
 	private String tagname;	//지역테그
 	private int parent;		//부모글
-	private int joinercount;	// 좋아요
+	private int joinercount;	// 좋아요카운트
 	private String joindate;	// 모임날
-	private String likeinner;	// 좋아요 누른사람
+	private String joinner;	// 좋아요 누른사람
+	private int likeidyn;
+	
 	
 	public CombbsDto() {}
 	public CombbsDto(int seq, String id, String title, String content, String wdate, int del, int readcount,
@@ -139,6 +141,21 @@ public class CombbsDto implements Serializable{
 	public void setJoindate(String joindate) {
 		this.joindate = joindate;
 	}
+	
+	public String getJoinner() {
+		return joinner;
+	}
+	public void setJoinner(String joinner) {
+		this.joinner = joinner;
+	}
+	
+	
+	public int getLikeidyn() {
+		return likeidyn;
+	}
+	public void setLikeidyn(int likeidyn) {
+		this.likeidyn = likeidyn;
+	}
 	public CombbsDto(String id, String title, String content, String tagname, String joindate) {
 		super();
 		this.id = id;
@@ -147,7 +164,66 @@ public class CombbsDto implements Serializable{
 		this.tagname = tagname;
 		this.joindate = joindate;
 	}
+	public CombbsDto(int seq, String id, String title, String content, String wdate, int del, int readcount,
+			int commentcount, String tagname, int parent, int joinercount, String joindate, String joinner,
+			int likeidyn) {
+		super();
+		this.seq = seq;
+		this.id = id;
+		this.title = title;
+		this.content = content;
+		this.wdate = wdate;
+		this.del = del;
+		this.readcount = readcount;
+		this.commentcount = commentcount;
+		this.tagname = tagname;
+		this.parent = parent;
+		this.joinercount = joinercount;
+		this.joindate = joindate;
+		this.joinner = joinner;
+		this.likeidyn = likeidyn;
+	}
+	public CombbsDto(int likeidyn) {
+		super();
+		this.likeidyn = likeidyn;
+	}
+	public CombbsDto(int seq, String id, String title, String content, String wdate, int del, int readcount,
+			int commentcount, String tagname, int parent, int joinercount, String joindate, String joinner)
+	{
+		super();
+		this.seq = seq;
+		this.id = id;
+		this.title = title;
+		this.content = content;
+		this.wdate = wdate;
+		this.del = del;
+		this.readcount = readcount;
+		this.commentcount = commentcount;
+		this.tagname = tagname;
+		this.parent = parent;
+		this.joinercount = joinercount;
+		this.joindate = joindate;
+		this.joinner = joinner;
+	}
+	public CombbsDto(int seq, String joinner) {
+		super();
+		this.seq = seq;
+		this.joinner = joinner;
+	}
+	public CombbsDto(String id, String title, String content, String tagname, String joindate,String wdate, int commentcount, int readcount,int joinercount) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.content = content;
+		this.tagname = tagname;
+		this.joindate = joindate;
+		this.wdate = wdate;
+		this.commentcount =commentcount;
+		this.readcount = readcount;
+		this.joinercount = joinercount;
+	}
 	
+
 	
 	
 	
