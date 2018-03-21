@@ -21,8 +21,8 @@ request.setCharacterEncoding("utf-8");
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/custom.css">
-	<link rel="stylesheet" type="text/css" href="_write.css?ver=1.46">
-<link rel="stylesheet" type="text/css" href="_main.css?ver=1.31">
+	<link rel="stylesheet" type="text/css" href="_write.css?ver=1.47">
+<link rel="stylesheet" type="text/css" href="_main.css?ver=1.33">
 <!-- 폰트  -->
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
 <script type="text/javascript">

@@ -27,9 +27,9 @@ request.setCharacterEncoding("utf-8");
 <script src="js/bootstrap.min.js"></script>
 	<script src="js/bootstrap.js"></script>
 
-<link rel="stylesheet" type="text/css" href="_detail.css?ver=1.44">
+<link rel="stylesheet" type="text/css" href="_detail.css?ver=1.45">
 
-<link rel="stylesheet" type="text/css" href="_main.css?ver=1.31">
+<link rel="stylesheet" type="text/css" href="_main.css?ver=1.32">
 </head>
 <body>
 <script type="text/javascript">
@@ -221,18 +221,17 @@ if(ologin == null){	//로그인안한상태
 if(ologin == null){	//로그인안한상태
 	%>
 <a href="javascript:void(0)"id="changedisli"><img src="image/dislikeoff.PNG" id="dislikeimg"></a><br>
-		<a href="javascript:void(0)"><img src="image/scrap.PNG" id="scrapimg"></a><br>
 		
 		<%
 }else{
 	
 %>
 <a href="LikeScrapController?command=dislikeimg&dislikeid=<%=mem.getId() %>&seq=<%=whatlist.get(0).getSeq()%>"id="changedisli"><img src="image/dislikeoff.PNG" id="dislikeimg"></a><br>
-		<a href="LikeScrapController?command=scrapimg&scrapid=<%=mem.getId() %>&seq=<%=whatlist.get(0).getSeq()%>"><img src="image/scrap.PNG" id="scrapimg"></a><br>	
+		
 <%
 }
 %>	
-		<span id="cocoun"><%=whatlist.get(0).getScrapcount()%></span>
+		
 		<br><br>
 		<%
 		System.out.println(whatlist.size()+"리스트사이즈");

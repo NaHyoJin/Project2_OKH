@@ -167,22 +167,7 @@ alert("검색된결과가없습니다");
 	totallist=serchlist;
 }
 %>
-<div class="titlediv"><span class="titi">전체게시판</span>
-	<%
-	if(ologin == null){
-			%>
-	
-	<button class="create btn btn-success btn-wide pull-right " type="button" id="loginhe">게시글쓰기</button></div>
-	
-	<%
-		}else{
-	%>
-	<button class="create btn btn-success btn-wide pull-right " type="button" id="techwrite">게시글쓰기</button></div>
-	
-	<%
-	}
-	%>
-	
+<div class="titlediv"><span class="titi">전체게시판</span></div>
 	
 <div class="wrap">
 <div class="sortingmenu">

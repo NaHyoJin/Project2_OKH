@@ -188,7 +188,6 @@ if(sortlist==null||whatsort==null||sortlist.size()==0){	//sort안했다
          <li><a onclick="location.href='TechbbsController?command=sorthe&whatthings=wdate'"  class="category-sort-link active">최신순</a></li>
          <li><a onclick="location.href='TechbbsController?command=sorthe&whatthings=likecount'" class="category-sort-link">좋아요순</a></li>
          <li><a onclick="location.href='TechbbsController?command=sorthe&whatthings=contentcount'" class="category-sort-link">댓글순</a></li>
-         <li><a onclick="location.href='TechbbsController?command=sorthe&whatthings=scrapcount'" class="category-sort-link">스크랩순</a></li>
          <li><a onclick="location.href='TechbbsController?command=sorthe&whatthings=readcount'" class="category-sort-link">조회순</a></li>
      </ul>
 	

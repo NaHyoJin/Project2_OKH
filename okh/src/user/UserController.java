@@ -59,7 +59,7 @@ public class UserController extends HttpServlet {
 			if(userDto != null) {
 				request.getSession().setAttribute("messageType", "성공 메시지");
 				request.getSession().setAttribute("messageContent", "로그인에 성공했습니다.");
-				response.sendRedirect("index.jsp");
+				response.sendRedirect("main.jsp");
 				return;
 			}else {
 				request.getSession().setAttribute("messageType", "오류 메시지");

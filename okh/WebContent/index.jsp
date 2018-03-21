@@ -1,4 +1,5 @@
 <%@page import="java.util.ArrayList"%>
+<%@page import="totalbbs.totalbbsdto"%>
 <%@page import="techbbs.TechbbsService"%>
 <%@page import="techbbs.TechbbsServiceImpl"%>
 <%@page import="techbbs.TechbbsDto"%>
@@ -18,8 +19,8 @@
 
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/bootstrap.js"></script>
-	<link rel="stylesheet" type="text/css" href="_main.css?ver=1.25">
-<link rel="stylesheet" type="text/css" href="_totalbbs.css?ver=1.24">
+	<link rel="stylesheet" type="text/css" href="_main.css?ver=1.27">
+<link rel="stylesheet" type="text/css" href="_totalbbs.css?ver=1.26">
 <!-- 쿠키용 -->
 <script type="text/javascript" src="js/jquery.cookie.js"></script>
 <script type="text/javascript">
