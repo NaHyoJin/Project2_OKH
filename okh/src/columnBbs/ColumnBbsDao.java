@@ -462,7 +462,7 @@ public class ColumnBbsDao implements iColumnBbsDao {
 				+ " (SELECT NVL(MAX(REF), 0)+1 FROM BBS), 0, 0, "
 				+ " ?, ?, SYSDATE, 0, "
 				+ " 0, 0) ";
-		
+		System.out.println(bbs.getId()+bbs.getTitle()+bbs.getContent());
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		

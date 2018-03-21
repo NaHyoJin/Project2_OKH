@@ -31,21 +31,26 @@ String choice = request.getParameter("choice");
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
 <title>bbslist</title>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+	
 
 <!-- 폰트  -->
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="_columnbbs.css?ver=1.59">
+<link rel="stylesheet" type="text/css" href="_techbbs.css?ver=1.64">
+<link rel="stylesheet" type="text/css" href="_main.css?ver=1.4">
 </head>
-
 <body bgcolor="#fcfbfb">
-
+<script type="text/javascript">
+function logout() {
+	location.href='index.jsp';
+}
+</script>
 <div class="menu">
 		<input type="button" class="login" id="login">
 		<input type="button" class="account" id="account">
@@ -118,45 +123,28 @@ if(findWord == null){
 }
 int cho = 0;
 
-if(choice == null) cho = 3;
+if(choice == null) cho = 0;
 else if(choice.equals("title")) cho = 0;
 else if(choice.equals("writer")) cho = 1;
-else if(choice.equals("content")) cho = 2;
-else if(choice.equals("tagname")) cho = 3;
- 
 
 iColumnBbsDao dao = ColumnBbsDao.getInstance();
 List<ColumnBbsDto> bbslist = dao.getBbsPagingList(paging, findWord, cho);
 %>
 
-<div class="titlediv"><span class="titi">칼럼</span>
-<button class="create btn btn-success btn-wide pull-right " type="button" id="write">새 칼럼 쓰기</button></div>
-
 <div class="wrap">
-<div class="sercharea">
-<select id="choice" style="height: 30px">
-		<option value="tagname" <%if(cho==3){ out.println("selected");}%>>선택하세요</option>
-		<option value="title" <%if(cho==0){ out.println("selected");}%>>제목</option>
-		<option value="writer" <%if(cho==1){ out.println("selected");}%>>작성자</option>
-		<option value="content" <%if(cho==2){ out.println("selected");}%>>내용</option>
-		</select>	 
-	 
-<input type="text" id="search" class="inputField">
-<button name="search" id="serchbtn" class="input-group-btn" onclick="searchBbs()"><img alt="" src="image/serchbtn.PNG"></button>
-</div> 
+	<div class="header">
+		<h1 style="font-size: 2em; font-family: monospace ">칼럼</h1>
+		<button type="button" id="write">칼럼쓰기</button>
+	</div>
 	<div class="board">
 		<table border="1" class="techtable">
-		<col width="450"><col width="80"><col width="80"><col width="80"><col width="150">
+		<col width="60"><col width="450"><col width="50">
 
-<!-- <tr>
-	<th>번호</th><th>제목</th>	<th>작성자</th>
-</tr>
- -->
 <%
 if(bbslist == null || bbslist.size() == 0){
 	%>	
 	<tr>
-		<th colspan="5">작성된 글이 없습니다</td>
+		<th colspan="3">작성된 글이 없습니다</th>
 	</tr>	
 <%
 }
@@ -168,10 +156,12 @@ for(int i = 0;i < bbslist.size(); i++){
 	<% 
 	if(bbs.getDel() == 0){
 	%>
-
 	
 	<tr>
-		<td><%=i+1%></td>
+
+	
+	
+		<th>#<%=bbs.getSeq()%></th>
 		<td>
 			<%=arrow(bbs.getDepth()) %>
 			<a href="columnbbsdetail.jsp?seq=<%=bbs.getSeq() %>">
@@ -206,7 +196,7 @@ for(int i = 0;i < bbslist.size(); i++){
 <br>
 
 <!-- search -->
-<!-- 
+
 <select id="choice">
 <option value="title">제목</option>
 <option value="writer">작성자</option>
@@ -214,8 +204,8 @@ for(int i = 0;i < bbslist.size(); i++){
 </select>
 
 <input type="text" id="search">
-<button name="search" onclick="searchBbs()">검색</button> -->
-
+<button name="search" onclick="searchBbs()">검색</button>
+	</div>
 </div>
 
 
@@ -245,4 +235,8 @@ $(function () {
 
 </body>
 </html>
+
+
+
+
 

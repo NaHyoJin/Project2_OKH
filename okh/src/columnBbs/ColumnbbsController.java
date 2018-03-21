@@ -63,9 +63,12 @@ public class ColumnbbsController extends HttpServlet {
 		}else if(command.equals("writeAf")) {					// O
 			boolean isS = dao.writeBbs(new ColumnBbsDto(id, title, content) );
 			if(isS) {
-				response.sendRedirect("columnbbslist.jsp");
+				System.out.println("라이트성공");
+			}else {
+				
+				System.out.println("라이트실패");
 			}
-			
+			response.sendRedirect("columnbbslist.jsp");
 		}else if(command.equals("del")) {
 			boolean isS = dao.dellBbs(Integer.parseInt(seq));
 			if(isS) {

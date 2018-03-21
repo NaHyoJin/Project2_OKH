@@ -126,13 +126,11 @@ function logout() {
 				location.href="LifeBbs?command=life";
 			});
 			
-			
-	/* 
-			//columns
-			$("#").click(function() {
-				location.href="";
+		//  정재흥 column 부분
+			$("#column").click(function () {
+				location.href= "Controller?command=column";
 			});
-	 */
+
 	 
 			//게시판5 나효진 jobs 부분.
 /* 			$("#jobs").click(function() {
