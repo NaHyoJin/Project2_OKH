@@ -18,7 +18,6 @@
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/bootstrap.js"></script>
 	<script src="js/bootstrap-tagsinput.js"></script>
-	
 	<!-- include libraries(jQuery, bootstrap) -->
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
