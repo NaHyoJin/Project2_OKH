@@ -87,7 +87,7 @@
 					<tr>
 						<td style="width: 110px;"><h5>사진 업로드</h5></td>
 						<td colspan="2">
-							<div class="input-group col-xs-12">
+							<input type="file" name="userProfile" class="file">
 								<span class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></span>
 								<input type="text" class="form-control input-lg" disabled placeholder="이미지를 업로드하세요.">
 								<span class="input-group-btn">
