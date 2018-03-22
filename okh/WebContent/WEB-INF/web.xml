@@ -112,6 +112,10 @@ version="3.0">
   	<servlet-name>qnaServlet</servlet-name>
   	<url-pattern>/qnaServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+  	<servlet-name>qnaAnswerServlet</servlet-name>
+  	<servlet-class>qna.QnaAnswerServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>qnaAnswerServlet</servlet-name>
     <url-pattern>/qnaAnswerServlet</url-pattern>
