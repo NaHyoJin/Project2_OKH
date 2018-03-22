@@ -1,3 +1,5 @@
+<%@page import="user.UserService"%>
+<%@page import="user.IUserService"%>
 <%@page import="user.UserDto"%>
 <%@page import="studysrc.CombbsDto"%>
 <%@page import="java.util.List"%>
@@ -21,7 +23,7 @@
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="_Studybbs.css?ver=1.59">
 <link rel="stylesheet" type="text/css" href="_studyupdate.css?ver=1.33">
-<link rel="stylesheet" type="text/css" href="_studymain.css?ver=1.3">
+<link rel="stylesheet" type="text/css" href="_main.css?ver=1.34">
 
 
 
@@ -31,6 +33,12 @@
 Object ologin = session.getAttribute("login");
 UserDto mem = null;
 mem = (UserDto)ologin;
+IUserService service = UserService.getInstance();
+
+String profile = null;
+if(ologin != null){
+	profile = service.getProfile(mem.getId());
+}
 %>
 
 
@@ -40,16 +48,22 @@ mem = (UserDto)ologin;
 		<%
 		if(ologin == null){
 		%>
+		<input type="button" class="homebtn" onclick="location.href='index.jsp'">
 		<input type="button" class="login" id="login">
 		<input type="button" class="account" id="account">
 		<%
 		}else{
 		%>
-		<div class="actionlogin">
-			<span><%=mem.getId() %></span>
+		<input type="button" class="homebtn" id="homebtn">
+<div class="actionlogin">
+	<a onclick="upmydetail()" style="cursor: pointer">
+			<img src="<%=profile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+		</a>
+			<span class="memid"><a onclick="upmydetail()" style="cursor: pointer;color: #fff;"><%=mem.getId() %></a></span> <br>
+				<span class="point"><img src="image/actionpoint.PNG" style="margin-top: 0" class="pointimg"><%=mem.getScore()%></span>
 			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
-			<img class="alarmbtn" alt="" src="image/alarm.PNG" style="cursor: pointer" id="btnPopover">	
-		</div>
+				
+</div>
 		<%
 		}
 		%>
@@ -62,6 +76,9 @@ mem = (UserDto)ologin;
 	</div>
 	<script type="text/javascript">
 	$(function() {
+		$("#homebtn").click(function() {
+			location.href="main.jsp";
+		});
 		$("#login").click(function() {
 			location.href = "User?command=login";
 		});
@@ -272,7 +289,7 @@ System.out.println(list.get(0).getId());
 				</td>
 			</tr>
 			<tr>
-				<td>테그</td>
+				<td>태그</td>
 				<td>
 					<input type="text" value="" data-role="tagsinput" name="tagnames" >
 					
@@ -288,7 +305,7 @@ System.out.println(list.get(0).getId());
 			<tr>
 		 		<td> 
 		 		<input type="submit" value="글올리기" class="btn btn-success btn-wide">
-		 			<input type="button" id="cancel" class="btn btn-success btn-wide" onclick="cancel(<%=seq %>)" value="취소">
+		 			<input type="button" id="cancel" class="btn btn-default btn-wide" onclick="cancel(<%=seq %>)" value="취소">
 		 			
 		 		</td>
 	 		</tr>
