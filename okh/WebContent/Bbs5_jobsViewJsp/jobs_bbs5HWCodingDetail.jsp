@@ -1,3 +1,5 @@
+<%@page import="user.UserService"%>
+<%@page import="user.IUserService"%>
 <%@page import="jobs_BBS5.HWRepbbsDto"%>
 <%@page import="jobs_BBS5.HWRepbbsService"%>
 <%@page import="jobs_BBS5.HWRepbbsServiceImpl"%>
@@ -89,8 +91,14 @@ if(whatlist.get(0).getPdsys() == 2){		//자료없으면
 }
 
 //답글 게시판 리스트불러오는 함수 작성
+String yn="";
 HWRepbbsServiceImpl trservice = HWRepbbsService.getInstance();
 List<HWRepbbsDto> replist = trservice.getRepBbsList(whatlist.get(0).getSeq());
+IUserService service = UserService.getInstance();
+String profile = null;
+if(ologin != null){
+	profile = service.getProfile(mem.getId());
+}
 %>
 
 
@@ -98,17 +106,24 @@ List<HWRepbbsDto> replist = trservice.getRepBbsList(whatlist.get(0).getSeq());
 	<div class="menu">
 			<%//로그인 안할경우.
 			if(mem == null){
+				yn="no";
 			%>
+			<input type="button" class="homebtn" onclick="location.href='index.jsp'">
 		<input type="button" class="login" id="login">
 		<input type="button" class="account" id="account">
 			<%
 			}else{//로그인 한경우.
+				yn="yes";
 			%>
 		<input type="button" class="homebtn" id="homebtn">
-			<div class="actionlogin">
-				<span><%=mem.getId() %></span>
-				<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="membtnPopover">
-			</div>
+<div class="actionlogin">
+<a onclick="upmydetail()" style="cursor: pointer">
+	<img src="<%=profile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+</a>		
+			<span class="memid"><a onclick="upmydetail()" style="cursor: pointer;color: #fff;"><%=mem.getId() %></a></span> <br>
+			<span class="point" style="margin-top: 0"><img src="image/actionpoint.PNG" class="pointimg"><%=mem.getScore()%></span>
+			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
+				</div>
 		<%
 		}
 		%>
@@ -212,8 +227,15 @@ List<HWRepbbsDto> replist = trservice.getRepBbsList(whatlist.get(0).getSeq());
 			
 			/* 장문석  study*/
 			$("#combbs").click(function () {
-				location.href = "CommunityControl?command=list";
-			});			
+				if(<%=yn.equals("yes")%>){
+					location.href = "CommunityControl?command=list";
+		
+				}
+				else{
+					location.href = "User?command=guest";
+				}
+				
+			});		
 	 
 			//게시판5 나효진 jobs 부분.
 			$("#jobs").click(function () {
@@ -262,21 +284,30 @@ List<HWRepbbsDto> replist = trservice.getRepBbsList(whatlist.get(0).getSeq());
 	</script>
 	
 <div class="wrap">
-<%
-	if(mem == null){
-		String unlogin = "Unknown";
-%>
-	<div class="myinfo"><%=unlogin %>님 <%=whatlist.get(0).getWdate() %><br>
-<%
-	}else{
-%>
-	<div class="myinfo"><%=mem.getId() %>님 <%=whatlist.get(0).getWdate() %><br>
-<%
-	}
-%>	
+<div class="myinfo">
+
 		<p class="myinfo_icon">
-		<img alt="image/reple.PNG 이미지 없음" src="image/reple.PNG"><%=whatlist.get(0).getCommentcount() %>
-		<img alt="image/readcount.PNG 이미지 없음." src="image/readcount.PNG"><%=whatlist.get(0).getReadcount() %>
+		<%
+		IUserService uservice=UserService.getInstance();
+		
+		int score=uservice.getScore(whatlist.get(0).getId());
+		String getprofile=uservice.getProfile(whatlist.get(0).getId());
+		%>
+		<a onclick="location.href='User?command=otherpage&infoid=<%=whatlist.get(0).getId() %>'" style="cursor: pointer">
+		
+		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+		</a>
+		<span class="detailid">
+		<a onclick="location.href='User?command=otherpage&infoid=<%=whatlist.get(0).getId() %>'" style="cursor: pointer"><%=whatlist.get(0).getId() %></a>
+		<span class="" style="margin-top: 0"><img src="image/actionpoint.PNG" class="pointimg">
+		
+		<%=score%></span></span>
+		 <br><br>
+		<span style="float:left; font-size: 12px;"><%=whatlist.get(0).getWdate() %><br></span>
+
+		
+		<img alt="" src="image/repleon.PNG"><span><%=whatlist.get(0).getCommentcount() %></span>
+		<img alt="" src="image/readcounton.PNG"><span><%=whatlist.get(0).getReadcount() %></span>
 		</p>
 	</div>
 	<div class="contentareawrap">
@@ -365,7 +396,7 @@ List<HWRepbbsDto> replist = trservice.getRepBbsList(whatlist.get(0).getSeq());
 		%>
 		
 		<img alt="image/settingbtn.PNG 이미지 없음." src="image/settingbtn.PNG" style="cursor: pointer; 
-		padding-bottom: 20px;" id="btnPopover">
+		padding-bottom: 20px;" id="btnPopover2">
 		
 		<%
 		}
@@ -484,9 +515,28 @@ for(int i = 0;i < replist.size(); i++){
 		<%
 			}
 		%> --%>
-		<%=bbs.getId()%>
-			<article class="content<%=bbs.getSeq() %>" name="content"><%=bbs.getContent() %></article>
-			
+		<%
+		score=uservice.getScore(bbs.getId());
+		getprofile=uservice.getProfile(bbs.getId());
+		%>
+			<p class="myinfo_icon" style="margin-top: 5px">
+			<a onclick="location.href ='User?command=otherpage&infoid=<%=bbs.getId() %>'" style="cursor: pointer">
+		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 30px; float:left; max-height: 30px; margin: 0 auto;">
+		</a>
+		<span class="detailid">
+		<a onclick="location.href ='User?command=otherpage&infoid=<%=bbs.getId() %>'" style="cursor: pointer">
+		<span style="float: left">
+		<%=bbs.getId() %>
+		</span>
+		  </a>                                  
+		<img src="image/actionpoint.PNG" class="pointimg" style="float: left">
+		<span style="float: left;"><%=score%></span><br>
+		<span style="font-size: 10px; margin-top:3px; float: left;"><%=bbs.getWdate() %></span><br><br>
+		</span> 
+		
+		</p><br><br>
+		<div style="clear: both;"></div>
+		<article class="content<%=bbs.getSeq() %>" name="content"><%=bbs.getContent() %></article>
 		</td>
 		<td style="border-left: 1px solid #DDD">	
 				<%
@@ -908,6 +958,80 @@ content: '<p>설정</p><hr><button type="button" class="btn btn-default popover-
           });
         });
    </script>
+   <script>
+      $(function() {
+         // initialize popover with dynamic content
+         $('#btnPopover2').popover({
+            placement: 'bottom',
+            container: 'body',
+            html: true,
+            trigger: 'hover',
+            content: '<button onclick="updatebbs(<%=whatlist.get(0).getSeq() %>)" type="button" class="btn btn-default popover-dismiss">수정</button><button onclick="deletebbs(<%=whatlist.get(0).getSeq() %>)" type="button" class="btn btn-default popover-dismiss">삭제</button>'
+         });
+         // prevent popover from being hidden on mouseout.
+         // only dismiss when explicity clicked (e.g. has .hide-popover)
+         $('#btnPopover2').on('hide.bs.popover', function(evt) {
+            if(!$(evt.target).hasClass('hide-popover')) {
+               evt.preventDefault();
+               evt.stopPropagation();
+               evt.cancelBubble = true;
+            }
+         });
+         // reset helper class when dismissed
+         $('#btnPopover2').on('hidden.bs.popover', function(evt) {
+            $(this).removeClass('hide-popover');
+         });
+         $('body').on('click', '.popover-dismiss', function() {
+            // add helper class to force dismissal
+            $('#btnPopover2').addClass('hide-popover');
+            // call method to hide popover
+            $('#btnPopover2').popover('hide');
+         });
+          
+          $('#btnPopover2').data('overButton', false);
+          $('#btnPopover2').data('overPopover', false);
+          $.fn.closePopover = function(){
+            var $this = $(this);
+            
+            if(!$this.data('overPopover') && !$this.data('overButton')){
+              $this.addClass('hide-popover');
+              $this.popover('hide');              
+            }
+          }
+          
+          //set flags when mouse enters the button or the popover.
+          //When the mouse leaves unset immediately, wait a second (to allow the mouse to enter again or enter the other) and then test to see if the mouse is no longer over either. If not, close popover.
+          $('#btnPopover2').on('mouseenter', function(evt){
+            $(this).data('overButton', true);
+          });
+          $('#btnPopover2').on('mouseleave', function(evt){
+            var $btn = $(this);
+            $btn.data('overButton', false);
+            
+            setTimeout(function() {$btn.closePopover();}, 200);
+            
+          });
+          $('#btnPopover2').on('shown.bs.popover', function () {
+            var $btn = $(this);
+            $('.popover-content').on('mouseenter', function (evt){
+              $btn.data('overPopover', true);
+            });
+            $('.popover-content').on('mouseleave', function (evt){
+              $btn.data('overPopover', false);
+              
+              setTimeout(function() {$btn.closePopover();}, 200);
+            });
+          });
+        });
+   </script>
+   	<script type="text/javascript">
+	function logout() {
+		location.href ="User?command=logout";
+	}
+	function upmydetail() {
+		location.href ="User?command=mypage";
+	}
+	</script>
 </body>
 </html>
 

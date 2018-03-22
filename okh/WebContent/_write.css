@@ -139,7 +139,7 @@ input.login {
   margin-bottom: 20px;
   float: left;
   border: 1px solid #bcbcbc;
-  width: 700px;
+  width: 100%;
     border-collapse: separate;
     border-spacing: 2px;
     text-align: left;

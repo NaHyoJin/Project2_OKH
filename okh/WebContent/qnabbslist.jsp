@@ -419,7 +419,7 @@ if(sortlist==null||whatsort==null||sortlist.size()==0){	//sort안했다
 		<br>
 		
 		<jsp:include page="paging.jsp">
-	<jsp:param name="actionPath" value="techbbs.jsp"/>
+<jsp:param name="actionPath" value="qnabbslist.jsp"/>
 	<jsp:param name="findWord" value="<%=findWord %>"/>
 	<jsp:param name="choice" value="<%=choice %>"/>
 	<jsp:param name="nowPage" value="<%=String.valueOf(paging.getNowPage()) %>" />

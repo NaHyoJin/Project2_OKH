@@ -1,3 +1,5 @@
+<%@page import="user.UserService"%>
+<%@page import="user.IUserService"%>
 <%@page import="jobs_BBS5.newbbs5HWCodingPDSService"%>
 <%@page import="jobs_BBS5.newbbs5HWCodingPDSServiceImpl"%>
 <%@page import="jobs_BBS5.newbbs5HWCodingPDSVO"%>
@@ -24,7 +26,7 @@ rel="stylesheet">
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/custom.css">
 	<link rel="stylesheet" type="text/css" href="../_main.css?ver=1.32"><!-- 메인 상단 버튼 부분. -->
-	<link rel="stylesheet" type="text/css" href="../_write.css?ver=1.45">
+	<link rel="stylesheet" type="text/css" href="../_write.css?ver=1.47">
 <!-- 폰트  -->
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
 <script type="text/javascript">
@@ -99,15 +101,23 @@ $("#pdsup").click(function() {
 	//자료실 dto 부분.
 	newbbs5HWCodingPDSVO pdsdto = null;
 	List<newbbs5HWCodingPDSVO> pdslist = null;
+	IUserService service = UserService.getInstance();
+	String yn="";
+	String profile = null;
+	if(mem != null){
+		profile = service.getProfile(mem.getId());
+	}
 	%>
 
 
 	<%
 //mem 에 로그인 한건가 안한건가 확인해서 좌측 메뉴 보여주는것.
 	if(mem == null){
+		yn="no";
 %>
 	<!-- 인클루드 부분 -->
 	<div class="menu">
+	<input type="button" class="homebtn" onclick="location.href='../index.jsp'">
 		<input type="button" class="login" id="login">
 		<input type="button" class="account" id="account">
 		<input type="button" class="bbs1" id="qnabbs">
@@ -123,11 +133,16 @@ $("#pdsup").click(function() {
 	<!-- 인클루드 부분 -->
 	<div class="menu">
 		<input type="button" class="homebtn" id="homebtn">
-		<div class="actionlogin">
-			<span><%=mem.getId() %></span>
+<div class="actionlogin">
+
+	<a onclick="upmydetail()" style="cursor: pointer">
+			<img src="<%=profile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+		</a>
+			<span class="memid"><a onclick="upmydetail()" style="cursor: pointer;color: #fff;"><%=mem.getId() %></a></span> <br>
+					<span class="point"><img src="../image/actionpoint.PNG" style="margin-top: 0" class="pointimg"><%=mem.getScore()%></span>
 			<img class="settingbtn" alt="" src="../image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
-			
-		</div>
+				
+</div>
 		<input type="button" class="bbs1" id="qnabbs">
 		<input type="button" class="techbbs_hjh" id="techbbs">
 		<input type="button" class="bbs3" id="column"><!-- 정재흥 -->		
@@ -193,8 +208,15 @@ $("#pdsup").click(function() {
 			
 			/* 장문석  study*/
 			$("#combbs").click(function () {
-				location.href = "../CommunityControl?command=list";
-			});	
+				if(<%=yn.equals("yes")%>){
+					location.href = "../CommunityControl?command=list";
+		
+				}
+				else{
+					location.href = "../User?command=guest";
+				}
+				
+			});
 
 		});
 	</script>
@@ -207,7 +229,16 @@ $("#pdsup").click(function() {
 	 
 	 <div class="myinfo">
 	 	
-	 	<p id="test" align="left"><%=mem.getId() %></p>
+	 	<p class="myinfo_icon" style="margin-bottom: 3px;">
+		<a onclick="upmydetail()" style="cursor: pointer">
+		<img src="<%=profile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+		</a>
+		<span class="detailid">
+		<a onclick="upmydetail()" style="cursor: pointer; margin-left: 20px;"><%=mem.getId() %></a>
+		</span>
+</p>
+<span class="" style="display: inline-block;"><img src="../image/actionpoint.PNG" class="pointimg"></span>
+		<span style="display: inline-block;"><%=mem.getScore()%></span>
 		 <input type="hidden" name="id" value="<%=mem.getId()%>">
 		 <input type="hidden" name="command" value="techwriteAf">
 	 </div>
@@ -423,7 +454,14 @@ function eventonblur() {
           });
         });
    </script>
-
+<script type="text/javascript">
+	function logout() {
+		location.href ="User?command=logout";
+	}
+	function upmydetail() {
+		location.href ="User?command=mypage";
+	}
+	</script>
 <!-- var formData = new FormData(); 
 	formData.append("id", $("input[name=id2]").val()); 
 	formData.append("fileload", $("input[name=fileload]")[0].files[0]); 

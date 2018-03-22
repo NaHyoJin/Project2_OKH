@@ -1,3 +1,5 @@
+<%@page import="user.UserService"%>
+<%@page import="user.IUserService"%>
 <%@page import="jobs_BBS5.PagingBean"%>
 <%@page import="jobs_BBS5.newbbs5HWCodingVO"%>
 <%@page import="jobs_BBS5.newbbs5HWCodingService"%>
@@ -63,7 +65,7 @@ rel="stylesheet">
 
  	UserDto mem = null;//null로 초기화.
  	List<newbbs5HWCodingVO> techlist = (List<newbbs5HWCodingVO>)request.getAttribute("techbbs");
-	
+ 	
  	if(ologin != null){
 		mem = (UserDto)ologin;
 		//로그인 정보 가지고 오나 확인 부분.
@@ -149,6 +151,12 @@ else if(choice.equals("tagname")) cho = 3;
 	hwlist = dao.gettechBbsPagingList(paging, findWord, cho);
 
 	System.out.println(hwlist.size() + "사이즈크기");
+	IUserService service = UserService.getInstance();
+ 	String yn="";
+ 	String profile = null;
+ 	if(ologin != null){
+ 		profile = service.getProfile(mem.getId());
+ 	}
 %>
 
 <!-- 정렬 부붙. HW게시판 데이터. 일단 생략해보자.-->
@@ -176,18 +184,24 @@ else if(choice.equals("tagname")) cho = 3;
 	<div class="menu">
 			<%//로그인 안할경우.
 			if(mem == null){
+				yn="no";
 			%>
-		<input type="button" class="homebtn" id="homebtn">
+		<input type="button" class="homebtn" onclick="location.href='index.jsp'">
 		<input type="button" class="login" id="login">
 		<input type="button" class="account" id="account">
 			<%
 			}else{//로그인 한경우.
+				yn="yes";
 			%>
 		<input type="button" class="homebtn" id="homebtn">
-			<div class="actionlogin">
-				<span><%=mem.getId() %></span>
-				<img class="settingbtn" alt="" src="../image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
-			</div>
+		<div class="actionlogin">
+		<a onclick="upmydetail()" style="cursor: pointer">
+			<img src="<%=profile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+		</a>
+			<span class="memid"><a onclick="upmydetail()" style="cursor: pointer;color: #fff;"><%=mem.getId() %></a></span> <br>
+			<span class="point" style="margin-top: 0"><img src="../image/actionpoint.PNG" class="pointimg"><%=mem.getScore()%></span>
+			<img class="settingbtn" alt="" src="../image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
+				</div>
 		<%
 		}
 		%>
@@ -301,7 +315,9 @@ else if(choice.equals("tagname")) cho = 3;
 				} --%>
 				
 			});
-		
+			$("#homebtn").click(function() {
+				location.href="../main.jsp";
+			});
 			$("#login").click(function() {
 				location.href="../User?command=login";
 			});
@@ -332,8 +348,16 @@ else if(choice.equals("tagname")) cho = 3;
 			
 			/* 장문석  study*/
 			$("#combbs").click(function () {
+			if(<%=yn.equals("yes")%>){
 				location.href = "../CommunityControl?command=list";
-			});			
+	
+			}
+			else{
+				location.href = "../User?command=guest";
+			}
+			
+		});
+				
 	 
 			//게시판5 나효진 jobs 부분.
 			$("#jobs").click(function () {
@@ -432,7 +456,7 @@ type="button" id="techwrite">게시글 쓰기</button>
 				}
 				%>
 				
-				<p style="font-size: 20px">
+				<p style="font-size: 15px; margin-top: 5px;">
 				
 				<%
 				//로그인 안하고 글 볼때 null 값으로.
@@ -485,8 +509,24 @@ type="button" id="techwrite">게시글 쓰기</button>
 				%>
 				
 				<td>
-				<%=dto.getId() %>
-				<p style="font-size: 10px"><%=dto.getWdate() %></p>
+				<p class="myinfo_icon" style="margin-bottom: 0">
+			<a onclick="location.href ='User?command=otherpage&infoid=<%=dto.getId() %>'" style="cursor: pointer">
+			<%
+		IUserService uservice=UserService.getInstance();
+		
+		int score=uservice.getScore(dto.getId());
+		String getprofile=uservice.getProfile(dto.getId());
+		%>
+		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 30px; float:left; max-height: 30px; margin: 0 auto;">
+		</a>
+		<span class="detailid" style="margin-left: 10px;">
+		<a onclick="location.href ='../User?command=otherpage&infoid=<%=dto.getId() %>'" style="cursor: pointer"><span style="margin-top: 5px"><%=dto.getId() %></span></a>
+		<span class="" style="margin-top: 10px;"><img src="../image/actionpoint.PNG" class="pointimg">
+		
+		<%=score%></span>
+		</span> <br><br>
+		</p>
+			<p style="font-size: 10px"><%=dto.getWdate() %></p>
 				</td>
 				</tr>
 				<%
@@ -719,6 +759,14 @@ $(function() {
 	
 });
 </script>
+<script type="text/javascript">
+	function logout() {
+		location.href ="../User?command=logout";
+	}
+	function upmydetail() {
+		location.href ="../User?command=mypage";
+	}
+	</script>
 </body>
 </html>
 
