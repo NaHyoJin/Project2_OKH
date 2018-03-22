@@ -318,15 +318,15 @@ public class QnaServlet extends HttpServlet {
 				
 				if (isS) {
 					System.out.println("dislikeid아이디삭제성공");
-				//	boolean is=service.getparent(seq);
+					boolean is=service.getparent(seq);
 					List<QnaDto> list=new ArrayList<>();
-					/*if (is) {
+					if (is) {
 						list=service.getpdsdetail(seq);
 						System.out.println("자료있다");
 					}else {
 						list=service.getdetail(seq);
 						System.out.println("자료없다");
-					}*/
+					}
 					req.setAttribute("dislikeidyn", dto);
 					req.setAttribute("whatlist", list);
 					dispatch("qnabbsdetail.jsp", req, resp);
@@ -349,15 +349,15 @@ public class QnaServlet extends HttpServlet {
 				
 				if (isS) {
 					System.out.println("dislikeid아이디추가성공");
-				//	boolean is=service.getparent(seq);
+					boolean is=service.getparent(seq);
 					List<QnaDto> list=new ArrayList<>();
-					/*if (is) {
+					if (is) {
 						list=service.getpdsdetail(seq);
 						System.out.println("자료있다");
 					}else {
 						list=service.getdetail(seq);
 						System.out.println("자료없다");
-					}*/
+					}
 					req.setAttribute("dislikeidyn", dto);
 					req.setAttribute("whatlist", list);
 					dispatch("qnabbsdetail.jsp", req, resp);

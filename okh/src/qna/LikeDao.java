@@ -165,7 +165,7 @@ public class LikeDao implements LikeDaoImpl {
 		ResultSet rs=null;
 		QnaDto dto=null;
 		
-		String sql1 = " SELECT SEQ,ID, TITLE,TAGNAME,CONTENT,WDATE,  "
+		String sql1 = " SELECT SEQ,ID, TITLE,TAGNAME,CONTENT,WDATE,DEL  "
 				+ " READCOUNT,LIKECOUNT,LIKEID,DISLIKEID,COMMENTCOUNT,SCRAPCOUNT "
 				+ "  FROM QNA "
 				+ " WHERE SEQ=? AND LIKEID LIKE '%-" + serchlikeid.trim() + "-%' ";
