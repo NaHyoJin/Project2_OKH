@@ -238,9 +238,20 @@ if(ologin != null){
 		<table>
 			<col width="100"> <col width="800">
 			<tr>
-				<td>작성자</td>
+			<td style="vertical-align: middle;">작성자</td>
+				<td><p class="myinfo_icon" style="margin-bottom: 3px; ">
+		<a onclick="upmydetail()" style="cursor: pointer">
+		<img src="<%=profile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+		</a>
+		<span class="detailid">
+		<a onclick="upmydetail()" style="cursor: pointer; margin-left: 20px;"><%=mem.getId() %></a>
+		</span>
+</p>
+<span class="" style="display: inline-block;"><img src="image/actionpoint.PNG" class="pointimg"></span>
+		<span style="display: inline-block;"><%=mem.getScore()%></span></td>
+				
 				<td>
-					<input type="text" class="form-control" id="id" readonly="readonly" value="<%=mem.getId() %>" size="100">
+				
 					<input type="hidden" name="id" value="<%=mem.getId() %>">
 	 				<input type="hidden" name="command" value="ComwriteAF">
 				</td>
@@ -249,7 +260,7 @@ if(ologin != null){
 			<tr>
 				<td>제목</td>
 				<td>
-					<input type="text" class="form-control" placeholder="제목을 입력해 주세요." id="title" name="title" size="100">
+					<input type="text" style="margin-top: 15px;" class="form-control" placeholder="제목을 입력해 주세요." id="title" name="title" size="100">
 				</td>
 			</tr>
 			<tr>

@@ -1,3 +1,5 @@
+<%@page import="user.UserService"%>
+<%@page import="user.IUserService"%>
 <%@page import="user.UserDto"%>
 <%@page import="studysrc.iCalendar"%>
 <%@page import="user.UserDao"%>
@@ -12,18 +14,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>calendar</title>
-<style type="text/css">
-  body {
-    margin: 40px 10px;
-    padding: 0;
-    font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
-    font-size: 14px;
-  }
-  tr{
-  	
-  }
-
-</style>
+ <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+	
+<link rel="stylesheet" type="text/css" href="_main.css?ver=1.33">
+<link rel="stylesheet" type="text/css" href="_studycalendar.css?ver=1.33">
 </head>
 <body>
 
@@ -31,34 +30,52 @@
 	<%
 	Object ologin = session.getAttribute("login");
 	UserDto mem = (UserDto)ologin;
+	IUserService service = UserService.getInstance();
+	String yn="";
+	String profile = null;
+	if(ologin != null){
+		profile = service.getProfile(mem.getId());
+	}
 	%>
 <!-- 메뉴 -->
 	<div class="menu">
 		<%
 		if(ologin == null){
+			yn="no";
 		%>
+		<input type="button" class="homebtn" onclick="location.href='index.jsp'">
 		<input type="button" class="login" id="login">
 		<input type="button" class="account" id="account">
 		<%
 		}else{
+			yn="yes";
 		%>
-		<div class="actionlogin">
-			<span><%=mem.getId() %></span>
+		<input type="button" class="homebtn" id="homebtn">
+<div class="actionlogin">
+
+	<a onclick="upmydetail()" style="cursor: pointer">
+			<img src="<%=profile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+		</a>
+			<span class="memid"><a onclick="upmydetail()" style="cursor: pointer;color: #fff;"><%=mem.getId() %></a></span> <br>
+					<span class="point"><img src="image/actionpoint.PNG" style="margin-top: 0" class="pointimg"><%=mem.getScore()%></span>
 			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
-			<img class="alarmbtn" alt="" src="image/alarm.PNG" style="cursor: pointer" id="btnPopover">	
-		</div>
+				
+</div>
 		<%
 		}
 		%>
-		<input type="button" class="bbs1" id="qnabbs">				<!-- 박형태 -->
+	<input type="button" class="bbs1" id="qnabbs">				<!-- 박형태 -->
 		<input type="button" class="techbbs_hjh" id="techbbs">		<!-- 황준현 -->
 		<input type="button" class="bbs3" id="column">				<!-- 정재흥 -->
 		<input type="button" class="bbs4" id="combbs">				<!-- 장문석 -->
 		<input type="button" class="bbs5" id="jobs">				<!-- 나효진 -->
-		<input type="button" class="bbs6" id="life">				<!-- 정병찬 -->
+		<input type="button" class="bbs6" id="life">						<!-- 정병찬 -->
 	</div>
 	<script type="text/javascript">
 	$(function() {
+		$("#homebtn").click(function() {
+			location.href="main.jsp";
+		});
 		$("#login").click(function() {
 			location.href = "User?command=login";
 		});
@@ -81,7 +98,14 @@
 			location.href = "LifeBbs?command=life";
 		});
 		$("#combbs").click(function () {
-			location.href = "CommunityControl?command=list";
+			if(<%=yn.equals("yes")%>){
+				location.href = "CommunityControl?command=list";
+	
+			}
+			else{
+				location.href = "User?command=guest";
+			}
+			
 		});
 	});
 	</script>
@@ -248,11 +272,12 @@ public String makeTable(int year, int month, int day, List<CalendarDto> list){
 	
 	for(CalendarDto dto : list){
 		if(dto.getRdate().substring(0,8).equals(dates)){
-			s += "<tr bgcolor='yellow'>";
+			s += "<tr bgcolor='#006c00'>";
 			s += "<td>";
 			s += "<a href='CommunityControl?command=detail&seq="+dto.getChild()+"&likeid="+dto.getId()+"'>";
-			s += "<font style='font-size:8; color:red'>";
-			s += "#"+dto.getChild();
+			s += "<img src='image/scrap.PNG'>";
+			s += "<font style='font-size:8; color:#'>";
+			s += "#"+dto.getChild()+"<br>"+dto.getTitle();
 			s += "</font>";
 			s += "</a>";
 			s += "</td>";
@@ -264,7 +289,6 @@ public String makeTable(int year, int month, int day, List<CalendarDto> list){
 }
 %>
 <div align="center">
-<h1>스케쥴</h1>
 <%
 	Calendar cal = Calendar.getInstance();
 cal.set(Calendar.DATE, 1);
@@ -298,16 +322,16 @@ cal.set(year, month-1, 1); 	//연 월 일 셋팅 완료
 int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 
 // << 연도
-String pp = String.format("<a href='%s?year=%d&month=%d'><img src='image/left.gif'></a>",
+String pp = String.format("<a href='%s?year=%d&month=%d'>&lt;&lt;</a>",
 							"calendar.jsp",year-1,month);
 // < 월
-String p = String.format("<a href='%s?year=%d&month=%d'><img src='image/prec.gif'></a>",
+String p = String.format("<a href='%s?year=%d&month=%d'>&lt;</a>",
 							"calendar.jsp",year,month-1);
 // > 월
-String n = String.format("<a href='%s?year=%d&month=%d'><img src='image/next.gif'></a>",
+String n = String.format("<a href='%s?year=%d&month=%d'>&gt;</a>",
 							"calendar.jsp",year,month+1);
 // >> 연도
-String nn = String.format("<a href='%s?year=%d&month=%d'><img src='image/last.gif'></a>",
+String nn = String.format("<a href='%s?year=%d&month=%d'>&gt;&gt;</a>",
 							"calendar.jsp",year+1,month);
 
 UserDto user = (UserDto)session.getAttribute("login");
@@ -319,24 +343,31 @@ List<CalendarDto> list = dao.getCalendarList(user.getId(), year+two(month+""));
 
 <table border="1">
 	<col width="100"><col width="100"><col width="100"><col width="100"><col width="100"><col width="100"><col width="100">
-	<tr height="80" bgcolor="gray">
-		<td colspan="7" align="center">
-			<%=pp %>&nbsp;&nbsp;<%=p %>&nbsp;
-			<font color="black" style="font-size: 50">
-				<%=String.format("%d년&nbsp;&nbsp;%s월", year,month) %>
-			</font>
-		&nbsp;<%=n %>&nbsp;&nbsp; <%=nn %>
-		</td>
+	<tr style="background-color: #0059ab">
+		<th colspan="7" style="text-align: center;">
+		<h1 style="color: #fff; padding-top: 10px;">일정관리</h1>
+		<ul class="pagination pagination-sm" >
+		<li class="step"><%=pp %></li>
+		<li class="step"><%=p %></li>
+		<li class="step">
+			<a href='javascript:void(0)' style="pointer-events: none; cursor: default;">
+			<%=String.format("%d년&nbsp;&nbsp;%s월", year,month) %>
+			</a>
+			</li>
+		<li class="step"><%=n %></li>	
+		<li class="step"><%=nn %></li>	
+		</ul>
+		</th>
 	</tr> 
 	
 	<tr height="80">
-		<td align="center"> 일 </td>
-		<td align="center"> 월 </td>
-		<td align="center"> 화 </td>
-		<td align="center"> 수 </td>
-		<td align="center"> 목 </td>
-		<td align="center"> 금 </td>
-		<td align="center"> 토 </td>
+		<td style="color:red; font-size: 20px; vertical-align: middle; text-align: center;"> 일 </td>
+		<td style="font-size: 20px; vertical-align: middle; text-align: center;"> 월 </td>
+		<td style="font-size: 20px; vertical-align: middle; text-align: center;"> 화 </td>
+		<td style="font-size: 20px; vertical-align: middle; text-align: center;"> 수 </td>
+		<td style="font-size: 20px; vertical-align: middle; text-align: center;"> 목 </td>
+		<td style="font-size: 20px; vertical-align: middle; text-align: center;"> 금 </td>
+		<td style="color:#0080ff; font-size: 20px; vertical-align: middle; text-align: center;"> 토 </td>
 	</tr>
 	<tr height="80" align="left" valign="top">
 	<%
@@ -378,7 +409,14 @@ List<CalendarDto> list = dao.getCalendarList(user.getId(), year+two(month+""));
 </div>
 
 
-
+   <script type="text/javascript">
+	function logout() {
+		location.href ="User?command=logout";
+	}
+	function upmydetail() {
+		location.href ="User?command=mypage";
+	}
+	</script>
 
 
 
