@@ -117,8 +117,8 @@ public class TotalController extends HttpServlet {
 				String todate=mon+day+hou+min+sec;
 				wdate=Integer.parseInt(todate);
 				totallist.add(new totalbbsdto(qnadto.getSeq(), "QnA게시판", qnadto.getId(), 
-						qnadto.getTitle(),qnadto.getContent(), qnadto.getReadcount(), qnadto.getFavor(), 
-						qnadto.getAnswercount(), wdate));
+						qnadto.getTitle(),qnadto.getContent(), qnadto.getReadcount(), qnadto.getLikecount(), 
+						qnadto.getCommentcount(), wdate));
 			}
 			for (int i = 0; i < comlist.size(); i++) {
 				int wdate=0;
@@ -222,8 +222,8 @@ public class TotalController extends HttpServlet {
 				String todate=mon+day+hou+min+sec;
 				wdate=Integer.parseInt(todate);
 				totallist.add(new totalbbsdto(qnadto.getSeq(), "QnA게시판", qnadto.getId(), 
-						qnadto.getTitle(),qnadto.getContent(), qnadto.getReadcount(), qnadto.getFavor(), 
-						qnadto.getAnswercount(), wdate));
+						qnadto.getTitle(),qnadto.getContent(), qnadto.getReadcount(), qnadto.getLikecount(), 
+						qnadto.getCommentcount(), wdate));
 			}
 			for (int i = 0; i < comlist.size(); i++) {
 				int wdate=0;
@@ -344,8 +344,8 @@ public class TotalController extends HttpServlet {
 				String todate=mon+day+hou+min+sec;
 				wdate=Integer.parseInt(todate);
 				totallist.add(new totalbbsdto(qnadto.getSeq(), "QnA게시판", qnadto.getId(), 
-						qnadto.getTitle(),qnadto.getContent(), qnadto.getReadcount(), qnadto.getFavor(), 
-						qnadto.getAnswercount(), wdate));
+						qnadto.getTitle(),qnadto.getContent(), qnadto.getReadcount(), qnadto.getLikecount(), 
+						qnadto.getCommentcount(), wdate));
 			}
 			for (int i = 0; i < comlist.size(); i++) {
 				int wdate=0;
@@ -481,8 +481,8 @@ public class TotalController extends HttpServlet {
 				String todate=mon+day+hou+min+sec;
 				wdate=Integer.parseInt(todate);
 				totallist.add(new totalbbsdto(qnadto.getSeq(), "QnA게시판", qnadto.getId(), 
-						qnadto.getTitle(),qnadto.getContent(), qnadto.getReadcount(), qnadto.getFavor(), 
-						qnadto.getAnswercount(), wdate));
+						qnadto.getTitle(),qnadto.getContent(), qnadto.getReadcount(), qnadto.getLikecount(), 
+						qnadto.getCommentcount(), wdate));
 			}
 			for (int i = 0; i < comlist.size(); i++) {
 				int wdate=0;
@@ -592,8 +592,8 @@ public class TotalController extends HttpServlet {
 				wdate=Integer.parseInt(todate);
 				insertid="-"+qnadto.getId()+"-";
 				totallist.add(new totalbbsdto(qnadto.getSeq(), "QnA게시판", insertid, 
-						qnadto.getTitle(),qnadto.getContent(), qnadto.getReadcount(), qnadto.getFavor(), 
-						qnadto.getAnswercount(), wdate));
+						qnadto.getTitle(),qnadto.getContent(), qnadto.getReadcount(), qnadto.getLikecount(), 
+						qnadto.getCommentcount(), wdate));
 			}
 			for (int i = 0; i < comlist.size(); i++) {
 				int wdate=0;
@@ -776,8 +776,8 @@ public class TotalController extends HttpServlet {
 				wdate=Integer.parseInt(todate);
 				insertid="-"+qnadto.getId()+"-";
 				totallist.add(new totalbbsdto(qnadto.getSeq(), "QnA게시판", insertid, 
-						qnadto.getTitle(),qnadto.getContent(), qnadto.getReadcount(), qnadto.getFavor(), 
-						qnadto.getAnswercount(), wdate));
+						qnadto.getTitle(),qnadto.getContent(), qnadto.getReadcount(), qnadto.getLikecount(), 
+						qnadto.getCommentcount(), wdate));
 			}
 			for (int i = 0; i < comlist.size(); i++) {
 				int wdate=0;

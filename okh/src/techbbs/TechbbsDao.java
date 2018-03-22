@@ -929,20 +929,18 @@ public class TechbbsDao implements iTechbbsDao {
 				
 				QnaDto dto = new QnaDto
 						(rs.getInt(1),
-						rs.getString(2),
-						rs.getInt(3),
-						rs.getInt(4),
-						rs.getInt(5),
-						rs.getString(6),
-						rs.getString(7),
-						rs.getString(8),
-						rs.getString(9),
-						rs.getInt(10),
-						rs.getInt(11),
-						rs.getInt(12),
-						rs.getInt(13),
-						rs.getInt(14),
-						rs.getInt(15)
+								rs.getString(2),
+								rs.getString(3),
+								rs.getString(4),
+								rs.getString(5),
+								rs.getString(6),
+								rs.getInt(7),
+								rs.getInt(8),
+								rs.getInt(9),
+								rs.getString(10),
+								rs.getString(11),
+								rs.getInt(12),
+								rs.getInt(13)
 						);
 		// seq, id, title, content, wdate, del, readcount, likecount, scrapcount)
 				list.add(dto);
@@ -1147,20 +1145,18 @@ public class TechbbsDao implements iTechbbsDao {
 				
 				QnaDto dto = new QnaDto
 						(rs.getInt(1),
-						rs.getString(2),
-						rs.getInt(3),
-						rs.getInt(4),
-						rs.getInt(5),
-						rs.getString(6),
-						rs.getString(7),
-						rs.getString(8),
-						rs.getString(9),
-						rs.getInt(10),
-						rs.getInt(11),
-						rs.getInt(12),
-						rs.getInt(13),
-						rs.getInt(14),
-						rs.getInt(15)
+								rs.getString(2),
+								rs.getString(3),
+								rs.getString(4),
+								rs.getString(5),
+								rs.getString(6),
+								rs.getInt(7),
+								rs.getInt(8),
+								rs.getInt(9),
+								rs.getString(10),
+								rs.getString(11),
+								rs.getInt(12),
+								rs.getInt(13)
 						);
 		// seq, id, title, content, wdate, del, readcount, likecount, scrapcount)
 				list.add(dto);
@@ -1287,7 +1283,7 @@ public class TechbbsDao implements iTechbbsDao {
 	}
 	@Override
 	public boolean checkqnacomment(int seq) {
-		String sql = " SELECT ANSWERCOUNT FROM QNA "
+		String sql = " SELECT COMMENTCOUNT FROM QNA "
 				+ " WHERE SEQ=? ";
 		Connection conn=null;
 		PreparedStatement psmt=null;
