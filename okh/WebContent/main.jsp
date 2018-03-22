@@ -146,10 +146,12 @@ if(ologin != null){
 			location.href = "LifeBbs?command=life";
 		});
 		$("#combbs").click(function () {
-			if(<%=id %> == null){
-				location.href = "User?command=guest";
-			}else{
+			if(<%=yn.equals("yes")%>){
 				location.href = "CommunityControl?command=list";
+	
+			}
+			else{
+				location.href = "User?command=guest";
 			}
 			
 		});
