@@ -29,7 +29,7 @@
 	<%
 	Object ologin = session.getAttribute("login");
 	UserDto mem = (UserDto)ologin;
-
+	String yn="";
 	IUserService service = UserService.getInstance();
 	
 	String profile = null;
@@ -42,17 +42,24 @@
 	<div class="menu">
 		<%
 		if(ologin == null){
+			yn="no";
 		%>
+		<input type="button" class="homebtn" onclick="location.href='index.jsp'">
 		<input type="button" class="login" id="login">
 		<input type="button" class="account" id="account">
 		<%
 		}else{
+			yn="yes";
 		%>
-		<div class="actionlogin">
-			<span><%=mem.getId() %></span>
+		<input type="button" class="homebtn" id="homebtn">
+<div class="actionlogin">
+<a onclick="upmydetail()" style="cursor: pointer">
+	<img src="<%=profile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+</a>		
+			<span class="memid"><a onclick="upmydetail()" style="cursor: pointer;color: #fff;"><%=mem.getId() %></a></span> <br>
+			<span class="point" style="margin-top: 0"><img src="image/actionpoint.PNG" class="pointimg"><%=mem.getScore()%></span>
 			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
-			<img class="alarmbtn" alt="" src="image/alarm.PNG" style="cursor: pointer" id="btnPopover">	
-		</div>
+				</div>
 		<%
 		}
 		%>
@@ -65,6 +72,9 @@
 	</div>
 	<script type="text/javascript">
 	$(function() {
+		$("#homebtn").click(function() {
+			location.href="main.jsp";
+		});
 		$("#login").click(function() {
 			location.href = "User?command=login";
 		});
@@ -87,7 +97,14 @@
 			location.href = "LifeBbs?command=life";
 		});
 		$("#combbs").click(function () {
-			location.href = "CommunityControl?command=list";
+			if(<%=yn.equals("yes")%>){
+				location.href = "CommunityControl?command=list";
+	
+			}
+			else{
+				location.href = "User?command=guest";
+			}
+			
 		});
 	});
 	</script>

@@ -24,11 +24,12 @@
 
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/bootstrap.js"></script>
-	<link rel="stylesheet" type="text/css" href="_main.css?ver=1.32">
-<link rel="stylesheet" type="text/css" href="_totalbbs.css?ver=1.27">
+<link rel="stylesheet" type="text/css" href="_main.css?ver=1.66">
+<link rel="stylesheet" type="text/css" href="_totalbbs.css?ver=1.27">	
 <!-- 쿠키용 -->
 <script type="text/javascript" src="js/jquery.cookie.js"></script>
 <script type="text/javascript">
+
 
 function getCookie(name){    
 var wcname = name + '=';
@@ -72,9 +73,9 @@ if(getCookie('okhpop') != 'rangs') {
 		<%
 		if(ologin == null){
 		%>
-		<input type="button" class="homebtn" id="homebtn">
-		<input type="button" class="login" id="login">
-		<input type="button" class="account" id="account">
+		<input type="button"  class="homebtn" id="homebtn">
+		<input type="button" style="margin-top: 20px;" class="login" id="login">
+		<input type="button" style="margin-top: 20px;" class="account" id="account">
 		<%
 		}else{
 		%>
@@ -306,7 +307,7 @@ function searchBbs1(e) {
 }
 </script>
 		<div class="partition1">
-			<h4 style="margin-bottom: 15px">Q&A <a href="qnaServlet?command=listQna"><img style="float: right" alt="" src="image/moresee.PNG"></a></h4>
+			<h4 style="margin-bottom: 15px">Q&A <a href="qnaServlet?command=listQna"><img style="float: right" alt="게시판으로가기" src="image/moresee.PNG"></a></h4>
 			<%
 			TechbbsServiceImpl tservice=TechbbsService.getInstance();
 			 tservice=TechbbsService.getInstance();
@@ -370,7 +371,7 @@ function searchBbs1(e) {
 			
 		</div>
 		<div class="partition2">
-		<h4 style="margin-bottom: 15px">사는얘기 <a href="LifeBbs?command=life"><img style="float: right" alt="" src="image/moresee.PNG"></a></h4>
+		<h4 style="margin-bottom: 15px">사는얘기 <a href="LifeBbs?command=life"><img style="float: right" alt="게시판으로가기" src="image/moresee.PNG"></a></h4>
 			<%
 			
 			 tservice=TechbbsService.getInstance();
@@ -514,7 +515,7 @@ function searchBbs1(e) {
 		</div>
 	
 		<div class="partition4">
-			<h4 style="margin-bottom: 15px">H/W & Coding 게시판 <a href="BBSHWCodingController?command=main"><img style="float: right" alt="" src="image/moresee.PNG"></a></h4>
+			<h4 style="margin-bottom: 15px">H/W & Coding 게시판 <a href="BBSHWCodingController?command=main"><img style="float: right" alt="게시판으로가기" src="image/moresee.PNG"></a></h4>
 			<%
 			newbbs5HWCodingServiceImpl hwservice = newbbs5HWCodingService.getInstance();
 			List<newbbs5HWCodingVO> hwlist = hwservice.gettechBbsList();
