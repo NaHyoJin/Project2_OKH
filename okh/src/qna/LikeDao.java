@@ -260,12 +260,14 @@ public class LikeDao implements LikeDaoImpl {
 	public boolean deleteLikeID(String deleteid, int seq) {
 		String getalllikeid=getLikeID(seq);
 		String[] ids=getids(getalllikeid);
-		String up="-";
+		//String up="-";
+		String up="";
 		for (int i = 0; i < ids.length; i++) {
 			if (ids[i].equals(deleteid)) {
 				
 			}else {
-				up=up+ids[i];
+				//up=up+ids[i];
+				up="-"+ids[i]+"-";
 			}
 		}
 		System.out.println(up);
@@ -304,12 +306,13 @@ public class LikeDao implements LikeDaoImpl {
 		System.out.println(deleteid+"이건..?"+seq);
 		String getall_dislikeid=getDisLikeID(seq);
 		String[] ids=getids(getall_dislikeid);
-		String up="-";
+		String up="";
 		for (int i = 0; i < ids.length; i++) {
 			if (ids[i].equals(deleteid)) {
 				
 			}else {
-				up=up+ids[i];
+			//	up=up+ids[i];
+				up="-"+ids[i]+"-";
 			}
 		}
 		

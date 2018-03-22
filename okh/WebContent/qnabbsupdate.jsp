@@ -21,6 +21,14 @@
 	<!-- 태그 이용하기위한-->
 	<link rel="stylesheet" href="css/bootstrap-tagsinput.css">
 	<script src="js/bootstrap-tagsinput.js"></script>
+	
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/custom.css">
+	<link rel="stylesheet" type="text/css" href="_write.css?ver=1.48">
+<link rel="stylesheet" type="text/css" href="_main.css?ver=1.36">
+<!-- 폰트  -->
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
+	
 </head>
 <body>
 
