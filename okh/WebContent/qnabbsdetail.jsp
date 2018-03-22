@@ -1,3 +1,5 @@
+<%@page import="user.UserService"%>
+<%@page import="user.IUserService"%>
 <%@page import="qna.QnaAnswerService"%>
 <%@page import="qna.QnaAnswerServiceImpl"%>
 <%@page import="java.util.List"%>
@@ -79,9 +81,13 @@ if(whatlist.get(0).getPdsys()==2){		//자료없으면
 	pdsyn=1;
 }
 //답글게시판리스트불러오는함수작성
-
+String yn="";
 List<QnaAnswerDto> replist=aservice.getRepBbsList(whatlist.get(0).getSeq());
-
+IUserService sservice = UserService.getInstance();
+String profile = null;
+if(ologin != null){
+	profile = sservice.getProfile(mem.getId());
+}
 %>
 
 
@@ -91,17 +97,25 @@ List<QnaAnswerDto> replist=aservice.getRepBbsList(whatlist.get(0).getSeq());
 	<div class="menu">
 		<%
 		if(ologin == null){
+			yn="no";
 		%>
-		<input type="button" class="login" id="login">
-		<input type="button" class="account" id="account">
-		<%
+		<input type="button" class="homebtn" onclick="location.href='index.jsp'">
+	<input type="button" class="login" id="login">
+	<input type="button" class="account" id="account">
+
+<%
 		}else{
+			yn="yes";
 		%>
-		<div class="actionlogin">
-			<span><%=mem.getId() %></span>
+		<input type="button" class="homebtn" id="homebtn">
+<div class="actionlogin">
+<a onclick="upmydetail()" style="cursor: pointer">
+	<img src="<%=profile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+</a>		
+			<span class="memid"><a onclick="upmydetail()" style="cursor: pointer;color: #fff;"><%=mem.getId() %></a></span> <br>
+			<span class="point" style="margin-top: 0"><img src="image/actionpoint.PNG" class="pointimg"><%=mem.getScore()%></span>
 			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
-			<img class="alarmbtn" alt="" src="image/alarm.PNG" style="cursor: pointer" id="btnPopover">	
-		</div>
+				</div>
 		<%
 		}
 		%>
@@ -136,7 +150,14 @@ List<QnaAnswerDto> replist=aservice.getRepBbsList(whatlist.get(0).getSeq());
 			location.href = "LifeBbs?command=life";
 		});
 		$("#combbs").click(function () {
-			location.href = "CommunityControl?command=list";
+			if(<%=yn.equals("yes")%>){
+				location.href = "CommunityControl?command=list";
+	
+			}
+			else{
+				location.href = "User?command=guest";
+			}
+			
 		});
 	});
 	</script>
@@ -266,8 +287,27 @@ if(ologin == null){	//로그인안한상태
 	
 	</div>
 <div class="wrap">
-	<div class="myinfo"><%=whatlist.get(0).getId() %><%=whatlist.get(0).getWdate() %><br>
+	<div class="myinfo">
 		<p class="myinfo_icon">
+		<%
+		IUserService uservice=UserService.getInstance();
+		
+		int score=uservice.getScore(whatlist.get(0).getId());
+		String getprofile=uservice.getProfile(whatlist.get(0).getId());
+		%>
+		<a onclick="location.href='User?command=otherpage&infoid=<%=whatlist.get(0).getId() %>'" style="cursor: pointer">
+		
+		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+		</a>
+		<span class="detailid">
+		<a onclick="location.href='User?command=otherpage&infoid=<%=whatlist.get(0).getId() %>'" style="cursor: pointer"><%=whatlist.get(0).getId() %></a>
+		<span class="" style="margin-top: 0"><img src="image/actionpoint.PNG" class="pointimg">
+		
+		<%=score%></span></span>
+		 <br><br>
+		<span style="float:left; font-size: 12px;"><%=whatlist.get(0).getWdate() %><br></span>
+
+		
 		<img alt="" src="image/repleon.PNG"><span><%=whatlist.get(0).getCommentcount() %></span>
 		<img alt="" src="image/readcounton.PNG"><span><%=whatlist.get(0).getReadcount() %></span>
 		</p>
@@ -401,7 +441,27 @@ if(ologin == null){	//로그인안한상태
 	%>
 	<tr>
 		<td>
-			<%=mem.getId() %>
+		<%
+		score=uservice.getScore(bbs.getId());
+		getprofile=uservice.getProfile(bbs.getId());
+		%>
+		<p class="myinfo_icon" style="margin-top: 5px">
+			<a onclick="location.href ='User?command=otherpage&infoid=<%=bbs.getId() %>'" style="cursor: pointer">
+		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 30px; float:left; max-height: 30px; margin: 0 auto;">
+		</a>
+		<span class="detailid">
+		<a onclick="location.href ='User?command=otherpage&infoid=<%=bbs.getId() %>'" style="cursor: pointer">
+		<span style="float: left">
+		<%=bbs.getId() %>
+		</span>
+		</a>
+		<img src="image/actionpoint.PNG" class="pointimg" style="float: left">
+		<span style="float: left;"><%=score%></span><br>
+		<span style="font-size: 10px; margin-top:3px; float: left;"><%=bbs.getWdate() %></span><br><br>
+		</span> 
+		
+		</p><br><br>
+		<div style="clear: both;"></div>
 			<article class="content<%=bbs.getSeq() %>" name="content"><%=bbs.getContent() %></article>
 		</td>
 		<td style="border-left: 1px solid #DDD">	
@@ -749,7 +809,14 @@ function loginhe() {
 	location.href='qnaServlet?command=qnadetail&likeid=&seq=<%=whatlist.get(0).getSeq()%>'
 }
 </script>		
-
+	<script type="text/javascript">
+	function logout() {
+		location.href ="User?command=logout";
+	}
+	function upmydetail() {
+		location.href ="User?command=mypage";
+	}
+	</script>
 </body>
 
 </html>
