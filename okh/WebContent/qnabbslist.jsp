@@ -464,9 +464,6 @@ function searchBbs1(e) {
 
 
 $(function() {
-	$("#qnabbs").click(function() {
-		location.href="qnaServlet?command=qnabbslist";
-	});
 	$("#qnawrite").click(function() {
 		location.href="qnaServlet?command=qnawrite";
 	});
