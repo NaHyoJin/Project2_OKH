@@ -178,7 +178,7 @@ List<HWRepbbsDto> replist = trservice.getRepBbsList(whatlist.get(0).getSeq());
 
 			//좌측 화면 상단 이미지 클릭시 인덱스로
 			$("#homebtn").click(function() {
-				location.href = "../mainJSP?command=main";
+				location.href = "mainJSP?command=main";
 			});
 		
 			$("#login").click(function() {

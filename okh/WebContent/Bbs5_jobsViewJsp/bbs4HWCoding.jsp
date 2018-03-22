@@ -366,22 +366,22 @@ type="button" id="techwrite">게시글 쓰기</button>
 	
 	
 <div class="wrap">
-
+<!-- 
 	<!-- 정렬 부분 추가. 정병찬 코드 -->
 	<div class="sortingmenu">
 			<ul class="list-sort pull-left">
-				<!-- <li><a onclick="location.href='lifeBbsList.jsp?sort=wdate'" class="category-sort-link active">최신순</a></li>
+				<li><a onclick="location.href='lifeBbsList.jsp?sort=wdate'" class="category-sort-link active">최신순</a></li>
 				<li><a onclick="location.href='lifeBbsList.jsp?sort=up'" class="category-sort-link active">추천순</a></li>
 				<li><a onclick="location.href='lifeBbsList.jsp?sort=countreply'" class="category-sort-link active">댓글순</a></li>
-				<li><a onclick="location.href='lifeBbsList.jsp?sort=readcount'" class="category-sort-link active">조회순</a></li> -->
-			<!-- 하나씩 만들때마다 하나씩 지워보자. -->
+				<li><a onclick="location.href='lifeBbsList.jsp?sort=readcount'" class="category-sort-link active">조회순</a></li>
+			하나씩 만들때마다 하나씩 지워보자.
 			<li><a onclick="#" class="category-sort-link active">최신순</a></li>
 				<li><a onclick="#" class="category-sort-link active">추천순</a></li>
 				<li><a onclick="#" class="category-sort-link active">댓글순</a></li>
 				<li><a onclick="#" class="category-sort-link active">조회순</a></li>
 			</ul>
 		</div>
-		
+ -->		
 
 	<div class="sercharea">
 		<select id="choice" style="height: 30px">

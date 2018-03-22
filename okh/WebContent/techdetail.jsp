@@ -173,7 +173,7 @@ if(ologin == null){	//로그인안한상태
 	<%
 if(ologin == null){	//로그인안한상태
 	%>
-<button class="create btn btn-success btn-wide pull-right" onclick="loginhe()">새 글 쓰기</button>
+<button class="create btn btn-success btn-wide pull-right" onclick="location.href = 'User?command=guest'">새 글 쓰기</button>
 		<%
 }else{
 	
