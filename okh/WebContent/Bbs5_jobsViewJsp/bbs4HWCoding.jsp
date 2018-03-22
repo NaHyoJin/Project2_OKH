@@ -280,10 +280,10 @@ else if(choice.equals("tagname")) cho = 3;
  --%>				
  				
 				if(memcheck != null){
-					location.href = "mainJSP?command=main";
+					location.href = "../mainJSP?command=main";
 				}
 				else{
-					location.href = "mainJSP?command=index";	
+					location.href = "../mainJSP?command=index";	
 				}
 
 				<%-- var memcheck = null;
@@ -614,7 +614,7 @@ function searchBbs1(e) {
 $(function() {	
 	
 	$("#techbbs").click(function() {
-		location.href = "TechbbsController?command=techbbs";
+		location.href = "../TechbbsController?command=techbbs";
 	});//////////////techbbs
 	
 	
