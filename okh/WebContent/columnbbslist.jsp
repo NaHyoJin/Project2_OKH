@@ -8,7 +8,6 @@
 <%@page import="user.UserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
 <%!
 // 댓글용
 public String arrow(int depth){	
@@ -294,7 +293,7 @@ System.out.println("bbslist in list : " + bbslist);
 
 	<div class="board">
 		<table border="1" class="techtable">
-		<col width="60"><col width="600"><col width="50">
+		<col width="60"><col width="550"><col width="50">
 		
 		<%
 		if(bbslist == null || bbslist.size() == 0){

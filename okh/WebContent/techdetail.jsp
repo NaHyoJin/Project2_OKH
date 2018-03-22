@@ -123,6 +123,9 @@ if(ologin == null){	//로그인안한상태
 	
 	<script type="text/javascript">
 		$(function() {//좌측 메뉴바 누르는 곳.
+			$("#homebtn").click(function() {
+				location.href="main.jsp";
+			});
 			$("#login").click(function() {
 				location.href = "User?command=login";
 			});

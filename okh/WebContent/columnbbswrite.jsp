@@ -1,3 +1,5 @@
+<%@page import="user.UserService"%>
+<%@page import="user.IUserService"%>
 <%@page import="user.UserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -23,8 +25,8 @@
 	<!-- include summernote css/js -->
 	<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
-	<link rel="stylesheet" type="text/css" href="_lifemain.css?ver-1.62">
-	<link rel="stylesheet" type="text/css" href="_lifewrite.css?ver=1.1">
+	<link rel="stylesheet" type="text/css" href="_main.css?ver=1.62">
+	<link rel="stylesheet" type="text/css" href="_columnwrite.css?ver=1.1">
 </head>
 <body>
 
@@ -32,22 +34,37 @@
 	<%
 	Object ologin = session.getAttribute("login");
 	UserDto mem = (UserDto)ologin;
+	IUserService service = UserService.getInstance();
+	String yn="";
+	String profile = null;
+	if(ologin != null){
+		profile = service.getProfile(mem.getId());
+	}
 	%>
 <!-- 메뉴 -->
 	<div class="menu">
 		<%
 		if(ologin == null){
+			yn="no";
 		%>
+		<input type="button" class="homebtn" onclick="location.href='index.jsp'">
 		<input type="button" class="login" id="login">
 		<input type="button" class="account" id="account">
 		<%
 		}else{
+			yn="yes";
 		%>
-		<div class="actionlogin">
-			<span><%=mem.getId() %></span>
+		<input type="button" class="homebtn" id="homebtn">
+<div class="actionlogin">
+
+	<a onclick="upmydetail()" style="cursor: pointer">
+			<img src="<%=profile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+		</a>
+			<span class="memid"><a onclick="upmydetail()" style="cursor: pointer;color: #fff;"><%=mem.getId() %></a></span> <br>
+					<span class="point"><img src="image/actionpoint.PNG" style="margin-top: 0" class="pointimg"><%=mem.getScore()%></span>
 			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
-			<img class="alarmbtn" alt="" src="image/alarm.PNG" style="cursor: pointer" id="btnPopover">	
-		</div>
+				
+</div>
 		<%
 		}
 		%>
@@ -57,9 +74,12 @@
 		<input type="button" class="bbs4" id="combbs">				<!-- 장문석 -->
 		<input type="button" class="bbs5" id="jobs">				<!-- 나효진 -->
 		<input type="button" class="bbs6" id="life">				<!-- 정병찬 -->
-	</div>
+		</div>
 	<script type="text/javascript">
 	$(function() {
+		$("#homebtn").click(function() {
+			location.href="main.jsp";
+		});
 		$("#login").click(function() {
 			location.href = "User?command=login";
 		});
@@ -82,7 +102,14 @@
 			location.href = "LifeBbs?command=life";
 		});
 		$("#combbs").click(function () {
-			location.href = "CommunityControl?command=list";
+			if(<%=yn.equals("yes")%>){
+				location.href = "CommunityControl?command=list";
+	
+			}
+			else{
+				location.href = "User?command=guest";
+			}
+			
 		});
 	});
 	</script>
@@ -202,8 +229,20 @@
 </div>
 <div class="wrap">
 		<div class="myinfo">
-			<p id="test" align="left"><%=mem.getId() %></p>
-		</div>
+	 	
+	 	<p class="myinfo_icon" style="margin-bottom: 3px;">
+		<a onclick="upmydetail()" style="cursor: pointer">
+		<img src="<%=profile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+		</a>
+		<span class="detailid">
+		<a onclick="upmydetail()" style="cursor: pointer; margin-left: 20px;"><%=mem.getId() %></a>
+		</span>
+</p>
+<span class="" style="display: inline-block;"><img src="image/actionpoint.PNG" class="pointimg"></span>
+		<span style="display: inline-block;"><%=mem.getScore()%></span>
+		 <input type="hidden" name="id" value="<%=mem.getId()%>">
+		 <input type="hidden" name="command" value="techwriteAf">
+	 </div>
 	<div class="writearea">
 		<form action="Controller" method="get">
 			<input type="hidden" name="command" value="writeAf">
@@ -232,6 +271,14 @@
 	             focus: true
 	     });
 	});
+	</script>
+	  <script type="text/javascript">
+	function logout() {
+		location.href ="User?command=logout";
+	}
+	function upmydetail() {
+		location.href ="User?command=mypage";
+	}
 	</script>
 </body>
 </html>

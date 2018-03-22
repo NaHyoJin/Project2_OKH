@@ -447,7 +447,7 @@ if(list==null||list.size()==0){
 		
 			<article class="content">
 					<%=list.get(0).getBbscontent()%><br>
-				모임날짜 <%=list.get(0).getBbsjoindate() %>
+				<%=toDates(list.get(0).getBbsjoindate()) %>
 					
 				</article>
 	</div>

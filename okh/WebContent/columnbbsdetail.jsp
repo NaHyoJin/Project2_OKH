@@ -1,3 +1,5 @@
+<%@page import="user.UserService"%>
+<%@page import="user.IUserService"%>
 <%@page import="user.UserDto"%>
 <%@page import="columnBbs.ColumnBbsDto"%>
 <%@page import="columnBbs.ColumnBbsDao"%>
@@ -18,7 +20,7 @@
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/bootstrap.js"></script>
 	<link rel="stylesheet" type="text/css" href="_lifedetail.css?ver=1.5">
-	<link rel="stylesheet" type="text/css" href="_lifemain.css?ver-1.62">
+	<link rel="stylesheet" type="text/css" href="_main.css?ver-1.62">
 </head>
 <body>
 
@@ -26,22 +28,34 @@
 	<%
 	Object ologin = session.getAttribute("login");
 	UserDto mem = (UserDto)ologin;
+	String yn="";
+	IUserService service = UserService.getInstance();
+	String profile = null;
+	if(ologin != null){
+		profile = service.getProfile(mem.getId());
+	}
 	%>
 <!-- 메뉴 -->
 	<div class="menu">
 		<%
 		if(ologin == null){
+			yn="no";
 		%>
+		<input type="button" class="homebtn" onclick="location.href='index.jsp'">
 		<input type="button" class="login" id="login">
 		<input type="button" class="account" id="account">
 		<%
 		}else{
 		%>
-		<div class="actionlogin">
-			<span><%=mem.getId() %></span>
+		<input type="button" class="homebtn" id="homebtn">
+<div class="actionlogin">
+<a onclick="upmydetail()" style="cursor: pointer">
+	<img src="<%=profile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+</a>		
+			<span class="memid"><a onclick="upmydetail()" style="cursor: pointer;color: #fff;"><%=mem.getId() %></a></span> <br>
+			<span class="point" style="margin-top: 0"><img src="image/actionpoint.PNG" class="pointimg"><%=mem.getScore()%></span>
 			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
-			<img class="alarmbtn" alt="" src="image/alarm.PNG" style="cursor: pointer" id="btnPopover">	
-		</div>
+				</div>
 		<%
 		}
 		%>
@@ -54,6 +68,9 @@
 	</div>
 	<script type="text/javascript">
 	$(function() {
+		$("#homebtn").click(function() {
+			location.href="main.jsp";
+		});
 		$("#login").click(function() {
 			location.href = "User?command=login";
 		});
@@ -76,7 +93,14 @@
 			location.href = "LifeBbs?command=life";
 		});
 		$("#combbs").click(function () {
-			location.href = "CommunityControl?command=list";
+			if(<%=yn.equals("yes")%>){
+				location.href = "CommunityControl?command=list";
+	
+			}
+			else{
+				location.href = "User?command=guest";
+			}
+			
 		});
 	});
 	</script>
@@ -131,7 +155,7 @@
 			container: 'body',
 			html: true,
 			trigger: 'hover',
-			content: '<p>설정</p><hr><button type="button" class="btn btn-default popover-dismiss" onclick="logout()">로그아웃</button><button type="button" class="btn btn-default popover-dismiss" onclick="mypage()">정보수정</button>'
+			content: '<button type="button" class="btn btn-default popover-dismiss" onclick="logout()">로그아웃</button><button type="button" class="btn btn-default popover-dismiss" onclick="mypage()">정보수정</button>'
 		});
 		$('#btnPopover').on('hide.bs.popover', function(evt) {
 			if(!$(evt.target).hasClass('hide-popover')) {
@@ -182,14 +206,7 @@
       });
     });
 	</script>
-	<script type="text/javascript">
-	function logout() {
-		location.href ="User?command=logout";
-	}
-	function mypage() {
-		location.href ="User?command=mypage";
-	}
-	</script>
+	
 <h1>상세 글보기</h1>
 
 <%
@@ -244,7 +261,7 @@ dao.readcount(seq);
 			<%
 			if(ologin != null && bbs.getId().equals(mem.getId())){
 			%>
-			<img alt="" src="image/settingbtn.PNG" style="cursor: pointer; padding-bottom: 20px; display: inline-block;" id="btnPopover">
+			<img alt="" src="image/settingbtn.PNG" style="cursor: pointer; padding-bottom: 20px; display: inline-block;" id="btnPopover2">
 			<%
 			}
 			%>
@@ -252,7 +269,80 @@ dao.readcount(seq);
 	</div>
 	
 </div>
-
+<script type="text/javascript">
+	function logout() {
+		location.href ="User?command=logout";
+	}
+	function mypage() {
+		location.href ="User?command=mypage";
+	}
+	</script>
+	<script>
+      $(function() {
+         // initialize popover with dynamic content
+         $('#btnPopover2').popover({
+            placement: 'bottom',
+            container: 'body',
+            html: true,
+            trigger: 'hover',
+            content: '<button onclick="updatebbs(<%=bbs.getSeq() %>)" type="button" class="btn btn-default popover-dismiss">수정</button><button onclick="deletebbs(<%=bbs.getSeq() %>)" type="button" class="btn btn-default popover-dismiss">삭제</button>'
+         });
+         // prevent popover from being hidden on mouseout.
+         // only dismiss when explicity clicked (e.g. has .hide-popover)
+         $('#btnPopover2').on('hide.bs.popover', function(evt) {
+            if(!$(evt.target).hasClass('hide-popover')) {
+               evt.preventDefault();
+               evt.stopPropagation();
+               evt.cancelBubble = true;
+            }
+         });
+         // reset helper class when dismissed
+         $('#btnPopover2').on('hidden.bs.popover', function(evt) {
+            $(this).removeClass('hide-popover');
+         });
+         $('body').on('click', '.popover-dismiss', function() {
+            // add helper class to force dismissal
+            $('#btnPopover2').addClass('hide-popover');
+            // call method to hide popover
+            $('#btnPopover2').popover('hide');
+         });
+          
+          $('#btnPopover2').data('overButton', false);
+          $('#btnPopover2').data('overPopover', false);
+          $.fn.closePopover = function(){
+            var $this = $(this);
+            
+            if(!$this.data('overPopover') && !$this.data('overButton')){
+              $this.addClass('hide-popover');
+              $this.popover('hide');              
+            }
+          }
+          
+          //set flags when mouse enters the button or the popover.
+          //When the mouse leaves unset immediately, wait a second (to allow the mouse to enter again or enter the other) and then test to see if the mouse is no longer over either. If not, close popover.
+          $('#btnPopover2').on('mouseenter', function(evt){
+            $(this).data('overButton', true);
+          });
+          $('#btnPopover2').on('mouseleave', function(evt){
+            var $btn = $(this);
+            $btn.data('overButton', false);
+            
+            setTimeout(function() {$btn.closePopover();}, 200);
+            
+          });
+          $('#btnPopover2').on('shown.bs.popover', function () {
+            var $btn = $(this);
+            $('.popover-content').on('mouseenter', function (evt){
+              $btn.data('overPopover', true);
+            });
+            $('.popover-content').on('mouseleave', function (evt){
+              $btn.data('overPopover', false);
+              
+              setTimeout(function() {$btn.closePopover();}, 200);
+            });
+          });
+        });
+   </script>
 
 	<script type="text/javascript">
 	function updatebbs( seq ) {
