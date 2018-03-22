@@ -85,6 +85,9 @@
 	</div>
 	<script type="text/javascript">
 	$(function() {
+		$("#homebtn").click(function() {
+			location.href="main.jsp";
+		});
 		$("#login").click(function() {
 			location.href = "User?command=login";
 		});

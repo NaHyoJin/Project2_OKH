@@ -96,7 +96,7 @@ mem = (UserDto)ologin;
 PdsDto pdsdto=null;
 List<PdsDto> pdslist=null;
 IUserService service = UserService.getInstance();
-
+String yn="";
 String profile = null;
 if(ologin != null){
 	profile = service.getProfile(mem.getId());
@@ -108,6 +108,7 @@ if(ologin != null){
 	<div class="menu">
 			<%
 if(ologin == null){	//로그인안한상태
+	yn="no";
 	%>
 	<input type="button" class="homebtn" onclick="location.href='index.jsp'">
 	<input type="button" class="login" id="login">
@@ -115,7 +116,7 @@ if(ologin == null){	//로그인안한상태
 
 		<%
 }else{
-	
+	yn="yes";
 %>
 <input type="button" class="homebtn" id="homebtn">
 <div class="actionlogin">
@@ -131,12 +132,12 @@ if(ologin == null){	//로그인안한상태
 <%
 }
 %>
-		<input type="button" class="bbs1" id="qnabbs">
-		<input type="button" class="techbbs_hjh" id="techbbs">
-		<input type="button" class="bbs3" ><!-- 정재흥 -->
-		<input type="button" class="bbs4" >
-		<input type="button" class="bbs5" id="jobs"><!-- 나효진 -->
-		<input type="button" class="bbs6" id="life"><!-- 병찬 사는얘기 -->
+		<input type="button" class="bbs1" id="qnabbs">				<!-- 박형태 -->
+		<input type="button" class="techbbs_hjh" id="techbbs">		<!-- 황준현 -->
+		<input type="button" class="bbs3" id="column">				<!-- 정재흥 -->
+		<input type="button" class="bbs4" id="combbs">				<!-- 장문석 -->
+		<input type="button" class="bbs5" id="jobs">				<!-- 나효진 -->
+		<input type="button" class="bbs6" id="life">				<!-- 정병찬 -->
 	</div>	
 
 	
@@ -146,46 +147,35 @@ if(ologin == null){	//로그인안한상태
 				location.href="main.jsp";
 			});
 			$("#login").click(function() {
-				location.href="User?command=login";
+				location.href = "User?command=login";
 			});
-	
 			$("#account").click(function() {
-				location.href="User?command=join";
+				location.href = "User?command=join";
 			});
-			
-			//QNA
 			$("#qnabbs").click(function() {
 				location.href="qnaServlet?command=listQna";
-			});
-			
-			$("#second").click(function() {
-				location.href="second.jsp";
-			});
-	
+			});	
 			$("#techbbs").click(function() {
 				location.href="TechbbsController?command=techbbs";
 			});
-	
+			$("#column").click(function name() {
+				location.href="Controller?command=column";
+			});
+			$("#jobs").click(function () {
+				location.href = "jobs";
+			});
 			$("#life").click(function() {
-				location.href="LifeBbs?command=life";
+				location.href = "LifeBbs?command=life";
 			});
-			
-			
-	/* 
-			//columns
-			$("#").click(function() {
-				location.href="";
-			});
-	 */
-	 
-			//게시판5 나효진 jobs 부분.
-/* 			$("#jobs").click(function() {
-				location.href="main.BBSHWCodingController";
-			});
- */	 
-			
-			$("#jobs").click(function name() {
-				location.href="jobs";
+			$("#combbs").click(function () {
+				if(<%=yn.equals("yes")%>){
+					location.href = "CommunityControl?command=list";
+		
+				}
+				else{
+					location.href = "User?command=guest";
+				}
+				
 			});
 
 		});

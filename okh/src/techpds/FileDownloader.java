@@ -57,7 +57,8 @@ public class FileDownloader extends HttpServlet {
 			//개인폴더에올렸을때
 			//filePath="C:\\tmp";
 			//톰캣에올렸을때
-			filePath=mConfig.getServletContext().getRealPath("/techupload");
+			//filePath=mConfig.getServletContext().getRealPath("/techupload");
+			filePath = "C:\\okhmem";
 		}
 		
 		try {
