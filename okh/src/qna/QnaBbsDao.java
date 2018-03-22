@@ -12,7 +12,7 @@ import db.DBClose;
 import db.DBConnection;
 import qna.PagingBean;
 import qna.PagingUtil;
-import techbbs.TechbbsDto;
+
 
 
 

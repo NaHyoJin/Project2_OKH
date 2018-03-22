@@ -3,7 +3,7 @@ package qna;
 import java.util.List;
 
 import qna.PagingBean;
-import techbbs.TechbbsDto;
+
 
 
 public interface QnaBbsDaoImpl {

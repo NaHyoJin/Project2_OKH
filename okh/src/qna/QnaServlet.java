@@ -11,9 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import likescrap.LikeScrapService;
-import likescrap.LikeScrapServiceImpl;
-import techbbs.TechbbsDto;
+
 
 
 public class QnaServlet extends HttpServlet {
@@ -375,7 +373,7 @@ public class QnaServlet extends HttpServlet {
 		///////////////////////////////////////////////////////////////////
 		////////////////////////////TechbbsController
 		else if(command.equals("qnabbs")) {			
-			List<TechbbsDto> list=new ArrayList<>();
+			List<QnaDto> list=new ArrayList<>();
 			req.setAttribute("qnabbs", list);
 			dispatch("qnabbslist.jsp", req, resp);
 		}else if(command.equals("qnabbswrite")) {
@@ -391,7 +389,7 @@ public class QnaServlet extends HttpServlet {
 			}
 			resp.sendRedirect("qnabbswrite.jsp");
 		}else if(command.equals("qnawriteAf")) {
-			String tagname = "-TechTips-";
+			String tagname = "-QnA-";
 			String[] tagnames=req.getParameterValues("tagnames");	//span태그안의value값다받아오기
 			String id=req.getParameter("id");
 			String title=req.getParameter("title");
@@ -401,7 +399,7 @@ public class QnaServlet extends HttpServlet {
 				System.out.println("여기가문제였군2");
 				QnaDto dto1=null;
 				req.setAttribute("return1", dto1);
-				dispatch("techwriteAf.jsp", req, resp);
+				dispatch("qnawriteAf.jsp", req, resp);
 			}
 			if(tagnames==null) {
 				QnaDto dto=new QnaDto(id, title, tagname, content);

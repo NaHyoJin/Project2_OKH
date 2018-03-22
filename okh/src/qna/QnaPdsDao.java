@@ -9,7 +9,7 @@ import java.util.List;
 
 import db.DBClose;
 import db.DBConnection;
-import techpds.PdsDto;
+
 
 
 public class QnaPdsDao implements QnaPdsDaoImpl {
