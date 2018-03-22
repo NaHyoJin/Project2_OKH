@@ -60,12 +60,14 @@ if(ologin != null){
 		<%
 		if(ologin == null){
 		%>
+		<input type="button" class="homebtn" onclick="location.href='index.jsp'">
 		<input type="button" class="login" id="login">
 		<input type="button" class="account" id="account">
 		<%
 		}else{
 		%>
 		<div class="actionlogin">
+		<input type="button" class="homebtn" id="homebtn">
 			<span><%=mem.getId() %></span>
 			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
 			<img class="alarmbtn" alt="" src="image/alarm.PNG" style="cursor: pointer" id="btnPopover">	
@@ -82,6 +84,9 @@ if(ologin != null){
 	</div>
 	<script type="text/javascript">
 	$(function() {
+		$("#homebtn").click(function() {
+			location.href="main.jsp";
+		});
 		$("#login").click(function() {
 			location.href = "User?command=login";
 		});
@@ -104,7 +109,12 @@ if(ologin != null){
 			location.href = "LifeBbs?command=life";
 		});
 		$("#combbs").click(function () {
-			location.href = "CommunityControl?command=list";
+			if(<%=ologin %> == null){
+				location.href = "User?command=guest";
+			}else{
+				location.href = "CommunityControl?command=list";
+			}
+			
 		});
 	});
 	</script>

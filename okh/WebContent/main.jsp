@@ -93,16 +93,21 @@ if(ologin != null){
 	alert("로그인해 주십시오");
 	location.href = "index.jsp";	
 	</script>	
-		<input type="button" class="login" id="login">
-		<input type="button" class="account" id="account">
-		<%
+				<%
+				return;
 		}else{
+			
 		%>
+		<input type="button" class="homebtn" id="homebtn">
 		<div class="actionlogin">
-			<span><%=mem.getId() %></span>
+		<a onclick="upmydetail()" style="cursor: pointer">
+			<img src="<%=profile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+		</a>
+			<span class="memid"><a onclick="upmydetail()" style="cursor: pointer;color: #fff;"><%=mem.getId() %></a></span> <br>
+			<span class="point" style="margin-top: 0"><img src="image/actionpoint.PNG" class="pointimg"><%=mem.getScore()%></span>
 			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
-			<img class="alarmbtn" alt="" src="image/alarm.PNG" style="cursor: pointer" id="btnPopover">	
-		</div>
+				</div>
+		
 		<%
 		}
 		%>
@@ -115,6 +120,9 @@ if(ologin != null){
 	</div>
 	<script type="text/javascript">
 	$(function() {
+		$("#homebtn").click(function() {
+			location.href="main.jsp";
+		});
 		$("#login").click(function() {
 			location.href = "User?command=login";
 		});
@@ -137,7 +145,12 @@ if(ologin != null){
 			location.href = "LifeBbs?command=life";
 		});
 		$("#combbs").click(function () {
-			location.href = "CommunityControl?command=list";
+			if(<%=ologin %> == null){
+				location.href = "User?command=guest";
+			}else{
+				location.href = "CommunityControl?command=list";
+			}
+			
 		});
 	});
 	</script>

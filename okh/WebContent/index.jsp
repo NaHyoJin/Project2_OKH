@@ -71,6 +71,7 @@ if(getCookie('okhpop') != 'rangs') {
 		<%
 		if(ologin == null){
 		%>
+		<input type="button" class="homebtn" id="homebtn">
 		<input type="button" class="login" id="login">
 		<input type="button" class="account" id="account">
 		<%
@@ -94,6 +95,9 @@ if(getCookie('okhpop') != 'rangs') {
 	</div>
 	<script type="text/javascript">
 	$(function() {
+		$("#homebtn").click(function() {
+			location.href="index.jsp";
+		});
 		$("#login").click(function() {
 			location.href = "User?command=login";
 		});
