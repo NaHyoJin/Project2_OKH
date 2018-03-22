@@ -61,6 +61,7 @@ if(ologin != null){
 		if(ologin == null){
 			yn="no";
 		%>
+		<input type="button" class="homebtn" onclick="location.href='index.jsp'">
 		<input type="button" class="login" id="login">
 		<input type="button" class="account" id="account">
 		<%
@@ -88,6 +89,9 @@ if(ologin != null){
 	</div>
 	<script type="text/javascript">
 	$(function() {
+		$("#homebtn").click(function() {
+			location.href="main.jsp";
+		});
 		$("#login").click(function() {
 			location.href = "User?command=login";
 		});

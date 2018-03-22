@@ -48,7 +48,7 @@ UserDto mem = null;
 List<TechbbsDto> techlist=(List<TechbbsDto>)request.getAttribute("techbbs");
 mem = (UserDto)ologin;
 IUserService service = UserService.getInstance();
-
+String yn="";
 String profile = null;
 if(ologin != null){
 	profile = service.getProfile(mem.getId());
@@ -59,19 +59,24 @@ if(ologin != null){
 	<div class="menu">
 		<%
 		if(ologin == null){
+			yn="no";
 		%>
 		<input type="button" class="homebtn" onclick="location.href='index.jsp'">
 		<input type="button" class="login" id="login">
 		<input type="button" class="account" id="account">
 		<%
 		}else{
+			yn="yes";
 		%>
-		<div class="actionlogin">
 		<input type="button" class="homebtn" id="homebtn">
-			<span><%=mem.getId() %></span>
+		<div class="actionlogin">
+		<a onclick="upmydetail()" style="cursor: pointer">
+			<img src="<%=profile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+		</a>
+			<span class="memid"><a onclick="upmydetail()" style="cursor: pointer;color: #fff;"><%=mem.getId() %></a></span> <br>
+			<span class="point" style="margin-top: 0"><img src="image/actionpoint.PNG" class="pointimg"><%=mem.getScore()%></span>
 			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
-			<img class="alarmbtn" alt="" src="image/alarm.PNG" style="cursor: pointer" id="btnPopover">	
-		</div>
+				</div>
 		<%
 		}
 		%>
@@ -109,10 +114,12 @@ if(ologin != null){
 			location.href = "LifeBbs?command=life";
 		});
 		$("#combbs").click(function () {
-			if(<%=ologin %> == null){
-				location.href = "User?command=guest";
-			}else{
+			if(<%=yn.equals("yes")%>){
 				location.href = "CommunityControl?command=list";
+	
+			}
+			else{
+				location.href = "User?command=guest";
 			}
 			
 		});
