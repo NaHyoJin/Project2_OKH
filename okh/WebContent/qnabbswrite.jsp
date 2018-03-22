@@ -228,6 +228,8 @@
 		location.href ="User?command=mypage";
 	}
 	</script>
+	<div class="titlediv"><h2>새글쓰기</h2><br>
+	</div>
 <div class="wrap">
 
 
@@ -236,8 +238,6 @@
 <form action="qnaServlet" method="get">
 <table>
 
-<tr>새 글 쓰기</tr>
-<br><br>
 
 <tr>
 	<td>
@@ -250,13 +250,13 @@
 
 <tr>
 	<td>
-		<input type="text" name="tItle"  placeholder="제목을 입력하세요" style="width: 800px"><br><br>
+		<input type="text" name="tItle" class="form-control"  placeholder="제목을 입력하세요" style="width: 800px"><br><br>
 	</td>	
 </tr>
 
 <tr>
 	<td>
-		<input type="text" name="tAg" id="tAg" data-role="tagsinput" style="width: 800px" value="QnA" ><br><br>
+		<input type="text" name="tAg" id="tAg" class="form-control" data-role="tagsinput" style="width: 800px" value="QnA" ><br><br>
 	</td>
 </tr>	
 
@@ -270,8 +270,8 @@
 
 <tr>
 	<td>
-		<input type="reset" value="취소" onclick="location.href='qnaServlet?command=listQna'" >
-		<input type="submit" value="등록">
+		<input type="reset" class="btn btn-default btn-wide" value="취소" onclick="location.href='qnaServlet?command=listQna'" >
+		<input type="submit" class="btn btn-success btn-wide" value="등록">
 	</td>
 </tr>
 

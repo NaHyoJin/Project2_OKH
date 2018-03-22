@@ -354,7 +354,7 @@ if(ologin == null){	//로그인안한상태
 		<span style="float: left">
 		<%=bbs.getId() %>
 		</span>
-		</a>
+		</a>                                   
 		<img src="image/actionpoint.PNG" class="pointimg" style="float: left">
 		<span style="float: left;"><%=score%></span><br>
 		<span style="font-size: 10px; margin-top:3px; float: left;"><%=bbs.getWdate() %></span><br><br>
