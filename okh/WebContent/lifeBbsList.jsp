@@ -1,3 +1,5 @@
+<%@page import="user.UserService"%>
+<%@page import="user.IUserService"%>
 <%@page import="lifeBbs.LifeBbssReplyDao"%>
 <%@page import="lifeBbs.ILifeBbssReplyDao"%>
 <%@page import="lifeBbs.LifeBbssReplyDto"%>
@@ -30,8 +32,8 @@ public String arrow(int depth){
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>LifeBBSList</title>
 	<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="_lifebbs.css?ver-1.5">
-	<link rel="stylesheet" type="text/css" href="_lifemain.css?ver-1.62">
+	<link rel="stylesheet" type="text/css" href="_lifebbs.css?ver=1.5">
+	<link rel="stylesheet" type="text/css" href="_main.css?ver=1.62">
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 </head>
 <body bgcolor="#fcfbfb">
@@ -40,22 +42,35 @@ public String arrow(int depth){
 	<%
 	Object ologin = session.getAttribute("login");
 	UserDto mem = (UserDto)ologin;
+	IUserService service = UserService.getInstance();
+	String yn="";
+	String profile = null;
+	if(ologin != null){
+		profile = service.getProfile(mem.getId());
+	}
 	%>
 <!-- 메뉴 -->
 	<div class="menu">
 		<%
 		if(ologin == null){
+			yn="no";
 		%>
+		<input type="button" class="homebtn" onclick="location.href='index.jsp'">
 		<input type="button" class="login" id="login">
 		<input type="button" class="account" id="account">
 		<%
 		}else{
+			yn="yes";
 		%>
+		<input type="button" class="homebtn" id="homebtn">
 		<div class="actionlogin">
-			<span><%=mem.getId() %></span>
+		<a onclick="upmydetail()" style="cursor: pointer">
+			<img src="<%=profile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+		</a>
+			<span class="memid"><a onclick="upmydetail()" style="cursor: pointer;color: #fff;"><%=mem.getId() %></a></span> <br>
+			<span class="point" style="margin-top: 0"><img src="image/actionpoint.PNG" class="pointimg"><%=mem.getScore()%></span>
 			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
-			<img class="alarmbtn" alt="" src="image/alarm.PNG" style="cursor: pointer" id="btnPopover">	
-		</div>
+				</div>
 		<%
 		}
 		%>
@@ -68,6 +83,9 @@ public String arrow(int depth){
 	</div>
 	<script type="text/javascript">
 	$(function() {
+		$("#homebtn").click(function() {
+			location.href="main.jsp";
+		});
 		$("#login").click(function() {
 			location.href = "User?command=login";
 		});
@@ -90,7 +108,14 @@ public String arrow(int depth){
 			location.href = "LifeBbs?command=life";
 		});
 		$("#combbs").click(function () {
-			location.href = "CommunityControl?command=list";
+			if(<%=yn.equals("yes")%>){
+				location.href = "CommunityControl?command=list";
+	
+			}
+			else{
+				location.href = "User?command=guest";
+			}
+			
 		});
 	});
 	</script>
@@ -354,8 +379,24 @@ public String arrow(int depth){
 						}
 						%>
 					<td>
-						<%=bbs.getId() %>
-						<p style="font-size: 10px"><%=bbs.getWdate() %></p>
+						<p class="myinfo_icon" style="margin-bottom: 0">
+			<a onclick="location.href ='User?command=otherpage&infoid=<%=bbs.getId() %>'" style="cursor: pointer">
+			<%
+		IUserService uservice=UserService.getInstance();
+		
+		int score=uservice.getScore(bbs.getId());
+		String getprofile=uservice.getProfile(bbs.getId());
+		%>
+		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 30px; float:left; max-height: 30px; margin: 0 auto;">
+		</a>
+		<span class="detailid" style="margin-left: 10px;">
+		<a onclick="location.href ='User?command=otherpage&infoid=<%=bbs.getId() %>'" style="cursor: pointer"><span style="margin-top: 5px"><%=bbs.getId() %></span></a>
+		<span class="" style="margin-top: 10px;"><img src="image/actionpoint.PNG" class="pointimg">
+		
+		<%=score%></span>
+		</span> <br><br>
+		</p>
+			<p style="font-size: 10px"><%=bbs.getWdate() %></p>
 					</td>
 				</tr>	
 				<%
@@ -391,6 +432,14 @@ public String arrow(int depth){
 		var word = document.getElementById("search").value;
 		var choice = document.getElementById("choice").value;
 		location.href = "lifeBbsList.jsp?findWord=" + word + "&choice=" + choice;
+	}
+	</script>
+	<script type="text/javascript">
+	function logout() {
+		location.href ="User?command=logout";
+	}
+	function upmydetail() {
+		location.href ="User?command=mypage";
 	}
 	</script>
 </body>

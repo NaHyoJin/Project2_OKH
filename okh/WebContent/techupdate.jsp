@@ -80,47 +80,29 @@ if(ologin == null){	//로그인안한상태
 				location.href="main.jsp";
 			});
 			$("#login").click(function() {
-				location.href="User?command=login";
+				location.href = "User?command=login";
 			});
-	
 			$("#account").click(function() {
-				location.href="User?command=join";
+				location.href = "User?command=join";
 			});
-			
-			//QNA
 			$("#qnabbs").click(function() {
 				location.href="qnaServlet?command=listQna";
-			});
-			
-			$("#second").click(function() {
-				location.href="second.jsp";
-			});
-	
+			});	
 			$("#techbbs").click(function() {
 				location.href="TechbbsController?command=techbbs";
 			});
-	
+			$("#column").click(function name() {
+				location.href="Controller?command=column";
+			});
+			$("#jobs").click(function () {
+				location.href = "jobs";
+			});
 			$("#life").click(function() {
-				location.href="LifeBbs?command=life";
+				location.href = "LifeBbs?command=life";
 			});
-			
-			
-	/* 
-			//columns
-			$("#").click(function() {
-				location.href="";
-			});
-	 */
-	 
-			//게시판5 나효진 jobs 부분.
-/* 			$("#jobs").click(function() {
-				location.href="main.BBSHWCodingController";
-			});
- */	 
-			
-			$("#jobs").click(function name() {
-				location.href="jobs";
-			});
+			$("#combbs").click(function () {
+					location.href = "CommunityControl?command=list";
+		
 
 		});
 	</script>
