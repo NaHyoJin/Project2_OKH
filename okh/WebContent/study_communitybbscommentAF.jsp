@@ -15,8 +15,6 @@
 <body>
 
 <%
-
-
 Object ologin = session.getAttribute("login");
 UserDto mem = null;
 if(ologin == null){

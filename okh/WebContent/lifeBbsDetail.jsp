@@ -43,6 +43,7 @@ public String arrow(int depth){
 	<link rel="stylesheet" type="text/css" href="_lifemain.css?ver-1.62">
 </head>
 <body>
+
 <!-- 로그인 세션 -->
 	<%
 	Object ologin = session.getAttribute("login");
@@ -60,16 +61,16 @@ public String arrow(int depth){
 		%>
 		<div class="actionlogin">
 			<span><%=mem.getId() %></span>
-			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="membtnPopover">
-			<img class="alarmbtn" alt="" src="image/alarm.PNG" style="cursor: pointer" id="alarmbtnPopover">
+			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
+			<img class="alarmbtn" alt="" src="image/alarm.PNG" style="cursor: pointer" id="btnPopover">	
 		</div>
 		<%
 		}
 		%>
 		<input type="button" class="bbs1" id="qnabbs">				<!-- 박형태 -->
 		<input type="button" class="techbbs_hjh" id="techbbs">		<!-- 황준현 -->
-		<input type="button" class="bbs3" >							<!-- 정재흥 -->
-		<input type="button" class="bbs4" >							<!-- 장문석 -->
+		<input type="button" class="bbs3" id="column">				<!-- 정재흥 -->
+		<input type="button" class="bbs4" id="combbs">				<!-- 장문석 -->
 		<input type="button" class="bbs5" id="jobs">				<!-- 나효진 -->
 		<input type="button" class="bbs6" id="life">				<!-- 정병찬 -->
 	</div>
@@ -87,8 +88,17 @@ public String arrow(int depth){
 		$("#techbbs").click(function() {
 			location.href="TechbbsController?command=techbbs";
 		});
+		$("#column").click(function name() {
+			location.href="Controller?command=column";
+		});
+		$("#jobs").click(function () {
+			location.href = "jobs";
+		});
 		$("#life").click(function() {
 			location.href = "LifeBbs?command=life";
+		});
+		$("#combbs").click(function () {
+			location.href = "CommunityControl?command=list";
 		});
 	});
 	</script>
@@ -135,6 +145,73 @@ public String arrow(int depth){
 	session.removeAttribute("messageType");
 	}
 	%>
+<!-- 로그아웃, 정보수정 popover -->
+	<script type="text/javascript">
+	$(function() {
+		$('#btnPopover').popover({
+			placement: 'right',
+			container: 'body',
+			html: true,
+			trigger: 'hover',
+			content: '<p>설정</p><hr><button type="button" class="btn btn-default popover-dismiss" onclick="logout()">로그아웃</button><button type="button" class="btn btn-default popover-dismiss" onclick="mypage()">정보수정</button>'
+		});
+		$('#btnPopover').on('hide.bs.popover', function(evt) {
+			if(!$(evt.target).hasClass('hide-popover')) {
+				evt.preventDefault();
+				evt.stopPropagation();
+				evt.cancelBubble = true;
+			}
+		});
+		$('#btnPopover').on('hidden.bs.popover', function(evt) {
+			$(this).removeClass('hide-popover');
+		});
+		$('body').on('click', '.popover-dismiss', function() {
+			$('#btnPopover').addClass('hide-popover');
+			$('#btnPopover').popover('hide');
+		});
+      
+      $('#btnPopover').data('overButton', false);
+      $('#btnPopover').data('overPopover', false);
+      $.fn.closePopover = function(){
+        var $this = $(this);
+        
+        if(!$this.data('overPopover') && !$this.data('overButton')){
+          $this.addClass('hide-popover');
+          $this.popover('hide');              
+        }
+      }
+      
+      $('#btnPopover').on('mouseenter', function(evt){
+        $(this).data('overButton', true);
+      });
+      $('#btnPopover').on('mouseleave', function(evt){
+        var $btn = $(this);
+        $btn.data('overButton', false);
+        
+        setTimeout(function() {$btn.closePopover();}, 200);
+        
+      });
+      $('#btnPopover').on('shown.bs.popover', function () {
+        var $btn = $(this);
+        $('.popover-content').on('mouseenter', function (evt){
+          $btn.data('overPopover', true);
+        });
+        $('.popover-content').on('mouseleave', function (evt){
+          $btn.data('overPopover', false);
+          
+          setTimeout(function() {$btn.closePopover();}, 200);
+        });
+      });
+    });
+	</script>
+	<script type="text/javascript">
+	function logout() {
+		location.href ="User?command=logout";
+	}
+	function mypage() {
+		location.href ="User?command=mypage";
+	}
+	</script>
 <!-- 게시판 데이터 -->
 	<%
 	request.setCharacterEncoding("UTF-8");
@@ -305,7 +382,7 @@ public String arrow(int depth){
 				<%
 				if(ologin != null && bbs.getId().equals(mem.getId())){
 				%>
-				<img alt="" src="image/settingbtn.PNG" style="cursor: pointer; padding-bottom: 20px; display: inline-block;" id="btnPopover">
+				<img alt="" src="image/settingbtn.PNG" style="cursor: pointer; padding-bottom: 20px; display: inline-block;" id="btnPopover2">
 				<%
 				}
 				%>
@@ -537,7 +614,7 @@ public String arrow(int depth){
 <!-- 글 수정, 삭제 popover -->
 	<script>
       $(function() {
-         $('#btnPopover').popover({
+         $('#btnPopover2').popover({
             placement: 'bottom',
             container: 'body',
             html: true,
@@ -545,7 +622,7 @@ public String arrow(int depth){
             content: '<button onclick="updatebbs(<%=bbs.getSeq() %>)" type="button" class="btn btn-default popover-dismiss">수정</button><button onclick="deletebbs(<%=bbs.getSeq() %>)" type="button" class="btn btn-default popover-dismiss">삭제</button>'
          });
          
-         $('#btnPopover').on('hide.bs.popover', function(evt) {
+         $('#btnPopover2').on('hide.bs.popover', function(evt) {
             if(!$(evt.target).hasClass('hide-popover')) {
                evt.preventDefault();
                evt.stopPropagation();
@@ -553,16 +630,16 @@ public String arrow(int depth){
             }
          });
 
-         $('#btnPopover').on('hidden.bs.popover', function(evt) {
+         $('#btnPopover2').on('hidden.bs.popover', function(evt) {
             $(this).removeClass('hide-popover');
          });
          $('body').on('click', '.popover-dismiss', function() {
-            $('#btnPopover').addClass('hide-popover');
-            $('#btnPopover').popover('hide');
+            $('#btnPopover2').addClass('hide-popover');
+            $('#btnPopover2').popover('hide');
          });
           
-          $('#btnPopover').data('overButton', false);
-          $('#btnPopover').data('overPopover', false);
+          $('#btnPopover2').data('overButton', false);
+          $('#btnPopover2').data('overPopover', false);
           $.fn.closePopover = function(){
             var $this = $(this);
             
@@ -572,17 +649,17 @@ public String arrow(int depth){
             }
           }
           
-          $('#btnPopover').on('mouseenter', function(evt){
+          $('#btnPopover2').on('mouseenter', function(evt){
             $(this).data('overButton', true);
           });
-          $('#btnPopover').on('mouseleave', function(evt){
+          $('#btnPopover2').on('mouseleave', function(evt){
             var $btn = $(this);
             $btn.data('overButton', false);
             
             setTimeout(function() {$btn.closePopover();}, 200);
             
           });
-          $('#btnPopover').on('shown.bs.popover', function () {
+          $('#btnPopover2').on('shown.bs.popover', function () {
             var $btn = $(this);
             $('.popover-content').on('mouseenter', function (evt){
               $btn.data('overPopover', true);
@@ -595,72 +672,6 @@ public String arrow(int depth){
           });
         });
    </script>
-<!-- 로그아웃, 정보수정 popover -->
-	<script type="text/javascript">
-	$(function() {
-		$('#membtnPopover').popover({
-			placement: 'right',
-			container: 'body',
-			html: true,
-			trigger: 'hover',
-			content: '<p>설정</p><hr><button type="button" class="btn btn-default popover-dismiss" onclick="logout()">로그아웃</button><button type="button" class="btn btn-default popover-dismiss" onclick="mypage()">정보수정</button>'
-		});
-		$('#membtnPopover').on('hide.bs.popover', function(evt) {
-			if(!$(evt.target).hasClass('hide-popover')) {
-				evt.preventDefault();
-				evt.stopPropagation();
-				evt.cancelBubble = true;
-			}
-		});
-		$('#membtnPopover').on('hidden.bs.popover', function(evt) {
-			$(this).removeClass('hide-popover');
-		});
-		$('body').on('click', '.popover-dismiss', function() {
-			$('#membtnPopover').addClass('hide-popover');
-			$('#membtnPopover').popover('hide');
-		});
-      
-      $('#membtnPopover').data('overButton', false);
-      $('#membtnPopover').data('overPopover', false);
-      $.fn.closePopover = function(){
-        var $this = $(this);
-        
-        if(!$this.data('overPopover') && !$this.data('overButton')){
-          $this.addClass('hide-popover');
-          $this.popover('hide');              
-        }
-      }
-      
-      $('#membtnPopover').on('mouseenter', function(evt){
-        $(this).data('overButton', true);
-      });
-      $('#membtnPopover').on('mouseleave', function(evt){
-        var $btn = $(this);
-        $btn.data('overButton', false);
-        
-        setTimeout(function() {$btn.closePopover();}, 200);
-        
-      });
-      $('#membtnPopover').on('shown.bs.popover', function () {
-        var $btn = $(this);
-        $('.popover-content').on('mouseenter', function (evt){
-          $btn.data('overPopover', true);
-        });
-        $('.popover-content').on('mouseleave', function (evt){
-          $btn.data('overPopover', false);
-          
-          setTimeout(function() {$btn.closePopover();}, 200);
-        });
-      });
-    });
-	</script>
-	<script type="text/javascript">
-	function logout() {
-		location.href ="User?command=logout";
-	}
-	function mypage() {
-		alert("mypage");
-	}
-	</script>
+
 </body>
 </html>

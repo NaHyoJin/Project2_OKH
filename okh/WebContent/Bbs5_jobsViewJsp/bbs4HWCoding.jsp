@@ -348,7 +348,7 @@ else if(choice.equals("tagname")) cho = 3;
 		});
 	</script>
 	
-	<div class="titlediv"><span class="titi">H/W & Coding NEWS;</span>
+	<div class="titlediv"><span class="titi">H/W & Coding NEWS</span>
 <%-- 	
 	<div style="margin-left: 320px" >
 		<jsp:include page="BBS5TopMenuinclude.jsp" flush="false" />

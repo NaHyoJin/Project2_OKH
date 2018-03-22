@@ -224,7 +224,7 @@ List<HWRepbbsDto> replist = trservice.getRepBbsList(whatlist.get(0).getSeq());
 		});
 	</script>
 	
-	<div class="titlediv"><h2>HW & Coding Detail;</h2><br>
+	<div class="titlediv"><h2>HW & Coding Detail</h2><br>
 <!-- 	<button onclick="location.href='../BBSHWCodingController?command=techbbs1'"  -->
 <%
 	if(mem != null){
