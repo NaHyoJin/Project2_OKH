@@ -137,13 +137,6 @@ if(ologin != null){
 		
 	</div>
 	
-	<script type="text/javascript">
-	function logout() {
-		location.href = "User?command=logout";
-	}
-	</script>
-
-
 <%-- 	
 <%
 //mem 에 로그인 한건가 안한건가 확인해서 좌측 메뉴 보여주는것.
@@ -179,11 +172,7 @@ if(ologin != null){
 		<input type="button" class="bbs6" id="life"><!-- 병찬 사는얘기 -->
 	</div>	
 	
-	<script type="text/javascript">
-		function logout() {
-			location.href = '../mainJSP';
-		}
-	</script>
+
 <%
 	}
 %>
@@ -827,137 +816,65 @@ if(li4 == null){
 }
 %>
 		
-<script>
-$(function() {
-    // initialize popover with dynamic content
-    $('#membtnPopover').popover({
-       placement: 'right',
-       container: 'body',
-       html: true,
-       trigger: 'hover',
-       //content: '<button onclick="logout()" type="button" class="btn btn-default popover-dismiss">로그 아웃</button><button onclick="upmydetail()" type="button" class="btn btn-default popover-dismiss">마이 페이지</button>'
-       //content: '<button onclick="updatebbs(<%=whatlist.get(0).getSeq() %>)" type="button" class="btn btn-default popover-dismiss">내 글 수정</button><button onclick="deletebbs(<%=whatlist.get(0).getSeq() %>)" type="button" class="btn btn-default popover-dismiss">내 글 삭제</button>'
-content: '<p>설정</p><hr><button type="button" class="btn btn-default popover-dismiss" onclick="logout()">로그아웃</button><button type="button" class="btn btn-default popover-dismiss" onclick="mypage()">정보수정</button>'
-    });
-    
-    // prevent popover from being hidden on mouseout.
-    // only dismiss when explicity clicked (e.g. has .hide-popover)
-    $('#membtnPopover').on('hide.bs.popover', function(evt) {
-       if(!$(evt.target).hasClass('hide-popover')) {
-          evt.preventDefault();
-          evt.stopPropagation();
-          evt.cancelBubble = true;
-       }
-    });
-    // reset helper class when dismissed
-    $('#membtnPopover').on('hidden.bs.popover', function(evt) {
-       $(this).removeClass('hide-popover');
-    });
-    $('body').on('click', '.popover-dismiss', function() {
-       // add helper class to force dismissal
-       $('#membtnPopover').addClass('hide-popover');
-       // call method to hide popover
-       $('#membtnPopover').popover('hide');
-    });
-     
-     $('#membtnPopover').data('overButton', false);
-     $('#membtnPopover').data('overPopover', false);
-     $.fn.closePopover = function(){
-       var $this = $(this);
-       
-       if(!$this.data('overPopover') && !$this.data('overButton')){
-         $this.addClass('hide-popover');
-         $this.popover('hide');              
-       }
-     }
-     
-     //set flags when mouse enters the button or the popover.
-     //When the mouse leaves unset immediately, wait a second (to allow the mouse to enter again or enter the other) and then test to see if the mouse is no longer over either. If not, close popover.
-     $('#membtnPopover').on('mouseenter', function(evt){
-       $(this).data('overButton', true);
-     });
-     $('#membtnPopover').on('mouseleave', function(evt){
-       var $btn = $(this);
-       $btn.data('overButton', false);
-       
-       setTimeout(function() {$btn.closePopover();}, 200);
-       
-     });
-     $('#membtnPopover').on('shown.bs.popover', function () {
-       var $btn = $(this);
-       $('.popover-content').on('mouseenter', function (evt){
-         $btn.data('overPopover', true);
-       });
-       $('.popover-content').on('mouseleave', function (evt){
-         $btn.data('overPopover', false);
-         
-         setTimeout(function() {$btn.closePopover();}, 200);
-       });
-     });
-   });
-   </script>
-   
-   <!-- 글 수정, 삭제 popover -->
-	<script>
-      $(function() {
-         $('#btnPopover').popover({
-            placement: 'right',
-            container: 'body',
-            html: true,
-            trigger: 'hover',
-            content: '<button onclick="updatebbs(<%=whatlist.get(0).getSeq() %>)" type="button" class="btn btn-default popover-dismiss">내 글 수정</button><button onclick="deletebbs(<%=whatlist.get(0).getSeq() %>)" type="button" class="btn btn-default popover-dismiss">내 글 삭제</button>'
-         });
-         
-         $('#btnPopover').on('hide.bs.popover', function(evt) {
-            if(!$(evt.target).hasClass('hide-popover')) {
-               evt.preventDefault();
-               evt.stopPropagation();
-               evt.cancelBubble = true;
-            }
-         });
-
-         $('#btnPopover').on('hidden.bs.popover', function(evt) {
-            $(this).removeClass('hide-popover');
-         });
-         $('body').on('click', '.popover-dismiss', function() {
-            $('#btnPopover').addClass('hide-popover');
-            $('#btnPopover').popover('hide');
-         });
-          
-          $('#btnPopover').data('overButton', false);
-          $('#btnPopover').data('overPopover', false);
-          $.fn.closePopover = function(){
-            var $this = $(this);
-            
-            if(!$this.data('overPopover') && !$this.data('overButton')){
-              $this.addClass('hide-popover');
-              $this.popover('hide');              
-            }
-          }
-          
-          $('#btnPopover').on('mouseenter', function(evt){
-            $(this).data('overButton', true);
-          });
-          $('#btnPopover').on('mouseleave', function(evt){
-            var $btn = $(this);
-            $btn.data('overButton', false);
-            
-            setTimeout(function() {$btn.closePopover();}, 200);
-            
-          });
-          $('#btnPopover').on('shown.bs.popover', function () {
-            var $btn = $(this);
-            $('.popover-content').on('mouseenter', function (evt){
-              $btn.data('overPopover', true);
-            });
-            $('.popover-content').on('mouseleave', function (evt){
-              $btn.data('overPopover', false);
-              
-              setTimeout(function() {$btn.closePopover();}, 200);
-            });
-          });
+<!-- 로그아웃, 정보수정 popover -->
+	<script type="text/javascript">
+	$(function() {
+		$('#btnPopover').popover({
+			placement: 'right',
+			container: 'body',
+			html: true,
+			trigger: 'hover',
+			content: '<p>설정</p><hr><button type="button" class="btn btn-default popover-dismiss" onclick="logout()">로그아웃</button><button type="button" class="btn btn-default popover-dismiss" onclick="mypage()">정보수정</button>'
+		});
+		$('#btnPopover').on('hide.bs.popover', function(evt) {
+			if(!$(evt.target).hasClass('hide-popover')) {
+				evt.preventDefault();
+				evt.stopPropagation();
+				evt.cancelBubble = true;
+			}
+		});
+		$('#btnPopover').on('hidden.bs.popover', function(evt) {
+			$(this).removeClass('hide-popover');
+		});
+		$('body').on('click', '.popover-dismiss', function() {
+			$('#btnPopover').addClass('hide-popover');
+			$('#btnPopover').popover('hide');
+		});
+      
+      $('#btnPopover').data('overButton', false);
+      $('#btnPopover').data('overPopover', false);
+      $.fn.closePopover = function(){
+        var $this = $(this);
+        
+        if(!$this.data('overPopover') && !$this.data('overButton')){
+          $this.addClass('hide-popover');
+          $this.popover('hide');              
+        }
+      }
+      
+      $('#btnPopover').on('mouseenter', function(evt){
+        $(this).data('overButton', true);
+      });
+      $('#btnPopover').on('mouseleave', function(evt){
+        var $btn = $(this);
+        $btn.data('overButton', false);
+        
+        setTimeout(function() {$btn.closePopover();}, 200);
+        
+      });
+      $('#btnPopover').on('shown.bs.popover', function () {
+        var $btn = $(this);
+        $('.popover-content').on('mouseenter', function (evt){
+          $btn.data('overPopover', true);
         });
-   </script>
+        $('.popover-content').on('mouseleave', function (evt){
+          $btn.data('overPopover', false);
+          
+          setTimeout(function() {$btn.closePopover();}, 200);
+        });
+      });
+    });
+	</script>
    <script>
       $(function() {
          // initialize popover with dynamic content
@@ -966,7 +883,7 @@ content: '<p>설정</p><hr><button type="button" class="btn btn-default popover-
             container: 'body',
             html: true,
             trigger: 'hover',
-            content: '<button onclick="updatebbs(<%=whatlist.get(0).getSeq() %>)" type="button" class="btn btn-default popover-dismiss">수정</button><button onclick="deletebbs(<%=whatlist.get(0).getSeq() %>)" type="button" class="btn btn-default popover-dismiss">삭제</button>'
+            content: '<button onclick="updatebbs(<%=whatlist.get(0).getSeq() %>)" type="button" class="btn btn-default popover-dismiss">내 글 수정</button><button onclick="deletebbs(<%=whatlist.get(0).getSeq() %>)" type="button" class="btn btn-default popover-dismiss">내 글 삭제</button>'
          });
          // prevent popover from being hidden on mouseout.
          // only dismiss when explicity clicked (e.g. has .hide-popover)
@@ -1026,10 +943,10 @@ content: '<p>설정</p><hr><button type="button" class="btn btn-default popover-
    </script>
    	<script type="text/javascript">
 	function logout() {
-		location.href ="User?command=logout";
+		location.href = "User?command=logout";
 	}
-	function upmydetail() {
-		location.href ="User?command=mypage";
+	function mypage() {
+		location.href = "User?command=mypage";
 	}
 	</script>
 </body>
