@@ -245,7 +245,7 @@ System.out.println("bbslist in list : " + bbslist);
 	if(ologin == null){
 			%>
 	
-	<button class="create btn btn-success btn-wide pull-right " type="button" id="loginhe">게시글쓰기</button>
+	<button class="create btn btn-success btn-wide pull-right " type="button" onclick="location.href = 'User?command=guest'">게시글쓰기</button>
 	
 	<%
 		}else{
