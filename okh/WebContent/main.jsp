@@ -76,7 +76,7 @@ public String arrow(int depth){
 <%//로그인한id가져오기
 Object ologin = session.getAttribute("login");
 UserDto mem = null;
-
+String yn="";
 mem = (UserDto)ologin;
 IUserService service = UserService.getInstance();
 String profile = null;
@@ -88,6 +88,7 @@ if(ologin != null){
 	<div class="menu">
 		<%
 		if(ologin == null){
+			yn="no";
 		%>
 		 <script type="text/javascript">
 	alert("로그인해 주십시오");
@@ -96,7 +97,7 @@ if(ologin != null){
 				<%
 				return;
 		}else{
-			
+			yn="yes";
 		%>
 		<input type="button" class="homebtn" id="homebtn">
 		<div class="actionlogin">
@@ -107,7 +108,11 @@ if(ologin != null){
 			<span class="point" style="margin-top: 0"><img src="image/actionpoint.PNG" class="pointimg"><%=mem.getScore()%></span>
 			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
 				</div>
-		
+		<script type="text/javascript">
+		$("#combbs").click(function () {
+				location.href = "CommunityControl?command=list";
+		});
+		</script>
 		<%
 		}
 		%>
@@ -143,14 +148,6 @@ if(ologin != null){
 		});
 		$("#life").click(function() {
 			location.href = "LifeBbs?command=life";
-		});
-		$("#combbs").click(function () {
-			if(<%=ologin %> == null){
-				location.href = "User?command=guest";
-			}else{
-				location.href = "CommunityControl?command=list";
-			}
-			
 		});
 	});
 	</script>
