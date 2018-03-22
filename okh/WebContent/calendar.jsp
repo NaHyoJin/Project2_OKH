@@ -22,7 +22,7 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 	
 <link rel="stylesheet" type="text/css" href="_main.css?ver=1.33">
-<link rel="stylesheet" type="text/css" href="_studycalendar.css?ver=1.33">
+<link rel="stylesheet" type="text/css" href="_studycalendar.css?ver=1.39">
 </head>
 <body>
 
@@ -272,12 +272,11 @@ public String makeTable(int year, int month, int day, List<CalendarDto> list){
 	
 	for(CalendarDto dto : list){
 		if(dto.getRdate().substring(0,8).equals(dates)){
-			s += "<tr bgcolor='#006c00'>";
+			s += "<tr bgcolor=''>";
 			s += "<td>";
 			s += "<a href='CommunityControl?command=detail&seq="+dto.getChild()+"&likeid="+dto.getId()+"'>";
-			s += "<img src='image/scrap.PNG'>";
-			s += "<font style='font-size:8; color:#'>";
-			s += "#"+dto.getChild()+"<br>"+dto.getTitle();
+			s += "<font style='font-size:14px;'>";
+			s += "#"+dto.getChild()+"  "+dto.getTitle();
 			s += "</font>";
 			s += "</a>";
 			s += "</td>";
@@ -341,7 +340,7 @@ List<CalendarDto> list = dao.getCalendarList(user.getId(), year+two(month+""));
 
 %>
 
-<table border="1">
+<table border="1" class="calendar">
 	<col width="100"><col width="100"><col width="100"><col width="100"><col width="100"><col width="100"><col width="100">
 	<tr style="background-color: #0059ab">
 		<th colspan="7" style="text-align: center;">
@@ -374,7 +373,7 @@ List<CalendarDto> list = dao.getCalendarList(user.getId(), year+two(month+""));
 	//위쪽의 빈칸
 		for(int i=1;i<dayOfWeek;i++){
 	%>
-				<td bgcolor="#c6c6c6">&nbsp;</td>
+				<th bgcolor="#c6c6c6">&nbsp;</th>
 	<% 
 		}
 	

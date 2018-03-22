@@ -1,3 +1,5 @@
+<%@page import="user.UserService"%>
+<%@page import="user.IUserService"%>
 <%@page import="Study_like.LikeScrapService"%>
 <%@page import="Study_like.LikeScrapServiceImpl"%>
 <%@page import="java.sql.Timestamp"%>
@@ -24,6 +26,7 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="_studydetail.css?ver=1.41">
+<link rel="stylesheet" type="text/css" href="_main.css?ver=1.48">
 </head>
 <body>
 <script type="text/javascript">
@@ -60,22 +63,35 @@ public String toDates(String mdate){
 	<%
 	Object ologin = session.getAttribute("login");
 	UserDto mem = (UserDto)ologin;
+	String yn="";
+	IUserService uservice = UserService.getInstance();
+	String profile = null;
+	if(ologin != null){
+		profile = uservice.getProfile(mem.getId());
+	}
 	%>
 <!-- 메뉴 -->
 	<div class="menu">
 		<%
 		if(ologin == null){
+			yn="no";
 		%>
+		<input type="button" class="homebtn" onclick="location.href='index.jsp'">
 		<input type="button" class="login" id="login">
 		<input type="button" class="account" id="account">
 		<%
 		}else{
+			yn="yes";
 		%>
-		<div class="actionlogin">
-			<span><%=mem.getId() %></span>
+		<input type="button" class="homebtn" id="homebtn">
+<div class="actionlogin">
+<a onclick="upmydetail()" style="cursor: pointer">
+	<img src="<%=profile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+</a>		
+			<span class="memid"><a onclick="upmydetail()" style="cursor: pointer;color: #fff;"><%=mem.getId() %></a></span> <br>
+			<span class="point" style="margin-top: 0"><img src="image/actionpoint.PNG" class="pointimg"><%=mem.getScore()%></span>
 			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
-			<img class="alarmbtn" alt="" src="image/alarm.PNG" style="cursor: pointer" id="btnPopover">	
-		</div>
+				</div>
 		<%
 		}
 		%>
@@ -88,6 +104,9 @@ public String toDates(String mdate){
 	</div>
 	<script type="text/javascript">
 	$(function() {
+		$("#homebtn").click(function() {
+			location.href="main.jsp";
+		});
 		$("#login").click(function() {
 			location.href = "User?command=login";
 		});
@@ -110,7 +129,14 @@ public String toDates(String mdate){
 			location.href = "LifeBbs?command=life";
 		});
 		$("#combbs").click(function () {
-			location.href = "CommunityControl?command=list";
+			if(<%=yn.equals("yes")%>){
+				location.href = "CommunityControl?command=list";
+	
+			}
+			else{
+				location.href = "User?command=guest";
+			}
+			
 		});
 	});
 	</script>
@@ -255,10 +281,26 @@ if(list==null||list.size()==0){
 	<form action="CommunityControl">
 	<div class="wrap">
 		<div class="myinfo">
-		<%=mem.getId() %><%=list1.get(0).getWdate() %><br>
 		<p class="myinfo_icon">
-		<img alt="" src="image/reple.PNG"><%=list1.get(0).getCommentcount() %>
-		<img alt="" src="image/readcount.PNG"><%=list1.get(0).getReadcount() %>
+		<%
+		int score=uservice.getScore(list1.get(0).getId());
+		String getprofile=uservice.getProfile(list1.get(0).getId());
+		%>
+		<a onclick="location.href='User?command=otherpage&infoid=<%=list1.get(0).getId() %>'" style="cursor: pointer">
+		
+		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+		</a>
+		<span class="detailid" style="float: left; display: inline-block; margin-left: 15px;">
+		<a onclick="location.href='User?command=otherpage&infoid=<%=list1.get(0).getId() %>'" style="cursor: pointer"><%=list1.get(0).getId() %></a>
+		<span class="" style="margin-top: 0"><img src="image/actionpoint.PNG" class="pointimg">
+		
+		<%=score%></span></span>
+		 <br><br>
+		<span style="float:left; font-size: 12px;"><%=list1.get(0).getWdate()%><br></span>
+
+		
+		<img alt="" src="image/repleon.PNG"><span><%=list1.get(0).getCommentcount() %></span>
+		<img alt="" src="image/readcounton.PNG"><span><%=list1.get(0).getReadcount()%></span>
 		</p>
 	</div> 
 												
@@ -334,12 +376,30 @@ if(list==null||list.size()==0){
 			for(int i = 0;i<list.size();i++){
 				%>
 			
-		<tr>
-			<td> <%= list.get(i).getCommentid() %><br><%=list.get(i).getCommentwdate() %>작성
+		<tr><td>
+		<%
+		score=uservice.getScore(list.get(i).getCommentid());
+		getprofile=uservice.getProfile(list.get(i).getCommentid());
+		%>
+			<p class="myinfo_icon" style="margin-top: 5px">
+			<a onclick="location.href ='User?command=otherpage&infoid=<%=list.get(i).getCommentid() %>'" style="cursor: pointer">
+		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 30px; float:left; max-height: 30px; margin: 0 auto;">
+		</a>
+		<span class="detailid">
+		<a onclick="location.href ='User?command=otherpage&infoid=<%=list.get(i).getCommentid()%>'" style="cursor: pointer">
+		<span style="float: left">
+		<%=list.get(i).getCommentid() %>
+		</span>
+		</a>                                   
+		<img src="image/actionpoint.PNG" class="pointimg" style="float: left">
+		<span style="float: left;"><%=score%></span><br>
+		<span style="font-size: 10px; margin-top:3px; float: left;"><%=list.get(i).getBbswdate() %></span><br><br>
+		</span> 
 		
-		</tr>
-		<tr>
-			<td><%=list.get(i).getCommentcontent() %> </td>
+		</p><br><br>
+		<div style="clear: both;"></div>
+		<article class="content<%=list.get(i).getBbsseq() %>" name="content"><%=list.get(i).getBbscontent() %></article>
+			</td>
 		</tr>
 
 	<%
@@ -411,10 +471,27 @@ if(list==null||list.size()==0){
 											<input type="hidden" name="parent" value="<%=seq %>"> 
 		 					 </div> --%>
 <div class="wrap">
-	<div class="myinfo"><%=mem.getId() %><%=list.get(0).getBbswdate() %><br>
+	<div class="myinfo"><p class="myinfo_icon">
 		<p class="myinfo_icon">
-		<img alt="" src="image/reple.PNG"><%=list.get(0).getBbscommentcount()%>
-		<img alt="" src="image/readcount.PNG"><%=list.get(0).getBbsreadcount() %>
+		<%
+		int score=uservice.getScore(list.get(0).getBbsid());
+		String getprofile=uservice.getProfile(list.get(0).getBbsid());
+		%>
+		<a onclick="location.href='User?command=otherpage&infoid=<%=list.get(0).getBbsid() %>'" style="cursor: pointer">
+		
+		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+		</a>
+		<span class="detailid" style="float: left; display: inline-block; margin-left: 15px;">
+		<a onclick="location.href='User?command=otherpage&infoid=<%=list.get(0).getBbsid() %>'" style="cursor: pointer"><%=list.get(0).getBbsid() %></a>
+		<span class="" style="margin-top: 0"><img src="image/actionpoint.PNG" class="pointimg">
+		
+		<%=score%></span></span>
+		 <br><br>
+		<span style="float:left; font-size: 12px;"><%=list.get(0).getBbswdate()%><br></span>
+
+		
+		<img alt="" src="image/repleon.PNG"><span><%=list.get(0).getBbscommentcount() %></span>
+		<img alt="" src="image/readcounton.PNG"><span><%=list.get(0).getBbsreadcount()%></span>
 		</p>
 	</div>
 		 
@@ -522,7 +599,24 @@ if(list==null||list.size()==0){
 			%>
 		
 	<tr>
-		<td> <%= list.get(i).getCommentid() %><br><%=list.get(i).getCommentwdate() %>작성
+		<td>
+		<%
+		score=uservice.getScore(list.get(i).getBbsid());
+		getprofile=uservice.getProfile(list.get(i).getBbsid());
+		%>
+		<a onclick="location.href ='User?command=otherpage&infoid=<%= list.get(i).getCommentid() %>'" style="cursor: pointer">
+		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 30px; float:left; max-height: 30px; margin: 0 auto;">
+		</a>
+		<span class="detailid">
+		<a onclick="location.href ='User?command=otherpage&infoid=<%=list.get(i).getCommentid() %>'" style="cursor: pointer">
+		<span style="float: left">
+		<%=list.get(i).getCommentid() %>
+		</span>
+		</a>
+		<img src="image/actionpoint.PNG" class="pointimg" style="float: left">
+		<span style="float: left;"><%=score%></span><br>
+		<span style="font-size: 10px; margin-top:3px; float: left;"><%=list.get(i).getCommentwdate() %></span><br><br>
+		</span> 
 		
 		<td rowspan="2">
 		<%
@@ -575,7 +669,7 @@ if(list==null||list.size()==0){
 			<tr>
 			
 				<td colspan="2">
-					<input type="text" id="id" readonly="readonly" value="<%=mem.getId() %>" size="100">
+
 					<input type="hidden" name="id" value="<%=mem.getId() %>">
 	 				<input type="hidden" name="parent" value="<%=list.get(0).getBbsparent() %>">
 	 				

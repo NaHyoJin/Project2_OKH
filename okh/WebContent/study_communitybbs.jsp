@@ -246,9 +246,9 @@ String choice = request.getParameter("choice");
 if(choice == null){
 	choice = "title";
 }
-if(findWord == null || findWord.equals("")){
-	choice = "title";
-}
+if(findWord == null || findWord.equals("null")){
+	   findWord = "";
+	}
 
 
 
