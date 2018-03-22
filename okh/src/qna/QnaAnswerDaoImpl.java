@@ -2,12 +2,16 @@ package qna;
 
 import java.util.List;
 
+
+
 public interface QnaAnswerDaoImpl {
 
-	public boolean writeAnswer(QnaDto dto, int seq);
 	
-	public List<QnaAnswerDto> getCommentList(int seq);
 	
-	public int getSeq();
+	public List<QnaAnswerDto> getRepBbsList(int seq);
+	public boolean writeBbs(QnaAnswerDto bbs);
+	
+	public boolean repupdate(int seq, String content);
+	public boolean repdelete(int seq);
 	
 }

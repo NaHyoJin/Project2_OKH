@@ -17,23 +17,25 @@ public interface QnaServiceImpl extends Serializable {
 	public QnaDto getBbs(int seq);	
 	public String RemoveHTMLTag(String changeStr);
 	public boolean qnaupdate(QnaDto dto);	
-	public boolean answer(int seq, QnaDto dto);
-	
-	
-	public boolean writeAnswer(QnaDto dto, int seq);
-	
+	public boolean answer(int seq, QnaDto dto);			
 	public String[] getTagName(String tagname);
 	public boolean checkcomment(int seq);
 	public List<QnaDto> getqnaBbssortPagingList(PagingBean paging, String whatsort);
 	
-	public int getSeq();
+	
 	public void likecountplus(int seq) ;
 	public void dislikecount(int seq);
 	public boolean delete(int seq);
 	public void readcountplus(int seq);
 	public void commentcountplus(int seq) ;
-	public void commentcountminus(int seq); 
-	public List<QnaAnswerDto> getCommentList(int seq);
+	public void commentcountminus(int seq);
+	
+	public boolean getparent(int seq);
+	public List<QnaDto> getpdsdetail(int seq);
+	public List<QnaDto> getdetail(int seq);
+	public boolean update(int seq, String title, String content);
+	public boolean repAlldelete(int seq);
+	public boolean writeBbs(QnaDto bbs);
 	
 	
 	//좋아요,싫어요,스크랩아이디저장하기
@@ -50,6 +52,17 @@ public interface QnaServiceImpl extends Serializable {
 	public boolean deleteaddDisLikeID(String deleteid,int seq);
 	//스플릿하는함수-아이디빼주려고
 	public String[] getids(String serchid);
+	
+	
+	/// qnapdsdao
+	public boolean writePds(QnaPdsDto pds);
+	public List<QnaPdsDto> getpdsList(int parent);
+	public QnaPdsDto getPdsBbs(int seq);
+	public boolean pdsdelete(int seq);
+
+	public boolean pdsupdate(int seq, String filename);
+	public int getPdsSeq();
+	
 	
 	
 	

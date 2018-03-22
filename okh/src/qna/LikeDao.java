@@ -8,7 +8,7 @@ import java.util.StringTokenizer;
 
 import db.DBClose;
 import db.DBConnection;
-import techbbs.TechbbsDto;
+
 
 public class LikeDao implements LikeDaoImpl {
 
@@ -167,7 +167,7 @@ public class LikeDao implements LikeDaoImpl {
 		
 		String sql1 = " SELECT SEQ,ID, TITLE,TAGNAME,CONTENT,WDATE,  "
 				+ " READCOUNT,LIKECOUNT,LIKEID,DISLIKEID,COMMENTCOUNT,SCRAPCOUNT "
-				+ "  FROM QnaDto "
+				+ "  FROM QNA "
 				+ " WHERE SEQ=? AND LIKEID LIKE '%-" + serchlikeid.trim() + "-%' ";
 		try {
 			conn = DBConnection.getConnection();
@@ -217,7 +217,7 @@ public class LikeDao implements LikeDaoImpl {
 		
 		String sql1 = " SELECT SEQ,ID, TITLE,TAGNAME,CONTENT,WDATE,  "
 				+ " READCOUNT,LIKECOUNT,LIKEID,DISLIKEID,COMMENTCOUNT,SCRAPCOUNT "
-				+ "  FROM QnaDto "
+				+ "  FROM QNA "
 				+ " WHERE SEQ=? AND DISLIKEID LIKE '%-" + serchdislikeid.trim() + "-%' ";
 		try {
 			conn = DBConnection.getConnection();
@@ -269,7 +269,7 @@ public class LikeDao implements LikeDaoImpl {
 			}
 		}
 		System.out.println(up);
-		String sql = " UPDATE QnaDto SET LIKEID=? "
+		String sql = " UPDATE QNA SET LIKEID=? "
 				+ " WHERE SEQ=? ";
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -313,7 +313,7 @@ public class LikeDao implements LikeDaoImpl {
 			}
 		}
 		
-		String sql = " UPDATE QnaDto SET DISLIKEID=? "
+		String sql = " UPDATE QNA SET DISLIKEID=? "
 				+ " WHERE SEQ=? ";
 		Connection conn = null;
 		PreparedStatement psmt = null;

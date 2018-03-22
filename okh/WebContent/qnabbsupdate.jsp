@@ -1,3 +1,5 @@
+<%@page import="qna.QnaService"%>
+<%@page import="qna.QnaServiceImpl"%>
 <%@page import="qna.QnaDto"%>
 <%@page import="user.UserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -33,7 +35,13 @@ UserDto mem = (UserDto)ologin;
 
 <%
 //seq에따른 getbbs를 통해 가져옴 dto정보 불러오기위해
-QnaDto bbs = (QnaDto)session.getAttribute("detailDto");	
+QnaServiceImpl qnaservice = QnaService.getInstance();
+
+String seq = request.getParameter("seq");
+
+QnaDto bbs = qnaservice.getBbs(Integer.parseInt(seq));
+System.out.println("bbs in update : " + bbs.toString());
+
 
 %>
 <div class="border" align="center">
@@ -59,7 +67,7 @@ QnaDto bbs = (QnaDto)session.getAttribute("detailDto");
 
 <tr>
 	<td>
-		<input type="text" name="tAg" id="tAg" data-role="tagsinput" style="width: 800px" value="<%=bbs.getTag() %>" ><br><br>
+		<input type="text" name="tAg" id="tAg" data-role="tagsinput" style="width: 800px" value="<%=bbs.getTagname() %>" ><br><br>
 	</td>
 </tr>	
 

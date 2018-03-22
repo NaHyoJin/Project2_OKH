@@ -107,12 +107,24 @@ version="3.0">
   <servlet>
   	<servlet-name>qnaServlet</servlet-name>
   	<servlet-class>qna.QnaServlet</servlet-class>
-  </servlet>
-  
+  </servlet>  
   <servlet-mapping>
   	<servlet-name>qnaServlet</servlet-name>
   	<url-pattern>/qnaServlet</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>qnaAnswerServlet</servlet-name>
+    <url-pattern>/qnaAnswerServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>qnafiledown</servlet-name>
+    <servlet-class>qna.FileDownloader</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>qnafiledown</servlet-name>
+    <url-pattern>/qnafiledown</url-pattern>
+  </servlet-mapping>
+  
   
    		<!-- 커뮤니티일정게시판 -->
   <servlet>

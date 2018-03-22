@@ -7,16 +7,20 @@ import java.util.List;
 public class QnaService implements QnaServiceImpl {
 
 	
+	
+
 	private static QnaService qnaService = new QnaService();	
 	
 	public QnaBbsDaoImpl qnadao;	
-	public QnaAnswerDaoImpl qnaanswerdao;
+//	public QnaAnswerDaoImpl qnaanswerdao;
 	public LikeDaoImpl likedao;
+	public QnaPdsDaoImpl qnapdsdao;
 	
 	private QnaService() {
 		qnadao = new QnaBbsDao();		
-		qnaanswerdao = new QnaAnswerDao();
+	//	qnaanswerdao = new QnaAnswerDao();
 		likedao = new LikeDao();
+		qnapdsdao = new QnaPdsDao();
 	}	
 	public static QnaService getInstance() {
 		return qnaService;
@@ -59,8 +63,14 @@ public class QnaService implements QnaServiceImpl {
 	public String[] getTagName(String tagname) {		
 		return qnadao.getTagName(tagname);
 	}
-	
-	
+	@Override
+	public boolean update(int seq, String title, String content) {
+		return qnadao.update(seq, title, content);
+	}	
+	@Override
+	public boolean repAlldelete(int seq) {
+		return qnadao.repAlldelete(seq);
+	}
 	@Override
 	public List<QnaDto> getqnaBbssortPagingList(PagingBean paging, String whatsort) {
 		return qnadao.getqnaBbssortPagingList(paging, whatsort);
@@ -102,18 +112,24 @@ public class QnaService implements QnaServiceImpl {
 	}
 	
 	@Override
-	public boolean writeAnswer(QnaDto dto, int seq) {
-		return qnaanswerdao.writeAnswer(dto, seq);
-	}
-	@Override
-	public int getSeq() {		
-		return qnaanswerdao.getSeq();
-	}
-	@Override
-	public List<QnaAnswerDto> getCommentList(int seq) {
-		return qnaanswerdao.getCommentList(seq);
+	public boolean getparent(int seq) {
+		return qnadao.getparent(seq);
 	}
 	
+	@Override
+	public List<QnaDto> getpdsdetail(int seq) {
+		return qnadao.getpdsdetail(seq);
+	}
+	
+	@Override
+	public List<QnaDto> getdetail(int seq) {
+		return qnadao.getdetail(seq);
+	}
+	
+	@Override
+	public boolean writeBbs(QnaDto bbs) {
+		return qnadao.writeBbs(bbs);
+	}
 	////////////////////////////////like
 	@Override
 	public boolean addLikeID(QnaDto bbs) {
@@ -154,10 +170,31 @@ public class QnaService implements QnaServiceImpl {
 	
 	
 	
-	
-	
-	
-	
+///////////////////////pds
+	@Override
+	public boolean writePds(QnaPdsDto pds) {
+		return qnapdsdao.writePds(pds);
+	}
+	@Override
+	public List<QnaPdsDto> getpdsList(int parent) {
+		return qnapdsdao.getpdsList(parent);
+	}
+	@Override
+	public QnaPdsDto getPdsBbs(int seq) {
+		return qnapdsdao.getPdsBbs(seq);
+	}
+	@Override
+	public boolean pdsdelete(int seq) {
+		return qnapdsdao.pdsdelete(seq);
+	}
+	@Override
+	public boolean pdsupdate(int seq, String filename) {
+		return qnapdsdao.pdsupdate(seq, filename);
+	}
+	@Override
+	public int getPdsSeq() {
+		return qnapdsdao.getPdsSeq();
+	}
 	
 	
 }

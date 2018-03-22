@@ -3,6 +3,8 @@ package qna;
 import java.util.List;
 
 import qna.PagingBean;
+import techbbs.TechbbsDto;
+
 
 public interface QnaBbsDaoImpl {
 
@@ -33,6 +35,12 @@ public interface QnaBbsDaoImpl {
 	public void commentcountplus(int seq);
 	public void commentcountminus(int seq);
 	
+	public boolean getparent(int seq);
+	public List<QnaDto> getpdsdetail(int seq);
+	public List<QnaDto> getdetail(int seq);
+	public boolean update(int seq, String title, String content);
+	public boolean repAlldelete(int seq);
+	public boolean writeBbs(QnaDto bbs);
 	
 	// like
 	

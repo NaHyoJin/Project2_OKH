@@ -12,6 +12,7 @@ import db.DBClose;
 import db.DBConnection;
 import qna.PagingBean;
 import qna.PagingUtil;
+import techbbs.TechbbsDto;
 
 
 
@@ -55,6 +56,46 @@ public class QnaBbsDao implements QnaBbsDaoImpl {
 		return commentcount>0?true:false;
 	}
 	
+	@Override
+	public boolean writeBbs(QnaDto bbs) {
+		String sql = " INSERT INTO QNA(SEQ, ID, "
+				+ " TITLE, TAGNAME, CONTENT, WDATE, "
+				+ " DEL, READCOUNT,LIKECOUNT,LIKEID,DISLIKEID,COMMENTCOUNT,SCRAPCOUNT ) "
+				+ " VALUES(QNA.NEXTVAL, ?, ?, ?,?, "
+				+ " SYSDATE, 0,0,0,?,?,0,0) ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		
+		int count = 0;
+		
+		try {
+			conn = DBConnection.getConnection();			
+			System.out.println("1/6 writeBbs Success");
+			
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 writeBbs Success");
+			
+			psmt.setString(1, bbs.getId());
+			psmt.setString(2, bbs.getTitle());
+			psmt.setString(3, bbs.getTagname());
+			psmt.setString(4, bbs.getContent());
+			psmt.setString(5, "-admin");
+			psmt.setString(6, "-admin");
+			count = psmt.executeUpdate();
+			
+			System.out.println("3/6 writeBbs Success");
+			
+		} catch (SQLException e) {
+			System.out.println("writeBbs fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);			
+		}
+		
+		return count>0?true:false;
+	}
+
 	@Override
 	public String[] getTagName(String tagname) {
 		StringTokenizer st= new StringTokenizer(tagname, "-");
@@ -449,7 +490,7 @@ public class QnaBbsDao implements QnaBbsDaoImpl {
 	@Override
 	public boolean qnaupdate(QnaDto dto) {		
 		String sql = " UPDATE QNA "
-				+ " SET TITLE = ?, CONTENT = ?, TAG = ?"
+				+ " SET TITLE = ?, CONTENT = ?, TAGNAME = ?"
 				+ " WHERE SEQ = ? ";
 		
 		Connection conn = null;
@@ -481,6 +522,66 @@ public class QnaBbsDao implements QnaBbsDaoImpl {
 		return count>0?true:false;
 	}
 	
+	@Override
+	public boolean repAlldelete(int seq) {
+		String sql=" DELETE  "
+				+ " FROM QNAANSWER "
+				+ " WHERE PARENT = ? ";
+		Connection conn=null;
+		PreparedStatement pstmt=null;//sql문에서?썻을때이렇게불러와야한다
+		
+		int count=0;
+		
+		try {
+			conn=DBConnection.getConnection();
+			pstmt=conn.prepareStatement(sql);
+			System.out.println("1/6 pdsdelete Success");
+			pstmt.setInt(1, seq);
+			System.out.println("2/6 pdsdelete Success");
+			count=pstmt.executeUpdate();
+			System.out.println("3/6 pdsdelete Success");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {DBClose.close(pstmt, conn, null);}
+		
+		return count>0?true:false;
+	}
+
+	@Override
+	public boolean update(int seq, String title, String content) {
+		String sql = " UPDATE QNA SET "
+				+ " TITLE=?, CONTENT=? "
+				+ " WHERE SEQ=? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		int count = 0;
+		
+		try {
+			conn = DBConnection.getConnection();	
+			System.out.println("2/6 S updateBbs");
+			
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, title);
+			psmt.setString(2, content);
+			psmt.setInt(3, seq);
+			
+			System.out.println("3/6 S updateBbs");
+			
+			count = psmt.executeUpdate();
+			System.out.println("4/6 S updateBbs");
+			
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		} finally{
+			DBClose.close(psmt, conn, null);	
+			System.out.println("5/6 S updateBbs");
+		}		
+		
+		return count>0?true:false;
+	}
+
 	@Override
 	public void readcount(int seq) {
 		String sql = " UPDATE QNA "
@@ -781,14 +882,14 @@ public class QnaBbsDao implements QnaBbsDaoImpl {
 	@Override
 	public List<QnaDto> getQnaList() {
 		
-		String sql = " SELECT SEQ, ID, TITLE, TAGNAME, CONTENT, WDATE, DEL,"
+		/*String sql = " SELECT SEQ, ID, TITLE, TAGNAME, CONTENT, WDATE, DEL,"
 				+ " READCOUNT, LIKECOUNT, LIKEID, DISLIKEID, COMMENTCOUNT, SCRAPCOUNT "
-				+ " FROM QNA ";
+				+ " FROM QNA ";*/
 				
-		/*String sql = " SELECT * FROM  "
+		String sql = " SELECT * FROM  "
 				+ " (SELECT * FROM (SELECT * FROM QNA ORDER BY SEQ ASC) "
 				+ "  WHERE ROWNUM >= 1 AND DEL=0 ORDER BY SEQ DESC) "
-				+ " WHERE ROWNUM <= 6 AND DEL=0 ";*/
+				+ " WHERE ROWNUM <= 6 AND DEL=0 ";
 		
 		List<QnaDto> list = new ArrayList<QnaDto>();
 		
@@ -837,6 +938,7 @@ public class QnaBbsDao implements QnaBbsDaoImpl {
 		return list;
 	}
 
+	
 	@Override
 	public String RemoveHTMLTag(String changeStr){
 	    if(changeStr != null && !changeStr.equals("")){
@@ -997,8 +1099,167 @@ public class QnaBbsDao implements QnaBbsDaoImpl {
 			DBClose.close(psmt, conn, rs);	
 		}	
 	}
+
+	@Override
+	public boolean getparent(int seq) {
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		List<QnaDto> list=new ArrayList<>();
+		QnaDto dto=null;
+		String sql = " SELECT B.SEQ,B.ID, B.TITLE,B.TAGNAME,B.CONTENT,B.WDATE, "
+				+ " B.READCOUNT,B.LIKECOUNT,B.LIKEID,B.DISLIKEID,B.COMMENTCOUNT,B.SCRAPCOUNT,P.SEQ,P.FILENAME,P.PARENT "
+				+ " FROM QNA B,QNA_PDS P  "
+				+ " WHERE B.ID=P.ID AND B.SEQ=? AND B.SEQ=P.PARENT ";
+		
+		try {			
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);	
+			System.out.println("1/6 getparent Success");		
+			psmt.setInt(1, seq);			
+			rs = psmt.executeQuery();
+			
+			while(rs.next()){		
+				int seq1=rs.getInt(1);
+				String id = rs.getString(2);
+				String title = rs.getString(3);
+				String tagname = rs.getString(4);
+				String content = rs.getString(5);
+				String wdate = rs.getString(6);	
+				int readcount = rs.getInt(7);
+				int likecount = rs.getInt(8);
+				String likeid = rs.getString(9);	
+				String dislikeid = rs.getString(10);
+				int commentcount = rs.getInt(11);
+				int scrapcount = rs.getInt(12);
+				int pdsseq=rs.getInt(13);
+				String filename = rs.getString(14);	
+				int parent=rs.getInt(15);
+				int pdsyn=0;
+				pdsyn=dto!=null?1:2;	//자료있으면 1 자료없으면2
+				
+				dto = new QnaDto(seq1, id, title, tagname, content, wdate, readcount,likecount, likeid,dislikeid,commentcount, scrapcount, filename, parent, pdsseq,pdsyn);
+				list.add(dto);
+					
+				System.out.println("5/6 getBbsPagingList Success");			
+				
+				
+			}
+			System.out.println("2/6 getparent Success");	
+		} catch (SQLException e) {		
+			System.out.println("getparent fail");	
+			e.printStackTrace();
+		} finally{
+			DBClose.close(psmt, conn, rs);	
+		}
+		System.out.println(dto!=null?true:false);	
+		return dto!=null?true:false;
+	}
+
+	@Override
+	public List<QnaDto> getpdsdetail(int seq) {
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		List<QnaDto> list=new ArrayList<>();
+		QnaDto dto=null;
+		String sql = " SELECT B.SEQ,B.ID, B.TITLE,B.TAGNAME,B.CONTENT,B.WDATE, "
+				+ " B.READCOUNT,B.LIKECOUNT,B.LIKEID,B.DISLIKEID,B.COMMENTCOUNT,B.SCRAPCOUNT,P.SEQ,P.FILENAME,P.PARENT "
+				+ " FROM QNA B,QNA_PDS P  "
+				+ " WHERE B.ID=P.ID AND B.SEQ=? AND B.SEQ=P.PARENT ";
+		
+		try {			
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);	
+			System.out.println("1/6 getpdsdetail Success");	
+			psmt.setInt(1, seq);			
+			rs = psmt.executeQuery();
+			System.out.println("2/6 getpdsdetail Success");	
+			while(rs.next()){		
+				int seq1=rs.getInt(1);
+				String id = rs.getString(2);
+				String title = rs.getString(3);
+				String tagname = rs.getString(4);
+				String content = rs.getString(5);
+				String wdate = rs.getString(6);	
+				int readcount = rs.getInt(7);
+				int likecount = rs.getInt(8);
+				String likeid = rs.getString(9);	
+				String dislikeid = rs.getString(10);
+				int commentcount = rs.getInt(11);
+				int scrapcount = rs.getInt(12);
+				int pdsseq=rs.getInt(13);
+				String filename = rs.getString(14);	
+				int parent=rs.getInt(15);
+				int pdsyn=1;
+				
+				dto = new QnaDto(seq1, id, title, tagname, content, wdate, readcount,likecount, likeid,dislikeid,commentcount, scrapcount, filename, parent, pdsseq,pdsyn);
+				list.add(dto);
+					
+				System.out.println("5/6 getdetail Success");			
+				
+				
+			}
+			System.out.println("3/6 getpdsdetail Success");	
+		} catch (SQLException e) {	
+			System.out.println("getpdsdetail fail");	
+			e.printStackTrace();
+		} finally{
+			DBClose.close(psmt, conn, rs);	
+		}
+		return list;
+	}
+
+	@Override
+	public List<QnaDto> getdetail(int seq) {
+		Connection conn=null;
+		PreparedStatement psmt=null;
+		ResultSet rs=null;
+		QnaDto dto=null;
+		List<QnaDto> list=new ArrayList<>();
+		String sql1 = " SELECT SEQ,ID, TITLE,TAGNAME,CONTENT,WDATE,DEL,  "
+				+ " READCOUNT,LIKECOUNT,LIKEID,DISLIKEID,COMMENTCOUNT,SCRAPCOUNT "
+				+ "  FROM QNA "
+				+ " WHERE SEQ=? ";
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 getdetail Success");			
+		psmt = conn.prepareStatement(sql1);	
+		
+		psmt.setInt(1, seq);			
+		rs = psmt.executeQuery();
+		System.out.println("2/6 getdetail Success");		
+		while(rs.next()){		
+			int seq1=rs.getInt(1);
+			String id = rs.getString(2);
+			String title = rs.getString(3);
+			String tagname = rs.getString(4);
+			String content = rs.getString(5);
+			String wdate = rs.getString(6);	
+			int del = rs.getInt(7);
+			int readcount = rs.getInt(8);
+			int likecount = rs.getInt(9);
+			String likeid = rs.getString(10);	
+			String dislikeid = rs.getString(11);	
+			int commentcount = rs.getInt(12);
+			int scrapcount = rs.getInt(13);
+			int pdsyn=2;
+			
+			dto = new QnaDto(seq1, id, title, tagname, content, wdate, del, readcount, commentcount, likecount, scrapcount, pdsyn);
+			list.add(dto);
+			
+		}
+		System.out.println("3/6 getdetail Success");		
+		} catch (SQLException e) {	
+			System.out.println("getdetail fail");		
+			e.printStackTrace();
+		} finally{
+			DBClose.close(psmt, conn, rs);	
+		}
+		return list;
+	}
 	
-	// like
+	
 
 	
 }

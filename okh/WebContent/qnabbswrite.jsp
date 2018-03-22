@@ -22,30 +22,104 @@
 	
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/custom.css">
-	<link rel="stylesheet" type="text/css" href="_write.css?ver=1.46">
-<link rel="stylesheet" type="text/css" href="_main.css?ver=1.31">
+	<link rel="stylesheet" type="text/css" href="_write.css?ver=1.48">
+<link rel="stylesheet" type="text/css" href="_main.css?ver=1.36">
 <!-- 폰트  -->
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
 </head>
 <body bgcolor="#fcfbfb">
 
-<div class="menu">
+<%-- <div class="menu">
 <jsp:include page="menuinclude.jsp">
 <jsp:param name="actionPath" value="index.jsp"/>
 </jsp:include>
 </div>
-
-
-
-
-
-
-
+ --%>
 <%
 Object ologin = session.getAttribute("login");
 UserDto mem = (UserDto)ologin;
 %>
+<!-- 인클루드 부분 -->
+	<div class="menu">
+			<%
+if(ologin == null){	//로그인안한상태
+	%>
+	<input type="button" class="homebtn" onclick="location.href='index.jsp'">
+	<input type="button" class="login" id="login">
+	<input type="button" class="account" id="account">
 
+		<%
+}else{
+	
+%>
+<input type="button" class="homebtn" id="homebtn">
+<div class="actionlogin">
+
+	<span><%=mem.getId() %></span>
+	<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
+</div>
+<%
+}
+%>
+		<input type="button" class="bbs1" id="qnabbs">
+		<input type="button" class="techbbs_hjh" id="techbbs">
+		<input type="button" class="bbs3" ><!-- 정재흥 -->
+		<input type="button" class="bbs4" >
+		<input type="button" class="bbs5" id="jobs"><!-- 나효진 -->
+		<input type="button" class="bbs6" id="life"><!-- 병찬 사는얘기 -->
+	</div>	
+
+	
+	<script type="text/javascript">
+		$(function() {//좌측 메뉴바 누르는 곳.
+			$("#homebtn").click(function() {
+				location.href="main.jsp";
+			});
+			$("#login").click(function() {
+				location.href="User?command=login";
+			});
+	
+			$("#account").click(function() {
+				location.href="User?command=join";
+			});
+			
+			//QNA
+			$("#qnabbs").click(function() {
+				location.href="qnaServlet?command=listQna";
+			});
+			
+			$("#second").click(function() {
+				location.href="second.jsp";
+			});
+	
+			$("#techbbs").click(function() {
+				location.href="TechbbsController?command=techbbs";
+			});
+	
+			$("#life").click(function() {
+				location.href="LifeBbs?command=life";
+			});
+			
+			
+	/* 
+			//columns
+			$("#").click(function() {
+				location.href="";
+			});
+	 */
+	 
+			//게시판5 나효진 jobs 부분.
+/* 			$("#jobs").click(function() {
+				location.href="main.BBSHWCodingController";
+			});
+ */	 
+			
+			$("#jobs").click(function name() {
+				location.href="jobs";
+			});
+
+		});
+	</script>
 <div class="wrap">
 
 
@@ -54,12 +128,13 @@ UserDto mem = (UserDto)ologin;
 <form action="qnaServlet" method="get">
 <table>
 
-<tr>현제 접속 아이디는:<%=mem.getId() %> </tr>
+<tr>새 글 쓰기</tr>
 <br><br>
 
 <tr>
 	<td>
 		<input type="hidden" name="command" value="writeQna">
+		<!-- <input type="hidden" name="command" value="qnawrite"> -->
 		<input type="hidden" name="iD" value="<%=mem.getId() %>">
 		
 	</td>
@@ -73,7 +148,7 @@ UserDto mem = (UserDto)ologin;
 
 <tr>
 	<td>
-		<input type="text" name="tAg" id="tAg" data-role="tagsinput" style="width: 800px" value="Q&A" ><br><br>
+		<input type="text" name="tAg" id="tAg" data-role="tagsinput" style="width: 800px" value="QnA" ><br><br>
 	</td>
 </tr>	
 
