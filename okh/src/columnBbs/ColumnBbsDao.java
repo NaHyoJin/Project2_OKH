@@ -9,6 +9,8 @@ import java.util.List;
 
 import db.DBClose;
 import db.DBConnection;
+import lifeBbs.LifeBbsDto;
+import lifeBbs.LifeBbsPagingUtil;
 import columnBbs.ColumnBbsDto;
 import columnBbs.PagingBean;
 import oracle.net.aso.r;
@@ -157,8 +159,6 @@ public class ColumnBbsDao implements iColumnBbsDao {
 		
 		List<ColumnBbsDto> bbslist = new ArrayList<ColumnBbsDto>();
 		
-		System.out.println("search = " + search);
-		
 		String sWord = "";		
 		if(search == 0) {	// 제목
 			sWord = " WHERE TITLE LIKE '%" + searchWord.trim() + "%' ";
@@ -167,6 +167,8 @@ public class ColumnBbsDao implements iColumnBbsDao {
 		}else if(search == 2) {	// 내용
 			
 		} 
+		System.out.println("search------------------ = " + search);
+		System.out.println("sWord------------------ = " + sWord);
 		
 		try {
 			conn = DBConnection.getConnection();
@@ -181,6 +183,7 @@ public class ColumnBbsDao implements iColumnBbsDao {
 			int totalCount = 0;
 			rs.next();
 			totalCount = rs.getInt(1);	// row의 총 갯수
+			System.out.println("totalCount------------------ = " + totalCount);
 			
 			paging.setTotalCount(totalCount);
 			paging = PagingUtil.setPagingInfo(paging);
@@ -195,6 +198,7 @@ public class ColumnBbsDao implements iColumnBbsDao {
 						+ "WHERE ROWNUM <=" + paging.getCountPerPage();
 			
 			System.out.println("paging.getStartNum() = " + paging.getStartNum());
+			System.out.println("paging.getCountPerPage() = " + paging.getCountPerPage());
 			
 			psmt = conn.prepareStatement(sql);
 			System.out.println("3/6 getBbsPagingList Success");
@@ -492,6 +496,8 @@ public class ColumnBbsDao implements iColumnBbsDao {
 		
 		return count>0?true:false;
 	}
+
+	
 
 	
 
