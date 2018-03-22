@@ -440,7 +440,7 @@ function searchBbs1(e) {
 			<%
 			}
 			
-			for(int i = 0; i < 6; i++){
+			for(int i = 0; i <hwlist.size(); i++){
 				newbbs5HWCodingVO hwdto = hwlist.get(i);
 				hwservice = newbbs5HWCodingService.getInstance();
 				boolean chekcomment = hwservice.checkcomment(hwlist.get(i).getSeq());
