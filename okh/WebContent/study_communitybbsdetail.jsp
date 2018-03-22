@@ -270,7 +270,7 @@ if(list==null||list.size()==0){
 				<span class="hjhtag"><%=list1.get(0).getTagname() %></span><br>
 				</p>
 				<h2 class="title"> <%=list1.get(0).getTitle() %></h2> <br>
-				<%=list1.get(0).getWdate() %><hr/>
+	<hr/>
 				
 				<article class="content">
 						<%=list1.get(0).getContent()%><br>
