@@ -6,8 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="_lifemain.css?ver-1.62">
-	<link rel="stylesheet" type="text/css" href="_lifewrite.css?ver=1.1">
+
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/bootstrap-tagsinput.css">
 	<link rel="stylesheet" href="css/custom.css">
@@ -24,6 +23,8 @@
 	<!-- include summernote css/js -->
 	<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+	<link rel="stylesheet" type="text/css" href="_lifemain.css?ver-1.62">
+	<link rel="stylesheet" type="text/css" href="_lifewrite.css?ver=1.1">
 </head>
 <body>
 

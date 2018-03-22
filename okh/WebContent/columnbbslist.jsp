@@ -294,7 +294,7 @@ System.out.println("bbslist in list : " + bbslist);
 
 	<div class="board">
 		<table border="1" class="techtable">
-		<col width="60"><col width="450"><col width="50">
+		<col width="60"><col width="600"><col width="50">
 		
 		<%
 		if(bbslist == null || bbslist.size() == 0){
