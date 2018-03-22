@@ -333,8 +333,24 @@ if(ologin == null){	//로그인안한상태
 	%>
 	<tr>
 		<td>
-			<%=mem.getId() %>
-			<article class="content<%=bbs.getSeq() %>" name="content"><%=bbs.getContent() %></article>
+			<p class="myinfo_icon" style="margin-top: 5px">
+			<a onclick="upmydetail()" style="cursor: pointer">
+		<img src="<%=profile %>" class="media-object img-circle" style="max-width: 30px; float:left; max-height: 30px; margin: 0 auto;">
+		</a>
+		<span class="detailid">
+		<a onclick="upmydetail()" style="cursor: pointer">
+		<span style="float: left">
+		<%=bbs.getId() %>
+		</span>
+		</a>
+		<img src="image/actionpoint.PNG" class="pointimg" style="float: left">
+		<span style="float: left;"><%=mem.getScore()%></span><br>
+		<span style="font-size: 10px; margin-top:3px; float: left;"><%=bbs.getWdate() %></span><br><br>
+		</span> 
+		
+		</p><br><br>
+		<div style="clear: both;"></div>
+		<article class="content<%=bbs.getSeq() %>" name="content"><%=bbs.getContent() %></article>
 		</td>
 		<td style="border-left: 1px solid #DDD">	
 	<%
