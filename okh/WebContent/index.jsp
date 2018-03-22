@@ -311,15 +311,16 @@ function searchBbs1(e) {
 		<div class="partition1">
 			<h4 style="margin-bottom: 15px">Q&A <a href="qnaServlet?command=listQna"><img style="float: right" alt="게시판으로가기" src="image/moresee.PNG"></a></h4>
 			<%
-			TechbbsServiceImpl tservice=TechbbsService.getInstance();
-			 tservice=TechbbsService.getInstance();
-			List<QnaDto> qnalist=tservice.getqnaBbsList();
+			TechbbsServiceImpl tservice =TechbbsService.getInstance();
+			 tservice =TechbbsService.getInstance();
+			List<QnaDto> qnalist =tservice.getqnaBbsList();
 			%>
 			<table class="techtable">
-				<%if(qnalist==null||qnalist.size()==0){
+				<%
+				if(qnalist == null ||qnalist.size()==0){
 				
 			%><tr>
-				<th>리스트가없습니다</th>
+				<th>Q&A가 없습니다.</th>
 				</tr>
 			<%
 			}
@@ -339,7 +340,7 @@ function searchBbs1(e) {
 			%>
 			<span style="font-size: 15px; margin-top: 5px;"><a href="qnaServlet?command=qnaBbsDetail&action=detail&likeid=&seq=<%=qna.getSeq()%>"><%=qna.getTitle() %></a></span>
 				<%
-		IUserService uservice=UserService.getInstance();
+		IUserService uservice =UserService.getInstance();
 		
 		int score=uservice.getScore(qnalist.get(i).getId());
 		String getprofile=uservice.getProfile(qnalist.get(i).getId());
@@ -463,10 +464,10 @@ function searchBbs1(e) {
 			List<LifeBbsDto> lifelist=tservice.getlifeBbsList();
 			%>
 			<table border="1" class="techtable">
-				<%if(lifelist==null||lifelist.size()==0){
+				<%if(lifelist== null||lifelist.size()==0){
 				
 			%><tr>
-				<th>리스트가없습니다</th>
+				<th>리스트가 없습니다.</th>
 				</tr>
 			<%
 			}
@@ -476,7 +477,7 @@ function searchBbs1(e) {
 				
 	
 				tservice=TechbbsService.getInstance();
-				boolean chekcomment=tservice.checklifecomment(lifelist.get(i).getSeq());
+				boolean chekcomment =tservice.checklifecomment(lifelist.get(i).getSeq());
 				if(chekcomment){
 			%>
 			<tr>
@@ -562,7 +563,7 @@ function searchBbs1(e) {
                      </a>
                   </span>
 				 	<%
-		IUserService uservice=UserService.getInstance();
+		IUserService uservice =UserService.getInstance();
 		
 		int score=uservice.getScore(dto.getId());
 		String getprofile=uservice.getProfile(dto.getId());
@@ -597,7 +598,7 @@ function searchBbs1(e) {
 		IUserService uservice=UserService.getInstance();
 		
 		int score=uservice.getScore(dto.getId());
-		String getprofile=uservice.getProfile(dto.getId());
+		String getprofile =uservice.getProfile(dto.getId());
 		%>
 <p class="myinfo_icon" style="float: right;">
 	<a onclick="location.href ='User?command=otherpage&infoid=<%=dto.getId() %>'" style="cursor: pointer">
@@ -615,22 +616,24 @@ function searchBbs1(e) {
 	</span> 
 </p>
 		<div style="clear: both;"></div>
-			<%}
+			<%
+			}
 			}}
 			%>
 		</table>
 		</div>
 		<div class="partition3">
-			<h4 style="margin-bottom: 15px">기술게시판 <a href="TechbbsController?command=techbbs"><img style="float: right" alt="" src="image/moresee.PNG"></a></h4>
+			<h4 style="margin-bottom: 15px">기술 게시판 <a href="TechbbsController?command=techbbs"><img style="float: right" alt="" src="image/moresee.PNG"></a></h4>
 			<%
 			 tservice=TechbbsService.getInstance();
 			List<TechbbsDto> techlist=tservice.gettechBbsList();
 			%>
 			<table border="1" class="techtable">
-				<%if(techlist==null||techlist.size()==0){
+				<%
+				if(techlist == null || techlist.size()==0){
 				
 			%><tr>
-				<th>리스트가없습니다</th>
+				<th>기술 게시판 글이 없습니다.</th>
 				</tr>
 			<%
 			}

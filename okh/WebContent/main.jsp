@@ -20,9 +20,7 @@
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/custom.css">
 	
-	<title>index.jsp</title>
-	
-	
+	<title>main.jsp</title>	
 	
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/bootstrap.js"></script>

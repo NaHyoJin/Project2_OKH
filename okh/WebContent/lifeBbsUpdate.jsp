@@ -14,7 +14,7 @@
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/bootstrap-tagsinput.css">
 	<link rel="stylesheet" href="css/custom.css">
-	<title>Insert title here</title>
+	<title>lifeBbsUpdate.jsp</title>
 	<link rel="stylesheet" type="text/css" href="_main.css?ver=1.62">
 	<link rel="stylesheet" type="text/css" href="_lifewrite.css?ver=1.1">
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>

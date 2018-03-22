@@ -21,7 +21,7 @@
 
 
  
-<title>Insert title here</title>
+<title>datepic.jsp</title>
 </head>
 <body>
 <input type="text" id="cdate">

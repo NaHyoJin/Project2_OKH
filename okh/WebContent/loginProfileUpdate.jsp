@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/custom.css?ver=1.2">
-	<title>join.jsp</title>
+	<title>loginProfileUpdate.jsp</title>
 	<link rel="stylesheet" type="text/css" href="_main.css">
 	
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
