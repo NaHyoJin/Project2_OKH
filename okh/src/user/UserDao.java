@@ -234,8 +234,10 @@ public class UserDao implements IUserDao {
 			
 			if(rs.next()) {
 				if(rs.getString(1).equals(" ")) {
+					System.out.println("왔ㄴ니ㅣ니니?");
 					return "http://localhost:8090/okh/image/muser.png";
 				}
+				System.out.println("왓왓!!?");
 				return "http://localhost:8090/okh/upload/" + rs.getString(1);
 			}
 			
@@ -245,7 +247,7 @@ public class UserDao implements IUserDao {
 		} finally {
 			DBClose.close(psmt, conn, rs);
 		}
-		
+		System.out.println("잉잉!!?");
 		return "http://localhost:8090/okh/image/muser.png";
 	}
 
