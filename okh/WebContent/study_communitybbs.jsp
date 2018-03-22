@@ -297,8 +297,7 @@ List<CombbsDto> bbslist = service.getpagingComList(paging, findWord, cho);
 		function searchBbs() {
 			var word = document.getElementById("search").value;
 			var choice = document.getElementById("choice").value;
-			var content = document.getElementById("content").value;
-			location.href = "study_communitybbs.jsp?findWord=" + word + "&choice=" + choice + "&content=" +content;
+			location.href = "study_communitybbs.jsp?findWord=" + word + "&choice=" + choice;
 		}
 </script>
 
