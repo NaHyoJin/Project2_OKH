@@ -13,22 +13,18 @@ CREATE TABLE QNA(
 	SEQ NUMBER(8) PRIMARY KEY,
 	ID VARCHAR2(50) NOT NULL,
 	
-	REF NUMBER(8) NOT NULL,
-	STEP NUMBER(8) NOT NULL,
-	DEPTH NUMBER(8) NOT NULL,
-	
 	TITLE VARCHAR2(200) NOT NULL,
+	TAGNAME VARCHAR2(50) NOT NULL,
 	CONTENT VARCHAR2(4000) NOT NULL,
-	TAG VARCHAR2(200) NOT NULL,
 	WDATE DATE NOT NULL,
-	PARENT NUMBER(8) NOT NULL,
 	
 	DEL NUMBER(1) NOT NULL,
 	READCOUNT NUMBER(8) NOT NULL,
-	
-	FAVOR NUMBER(1) NOT NULL,
-	LVPOINT NUMBER(8) NOT NULL,
-	ANSWERCOUNT NUMBER(8) NOT NULL	
+	LIKECOUNT NUMBER(8) NOT NULL,
+	LIKEID VARCHAR2(1000),
+	DISLIKEID VARCHAR2(1000),
+	COMMENTCOUNT NUMBER(8) NOT NULL,
+	SCRAPCOUNT NUMBER(8) NOT NULL	
 );
 
 CREATE SEQUENCE SEQ_QNA
@@ -37,72 +33,78 @@ START WITH 1 INCREMENT BY 1;
 ALTER TABLE QNA
 ADD CONSTRAINT FK_QNA_ID FOREIGN KEY(ID)
 REFERENCES OKHMEM(ID);
-
-
-
 */
 
 public class QnaDto implements Serializable{
 
 	private int seq;
 	private String id;
-	private int ref;		// 그룹번호
-	private int step;		// 열번호
-	private int depth;		// 깊이
+	
 	private String title;
+	private String tagname;
 	private String content;
-	private String tag;
 	private String wdate;
-	private int parent;		// 부모글
-	private int del;
+	
+	private int del;	// 삭제
 	private int readcount;
-	private int favor;		// 찬성,반대
-	private int lvpoint;	// 활동 포인트 글+5, 댓글+2
-	private int answercount;	// 답변수
+	private int likecount;
+	private String likeid;
+	private String dislikeid;
+	private int commentcount;
+	private int scrapcount;
 	
-	public QnaDto() {}
-
+	private String filename;
+	private int parent;
+	private int pdsseq;
+	private int pdsys;
+	
+	private int likeidyn;
+	private int dislikeidyn;
 	
 	
-	public QnaDto(String id, String title, String content, String tag) {
-		super();
-		this.id = id;
-		this.title = title;
-		this.content = content;
-		this.tag = tag;
-	}
-
-
-
-	public QnaDto(int seq, String id, int ref, int step, int depth, String title, String content, String tag,
-			String wdate, int parent, int del, int readcount, int favor, int lvpoint, int answercount) {
+	
+	
+	public QnaDto(int seq, String id, String title, String tagname, String content, String wdate, int del,
+			int readcount, int likecount, String likeid, String dislikeid, int commentcount, int scrapcount,
+			String filename, int parent, int pdsseq, int pdsys, int likeidyn, int dislikeidyn) {
 		super();
 		this.seq = seq;
 		this.id = id;
-		this.ref = ref;
-		this.step = step;
-		this.depth = depth;
 		this.title = title;
+		this.tagname = tagname;
 		this.content = content;
-		this.tag = tag;
 		this.wdate = wdate;
-		this.parent = parent;
 		this.del = del;
 		this.readcount = readcount;
-		this.favor = favor;
-		this.lvpoint = lvpoint;
-		this.answercount = answercount;
+		this.likecount = likecount;
+		this.likeid = likeid;
+		this.dislikeid = dislikeid;
+		this.commentcount = commentcount;
+		this.scrapcount = scrapcount;
+		this.filename = filename;
+		this.parent = parent;
+		this.pdsseq = pdsseq;
+		this.pdsys = pdsys;
+		this.likeidyn = likeidyn;
+		this.dislikeidyn = dislikeidyn;
 	}
+	
+	
+
 
 
 
 	@Override
 	public String toString() {
-		return "QnaDto [seq=" + seq + ", id=" + id + ", ref=" + ref + ", step=" + step + ", depth=" + depth + ", title="
-				+ title + ", content=" + content + ", tag=" + tag + ", wdate=" + wdate + ", parent=" + parent + ", del="
-				+ del + ", readcount=" + readcount + ", favor=" + favor + ", lvpoint=" + lvpoint + ", answercount="
-				+ answercount + "]";
+		return "QnaDto [seq=" + seq + ", id=" + id + ", title=" + title + ", tagname=" + tagname + ", content="
+				+ content + ", wdate=" + wdate + ", del=" + del + ", readcount=" + readcount + ", likecount="
+				+ likecount + ", likeid=" + likeid + ", dislikeid=" + dislikeid + ", commentcount=" + commentcount
+				+ ", scrapcount=" + scrapcount + ", filename=" + filename + ", parent=" + parent + ", pdsseq=" + pdsseq
+				+ ", pdsys=" + pdsys + ", likeidyn=" + likeidyn + ", dislikeidyn=" + dislikeidyn + "]";
 	}
+
+
+
 
 
 
@@ -112,9 +114,15 @@ public class QnaDto implements Serializable{
 
 
 
+
+
+
 	public void setSeq(int seq) {
 		this.seq = seq;
 	}
+
+
+
 
 
 
@@ -124,45 +132,15 @@ public class QnaDto implements Serializable{
 
 
 
+
+
+
 	public void setId(String id) {
 		this.id = id;
 	}
 
 
 
-	public int getRef() {
-		return ref;
-	}
-
-
-
-	public void setRef(int ref) {
-		this.ref = ref;
-	}
-
-
-
-	public int getStep() {
-		return step;
-	}
-
-
-
-	public void setStep(int step) {
-		this.step = step;
-	}
-
-
-
-	public int getDepth() {
-		return depth;
-	}
-
-
-
-	public void setDepth(int depth) {
-		this.depth = depth;
-	}
 
 
 
@@ -172,9 +150,33 @@ public class QnaDto implements Serializable{
 
 
 
+
+
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
+
+
+
+
+
+	public String getTagname() {
+		return tagname;
+	}
+
+
+
+
+
+
+	public void setTagname(String tagname) {
+		this.tagname = tagname;
+	}
+
+
+
 
 
 
@@ -184,21 +186,15 @@ public class QnaDto implements Serializable{
 
 
 
+
+
+
 	public void setContent(String content) {
 		this.content = content;
 	}
 
 
 
-	public String getTag() {
-		return tag;
-	}
-
-
-
-	public void setTag(String tag) {
-		this.tag = tag;
-	}
 
 
 
@@ -208,21 +204,15 @@ public class QnaDto implements Serializable{
 
 
 
+
+
+
 	public void setWdate(String wdate) {
 		this.wdate = wdate;
 	}
 
 
 
-	public int getParent() {
-		return parent;
-	}
-
-
-
-	public void setParent(int parent) {
-		this.parent = parent;
-	}
 
 
 
@@ -232,9 +222,15 @@ public class QnaDto implements Serializable{
 
 
 
+
+
+
 	public void setDel(int del) {
 		this.del = del;
 	}
+
+
+
 
 
 
@@ -244,50 +240,218 @@ public class QnaDto implements Serializable{
 
 
 
+
+
+
 	public void setReadcount(int readcount) {
 		this.readcount = readcount;
 	}
 
 
 
-	public int getFavor() {
-		return favor;
+
+
+
+	public int getLikecount() {
+		return likecount;
 	}
 
 
 
-	public void setFavor(int favor) {
-		this.favor = favor;
+
+
+
+	public void setLikecount(int likecount) {
+		this.likecount = likecount;
 	}
 
 
 
-	public int getLvpoint() {
-		return lvpoint;
+
+
+
+	public String getLikeid() {
+		return likeid;
 	}
 
 
 
-	public void setLvpoint(int lvpoint) {
-		this.lvpoint = lvpoint;
+
+
+
+	public void setLikeid(String likeid) {
+		this.likeid = likeid;
 	}
 
 
 
-	public int getAnswercount() {
-		return answercount;
+
+
+
+	public String getDislikeid() {
+		return dislikeid;
 	}
 
 
 
-	public void setAnswercount(int answercount) {
-		this.answercount = answercount;
+
+
+
+	public void setDislikeid(String dislikeid) {
+		this.dislikeid = dislikeid;
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
+
+	public int getCommentcount() {
+		return commentcount;
+	}
+
+
+
+
+
+
+	public void setCommentcount(int commentcount) {
+		this.commentcount = commentcount;
+	}
+
+
+
+
+
+
+	public int getScrapcount() {
+		return scrapcount;
+	}
+
+
+
+
+
+
+	public void setScrapcount(int scrapcount) {
+		this.scrapcount = scrapcount;
+	}
+
+
+
+
+
+
+	public String getFilename() {
+		return filename;
+	}
+
+
+
+
+
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
+
+
+
+
+
+	public int getParent() {
+		return parent;
+	}
+
+
+
+
+
+
+	public void setParent(int parent) {
+		this.parent = parent;
+	}
+
+
+
+
+
+
+	public int getPdsseq() {
+		return pdsseq;
+	}
+
+
+
+
+
+
+	public void setPdsseq(int pdsseq) {
+		this.pdsseq = pdsseq;
+	}
+
+
+
+
+
+
+	public int getPdsys() {
+		return pdsys;
+	}
+
+
+
+
+
+
+	public void setPdsys(int pdsys) {
+		this.pdsys = pdsys;
+	}
+
+
+
+
+
+
+	public int getLikeidyn() {
+		return likeidyn;
+	}
+
+
+
+
+
+
+	public void setLikeidyn(int likeidyn) {
+		this.likeidyn = likeidyn;
+	}
+
+
+
+
+
+
+	public int getDislikeidyn() {
+		return dislikeidyn;
+	}
+
+
+
+
+
+
+	public void setDislikeidyn(int dislikeidyn) {
+		this.dislikeidyn = dislikeidyn;
+	}
+
+
+
+
+
+
+	public QnaDto() {}
+
 	
 	
 }
