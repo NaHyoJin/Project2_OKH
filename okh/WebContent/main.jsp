@@ -76,15 +76,7 @@ public String arrow(int depth){
 <%//로그인한id가져오기
 Object ologin = session.getAttribute("login");
 UserDto mem = null;
-if(ologin == null){
-	%>
-	<script type="text/javascript">
-	alert("로그인해 주십시오");
-	location.href = "index.jsp";	
-	</script>	
-	<%
-	return;
-}
+
 mem = (UserDto)ologin;
 IUserService service = UserService.getInstance();
 String profile = null;
@@ -97,6 +89,10 @@ if(ologin != null){
 		<%
 		if(ologin == null){
 		%>
+		 <script type="text/javascript">
+	alert("로그인해 주십시오");
+	location.href = "index.jsp";	
+	</script>	
 		<input type="button" class="login" id="login">
 		<input type="button" class="account" id="account">
 		<%
@@ -321,7 +317,7 @@ function searchBbs1(e) {
 				<th>리스트가없습니다</th>
 				</tr>
 			<%
-			}
+			}else{
 			
 			for(int i=0;i<qnalist.size();i++){
 				QnaDto qna=qnalist.get(i);
@@ -365,7 +361,7 @@ function searchBbs1(e) {
 				<p style="font-size: 15px; margin-top: 5px;"><a href="qnaServlet?command=qnaBbsDetail&action=detail&likeid=<%=mem.getId() %>&seq=<%=qna.getSeq()%>"><%=qna.getTitle() %></a></p>
 				<p style="text-align: right"><%=qna.getId() %></p>
 			<%}
-			}}
+			}}}
 			%>
 		</table>
 			
@@ -385,7 +381,7 @@ function searchBbs1(e) {
 				<th>리스트가없습니다</th>
 				</tr>
 			<%
-			}
+			}else{
 			
 			for(int i=0;i<lifelist.size();i++){
 				LifeBbsDto dto=lifelist.get(i);
@@ -449,7 +445,7 @@ function searchBbs1(e) {
                   </p>
 				<p style="text-align: right"><%=dto.getId() %></p>
 			<%}
-			}}
+			}}}
 			%>
 		</table>
 		</div>
@@ -466,7 +462,7 @@ function searchBbs1(e) {
 				<th>리스트가없습니다</th>
 				</tr>
 			<%
-			}
+			}else{
 			
 			for(int i=0;i<techlist.size();i++){
 				TechbbsDto dto=techlist.get(i);
@@ -510,7 +506,7 @@ function searchBbs1(e) {
 				<p style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=<%=mem.getId() %>&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a></p>
 				<p style="text-align: right"><%=dto.getId() %></p>
 			<%}
-			}}
+			}}}
 			%>
 		</table>
 		</div>
@@ -529,9 +525,9 @@ function searchBbs1(e) {
 				<th>H/W & Coding 글이 없습니다.</th>
 				</tr>
 			<%
-			}
+			}else{
 			
-			for(int i = 0; i < 6; i++){
+			for(int i = 0; i < hwlist.size(); i++){
 				newbbs5HWCodingVO hwdto = hwlist.get(i);
 				hwservice = newbbs5HWCodingService.getInstance();
 				boolean chekcomment = hwservice.checkcomment(hwlist.get(i).getSeq());
@@ -595,7 +591,7 @@ function searchBbs1(e) {
 	
 			<%
 			}
-			}
+			}}
 			%>
 		</table>
 		</div>
