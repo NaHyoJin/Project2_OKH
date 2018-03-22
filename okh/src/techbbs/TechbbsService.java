@@ -1,6 +1,7 @@
 package techbbs;
 import java.util.List;
 
+import totalbbs.ColumnBbsDto;
 import totalbbs.CombbsDto;
 import totalbbs.LifeBbsDto;
 import totalbbs.QnaDto;
@@ -167,6 +168,36 @@ public class TechbbsService implements TechbbsServiceImpl{
 	public List<totalbbsdto> gettotalBbsList() {
 		// TODO Auto-generated method stub
 		return techbbsdao.gettotalBbsList();
+	}
+	@Override
+	public List<ColumnBbsDto> allcolBbsList() {
+		// TODO Auto-generated method stub
+		return techbbsdao.allcolBbsList();
+	}
+	@Override
+	public boolean checkqnacomment(int seq) {
+		// TODO Auto-generated method stub
+		return techbbsdao.checkqnacomment(seq);
+	}
+	@Override
+	public boolean checklifecomment(int seq) {
+		// TODO Auto-generated method stub
+		return techbbsdao.checklifecomment(seq);
+	}
+	@Override
+	public List<TechbbsDto> getliketechBbsList(String likeid) {
+		// TODO Auto-generated method stub
+		return techbbsdao.getliketechBbsList(likeid);
+	}
+	@Override
+	public List<LifeBbsDto> getlikealllifeBbsList(String likeid) {
+		// TODO Auto-generated method stub
+		return techbbsdao.getlikealllifeBbsList(likeid);
+	}
+	@Override
+	public List<newbbs5HWCodingVO> getlikeallbbs5BbsList(String likeid) {
+		// TODO Auto-generated method stub
+		return techbbsdao.getlikeallbbs5BbsList(likeid);
 	}
 	
 	

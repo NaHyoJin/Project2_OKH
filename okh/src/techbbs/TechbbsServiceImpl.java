@@ -2,6 +2,7 @@ package techbbs;
 
 import java.util.List;
 
+import totalbbs.ColumnBbsDto;
 import totalbbs.CombbsDto;
 import totalbbs.LifeBbsDto;
 import totalbbs.QnaDto;
@@ -39,12 +40,18 @@ public interface TechbbsServiceImpl {
 		public List<LifeBbsDto> getlifeBbsList();
 		public List<newbbs5HWCodingVO> getbbs5BbsList();
 		public List<QnaDto> getqnaBbsList();
-		
+		public boolean checkqnacomment(int seq);
+		public boolean checklifecomment(int seq);
 		//전체게시판 만들기용
 		public List<TechbbsDto> alltechBbsList();
 		public List<LifeBbsDto> alllifeBbsList();
 		public List<newbbs5HWCodingVO> allbbs5BbsList();
 		public List<QnaDto> allqnaBbsList();
 		public List<CombbsDto> allcomBbsList();
+		public List<ColumnBbsDto> allcolBbsList();
 		public List<totalbbsdto> gettotalBbsList();
+		//mypage 좋아요한글뿌리기
+		public List<TechbbsDto> getliketechBbsList(String likeid);
+		public List<LifeBbsDto> getlikealllifeBbsList(String likeid);
+		public List<newbbs5HWCodingVO> getlikeallbbs5BbsList(String likeid);
 }
