@@ -175,18 +175,18 @@ public class ComDao implements iComDao {
 		
 		try {
 			conn = DBConnection.getConnection();
-			System.out.println("1/6 readcount Success");
+			System.out.println("1/6 commentdiscount Success");
 			
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, seq);
-			System.out.println("2/6 readcount Success");
+			System.out.println("2/6 commentdiscount Success");
 			
 			psmt.executeUpdate();
-			System.out.println("3/6 readcount Success");
+			System.out.println("3/6 commentdiscount Success");
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("readcount Fail");
+			System.out.println("commentdiscount Fail");
 		} finally {
 			DBClose.close(psmt, conn, null);			
 		}		
@@ -496,7 +496,7 @@ public boolean writeBbs(CombbsDto dto) {
 		psmt.setString(3, dto.getTagname());
 		psmt.setString(4, dto.getContent());
 		psmt.setString(5, dto.getJoindate());
-		psmt.setString(6, "글쓴이-,"+dto.getId()+",");
+		psmt.setString(6, "글쓴이,"+dto.getId()+",");
 		
 		
 		

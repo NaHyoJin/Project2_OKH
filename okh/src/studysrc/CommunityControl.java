@@ -65,11 +65,20 @@ public class CommunityControl extends HttpServlet {
 			tagname = tagname.substring(0, tagname.lastIndexOf("-"));
 			System.out.println(id+title+content+tagname+date);
 			CombbsDto dto = new CombbsDto(id, title, content, tagname, date);
+			ICombbsService service = CombbsService.getInstance();
+			boolean isS = service.writeBbs(dto);
+			
+			iCalendar dao = CalendarDao.getInstance();
+			if(isS) {
+				int child =service.getSeq();
+				boolean isCalS = service.writecalendar(dto, child);
+				if(isCalS) {
+					response.sendRedirect("study_communitybbs.jsp");
+				}
+			}
 			
 			
 			
-			request.setAttribute("comwritedto", dto);
-			dispatch("study_communitywriteAF.jsp", request, response);
 		}else if(command.equals("detail")) {
 			Study_like.LikeScrapServiceImpl lsservice=Study_like.LikeScrapService.getInstance();
 			String sseq = request.getParameter("seq");
@@ -188,6 +197,7 @@ public class CommunityControl extends HttpServlet {
 			service.delcomment(seq);
 			ICombbsService service1 = CombbsService.getInstance();
 			service1.commentdiscount(seq);
+			
 			dispatch("study_communitybbs.jsp", request, response);
 		}else if(command.equals("commentup")) {
 			String sseq = request.getParameter("commentseq");

@@ -192,8 +192,9 @@ if(list==null||list.size()==0){
 				<article class="content">
 						<%=list1.get(0).getContent()%><br>
 					모임날짜 <%=toDates(list1.get(0).getJoindate()) %>
-					모이는사람 <%=origin %>
+				
 				</article>
+				
 				</div>
 				<div id="like">
 	<!-- 좋아요스크랩기능 -->
@@ -232,6 +233,7 @@ if(list==null||list.size()==0){
 	
 	
 <div class="qna">
+<input type="text" value="참여자  <%=origin %>" readonly="readonly" class="form-control">
 	<input type="text" value="댓글  <%=list1.get(0).getCommentcount() %>" readonly="readonly" class="form-control">
 
 	<table border="1" class="reptable">
@@ -363,7 +365,7 @@ if(list==null||list.size()==0){
 			<article class="content">
 					<%=list.get(0).getBbscontent()%><br>
 				모임날짜 <%=list.get(0).getBbsjoindate() %>
-					모이는사람 <%=origin %>
+					
 				</article>
 	</div>
 	<div id="like">
@@ -407,6 +409,7 @@ if(list==null||list.size()==0){
 <br>
 
 <div class="qna">
+<input type="text" value="참여자  <%=origin %>" readonly="readonly" class="form-control">
 	<input type="text" value="댓글  <%=list.get(0).getBbscommentcount() %>" readonly="readonly" class="form-control">
 
 

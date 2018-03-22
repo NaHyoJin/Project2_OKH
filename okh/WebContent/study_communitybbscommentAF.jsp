@@ -43,7 +43,7 @@ if(isS){
 
 
 
-location.href="CommunityControl?command=list";
+location.href="CommunityControl?command=detail&seq=<%=parent %>&likeid=<%=mem.getId() %>";
 
 </script>
 <%

@@ -172,7 +172,7 @@ public class LikeScrapDao implements iLikeScrapDao {
 	public boolean deleteLikeID(String deleteid, int seq) {
 		String getalllikeid=getLikeID(seq);
 		String[] ids=getids(getalllikeid);
-		String up="-";
+		String up="";
 		for (int i = 0; i < ids.length; i++) {
 			if (ids[i].equals(deleteid)) {
 				

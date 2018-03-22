@@ -85,7 +85,7 @@ mem = (UserDto)ologin;
 				<td>날짜</td>
 				<td>
 					<input type="button" class="form-control" style="text-align: left" value="날짜선택 호출" onclick="opendate();" />
-					<input type="text" class="form-control" readonly="readonly" id="pdate" name="date" value="">
+					<input type="text" class="form-control" readonly="readonly" id="pdate" name="date" value="20180323">
 					<select name="hour">
 				<option value="12"> 12
 				<%
