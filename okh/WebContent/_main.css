@@ -116,7 +116,7 @@ width: 880px;
  }
  .partition1{
  	position: absolute;
- 	top: 85px;
+ 	top:100px;
  	left: 20px;
  	width: 375px;
  	height: 340px;
@@ -124,24 +124,22 @@ width: 880px;
  }
   .partition2{
 position: absolute;
-top: 85px;
+top: 100px;
 right:0;
 width: 375px;
 height: 340px;
  	
  }
    .partition3{
- background-color: yellow;
 position: absolute;
-top: 440px;
+top: 455px;
 left: 20px;
 width: 375px;
 height: 340px;
  }
    .partition4{
- background-color: yellow;
 position: absolute;
-top: 440px;
+top: 455px;
 right: 0;
 width: 375px;
 height: 340px;
@@ -153,8 +151,8 @@ height: 340px;
 	top: 120px;
  }
  .settingbtn{
- display:inline-block;
  	 position: absolute;
+ 	 top:0;
 	left: 200px;
  }
  .alarmbtn{
@@ -163,4 +161,12 @@ height: 340px;
 	left: 200px;
 	top: 30px;
  }
- 
+ .memid{
+ font-size: 20px; color:#fff; margin-left: 20px;
+ }
+ .point{
+ font-size: 14px; color: #fff;
+ }
+ .pointimg{
+ margin-left:20px; margin-top:5px; margin-right:5px; display:inline-block;  max-width:10px;
+ }

@@ -295,3 +295,6 @@ width: 200px;
 	width: 100%;
 	cursor: pointer;
 }
+.detailid{
+	float:left;
+}

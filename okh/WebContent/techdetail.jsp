@@ -1,3 +1,5 @@
+<%@page import="user.UserService"%>
+<%@page import="user.IUserService"%>
 <%@page import="techreplebbs.TechRepbbsService"%>
 <%@page import="techreplebbs.TechRepbbsServiceImpl"%>
 <%@page import="techreplebbs.TechRepbbsDto"%>
@@ -27,9 +29,9 @@ request.setCharacterEncoding("utf-8");
 <script src="js/bootstrap.min.js"></script>
 	<script src="js/bootstrap.js"></script>
 
-<link rel="stylesheet" type="text/css" href="_detail.css?ver=1.45">
+<link rel="stylesheet" type="text/css" href="_detail.css?ver=1.47">
 
-<link rel="stylesheet" type="text/css" href="_main.css?ver=1.32">
+<link rel="stylesheet" type="text/css" href="_main.css?ver=1.48">
 </head>
 <body>
 <script type="text/javascript">
@@ -75,7 +77,11 @@ if(whatlist.get(0).getPdsys()==2){		//자료없으면
 //답글게시판리스트불러오는함수작성
 TechRepbbsServiceImpl trservice=TechRepbbsService.getInstance();
 List<TechRepbbsDto> replist=trservice.getRepBbsList(whatlist.get(0).getSeq());
-
+IUserService service = UserService.getInstance();
+String profile = null;
+if(ologin != null){
+	profile = service.getProfile(mem.getId());
+}
 %>
 
 
@@ -94,9 +100,13 @@ if(ologin == null){	//로그인안한상태
 %>
 <input type="button" class="homebtn" id="homebtn">
 <div class="actionlogin">
-	<span><%=mem.getId() %></span>
-	<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
-</div>
+<a onclick="upmydetail()" style="cursor: pointer">
+	<img src="<%=profile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+</a>		
+			<span class="memid"><a onclick="upmydetail()" style="cursor: pointer;color: #fff;"><%=mem.getId() %></a></span> <br>
+			<span class="point" style="margin-top: 0"><img src="image/actionpoint.PNG" class="pointimg"><%=mem.getScore()%></span>
+			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
+				</div>
 <%
 }
 %>
@@ -175,8 +185,22 @@ if(ologin == null){	//로그인안한상태
 	
 	</div>
 <div class="wrap">
-	<div class="myinfo"><%=whatlist.get(0).getId() %><%=whatlist.get(0).getWdate() %><br>
+		
+
+			
+	<div class="myinfo">
 		<p class="myinfo_icon">
+		<a onclick="upmydetail()" style="cursor: pointer">
+		<img src="<%=profile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+		</a>
+		<span class="detailid">
+		<a onclick="upmydetail()" style="cursor: pointer"><%=whatlist.get(0).getId() %></a>
+		<span class="" style="margin-top: 0"><img src="image/actionpoint.PNG" class="pointimg">
+		<%=mem.getScore()%></span>
+		</span> <br><br>
+		<span style="float:left; font-size: 12px;"><%=whatlist.get(0).getWdate() %><br></span>
+
+		
 		<img alt="" src="image/repleon.PNG"><span><%=whatlist.get(0).getCommentcount() %></span>
 		<img alt="" src="image/readcounton.PNG"><span><%=whatlist.get(0).getReadcount() %></span>
 		</p>
@@ -234,11 +258,11 @@ if(ologin == null){	//로그인안한상태
 		
 		<br><br>
 		<%
-		System.out.println(whatlist.size() + "리스트 사이즈");
+		System.out.println(whatlist.size()+"리스트사이즈");
 		if(whatlist.size()==1&&pdsyn==2){
 		}
-		else if(whatlist.size()>0 && pdsyn==1){
-			System.out.println("자료 있는 리스트");
+		else if(whatlist.size()>0&&pdsyn==1){
+			System.out.println("자료있는리스트");
 		%>
 		<input type="text" value="첨부된 파일" readonly="readonly" class="form-control">
 		<%
@@ -721,7 +745,14 @@ function loginhe() {
 	location.href='TechbbsController?command=techdetail&likeid=&seq=<%=whatlist.get(0).getSeq()%>'
 }
 </script>		
-
+	<script type="text/javascript">
+	function logout() {
+		location.href ="User?command=logout";
+	}
+	function upmydetail() {
+		location.href ="User?command=mypage";
+	}
+	</script>
 </body>
 </html>
 

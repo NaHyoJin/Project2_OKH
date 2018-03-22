@@ -1,3 +1,5 @@
+<%@page import="user.UserService"%>
+<%@page import="user.IUserService"%>
 <%@page import="java.util.List"%>
 <%@page import="techbbs.TechbbsDto"%>
 <%@page import="techbbs.TechbbsService"%>
@@ -29,6 +31,12 @@
 Object ologin = session.getAttribute("login");
 UserDto mem = null;
 mem = (UserDto)ologin;
+IUserService service = UserService.getInstance();
+
+String profile = null;
+if(ologin != null){
+	profile = service.getProfile(mem.getId());
+}
 %>
 
 	<!-- 인클루드 부분 -->
@@ -46,8 +54,13 @@ if(ologin == null){	//로그인안한상태
 %>
 <input type="button" class="homebtn" id="homebtn">
 <div class="actionlogin">
-	<span><%=mem.getId() %></span>
-	<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
+	<a onclick="upmydetail()" style="cursor: pointer">
+			<img src="<%=profile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+		</a>
+			<span class="memid"><a onclick="upmydetail()" style="cursor: pointer;color: #fff;"><%=mem.getId() %></a></span> <br>
+				<span class="point"><img src="image/actionpoint.PNG" style="margin-top: 0" class="pointimg"><%=mem.getScore()%></span>
+			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
+				
 </div>
 <%
 }
@@ -261,5 +274,13 @@ if(ologin == null){	//로그인안한상태
           });
         });
    </script>
+   <script type="text/javascript">
+	function logout() {
+		location.href ="User?command=logout";
+	}
+	function upmydetail() {
+		location.href ="User?command=mypage";
+	}
+	</script>
 </body>
 </html>

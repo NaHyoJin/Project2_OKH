@@ -1,3 +1,5 @@
+<%@page import="totalbbs.QnaDto"%>
+<%@page import="totalbbs.LifeBbsDto"%>
 <%@page import="jobs_BBS5.newbbs5HWCodingVO"%>
 <%@page import="jobs_BBS5.newbbs5HWCodingService"%>
 <%@page import="jobs_BBS5.newbbs5HWCodingServiceImpl"%>
@@ -22,8 +24,8 @@
 
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/bootstrap.js"></script>
-	<link rel="stylesheet" type="text/css" href="_main.css?ver=1.27">
-<link rel="stylesheet" type="text/css" href="_totalbbs.css?ver=1.26">
+	<link rel="stylesheet" type="text/css" href="_main.css?ver=1.32">
+<link rel="stylesheet" type="text/css" href="_totalbbs.css?ver=1.27">
 <!-- 쿠키용 -->
 <script type="text/javascript" src="js/jquery.cookie.js"></script>
 <script type="text/javascript">
@@ -59,7 +61,24 @@ if(getCookie('okhpop') != 'rangs') {
 	
 </head>
 <body>
-
+<%!
+// 답글
+public String arrow(int depth){	
+	String rs = "<img src='image/arrow.png' width='20px' height='20px'/>";
+	String nbsp = "&nbsp;&nbsp;&nbsp;&nbsp;";
+	String ts = "";
+	
+	for(int i = 0;i < depth; i++){
+		ts += nbsp;
+	}
+	return depth == 0?"":ts+rs;
+}
+%>  
+<%//로그인한id가져오기
+Object ologin = session.getAttribute("login");
+UserDto mem = null;
+mem = (UserDto)ologin;
+%>
 <%-- <%//로그인한id가져오기
 Object ologin = session.getAttribute("login");
 UserDto mem = null;
@@ -91,14 +110,13 @@ if(ologin == null){
 
 		<input type="button" class="bbs1" id="qnabbs">
 		<input type="button" class="techbbs_hjh" id="techbbs">
-		<input type="button" class="bbs3" id="column"><!-- 정재흥 -->
-		<input type="button" class="bbs4" id="combbs">
+		<input type="button" class="bbs3"  id="column"><!-- 정재흥 -->
+		<input type="button" class="bbs4" >
 		<input type="button" class="bbs5" id="jobs"><!-- 나효진 -->
 		<input type="button" class="bbs6" id="life"><!-- 병찬 사는얘기 -->
 	</div>	
 	<script type="text/javascript">
 		$(function() {//좌측 메뉴바 누르는 곳.
-			
 			$("#homebtn").click(function() {
 				location.href="index.jsp";
 			});
@@ -138,10 +156,10 @@ if(ologin == null){
 /* 			$("#jobs").click(function() {
 				location.href="main.BBSHWCodingController";
 			});
- */
+ */	 
 			
 			$("#jobs").click(function name() {
-				location.href = "jobs";
+				location.href="jobs";
 			});
 
 		});
@@ -199,15 +217,155 @@ function searchBbs1(e) {
 }
 </script>
 		<div class="partition1">
+			<h4 style="margin-bottom: 15px">Q&A <a href="qnaServlet?command=listQna"><img style="float: right" alt="" src="image/moresee.PNG"></a></h4>
+			<%
+			TechbbsServiceImpl tservice=TechbbsService.getInstance();
+			 tservice=TechbbsService.getInstance();
+			List<QnaDto> qnalist=tservice.getqnaBbsList();
+			%>
+			<table class="techtable">
+				<%if(qnalist==null||qnalist.size()==0){
+				
+			%><tr>
+				<th>리스트가없습니다</th>
+				</tr>
+			<%
+			}
 			
+			for(int i=0;i<qnalist.size();i++){
+				QnaDto qna=qnalist.get(i);
+				
+	
+				tservice=TechbbsService.getInstance();
+				boolean chekcomment=tservice.checkqnacomment(qnalist.get(i).getSeq());
+				if(chekcomment){
+			%>
+			<tr>
+				<th style="padding-left:10px;">
+				<%
+		if(ologin == null){	//로그인안한상태
+			%>
+			<p style="font-size: 15px; margin-top: 5px;"><a href="qnaServlet?command=qnaBbsDetail&action=detail&likeid=&seq=<%=qna.getSeq()%>"><%=qna.getTitle() %></a></p>
+				<p style="text-align: right"><%=qna.getId() %></p>
+		
+				<%
+		}else{
+			
+		%>
+				<p style="font-size: 15px; margin-top: 5px;"><a href="qnaServlet?command=qnaBbsDetail&action=detail&likeid=<%=mem.getId() %>&seq=<%=qna.getSeq()%>"><%=qna.getTitle() %></a></p>
+				<p style="text-align: right"><%=qna.getId() %></p>
+		<%
+		}
+			}else{
+			%>
+			
+			<tr>
+				<th style="padding-left:10px; border-left: 5px solid #808080">
+					<%
+		if(ologin == null){	//로그인안한상태
+			%>
+			<p style="font-size: 15px; margin-top: 5px;"><a href="qnaServlet?command=qnaBbsDetail&action=detail&likeid=&seq=<%=qna.getSeq()%>"><%=qna.getTitle() %></a></p>
+				<p style="text-align: right"><%=qna.getId() %></p>
+		
+				<%
+		}else{
+			
+		%>
+				<p style="font-size: 15px; margin-top: 5px;"><a href="qnaServlet?command=qnaBbsDetail&action=detail&likeid=<%=mem.getId() %>&seq=<%=qna.getSeq()%>"><%=qna.getTitle() %></a></p>
+				<p style="text-align: right"><%=qna.getId() %></p>
+			<%}
+			}}
+			%>
+		</table>
 			
 			
 		</div>
 		<div class="partition2">
-			
-		<h4 style="margin-bottom: 15px">Tech게시판 <a href="TechbbsController?command=techbbs"><img style="float: right" alt="" src="image/moresee.PNG"></a></h4>
+		<h4 style="margin-bottom: 15px">사는얘기 <a href="LifeBbs?command=life"><img style="float: right" alt="" src="image/moresee.PNG"></a></h4>
 			<%
-			TechbbsServiceImpl tservice=TechbbsService.getInstance();
+			
+			 tservice=TechbbsService.getInstance();
+			List<LifeBbsDto> lifelist=tservice.getlifeBbsList();
+			%>
+			<table border="1" class="techtable">
+				<%if(lifelist==null||lifelist.size()==0){
+				
+			%><tr>
+				<th>리스트가없습니다</th>
+				</tr>
+			<%
+			}
+			
+			for(int i=0;i<lifelist.size();i++){
+				LifeBbsDto dto=lifelist.get(i);
+				
+	
+				tservice=TechbbsService.getInstance();
+				boolean chekcomment=tservice.checklifecomment(lifelist.get(i).getSeq());
+				if(chekcomment){
+			%>
+			<tr>
+				<th style="padding-left:10px;">
+				<%
+		if(ologin == null){	//로그인안한상태
+			%>
+		<p style="font-size: 15px; padding-left: 10px;">
+                     <%=arrow(dto.getDepth()) %>
+                     <a href="LifeBbs?command=detail&seq=<%=dto.getSeq() %>">
+                        <%=dto.getTitle() %>
+                     </a>
+                  </p>
+				<p style="text-align: right"><%=dto.getId() %></p>
+		
+				<%
+		}else{
+			
+		%>
+				<p style="font-size: 15px; padding-left: 10px;">
+                     <%=arrow(dto.getDepth()) %>
+                     <a href="LifeBbs?command=detail&seq=<%=dto.getSeq() %>">
+                        <%=dto.getTitle() %>
+                     </a>
+                  </p>
+				<p style="text-align: right"><%=dto.getId() %></p>
+		<%
+		}
+			}else{
+			%>
+			
+			<tr>
+				<th style="padding-left:10px; border-left: 5px solid #808080">
+					<%
+		if(ologin == null){	//로그인안한상태
+			%>
+			<p style="font-size: 15px">
+                     <%=arrow(dto.getDepth()) %>
+                     <a href="LifeBbs?command=detail&seq=<%=dto.getSeq() %>">
+                        <%=dto.getTitle() %>
+                     </a>
+                  </p>
+				<p style="text-align: right"><%=dto.getId() %></p>
+		
+				<%
+		}else{
+			
+		%>
+				<p style="font-size: 15px">
+                     <%=arrow(dto.getDepth()) %>
+                     <a href="LifeBbs?command=detail&seq=<%=dto.getSeq() %>">
+                        <%=dto.getTitle() %>
+                     </a>
+                  </p>
+				<p style="text-align: right"><%=dto.getId() %></p>
+			<%}
+			}}
+			%>
+		</table>
+		</div>
+		<div class="partition3">
+			<h4 style="margin-bottom: 15px">기술게시판 <a href="TechbbsController?command=techbbs"><img style="float: right" alt="" src="image/moresee.PNG"></a></h4>
+			<%
+			 tservice=TechbbsService.getInstance();
 			List<TechbbsDto> techlist=tservice.gettechBbsList();
 			%>
 			<table border="1" class="techtable">
@@ -221,7 +379,6 @@ function searchBbs1(e) {
 			
 			for(int i=0;i<techlist.size();i++){
 				TechbbsDto dto=techlist.get(i);
-				String[] tagnames=tservice.getTagName(dto.getTagname());	
 				
 	
 				tservice=TechbbsService.getInstance();
@@ -229,26 +386,44 @@ function searchBbs1(e) {
 				if(chekcomment){
 			%>
 			<tr>
-				<th style="padding: 0">
-				<p style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=>&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a></p>
+				<th style="padding-left:10px;">
+				<%
+		if(ologin == null){	//로그인안한상태
+			%>
+			<p style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=>&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a></p>
 				<p style="text-align: right"><%=dto.getId() %></p>
-			<%
+		
+				<%
+		}else{
+			
+		%>
+				<p style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=<%=mem.getId() %>&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a></p>
+				<p style="text-align: right"><%=dto.getId() %></p>
+		<%
+		}
 			}else{
 			%>
+			
 			<tr>
-				<th style="padding: 0; border-left: 5px solid #808080">
-				<p style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a></p>
+				<th style="padding-left:10px; border-left: 5px solid #808080">
+					<%
+		if(ologin == null){	//로그인안한상태
+			%>
+			<p style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=>&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a></p>
 				<p style="text-align: right"><%=dto.getId() %></p>
-	
+		
+				<%
+		}else{
+			
+		%>
+				<p style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=<%=mem.getId() %>&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a></p>
+				<p style="text-align: right"><%=dto.getId() %></p>
 			<%}
-			}
+			}}
 			%>
 		</table>
 		</div>
-		<div class="partition3">
-			게시판뿌려주기3
-		</div>
-		
+	
 		<div class="partition4">
 			<h4 style="margin-bottom: 15px">H/W & Coding 게시판 <a href="BBSHWCodingController?command=main"><img style="float: right" alt="" src="image/moresee.PNG"></a></h4>
 			<%
@@ -265,21 +440,16 @@ function searchBbs1(e) {
 			<%
 			}
 			
-			for(int i = 0; i < hwlist.size(); i++){
+			for(int i = 0; i < 6; i++){
 				newbbs5HWCodingVO hwdto = hwlist.get(i);
-				String[] tagnames = hwservice.getTagName(hwdto.getTagname());	
-				
 				hwservice = newbbs5HWCodingService.getInstance();
 				boolean chekcomment = hwservice.checkcomment(hwlist.get(i).getSeq());
 				if(chekcomment){
 			%>
 			<tr>
-				<th style="padding: 0">
+				<th style="padding-left:10px;">
 						<%      
 						//로그인 정보 확인 부분. //로그인한id가져오기
-							Object ologin = session.getAttribute("login");
-						
-							UserDto mem = null;//null로 초기화.
 						 	if(ologin != null){
 								mem = (UserDto)ologin;
 								//로그인 정보 가지고 오나 확인 부분.
@@ -306,12 +476,9 @@ function searchBbs1(e) {
 			}else{
 			%>
 			<tr>
-				<th style="padding: 0; border-left: 5px solid #808080">
+				<th style="padding-left:10px; border-left: 5px solid #808080">
 				<%      
 				//로그인 정보 확인 부분. //로그인한id가져오기
-				Object ologin = session.getAttribute("login");
-			
-				UserDto mem = null;//null로 초기화.
 						 	if(ologin != null){
 								mem = (UserDto)ologin;
 								//로그인 정보 가지고 오나 확인 부분.

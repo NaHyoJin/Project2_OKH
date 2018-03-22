@@ -105,7 +105,7 @@ input.login {
 
 .wrap{
 	display: flex;
-   width: 1000px;
+   width: 1200px;
    height:100%;
  margin-top:0;
  padding: 20px;
@@ -148,7 +148,7 @@ input.login {
  }
  .upload{
  order:2;
- width: 300px;
+ width: 400px;
     margin-bottom: 20px;
     float: right;
     display:inline-block;

@@ -1,3 +1,5 @@
+<%@page import="user.UserService"%>
+<%@page import="user.IUserService"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="techbbs.TechbbsServiceImpl"%>
 <%@page import="techbbs.TechbbsService"%>
@@ -39,11 +41,18 @@ function logout() {
 	location.href='index.jsp';
 }
 </script>
+
 <%//로그인한id가져오기
 Object ologin = session.getAttribute("login");
 UserDto mem = null;
 
 mem = (UserDto)ologin;
+IUserService service = UserService.getInstance();
+
+String profile = null;
+if(ologin != null){
+	profile = service.getProfile(mem.getId());
+}
 %>
 <!-- 인클루드 부분 -->
 	<div class="menu">
@@ -61,9 +70,13 @@ mem = (UserDto)ologin;
 		%>
 		<input type="button" class="homebtn" id="homebtn">
 		<div class="actionlogin">
-			<span><%=mem.getId() %></span>
+		<a onclick="upmydetail()" style="cursor: pointer">
+			<img src="<%=profile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+		</a>
+			<span class="memid"><a onclick="upmydetail()" style="cursor: pointer;color: #fff;"><%=mem.getId() %></a></span> <br>
+			<span class="point"><img src="image/actionpoint.PNG" style="margin-top: 0" class="pointimg"><%=mem.getScore()%></span>
 			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
-		</div>
+					</div>
 		<%
 		}
 		
@@ -201,7 +214,7 @@ alert("검색된결과가없습니다");
 			<%
 			}
 			
-			for(int i=0;i<15;i++){
+			for(int i=0;i<totallist.size();i++){
 				totalbbsdto dto=totallist.get(i);
 				tservice=TechbbsService.getInstance();
 				if(dto.getComentcount()>0){
@@ -215,10 +228,9 @@ alert("검색된결과가없습니다");
 			<tr>
 				<th style="border-left: 5px solid #808080">
 				<%=totallist.get(i).getWhatbbs() %>
-			<%}
+			<%
+			}
 			if(ologin == null){
-			%>
-			<%//컨트롤러다따로 디테일 뿌려줘야한다
 			if(dto.getWhatbbs().equals("기술게시판")){
 			%>
 			<p style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=&seq=<%=dto.getParent()%>"><%=dto.getTitle() %></a></p>
@@ -226,31 +238,74 @@ alert("검색된결과가없습니다");
 			}else if(dto.getWhatbbs().equals("사는얘기")){
 			%>
 			<!-- 병찬이컨트롤러  -->
-			<p style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=&seq=<%=dto.getParent()%>"><%=dto.getTitle() %></a></p>
+			<p style="font-size: 15px">
+                     <a href="LifeBbs?command=detail&seq=<%=dto.getParent() %>">
+                        <%=dto.getTitle() %>
+                     </a>
+                  </p>
 			<%
 			}else if(dto.getWhatbbs().equals("QnA게시판")){
 			%>
 			<!-- 형태형컨트롤러  -->
-			<p style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=&seq=<%=dto.getParent()%>"><%=dto.getTitle() %></a></p>
+			<p style="font-size: 15px; margin-top: 5px;"><a href="qnaServlet?command=qnaBbsDetail&action=detail&likeid=&seq=<%=dto.getParent()%>"><%=dto.getTitle() %></a></p>
 			<%
 			}else if(dto.getWhatbbs().equals("커뮤니티게시판")){
 			%>
 			<!-- 문석이컨트롤러  -->
-			<p style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=&seq=<%=dto.getParent()%>"><%=dto.getTitle() %></a></p>
+			<p style="font-size: 20px"><a href="CommunityControl?command=detail&seq=<%=dto.getParent() %>&likeid="><%=dto.getTitle() %></a></p>
 			<%
 			}else if(dto.getWhatbbs().equals("HW게시판")){
 			%>
 			<!-- 효진형컨트롤러  -->
-			<p style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=&seq=<%=dto.getParent()%>"><%=dto.getTitle() %></a></p>
+			<p style="font-size: 15px; margin-top: 5px;"><a href="BBSHWCodingController?command=hwdetail&likeid=&seq=<%=dto.getParent()%>"><%=dto.getTitle() %></a></p>
+			<%
+			}else if(dto.getWhatbbs().equals("컬럼")){
+			%>
+			<!-- 재흥컨트롤러  -->
+			<p style="font-size: 15px">
+			<a href="columnbbsdetail.jsp?seq=<%=dto.getParent() %>">
+				<%=dto.getTitle() %>
+			</a></p>
 			<%
 			}
+				}else{	//로그인한상태
 			%>
-			
-			<%
-				}else{
+			<%//컨트롤러다따로 디테일 뿌려줘야한다
+			if(dto.getWhatbbs().equals("기술게시판")){
 			%>
 			<p style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=<%=mem.getId() %>&seq=<%=dto.getParent()%>"><%=dto.getTitle() %></a></p>
-			
+			<%
+			}else if(dto.getWhatbbs().equals("사는얘기")){
+			%>
+			<!-- 병찬이컨트롤러  -->
+			<p style="font-size: 15px">
+                     <a href="LifeBbs?command=detail&seq=<%=dto.getParent() %>">
+                        <%=dto.getTitle() %>
+                     </a>
+                  </p>
+			<%
+			}else if(dto.getWhatbbs().equals("QnA게시판")){
+			%>
+			<!-- 형태형컨트롤러  -->
+			<p style="font-size: 15px; margin-top: 5px;"><a href="qnaServlet?command=qnaBbsDetail&action=detail&likeid=<%=mem.getId() %>&seq=<%=dto.getParent()%>"><%=dto.getTitle() %></a></p>
+			<%
+			}else if(dto.getWhatbbs().equals("커뮤니티게시판")){
+			%>
+			<!-- 문석이컨트롤러  -->
+			<p style="font-size: 20px"><a href="CommunityControl?command=detail&seq=<%=dto.getParent() %>&likeid=<%=mem.getId() %>"><%=dto.getTitle() %></a></p>
+			<%
+			}else if(dto.getWhatbbs().equals("HW게시판")){
+			%>
+			<!-- 효진형컨트롤러  -->
+			<p style="font-size: 15px; margin-top: 5px;"><a href="BBSHWCodingController?command=hwdetail&likeid=<%=mem.getId() %>&seq=<%=dto.getParent()%>"><%=dto.getTitle() %></a></p>
+			<%
+			}else if(dto.getWhatbbs().equals("컬럼")){
+			%>
+			<!-- 재흥컨트롤러  -->
+			<p style="font-size: 15px">
+			<a href="columnbbsdetail.jsp?seq=<%=dto.getParent() %>">
+				<%=dto.getTitle() %>
+			</a></p>
 			<%
 			}
 			%>
@@ -292,7 +347,7 @@ alert("검색된결과가없습니다");
 			</td>
 			</tr>
 			<%
-			}
+			}}
 			%>
 		</table>
 		<br>
@@ -422,7 +477,14 @@ $(function() {
 
             });
             </script>
-        
+ <script type="text/javascript">
+	function logout() {
+		location.href ="User?command=logout";
+	}
+	function upmydetail() {
+		location.href ="User?command=mypage";
+	}
+	</script>       
 
 </body>
 </html>

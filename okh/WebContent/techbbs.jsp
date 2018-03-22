@@ -1,3 +1,5 @@
+<%@page import="user.UserService"%>
+<%@page import="user.IUserService"%>
 <%@page import="techbbs.PagingBean"%>
 <%@page import="user.UserDto"%>
 <%@page import="techbbs.TechbbsService"%>
@@ -31,7 +33,7 @@ String choice = request.getParameter("choice");
 
 <!-- 폰트  -->
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="_techbbs.css?ver=1.64">
+<link rel="stylesheet" type="text/css" href="_techbbs.css?ver=1.65">
 <link rel="stylesheet" type="text/css" href="_main.css?ver=1.4">
 </head>
 <body bgcolor="#fcfbfb">
@@ -45,6 +47,12 @@ Object ologin = session.getAttribute("login");
 UserDto mem = null;
 List<TechbbsDto> techlist=(List<TechbbsDto>)request.getAttribute("techbbs");
 mem = (UserDto)ologin;
+IUserService service = UserService.getInstance();
+
+String profile = null;
+if(ologin != null){
+	profile = service.getProfile(mem.getId());
+}
 %>
 <!-- 인클루드 부분 -->
 	<div class="menu">
@@ -62,8 +70,13 @@ mem = (UserDto)ologin;
 		%>
 		<input type="button" class="homebtn" id="homebtn">
 		<div class="actionlogin">
-			<span><%=mem.getId() %></span>
+		<a onclick="upmydetail()" style="cursor: pointer">
+			<img src="<%=profile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+		</a>
+			<span class="memid"><a onclick="upmydetail()" style="cursor: pointer;color: #fff;"><%=mem.getId() %></a></span> <br>
+			<span class="point"><img src="image/actionpoint.PNG" style="margin-top: 0" class="pointimg"><%=mem.getScore()%></span>
 			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
+				
 		</div>
 		<%
 		}
@@ -429,6 +442,13 @@ $(function() {
             });
             </script>
         
-
+<script type="text/javascript">
+	function logout() {
+		location.href ="User?command=logout";
+	}
+	function upmydetail() {
+		location.href ="User?command=mypage";
+	}
+	</script>
 </body>
 </html>

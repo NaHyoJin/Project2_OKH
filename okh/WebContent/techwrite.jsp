@@ -1,3 +1,5 @@
+<%@page import="user.UserService"%>
+<%@page import="user.IUserService"%>
 <%@page import="user.UserDto"%>
 <%@page import="techpds.PdsService"%>
 <%@page import="techpds.PdsServiceImpl"%>
@@ -11,7 +13,7 @@ request.setCharacterEncoding("utf-8");
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head> 
-<title>techwrite.jsp</title>
+<title>Insert title here</title>
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
@@ -21,7 +23,7 @@ request.setCharacterEncoding("utf-8");
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/custom.css">
-	<link rel="stylesheet" type="text/css" href="_write.css?ver=1.47">
+	<link rel="stylesheet" type="text/css" href="_write.css?ver=1.57">
 <link rel="stylesheet" type="text/css" href="_main.css?ver=1.33">
 <!-- 폰트  -->
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
@@ -93,6 +95,12 @@ UserDto mem = null;
 mem = (UserDto)ologin;
 PdsDto pdsdto=null;
 List<PdsDto> pdslist=null;
+IUserService service = UserService.getInstance();
+
+String profile = null;
+if(ologin != null){
+	profile = service.getProfile(mem.getId());
+}
 %>
 
 
@@ -112,8 +120,13 @@ if(ologin == null){	//로그인안한상태
 <input type="button" class="homebtn" id="homebtn">
 <div class="actionlogin">
 
-	<span><%=mem.getId() %></span>
-	<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
+	<a onclick="upmydetail()" style="cursor: pointer">
+			<img src="<%=profile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+		</a>
+			<span class="memid"><a onclick="upmydetail()" style="cursor: pointer;color: #fff;"><%=mem.getId() %></a></span> <br>
+					<span class="point"><img src="image/actionpoint.PNG" style="margin-top: 0" class="pointimg"><%=mem.getScore()%></span>
+			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
+				
 </div>
 <%
 }
@@ -402,5 +415,13 @@ function eventonblur() {
           });
         });
    </script>	
+   <script type="text/javascript">
+	function logout() {
+		location.href ="User?command=logout";
+	}
+	function upmydetail() {
+		location.href ="User?command=mypage";
+	}
+	</script>
 </body>
 </html>

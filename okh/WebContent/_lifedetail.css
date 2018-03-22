@@ -31,10 +31,9 @@ height: 100%;
 background-color: #0059ab;
 }
 .titlediv{
-	  width: 1000px;
+	width: 1000px;
    height:100%;
  margin-top:0;
-  margin-bottom:50px;
  padding: 20px;
  position: relative;
  top: 20px;
@@ -122,11 +121,8 @@ input.login {
    height:100%;
  margin: 10px;
  padding-bottom:15px;
- border: 1px solid #bcbcbc;
  position: relative;
- top: 30px;
  left: 300px;
- background-color: #fff;
  }
  .hjhtag{
 	font-size:10px;
@@ -213,32 +209,33 @@ width: 100%;
  }
  
  /* 테이블 */
- .reptable {
+ .techtable {
     width: 100%;
     border: none;
-    border-collapse: separate;
     border-spacing: 2px;
-   
+    
 }
  
-.reptable th {
-    padding: 15px;
+.techtable th {
+     padding: 10px 10px 5px 10px;
     border: none;
-    border-left: 5px solid #C03;
+    border-left: 5px solid #3a93de;
     border-bottom: 1px solid #DDD;
-    background: #FCF0F3;
+    background: #fff;
     font-weight: normal;
     text-align:left;
     text-shadow: 0 1px #FFF;
    vertical-align: middle;
 }
  
-.reptable td {
+.techtable td {
+	 background: #fff;
+	font-size:15px;
+    padding: 10px 10px 5px 10px;
     border: none;
     border-bottom: 1px solid #DDD;
     text-align: left;
-    vertical-align: baseline;
-     padding-bottom: 15px;
+    vertical-align: middle;
 }
 #frm{
 	margin-bottom: 15px;
@@ -295,4 +292,10 @@ width: 200px;
  border: none;
  position: relative;
  left:61px;
+ }
+ .listarea{
+ 	width: 700px;
+ 	height: 900px;
+ 	position: absolute;
+ 	top: 170px;
  }
