@@ -147,7 +147,7 @@ public class QnaServlet extends HttpServlet {
 			req.setAttribute("fdislikeidyn", dto1);
 			req.setAttribute("flikeidyn", dto);
 			req.setAttribute("whatlist", list);
-			dispatch("techdetail.jsp", req, resp);
+			dispatch("qnabbsdetail.jsp", req, resp);
 			
 			
 			

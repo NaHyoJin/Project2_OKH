@@ -245,7 +245,7 @@ else if(choice.equals("tagname")) cho = 3;
 	<script type="text/javascript">
 		$(function() {//좌측 메뉴바 누르는 곳.
 
-		
+		 
 			//좌측 화면 상단 이미지 클릭시 인덱스로 로그인 한경우. 안한 경우 다르게 설정해줄려는것.
 			$("#homebtn").click(function() {
 				
@@ -280,10 +280,10 @@ else if(choice.equals("tagname")) cho = 3;
  --%>				
  				
 				if(memcheck != null){
-					location.href = "../mainJSP?command=main";
+					location.href = "mainJSP?command=main";
 				}
 				else{
-					location.href = "../mainJSP?command=index";	
+					location.href = "mainJSP?command=index";	
 				}
 
 				<%-- var memcheck = null;
@@ -320,7 +320,7 @@ else if(choice.equals("tagname")) cho = 3;
 			});
 	
 			$("#techbbs").click(function() {
-				location.href="TechbbsController?command=techbbs";
+				location.href="../TechbbsController?command=techbbs";
 			});
 	
 			//병찬 사는 이야기.
