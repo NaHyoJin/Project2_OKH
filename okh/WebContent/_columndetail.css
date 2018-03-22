@@ -15,7 +15,7 @@ time, mark, audio, video {
 	margin: 0;
 	padding: 0;
 	border: 0;
-	vertical-align: baseline;
+	
 }
 body{
 	background-color: #fcfbfb;
@@ -31,9 +31,10 @@ height: 100%;
 background-color: #0059ab;
 }
 .titlediv{
-	width: 1000px;
+	  width: 940px;
    height:100%;
  margin-top:0;
+  margin-bottom:50px;
  padding: 20px;
  position: relative;
  top: 20px;
@@ -122,7 +123,9 @@ input.login {
  margin: 10px;
  padding-bottom:15px;
  position: relative;
+ top: 30px;
  left: 300px;
+ background-color: #fff;
  }
  .hjhtag{
 	font-size:10px;
@@ -152,6 +155,13 @@ input.login {
  }
  .myinfo_icon{
  	text-align: right;
+ 	vertical-align: top;
+ }
+  .myinfo_icon>span{
+  display:inline-block;
+  margin-left:10px;
+  margin-right:10px;
+ 	vertical-align: top;
  }
  .contentareawrap{
  display: flex;
@@ -180,8 +190,8 @@ input.login {
  	background-color: #fff;
  }
  
- #like{
- order:2;
+   #like{
+    order:2;
 width: 204px;
     margin-bottom: 20px;
     float: right;
@@ -209,33 +219,32 @@ width: 100%;
  }
  
  /* 테이블 */
- .techtable {
+ .reptable {
     width: 100%;
     border: none;
+    border-collapse: separate;
     border-spacing: 2px;
-    
+   
 }
  
-.techtable th {
-     padding: 10px 10px 5px 10px;
+.reptable th {
+    padding: 15px;
     border: none;
-    border-left: 5px solid #3a93de;
+    border-left: 5px solid #C03;
     border-bottom: 1px solid #DDD;
-    background: #fff;
+    background: #FCF0F3;
     font-weight: normal;
     text-align:left;
     text-shadow: 0 1px #FFF;
    vertical-align: middle;
 }
  
-.techtable td {
-	 background: #fff;
-	font-size:15px;
-    padding: 10px 10px 5px 10px;
+.reptable td {
     border: none;
     border-bottom: 1px solid #DDD;
     text-align: left;
-    vertical-align: middle;
+    vertical-align: baseline;
+     padding-bottom: 15px;
 }
 #frm{
 	margin-bottom: 15px;
@@ -281,21 +290,10 @@ width: 200px;
  #summer{
  width: 700px;
  }
- #upBtn{
- background: url(image/likeoff.png) no-repeat;
- border: none;
- position: relative;
- left:61px;
- }
- #downBtn{
- background: url(image/likeoff.png) no-repeat;
- border: none;
- position: relative;
- left:61px;
- }
- .listarea{
- 	width: 700px;
- 	height: 900px;
- 	position: absolute;
- 	top: 170px;
- }
+.downbtn input{
+	width: 100%;
+	cursor: pointer;
+}
+.detailid{
+	float:left;
+}

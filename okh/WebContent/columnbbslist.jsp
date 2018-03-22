@@ -293,8 +293,12 @@ System.out.println("bbslist in list : " + bbslist);
 
 	<div class="board">
 		<table border="1" class="techtable">
-		<col width="60"><col width="550"><col width="50">
-		
+		<col width="60"><col width="550"><col width="150">
+		<tr>
+			<th bgcolor="#757575">글번호</th>
+			<td bgcolor="#757575">제목</td>
+			<td bgcolor="#757575">글쓴이</td>
+		</tr>
 		<%
 		if(bbslist == null || bbslist.size() == 0){
 			%>	

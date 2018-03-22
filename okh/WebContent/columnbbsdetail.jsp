@@ -19,7 +19,7 @@
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/bootstrap.js"></script>
-	<link rel="stylesheet" type="text/css" href="_lifedetail.css?ver=1.5">
+	<link rel="stylesheet" type="text/css" href="_columndetail.css?ver=1.55">
 	<link rel="stylesheet" type="text/css" href="_main.css?ver-1.62">
 </head>
 <body>
@@ -235,11 +235,27 @@ dao.readcount(seq);
 </div>
 <div class="wrap">
 	<div class="myinfo">
-		<%=bbs.getId() %>
-		<%=bbs.getWdate() %>
-		<br>
 		<p class="myinfo_icon">
-			<img alt="" src="image/readcount.PNG"><span><%=bbs.getReadcount() %></span>
+		<%
+		IUserService uservice=UserService.getInstance();
+		
+		int score=uservice.getScore(bbs.getId());
+		String getprofile=uservice.getProfile(bbs.getId());
+		%>
+		<a onclick="location.href='User?command=otherpage&infoid=<%=bbs.getId() %>'" style="cursor: pointer">
+		
+		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+		</a>
+		<span class="detailid">
+		<a onclick="location.href='User?command=otherpage&infoid=<%=bbs.getId() %>'" style="cursor: pointer"><%=bbs.getId() %></a>
+		<span class="" style="margin-top: 0"><img src="image/actionpoint.PNG" class="pointimg">
+		
+		<%=score%></span></span>
+		 <br><br>
+		<span style="float:left; font-size: 12px;"><%=bbs.getWdate() %><br></span>
+
+		
+		<img alt="" src="image/readcounton.PNG"><span><%=bbs.getReadcount() %></span>
 		</p>
 	</div>
 	
@@ -261,7 +277,7 @@ dao.readcount(seq);
 			<%
 			if(ologin != null && bbs.getId().equals(mem.getId())){
 			%>
-			<img alt="" src="image/settingbtn.PNG" style="cursor: pointer; padding-bottom: 20px; display: inline-block;" id="btnPopover2">
+			<img alt="" src="image/settingbtn.PNG" style="cursor: pointer; margin-top:30px; padding-bottom: 20px; display: inline-block;" id="btnPopover2">
 			<%
 			}
 			%>
