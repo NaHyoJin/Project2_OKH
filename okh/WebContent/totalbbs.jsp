@@ -230,7 +230,7 @@ alert("검색된결과가없습니다");
 				<%=totallist.get(i).getWhatbbs() %>
 			<%
 			}
-			if(ologin == null){
+			if(ologin == null){	//로그인안했을때
 			if(dto.getWhatbbs().equals("기술게시판")){
 			%>
 			<p style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=&seq=<%=dto.getParent()%>"><%=dto.getTitle() %></a></p>
@@ -268,6 +268,57 @@ alert("검색된결과가없습니다");
 			</a></p>
 			<%
 			}
+			%>
+			</th>
+			<%if(dto.getComentcount()>0){
+			%>
+			<td><img src="image/repleon.PNG"><span class="textalig"> <%=dto.getComentcount() %></span></td>
+			<%
+			}else{
+			%>
+			<td><img src="image/repleoff.png"><span class="textalig"> <%=dto.getComentcount() %></span></td>
+			<%
+			}
+			%>
+			<%if(dto.getLikecount()>0){
+			%>
+			<td style="padding-top: 3px"><img src="image/likeeon.png"><span class="textalig"> <%=dto.getLikecount() %></span></td>
+			<%
+			}else{
+			%>
+			<td style="padding-top: 3px"><img src="image/likeeoff.png"><span class="textalig"> <%=dto.getLikecount() %></span></td>
+			<%
+			}
+			%>
+			<%if(dto.getReadcount()>0){
+			%>
+			<td><img src="image/readcounton.PNG"><span class="textalig"> <%=dto.getReadcount() %></span></td>
+			<%
+			}else{
+			%>
+			<td><img src="image/readcountoff.png"><span class="textalig"> <%=dto.getReadcount() %></span></td>
+			<%
+			}
+			%>
+			<td>
+			<%
+		IUserService uservice=UserService.getInstance();
+		
+		int score=uservice.getScore(dto.getId());
+		String getprofile=uservice.getProfile(dto.getId());
+		%>
+			<p class="myinfo_icon" style="margin-bottom: 0">
+			<a onclick="location.href='User?command=otherpage&infoid=<%=dto.getId() %>'" style="cursor: pointer">
+		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 30px; float:left; max-height: 30px; margin: 0 auto;">
+		</a>
+		<span class="detailid" style="margin-left: 10px;">
+		<a onclick="location.href='User?command=otherpage&infoid=<%=dto.getId() %>'" style="cursor: pointer"><span style="margin-top: 5px"><%=dto.getId() %></span></a>
+		</span> <br><br>
+		</p>
+			<p style="font-size: 10px">20180<%=dto.getWdate() %></p>
+		
+			</td>
+			<%
 				}else{	//로그인한상태
 			%>
 			<%//컨트롤러다따로 디테일 뿌려줘야한다
@@ -340,16 +391,22 @@ alert("검색된결과가없습니다");
 			<%
 			}
 			%>
-			
+				<%
+		IUserService uservice=UserService.getInstance();
+		
+		int score=uservice.getScore(dto.getId());
+		String getprofile=uservice.getProfile(dto.getId());
+		%>
 			<td>
 			<p class="myinfo_icon" style="margin-bottom: 0">
-			<a onclick="upmydetail()" style="cursor: pointer">
-		<img src="<%=profile %>" class="media-object img-circle" style="max-width: 30px; float:left; max-height: 30px; margin: 0 auto;">
+			<a onclick="location.href ='User?command=otherpage&infoid=<%=dto.getId() %>'" style="cursor: pointer">
+		
+		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 30px; float:left; max-height: 30px; margin: 0 auto;">
 		</a>
 		<span class="detailid" style="margin-left: 10px;">
-		<a onclick="upmydetail()" style="cursor: pointer"><span style="margin-top: 5px"><%=dto.getId() %></span></a>
+		<a onclick="location.href ='User?command=otherpage&infoid=<%=dto.getId() %>'" style="cursor: pointer"><span style="margin-top: 5px"><%=dto.getId() %></span></a>
 		<span class="" style="margin-top: 10px;"><img src="image/actionpoint.PNG" class="pointimg">
-		<%=mem.getScore()%></span>
+		<%=score%></span>
 		</span> <br><br>
 		</p>
 			<p style="font-size: 10px">20180<%=dto.getWdate() %></p>

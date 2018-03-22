@@ -2,6 +2,8 @@ package user;
 
 import java.io.File;
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -213,7 +215,14 @@ public class UserController extends HttpServlet {
 // 내 정보
 		else if(command.equals("mypage")) {
 			response.sendRedirect("mypage.jsp");
+		}else if(command.equals("otherpage")) {
+			String infoid=request.getParameter("infoid");
+			request.setAttribute("infoid", infoid);
+			dispatch("otherpage.jsp", request, response);
 		}
 	}
-
+	public void dispatch(String urls, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		RequestDispatcher _dispatch=req.getRequestDispatcher(urls);
+		_dispatch.forward(req, resp);
+	}
 }

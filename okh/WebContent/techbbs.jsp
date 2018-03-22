@@ -298,13 +298,20 @@ if(sortlist==null||whatsort==null||sortlist.size()==0){	//sort안했다
 			
 			<td>
 			<p class="myinfo_icon" style="margin-bottom: 0">
-			<a onclick="upmydetail()" style="cursor: pointer">
-		<img src="<%=profile %>" class="media-object img-circle" style="max-width: 30px; float:left; max-height: 30px; margin: 0 auto;">
+			<a onclick="location.href ='User?command=otherpage&infoid=<%=dto.getId() %>'" style="cursor: pointer">
+			<%
+		IUserService uservice=UserService.getInstance();
+		
+		int score=uservice.getScore(dto.getId());
+		String getprofile=uservice.getProfile(dto.getId());
+		%>
+		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 30px; float:left; max-height: 30px; margin: 0 auto;">
 		</a>
 		<span class="detailid" style="margin-left: 10px;">
-		<a onclick="upmydetail()" style="cursor: pointer"><span style="margin-top: 5px"><%=dto.getId() %></span></a>
+		<a onclick="location.href ='User?command=otherpage&infoid=<%=dto.getId() %>'" style="cursor: pointer"><span style="margin-top: 5px"><%=dto.getId() %></span></a>
 		<span class="" style="margin-top: 10px;"><img src="image/actionpoint.PNG" class="pointimg">
-		<%=mem.getScore()%></span>
+		
+		<%=score%></span>
 		</span> <br><br>
 		</p>
 			<p style="font-size: 10px"><%=dto.getWdate() %></p>

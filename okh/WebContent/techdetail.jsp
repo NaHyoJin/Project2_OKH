@@ -190,14 +190,22 @@ if(ologin == null){	//로그인안한상태
 			
 	<div class="myinfo">
 		<p class="myinfo_icon">
-		<a onclick="upmydetail()" style="cursor: pointer">
-		<img src="<%=profile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+		<%
+		IUserService uservice=UserService.getInstance();
+		
+		int score=uservice.getScore(whatlist.get(0).getId());
+		String getprofile=uservice.getProfile(whatlist.get(0).getId());
+		%>
+		<a onclick="location.href='User?command=otherpage&infoid=<%=whatlist.get(0).getId() %>'" style="cursor: pointer">
+		
+		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
 		</a>
 		<span class="detailid">
-		<a onclick="upmydetail()" style="cursor: pointer"><%=whatlist.get(0).getId() %></a>
+		<a onclick="location.href='User?command=otherpage&infoid=<%=whatlist.get(0).getId() %>'" style="cursor: pointer"><%=whatlist.get(0).getId() %></a>
 		<span class="" style="margin-top: 0"><img src="image/actionpoint.PNG" class="pointimg">
-		<%=mem.getScore()%></span>
-		</span> <br><br>
+		
+		<%=score%></span></span>
+		 <br><br>
 		<span style="float:left; font-size: 12px;"><%=whatlist.get(0).getWdate() %><br></span>
 
 		
@@ -333,18 +341,22 @@ if(ologin == null){	//로그인안한상태
 	%>
 	<tr>
 		<td>
+		<%
+		score=uservice.getScore(bbs.getId());
+		getprofile=uservice.getProfile(bbs.getId());
+		%>
 			<p class="myinfo_icon" style="margin-top: 5px">
-			<a onclick="upmydetail()" style="cursor: pointer">
-		<img src="<%=profile %>" class="media-object img-circle" style="max-width: 30px; float:left; max-height: 30px; margin: 0 auto;">
+			<a onclick="location.href ='User?command=otherpage&infoid=<%=bbs.getId() %>'" style="cursor: pointer">
+		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 30px; float:left; max-height: 30px; margin: 0 auto;">
 		</a>
 		<span class="detailid">
-		<a onclick="upmydetail()" style="cursor: pointer">
+		<a onclick="location.href ='User?command=otherpage&infoid=<%=bbs.getId() %>'" style="cursor: pointer">
 		<span style="float: left">
 		<%=bbs.getId() %>
 		</span>
 		</a>
 		<img src="image/actionpoint.PNG" class="pointimg" style="float: left">
-		<span style="float: left;"><%=mem.getScore()%></span><br>
+		<span style="float: left;"><%=score%></span><br>
 		<span style="font-size: 10px; margin-top:3px; float: left;"><%=bbs.getWdate() %></span><br><br>
 		</span> 
 		
