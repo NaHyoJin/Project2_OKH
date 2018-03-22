@@ -315,10 +315,6 @@ else if(choice.equals("tagname")) cho = 3;
 				location.href="../qnaServlet?command=listQna";
 			});
 			
-			$("#second").click(function() {
-				location.href="../second.jsp";
-			});
-	
 			$("#techbbs").click(function() {
 				location.href="../TechbbsController?command=techbbs";
 			});
@@ -329,7 +325,7 @@ else if(choice.equals("tagname")) cho = 3;
 			});
 			
 		//  정재흥 column 부분
-			$("column").click(function() {
+			$("#column").click(function() {
 //				alert("정재흥 버튼.");
 				location.href = "../Controller?command=column"
 			});

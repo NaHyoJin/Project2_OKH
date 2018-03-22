@@ -49,7 +49,8 @@ public String processUploadFile(FileItem fileItem, String dir, JspWriter out)
 */ 
 
 //지정폴더에저장
-String fupload="E:\\tmp";	//물리적으로 삭제해야된다.
+String fupload="C:\\NAS";	//물리적으로 삭제해야된다.
+//c 경로에 폴더 NAS 수동으로 만들어줘야한다.
 
 //톰캣에배포
 //String fupload=application.getRealPath("/techupload");	//WebContent안의 폴더이름을정해준거다 여기에올라갈거다
