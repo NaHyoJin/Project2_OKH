@@ -39,31 +39,44 @@ public String arrow(int depth){
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/bootstrap.js"></script>
-	<link rel="stylesheet" type="text/css" href="_lifedetail.css?ver=1.5">
-	<link rel="stylesheet" type="text/css" href="_lifemain.css?ver-1.62">
+	<link rel="stylesheet" type="text/css" href="_lifedetail.css?ver=1.8">
+	<link rel="stylesheet" type="text/css" href="_main.css?ver=1.62">
 </head>
 <body>
 
 <!-- 로그인 세션 -->
 	<%
+	String yn="";
 	Object ologin = session.getAttribute("login");
 	UserDto mem = (UserDto)ologin;
+	IUserService service = UserService.getInstance();
+	String profile = null;
+	if(ologin != null){
+		profile = service.getProfile(mem.getId());
+	}
 	%>
 <!-- 메뉴 -->
 	<div class="menu">
 		<%
 		if(ologin == null){
+			yn="no";
 		%>
+		<input type="button" class="homebtn" onclick="location.href='index.jsp'">
 		<input type="button" class="login" id="login">
 		<input type="button" class="account" id="account">
 		<%
 		}else{
-		%>
-		<div class="actionlogin">
-			<span><%=mem.getId() %></span>
+		yn="yes";
+%>
+<input type="button" class="homebtn" id="homebtn">
+<div class="actionlogin">
+<a onclick="upmydetail()" style="cursor: pointer">
+	<img src="<%=profile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+</a>		
+			<span class="memid"><a onclick="upmydetail()" style="cursor: pointer;color: #fff;"><%=mem.getId() %></a></span> <br>
+			<span class="point" style="margin-top: 0"><img src="image/actionpoint.PNG" class="pointimg"><%=mem.getScore()%></span>
 			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
-			<img class="alarmbtn" alt="" src="image/alarm.PNG" style="cursor: pointer" id="btnPopover">	
-		</div>
+				</div>
 		<%
 		}
 		%>
@@ -76,6 +89,9 @@ public String arrow(int depth){
 	</div>
 	<script type="text/javascript">
 	$(function() {
+		$("#homebtn").click(function() {
+			location.href="main.jsp";
+		});
 		$("#login").click(function() {
 			location.href = "User?command=login";
 		});
@@ -98,7 +114,14 @@ public String arrow(int depth){
 			location.href = "LifeBbs?command=life";
 		});
 		$("#combbs").click(function () {
-			location.href = "CommunityControl?command=list";
+			if(<%=yn.equals("yes")%>){
+				location.href = "CommunityControl?command=list";
+	
+			}
+			else{
+				location.href = "User?command=guest";
+			}
+			
 		});
 	});
 	</script>
@@ -218,7 +241,7 @@ public String arrow(int depth){
 	
 	String sseq = request.getParameter("seq");
 	
-	IUserService service = UserService.getInstance();
+	service = UserService.getInstance();
 	ILifeBbsDao dao = LifeBbsDao.getInstance();
 	ILifeBbssReplyDao rdao = LifeBbssReplyDao.getInstance();
 	
@@ -233,10 +256,6 @@ public String arrow(int depth){
 		filenameSplit = bbs.getFilename().split(",");
 	}
 	
-	String profile = null;
-	if(ologin != null){
-		profile = service.getProfile(mem.getId());
-	}
  	
 	String upIdSplit[] = null;
 	boolean findUpId = false;
@@ -312,13 +331,29 @@ public String arrow(int depth){
 	</div>
 	<div class="wrap">
 		<div class="myinfo">
-			<%=bbs.getId() %>
-			<%=bbs.getWdate() %>
-			<br>
 			<p class="myinfo_icon">
-				<img alt="" src="image/reple.PNG"><span><%=bbs.getCountreply() %></span>
-				<img alt="" src="image/readcount.PNG"><span><%=bbs.getReadcount() %></span>
-			</p>
+		<%
+		IUserService uservice=UserService.getInstance();
+		
+		int score=uservice.getScore(bbs.getId());
+		String getprofile=uservice.getProfile(bbs.getId());
+		%>
+		<a onclick="location.href='User?command=otherpage&infoid=<%=bbs.getId() %>'" style="cursor: pointer">
+		
+		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+		</a>
+		<span class="detailid" style="float: left; margin-left: 15px;">
+		<a onclick="location.href='User?command=otherpage&infoid=<%=bbs.getId() %>'" style="cursor: pointer"><%=bbs.getId() %></a>
+		<span class="" style="margin-top: 0"><img src="image/actionpoint.PNG" class="pointimg">
+		
+		<%=score%></span></span>
+		 <br><br>
+		<span style="float:left; font-size: 12px;"><%=bbs.getWdate() %><br></span>
+
+		
+		<img alt="" src="image/repleon.PNG"><span><%=bbs.getCountreply() %></span>
+		<img alt="" src="image/readcounton.PNG"><span><%=bbs.getReadcount() %></span>
+		</p>
 		</div>
 		
 		<div class="contentareawrap">
@@ -368,16 +403,15 @@ public String arrow(int depth){
 				}else if(findDownId){
 				%>
 				<button id="downBtn" style="display: block; padding-top: 20px;"><img src="image/dislikeon.PNG" id="dislikeimg"></button><br>
-				<a href="LikeScrapController?command=scrapimg"><img src="image/scrap.PNG" id="scrapimg"></a><br>
+				
 				<%
 				}else{
 				%>
 				<button id="downBtn" style="display: block; padding-top: 20px;"><img src="image/dislikeoff.PNG" id="dislikeimg"></button><br>
-				<a href="LikeScrapController?command=scrapimg"><img src="image/scrap.PNG" id="scrapimg"></a><br>
+				
 				<%
 				}
 				%>
-				<span id="cocoun">0</span>
 				<br><br>
 				<%
 				if(ologin != null && bbs.getId().equals(mem.getId())){
@@ -413,8 +447,28 @@ public String arrow(int depth){
 				%>	
 				<tr>
 					<td>
-						<%=rbbs.getId() %>
-						<article class="content<%=rbbs.getSeq() %>" name="content"><%=rbbs.getContent() %></article>
+						<%
+		score=uservice.getScore(rbbs.getId());
+		getprofile=uservice.getProfile(rbbs.getId());
+		%>
+			<p class="myinfo_icon" style="margin-top: 5px">
+			<a onclick="location.href ='User?command=otherpage&infoid=<%=rbbs.getId() %>'" style="cursor: pointer">
+		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 30px; float:left; max-height: 30px; margin: 0 auto;">
+		</a>
+		<span class="detailid">
+		<a onclick="location.href ='User?command=otherpage&infoid=<%=rbbs.getId() %>'" style="cursor: pointer">
+		<span style="float: left">
+		<%=rbbs.getId() %>
+		</span>
+		 </a>                                  
+		<img src="image/actionpoint.PNG" class="pointimg" style="float: left">
+		<span style="float: left;"><%=score%></span><br>
+		<span style="font-size: 10px; margin-top:3px; float: left;"><%=rbbs.getWdate() %></span><br><br>
+		</span> 
+		
+		</p>
+		<div style="clear: both;"></div>
+						<article style="margin-top: 0; margin-bottom: 10px;" class="content<%=rbbs.getSeq() %>" name="content"><%=rbbs.getContent() %></article>
 					</td>
 					<td style="border-left: 1px solid #DDD">
 							<%
@@ -448,9 +502,6 @@ public String arrow(int depth){
 								<input type="hidden" name="command" value="writeReply">
 								<input type="hidden" name="id" value="<%=mem.getId() %>">
 								<input type="hidden" name="bbsseq" value="<%=bbs.getSeq() %>">
-								<div>
-									<img src="<%=profile %>" class="media-object img-circle" style="max-width: 50px; margin: 0 auto;">
-								</div>
 								<textarea id="replyContent" name="content" placeholder="댓글 쓰기" class="form-control"></textarea>
 							</td>
 							<td>
@@ -672,6 +723,13 @@ public String arrow(int depth){
           });
         });
    </script>
-
+	<script type="text/javascript">
+	function logout() {
+		location.href ="User?command=logout";
+	}
+	function upmydetail() {
+		location.href ="User?command=mypage";
+	}
+	</script>
 </body>
 </html>

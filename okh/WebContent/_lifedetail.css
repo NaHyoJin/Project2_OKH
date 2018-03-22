@@ -31,7 +31,7 @@ height: 100%;
 background-color: #0059ab;
 }
 .titlediv{
-	width: 1000px;
+	width: 940px;
    height:100%;
  margin-top:0;
  padding: 20px;
@@ -122,6 +122,7 @@ input.login {
  margin: 10px;
  padding-bottom:15px;
  position: relative;
+ top:50px;
  left: 300px;
  }
  .hjhtag{

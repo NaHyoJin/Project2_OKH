@@ -23,7 +23,7 @@ request.setCharacterEncoding("utf-8");
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/custom.css">
-	<link rel="stylesheet" type="text/css" href="_write.css?ver=1.57">
+	<link rel="stylesheet" type="text/css" href="_techwrite.css?ver=1.58">
 <link rel="stylesheet" type="text/css" href="_main.css?ver=1.33">
 <!-- 폰트  -->
 <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
@@ -211,23 +211,18 @@ if(ologin == null){	//로그인안한상태
 		 <input type="button" class="btn btn-default btn-wide" onclick="gotobbs();" value="취소">
 	<button id="write" style="float: right" class="btn btn-success btn-wide" onclick="write1();">글추가</button>
 		</div>
-	 
-	 
-	 
-	
-	 
 	
 	 </form>
 	 <div class="height"></div>
-	 <div class="upload">
+	 
+</div>
+
+<div class="upload">
 	  <input type="button" class="btn btn-primary" value="첨부파일선택" onclick="openChild()"><br>
 	  <input type="text" value="첨부된 파일 " readonly="readonly" class="form-control">
 	 <textarea cols="5" rows="10" id="pInput" readonly="readonly" class="form-control"></textarea>
 	
 	</div> 
-</div>
-
-
 
 
 	
