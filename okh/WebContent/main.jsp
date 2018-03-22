@@ -78,6 +78,7 @@ Object ologin = session.getAttribute("login");
 UserDto mem = null;
 String yn="";
 mem = (UserDto)ologin;
+String id=(String)request.getSession().getAttribute("id");
 IUserService service = UserService.getInstance();
 String profile = null;
 if(ologin != null){
@@ -108,11 +109,6 @@ if(ologin != null){
 			<span class="point" style="margin-top: 0"><img src="image/actionpoint.PNG" class="pointimg"><%=mem.getScore()%></span>
 			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
 				</div>
-		<script type="text/javascript">
-		$("#combbs").click(function () {
-				location.href = "CommunityControl?command=list";
-		});
-		</script>
 		<%
 		}
 		%>
@@ -148,6 +144,14 @@ if(ologin != null){
 		});
 		$("#life").click(function() {
 			location.href = "LifeBbs?command=life";
+		});
+		$("#combbs").click(function () {
+			if(<%=id %> == null){
+				location.href = "User?command=guest";
+			}else{
+				location.href = "CommunityControl?command=list";
+			}
+			
 		});
 	});
 	</script>

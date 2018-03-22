@@ -65,6 +65,7 @@ if(getCookie('okhpop') != 'rangs') {
 	<%
 	Object ologin = session.getAttribute("login");
 	UserDto mem = (UserDto)ologin;
+	String id=(String)request.getSession().getAttribute("id");
 	%>
 <!-- 메뉴 -->
 	<div class="menu">
@@ -120,7 +121,7 @@ if(getCookie('okhpop') != 'rangs') {
 			location.href = "LifeBbs?command=life";
 		});
 		$("#combbs").click(function () {
-			if(<%=ologin %> == null){
+			if(<%=id %> == null || <%=id %>.equals("null")){
 				location.href = "User?command=guest";
 			}else{
 				location.href = "CommunityControl?command=list";
