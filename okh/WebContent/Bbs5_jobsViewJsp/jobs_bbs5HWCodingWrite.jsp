@@ -167,34 +167,34 @@ $("#pdsup").click(function() {
 			
 			//QNA
 			$("#qnabbs").click(function() {
-				location.href="qnaServlet?command=listQna";
+				location.href = "../qnaServlet?command=listQna";
 			});
 			
-			$("#second").click(function() {
-				location.href="second.jsp";
-			});
-	
+			//기술 게시판.
 			$("#techbbs").click(function() {
-				location.href="TechbbsController?command=techbbs";
+				location.href = "../TechbbsController?command=techbbs";
 			});
 	
 			$("#life").click(function() {
-				location.href="LifeBbs?command=life";
+				location.href = "../LifeBbs?command=life";
 			});
 			
 			
-	/* 
-			//columns
-			$("#").click(function() {
-				location.href="";
+		//  정재흥 column 부분
+			$("#column").click(function() {
+			location.href = "../Controller?command=column"
 			});
-	 */
 	 
 			//게시판5 나효진 jobs 부분.
 			
 			$("#jobs").click(function name() {
 				location.href="../jobs";
 			});
+			
+			/* 장문석  study*/
+			$("#combbs").click(function () {
+				location.href = "../CommunityControl?command=list";
+			});	
 
 		});
 	</script>
