@@ -234,9 +234,9 @@ public class UserDao implements IUserDao {
 			
 			if(rs.next()) {
 				if(rs.getString(1).equals(" ")) {
-					return "http://localhost:8090/okh_1/image/muser.png";
+					return "http://localhost:8090/okh/image/muser.png";
 				}
-				return "http://localhost:8090/okh_1/upload/" + rs.getString(1);
+				return "http://localhost:8090/okh/upload/" + rs.getString(1);
 			}
 			
 		} catch (SQLException e) {
@@ -246,7 +246,7 @@ public class UserDao implements IUserDao {
 			DBClose.close(psmt, conn, rs);
 		}
 		
-		return "http://localhost:8090/okh_1/image/muser.png";
+		return "http://localhost:8090/okh/image/muser.png";
 	}
 
 	@Override

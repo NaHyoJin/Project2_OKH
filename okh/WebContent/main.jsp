@@ -613,6 +613,13 @@ function searchBbs1(e) {
 		</div>
 		
 	</div>
-
+<script type="text/javascript">
+	function logout() {
+		location.href ="User?command=logout";
+	}
+	function upmydetail() {
+		location.href ="User?command=mypage";
+	}
+	</script>
 </body>
 </html>
