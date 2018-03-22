@@ -319,8 +319,8 @@ function searchBbs1(e) {
 	
 }
 </script>
-		<div class="partition1">
-			<h4 style="margin-bottom: 15px">Q&A <a href="qnaServlet?command=listQna"><img style="float: right" alt="" src="image/moresee.PNG"></a></h4>
+	<div class="partition1">
+			<h4 style="margin-bottom: 15px">Q&A <a href="qnaServlet?command=listQna"><img style="float: right" alt="게시판으로가기" src="image/moresee.PNG"></a></h4>
 			<%
 			TechbbsServiceImpl tservice=TechbbsService.getInstance();
 			 tservice=TechbbsService.getInstance();
@@ -333,7 +333,7 @@ function searchBbs1(e) {
 				<th>리스트가없습니다</th>
 				</tr>
 			<%
-			}else{
+			}
 			
 			for(int i=0;i<qnalist.size();i++){
 				QnaDto qna=qnalist.get(i);
@@ -348,15 +348,56 @@ function searchBbs1(e) {
 				<%
 		if(ologin == null){	//로그인안한상태
 			%>
-			<p style="font-size: 15px; margin-top: 5px;"><a href="qnaServlet?command=qnaBbsDetail&action=detail&likeid=&seq=<%=qna.getSeq()%>"><%=qna.getTitle() %></a></p>
-				<p style="text-align: right"><%=qna.getId() %></p>
+			<span style="font-size: 15px; margin-top: 5px;"><a href="qnaServlet?command=qnaBbsDetail&action=detail&likeid=&seq=<%=qna.getSeq()%>"><%=qna.getTitle() %></a></span>
+				<%
+		IUserService uservice=UserService.getInstance();
 		
+		int score=uservice.getScore(qnalist.get(i).getId());
+		String getprofile=uservice.getProfile(qnalist.get(i).getId());
+		%>
+<p class="myinfo_icon" style="float: right;">
+	<a onclick="location.href ='User?command=otherpage&infoid=<%=qnalist.get(i).getId() %>'" style="cursor: pointer">
+		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 20px; float:left; max-height: 20px; margin: 0 auto;">
+	</a>
+	<span class="detailid">
+		<a onclick="location.href ='User?command=otherpage&infoid=<%=qnalist.get(i).getId() %>'" style="cursor: pointer">
+			<span style="float: left; font-size: 12px;">
+			<%=qnalist.get(i).getId() %>
+			</span>
+		</a>                                  
+		<img src="image/actionpoint.PNG" class="pointimg" style="max-width: 13px; float:left; max-height: 13px;">
+		<span style="float: left; font-size: 12px;"><%=score%></span><br>
+		<span style="font-size: 10px; margin-top:3px; float: left;"><%=qnalist.get(i).getWdate() %></span>
+	</span> 
+</p>
+		<div style="clear: both;"></div>
 				<%
 		}else{
 			
 		%>
-				<p style="font-size: 15px; margin-top: 5px;"><a href="qnaServlet?command=qnaBbsDetail&action=detail&likeid=<%=mem.getId() %>&seq=<%=qna.getSeq()%>"><%=qna.getTitle() %></a></p>
-				<p style="text-align: right"><%=qna.getId() %></p>
+				<span style="font-size: 15px; margin-top: 5px;"><a href="qnaServlet?command=qnaBbsDetail&action=detail&likeid=<%=mem.getId() %>&seq=<%=qna.getSeq()%>"><%=qna.getTitle() %></a></span>
+				<%
+		IUserService uservice=UserService.getInstance();
+		
+		int score=uservice.getScore(qnalist.get(i).getId());
+		String getprofile=uservice.getProfile(qnalist.get(i).getId());
+		%>
+<p class="myinfo_icon" style="float: right;">
+	<a onclick="location.href ='User?command=otherpage&infoid=<%=qnalist.get(i).getId() %>'" style="cursor: pointer">
+		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 20px; float:left; max-height: 20px; margin: 0 auto;">
+	</a>
+	<span class="detailid">
+		<a onclick="location.href ='User?command=otherpage&infoid=<%=qnalist.get(i).getId() %>'" style="cursor: pointer">
+			<span style="float: left; font-size: 12px;">
+			<%=qnalist.get(i).getId() %>
+			</span>
+		</a>                                  
+		<img src="image/actionpoint.PNG" class="pointimg" style="max-width: 13px; float:left; max-height: 13px;">
+		<span style="float: left; font-size: 12px;"><%=score%></span><br>
+		<span style="font-size: 10px; margin-top:3px; float: left;"><%=qnalist.get(i).getWdate() %></span>
+	</span> 
+</p>
+		<div style="clear: both;"></div>
 		<%
 		}
 			}else{
@@ -367,24 +408,66 @@ function searchBbs1(e) {
 					<%
 		if(ologin == null){	//로그인안한상태
 			%>
-			<p style="font-size: 15px; margin-top: 5px;"><a href="qnaServlet?command=qnaBbsDetail&action=detail&likeid=&seq=<%=qna.getSeq()%>"><%=qna.getTitle() %></a></p>
-				<p style="text-align: right"><%=qna.getId() %></p>
+			<span style="font-size: 15px; margin-top: 5px;"><a href="qnaServlet?command=qnaBbsDetail&action=detail&likeid=&seq=<%=qna.getSeq()%>"><%=qna.getTitle() %></a></span>
+				<%
+		IUserService uservice=UserService.getInstance();
 		
+		int score=uservice.getScore(qnalist.get(i).getId());
+		String getprofile=uservice.getProfile(qnalist.get(i).getId());
+		%>
+<p class="myinfo_icon" style="float: right;">
+	<a onclick="location.href ='User?command=otherpage&infoid=<%=qnalist.get(i).getId() %>'" style="cursor: pointer">
+		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 20px; float:left; max-height: 20px; margin: 0 auto;">
+	</a>
+	<span class="detailid">
+		<a onclick="location.href ='User?command=otherpage&infoid=<%=qnalist.get(i).getId() %>'" style="cursor: pointer">
+			<span style="float: left; font-size: 12px;">
+			<%=qnalist.get(i).getId() %>
+			</span>
+		</a>                                  
+		<img src="image/actionpoint.PNG" class="pointimg" style="max-width: 13px; float:left; max-height: 13px;">
+		<span style="float: left; font-size: 12px;"><%=score%></span><br>
+		<span style="font-size: 10px; margin-top:3px; float: left;"><%=qnalist.get(i).getWdate() %></span>
+	</span> 
+</p>
+		<div style="clear: both;"></div>
 				<%
 		}else{
 			
 		%>
-				<p style="font-size: 15px; margin-top: 5px;"><a href="qnaServlet?command=qnaBbsDetail&action=detail&likeid=<%=mem.getId() %>&seq=<%=qna.getSeq()%>"><%=qna.getTitle() %></a></p>
-				<p style="text-align: right"><%=qna.getId() %></p>
+				<span style="font-size: 15px; margin-top: 5px;"><a href="qnaServlet?command=qnaBbsDetail&action=detail&likeid=<%=mem.getId() %>&seq=<%=qna.getSeq()%>"><%=qna.getTitle() %></a></span>
+				<%
+		IUserService uservice=UserService.getInstance();
+		
+		int score=uservice.getScore(qnalist.get(i).getId());
+		String getprofile=uservice.getProfile(qnalist.get(i).getId());
+		%>
+<p class="myinfo_icon" style="float: right;">
+	<a onclick="location.href ='User?command=otherpage&infoid=<%=qnalist.get(i).getId() %>'" style="cursor: pointer">
+		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 20px; float:left; max-height: 20px; margin: 0 auto;">
+	</a>
+	<span class="detailid">
+		<a onclick="location.href ='User?command=otherpage&infoid=<%=qnalist.get(i).getId() %>'" style="cursor: pointer">
+			<span style="float: left; font-size: 12px;">
+			<%=qnalist.get(i).getId() %>
+			</span>
+		</a>                                  
+		<img src="image/actionpoint.PNG" class="pointimg" style="max-width: 13px; float:left; max-height: 13px;">
+		<span style="float: left; font-size: 12px;"><%=score%></span><br>
+		<span style="font-size: 10px; margin-top:3px; float: left;"><%=qnalist.get(i).getWdate() %></span>
+	</span> 
+</p>
+		<div style="clear: both;"></div>
 			<%}
-			}}}
+			}}
 			%>
 		</table>
 			
 			
 		</div>
+		
 		<div class="partition2">
-		<h4 style="margin-bottom: 15px">사는얘기 <a href="LifeBbs?command=life"><img style="float: right" alt="" src="image/moresee.PNG"></a></h4>
+		<h4 style="margin-bottom: 15px">사는얘기 <a href="LifeBbs?command=life"><img style="float: right" alt="게시판으로가기" src="image/moresee.PNG"></a></h4>
 			<%
 			
 			 tservice=TechbbsService.getInstance();
@@ -397,7 +480,7 @@ function searchBbs1(e) {
 				<th>리스트가없습니다</th>
 				</tr>
 			<%
-			}else{
+			}
 			
 			for(int i=0;i<lifelist.size();i++){
 				LifeBbsDto dto=lifelist.get(i);
@@ -412,25 +495,67 @@ function searchBbs1(e) {
 				<%
 		if(ologin == null){	//로그인안한상태
 			%>
-		<p style="font-size: 15px; padding-left: 10px;">
+		<span style="font-size: 17px; padding-left: 10px;">
                      <%=arrow(dto.getDepth()) %>
                      <a href="LifeBbs?command=detail&seq=<%=dto.getSeq() %>">
                         <%=dto.getTitle() %>
                      </a>
-                  </p>
-				<p style="text-align: right"><%=dto.getId() %></p>
+                  </span>
+				<%
+		IUserService uservice=UserService.getInstance();
+		
+		int score=uservice.getScore(dto.getId());
+		String getprofile=uservice.getProfile(dto.getId());
+		%>
+<p class="myinfo_icon" style="float: right;">
+	<a onclick="location.href ='User?command=otherpage&infoid=<%=dto.getId() %>'" style="cursor: pointer">
+		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 20px; float:left; max-height: 20px; margin: 0 auto;">
+	</a>
+	<span class="detailid">
+		<a onclick="location.href ='User?command=otherpage&infoid=<%=dto.getId() %>'" style="cursor: pointer">
+			<span style="float: left; font-size: 12px;">
+			<%=dto.getId() %>
+			</span>
+		</a>                                  
+		<img src="image/actionpoint.PNG" class="pointimg" style="max-width: 13px; float:left; max-height: 13px;">
+		<span style="float: left; font-size: 12px;"><%=score%></span><br>
+		<span style="font-size: 10px; margin-top:3px; float: left;"><%=dto.getWdate() %></span>
+	</span> 
+</p>
+		<div style="clear: both;"></div>
 		
 				<%
 		}else{
 			
 		%>
-				<p style="font-size: 15px; padding-left: 10px;">
+				<span style="font-size: 15px; padding-left: 10px;">
                      <%=arrow(dto.getDepth()) %>
                      <a href="LifeBbs?command=detail&seq=<%=dto.getSeq() %>">
                         <%=dto.getTitle() %>
                      </a>
-                  </p>
-				<p style="text-align: right"><%=dto.getId() %></p>
+                  </span>
+					<%
+		IUserService uservice=UserService.getInstance();
+		
+		int score=uservice.getScore(dto.getId());
+		String getprofile=uservice.getProfile(dto.getId());
+		%>
+<p class="myinfo_icon" style="float: right;">
+	<a onclick="location.href ='User?command=otherpage&infoid=<%=dto.getId() %>'" style="cursor: pointer">
+		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 20px; float:left; max-height: 20px; margin: 0 auto;">
+	</a>
+	<span class="detailid">
+		<a onclick="location.href ='User?command=otherpage&infoid=<%=dto.getId() %>'" style="cursor: pointer">
+			<span style="float: left; font-size: 12px;">
+			<%=dto.getId() %>
+			</span>
+		</a>                                  
+		<img src="image/actionpoint.PNG" class="pointimg" style="max-width: 13px; float:left; max-height: 13px;">
+		<span style="float: left; font-size: 12px;"><%=score%></span><br>
+		<span style="font-size: 10px; margin-top:3px; float: left;"><%=dto.getWdate() %></span>
+	</span> 
+</p>
+		<div style="clear: both;"></div>
 		<%
 		}
 			}else{
@@ -441,27 +566,68 @@ function searchBbs1(e) {
 					<%
 		if(ologin == null){	//로그인안한상태
 			%>
-			<p style="font-size: 15px">
+			<span style="font-size: 15px">
                      <%=arrow(dto.getDepth()) %>
                      <a href="LifeBbs?command=detail&seq=<%=dto.getSeq() %>">
                         <%=dto.getTitle() %>
                      </a>
-                  </p>
-				<p style="text-align: right"><%=dto.getId() %></p>
+                  </span>
+				 	<%
+		IUserService uservice=UserService.getInstance();
 		
+		int score=uservice.getScore(dto.getId());
+		String getprofile=uservice.getProfile(dto.getId());
+		%>
+<p class="myinfo_icon" style="float: right;">
+	<a onclick="location.href ='User?command=otherpage&infoid=<%=dto.getId() %>'" style="cursor: pointer">
+		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 20px; float:left; max-height: 20px; margin: 0 auto;">
+	</a>
+	<span class="detailid">
+		<a onclick="location.href ='User?command=otherpage&infoid=<%=dto.getId() %>'" style="cursor: pointer">
+			<span style="float: left; font-size: 12px;">
+			<%=dto.getId() %>
+			</span>
+		</a>                                  
+		<img src="image/actionpoint.PNG" class="pointimg" style="max-width: 13px; float:left; max-height: 13px;">
+		<span style="float: left; font-size: 12px;"><%=score%></span><br>
+		<span style="font-size: 10px; margin-top:3px; float: left;"><%=dto.getWdate() %></span>
+	</span> 
+</p>
+		<div style="clear: both;"></div>
 				<%
 		}else{
 			
 		%>
-				<p style="font-size: 15px">
+				<span style="font-size: 15px">
                      <%=arrow(dto.getDepth()) %>
                      <a href="LifeBbs?command=detail&seq=<%=dto.getSeq() %>">
                         <%=dto.getTitle() %>
                      </a>
-                  </p>
-				<p style="text-align: right"><%=dto.getId() %></p>
+                  </span>
+                 	<%
+		IUserService uservice=UserService.getInstance();
+		
+		int score=uservice.getScore(dto.getId());
+		String getprofile=uservice.getProfile(dto.getId());
+		%>
+<p class="myinfo_icon" style="float: right;">
+	<a onclick="location.href ='User?command=otherpage&infoid=<%=dto.getId() %>'" style="cursor: pointer">
+		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 20px; float:left; max-height: 20px; margin: 0 auto;">
+	</a>
+	<span class="detailid">
+		<a onclick="location.href ='User?command=otherpage&infoid=<%=dto.getId() %>'" style="cursor: pointer">
+			<span style="float: left; font-size: 12px;">
+			<%=dto.getId() %>
+			</span>
+		</a>                                  
+		<img src="image/actionpoint.PNG" class="pointimg" style="max-width: 13px; float:left; max-height: 13px;">
+		<span style="float: left; font-size: 12px;"><%=score%></span><br>
+		<span style="font-size: 10px; margin-top:3px; float: left;"><%=dto.getWdate() %></span>
+	</span> 
+</p>
+		<div style="clear: both;"></div>
 			<%}
-			}}}
+			}}
 			%>
 		</table>
 		</div>
@@ -478,7 +644,7 @@ function searchBbs1(e) {
 				<th>리스트가없습니다</th>
 				</tr>
 			<%
-			}else{
+			}
 			
 			for(int i=0;i<techlist.size();i++){
 				TechbbsDto dto=techlist.get(i);
@@ -493,15 +659,57 @@ function searchBbs1(e) {
 				<%
 		if(ologin == null){	//로그인안한상태
 			%>
-			<p style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=>&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a></p>
-				<p style="text-align: right"><%=dto.getId() %></p>
+			<span style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=>&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a></span>
+					<%
+		IUserService uservice=UserService.getInstance();
+		
+		int score=uservice.getScore(dto.getId());
+		String getprofile=uservice.getProfile(dto.getId());
+		%>
+<p class="myinfo_icon" style="float: right;">
+	<a onclick="location.href ='User?command=otherpage&infoid=<%=dto.getId() %>'" style="cursor: pointer">
+		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 20px; float:left; max-height: 20px; margin: 0 auto;">
+	</a>
+	<span class="detailid">
+		<a onclick="location.href ='User?command=otherpage&infoid=<%=dto.getId() %>'" style="cursor: pointer">
+			<span style="float: left; font-size: 12px;">
+			<%=dto.getId() %>
+			</span>
+		</a>                                  
+		<img src="image/actionpoint.PNG" class="pointimg" style="max-width: 13px; float:left; max-height: 13px;">
+		<span style="float: left; font-size: 12px;"><%=score%></span><br>
+		<span style="font-size: 10px; margin-top:3px; float: left;"><%=dto.getWdate() %></span>
+	</span> 
+</p>
+		<div style="clear: both;"></div>
 		
 				<%
 		}else{
 			
 		%>
-				<p style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=<%=mem.getId() %>&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a></p>
-				<p style="text-align: right"><%=dto.getId() %></p>
+				<span style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=<%=mem.getId() %>&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a></span>
+					<%
+		IUserService uservice=UserService.getInstance();
+		
+		int score=uservice.getScore(dto.getId());
+		String getprofile=uservice.getProfile(dto.getId());
+		%>
+<p class="myinfo_icon" style="float: right;">
+	<a onclick="location.href ='User?command=otherpage&infoid=<%=dto.getId() %>'" style="cursor: pointer">
+		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 20px; float:left; max-height: 20px; margin: 0 auto;">
+	</a>
+	<span class="detailid">
+		<a onclick="location.href ='User?command=otherpage&infoid=<%=dto.getId() %>'" style="cursor: pointer">
+			<span style="float: left; font-size: 12px;">
+			<%=dto.getId() %>
+			</span>
+		</a>                                  
+		<img src="image/actionpoint.PNG" class="pointimg" style="max-width: 13px; float:left; max-height: 13px;">
+		<span style="float: left; font-size: 12px;"><%=score%></span><br>
+		<span style="font-size: 10px; margin-top:3px; float: left;"><%=dto.getWdate() %></span>
+	</span> 
+</p>
+		<div style="clear: both;"></div>
 		<%
 		}
 			}else{
@@ -512,23 +720,65 @@ function searchBbs1(e) {
 					<%
 		if(ologin == null){	//로그인안한상태
 			%>
-			<p style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=>&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a></p>
-				<p style="text-align: right"><%=dto.getId() %></p>
+			<span style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=>&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a></span>
+					<%
+		IUserService uservice=UserService.getInstance();
+		
+		int score=uservice.getScore(dto.getId());
+		String getprofile=uservice.getProfile(dto.getId());
+		%>
+<p class="myinfo_icon" style="float: right;">
+	<a onclick="location.href ='User?command=otherpage&infoid=<%=dto.getId() %>'" style="cursor: pointer">
+		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 20px; float:left; max-height: 20px; margin: 0 auto;">
+	</a>
+	<span class="detailid">
+		<a onclick="location.href ='User?command=otherpage&infoid=<%=dto.getId() %>'" style="cursor: pointer">
+			<span style="float: left; font-size: 12px;">
+			<%=dto.getId() %>
+			</span>
+		</a>                                  
+		<img src="image/actionpoint.PNG" class="pointimg" style="max-width: 13px; float:left; max-height: 13px;">
+		<span style="float: left; font-size: 12px;"><%=score%></span><br>
+		<span style="font-size: 10px; margin-top:3px; float: left;"><%=dto.getWdate() %></span>
+	</span> 
+</p>
+		<div style="clear: both;"></div>
 		
 				<%
 		}else{
 			
 		%>
-				<p style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=<%=mem.getId() %>&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a></p>
-				<p style="text-align: right"><%=dto.getId() %></p>
+				<span style="font-size: 15px; margin-top: 5px;"><a href="TechbbsController?command=techdetail&likeid=<%=mem.getId() %>&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a></span>
+					<%
+		IUserService uservice=UserService.getInstance();
+		
+		int score=uservice.getScore(dto.getId());
+		String getprofile=uservice.getProfile(dto.getId());
+		%>
+<p class="myinfo_icon" style="float: right;">
+	<a onclick="location.href ='User?command=otherpage&infoid=<%=dto.getId() %>'" style="cursor: pointer">
+		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 20px; float:left; max-height: 20px; margin: 0 auto;">
+	</a>
+	<span class="detailid">
+		<a onclick="location.href ='User?command=otherpage&infoid=<%=dto.getId() %>'" style="cursor: pointer">
+			<span style="float: left; font-size: 12px;">
+			<%=dto.getId() %>
+			</span>
+		</a>                                  
+		<img src="image/actionpoint.PNG" class="pointimg" style="max-width: 13px; float:left; max-height: 13px;">
+		<span style="float: left; font-size: 12px;"><%=score%></span><br>
+		<span style="font-size: 10px; margin-top:3px; float: left;"><%=dto.getWdate() %></span>
+	</span> 
+</p>
+		<div style="clear: both;"></div>
 			<%}
-			}}}
+			}}
 			%>
 		</table>
 		</div>
 	
 		<div class="partition4">
-			<h4 style="margin-bottom: 15px">H/W & Coding 게시판 <a href="BBSHWCodingController?command=main"><img style="float: right" alt="" src="image/moresee.PNG"></a></h4>
+			<h4 style="margin-bottom: 15px">H/W & Coding 게시판 <a href="BBSHWCodingController?command=main"><img style="float: right" alt="게시판으로가기" src="image/moresee.PNG"></a></h4>
 			<%
 			newbbs5HWCodingServiceImpl hwservice = newbbs5HWCodingService.getInstance();
 			List<newbbs5HWCodingVO> hwlist = hwservice.gettechBbsList();
@@ -541,9 +791,9 @@ function searchBbs1(e) {
 				<th>H/W & Coding 글이 없습니다.</th>
 				</tr>
 			<%
-			}else{
+			}
 			
-			for(int i = 0; i < hwlist.size(); i++){
+			for(int i = 0; i <hwlist.size(); i++){
 				newbbs5HWCodingVO hwdto = hwlist.get(i);
 				hwservice = newbbs5HWCodingService.getInstance();
 				boolean chekcomment = hwservice.checkcomment(hwlist.get(i).getSeq());
@@ -566,15 +816,36 @@ function searchBbs1(e) {
 								if(mem == null){
 									String memNull = null;
 							%>
-				<p style="font-size: 15px; margin-top: 5px;"><a href="BBSHWCodingController?command=techdetail&likeid=<%=memNull %>&seq=<%=hwdto.getSeq()%>"><%=hwdto.getTitle() %></a></p>
+				<span style="font-size: 15px; margin-top: 5px;"><a href="BBSHWCodingController?command=techdetail&likeid=<%=memNull %>&seq=<%=hwdto.getSeq()%>"><%=hwdto.getTitle() %></a></span>
 						<%
 							}else{//로그인 하고 글 볼때.
 						%>
-				<p style="font-size: 15px; margin-top: 5px;"><a href="BBSHWCodingController?command=techdetail&likeid=<%=mem.getId() %>&seq=<%=hwdto.getSeq()%>"><%=hwdto.getTitle() %></a></p>		
+				<span style="font-size: 15px; margin-top: 5px;"><a href="BBSHWCodingController?command=techdetail&likeid=<%=mem.getId() %>&seq=<%=hwdto.getSeq()%>"><%=hwdto.getTitle() %></a></span>		
 						<%
 							}
 			 			%>
-				<p style="text-align: right"><%=hwdto.getId() %></p>
+				<%
+		IUserService uservice=UserService.getInstance();
+		
+		int score=uservice.getScore(hwdto.getId());
+		String getprofile=uservice.getProfile(hwdto.getId());
+		%>
+<p class="myinfo_icon" style="float: right;">
+	<a onclick="location.href ='User?command=otherpage&infoid=<%=hwdto.getId() %>'" style="cursor: pointer">
+		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 20px; float:left; max-height: 20px; margin: 0 auto;">
+	</a>
+	<span class="detailid">
+		<a onclick="location.href ='User?command=otherpage&infoid=<%=hwdto.getId() %>'" style="cursor: pointer">
+			<span style="float: left; font-size: 12px;">
+			<%=hwdto.getId() %>
+			</span>
+		</a>                                  
+		<img src="image/actionpoint.PNG" class="pointimg" style="max-width: 13px; float:left; max-height: 13px;">
+		<span style="float: left; font-size: 12px;"><%=score%></span><br>
+		<span style="font-size: 10px; margin-top:3px; float: left;"><%=hwdto.getWdate() %></span>
+	</span> 
+</p>
+		<div style="clear: both;"></div>
 			<%
 			}else{
 			%>
@@ -595,23 +866,43 @@ function searchBbs1(e) {
 								if(mem == null){
 									String memNull = null;
 							%>
-				<p style="font-size: 15px; margin-top: 5px;"><a href="BBSHWCodingController?command=hwdetail&likeid=<%=memNull %>&seq=<%=hwdto.getSeq()%>"><%=hwdto.getTitle() %></a></p>
+				<span style="font-size: 15px; margin-top: 5px;"><a href="BBSHWCodingController?command=hwdetail&likeid=<%=memNull %>&seq=<%=hwdto.getSeq()%>"><%=hwdto.getTitle() %></a></span>
 						<%
 							}else{//로그인 하고 글 볼때.
 						%>
-				<p style="font-size: 15px; margin-top: 5px;"><a href="BBSHWCodingController?command=hwdetail&likeid=<%=mem.getId() %>&seq=<%=hwdto.getSeq()%>"><%=hwdto.getTitle() %></a></p>		
+				<span style="font-size: 15px; margin-top: 5px;"><a href="BBSHWCodingController?command=hwdetail&likeid=<%=mem.getId() %>&seq=<%=hwdto.getSeq()%>"><%=hwdto.getTitle() %></a></span>		
 						<%
 							}
 			 			%>
-				<p style="text-align: right"><%=hwdto.getId() %></p>
+				<%
+		IUserService uservice=UserService.getInstance();
+		
+		int score=uservice.getScore(hwdto.getId());
+		String getprofile=uservice.getProfile(hwdto.getId());
+		%>
+<p class="myinfo_icon" style="float: right;">
+	<a onclick="location.href ='User?command=otherpage&infoid=<%=hwdto.getId() %>'" style="cursor: pointer">
+		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 20px; float:left; max-height: 20px; margin: 0 auto;">
+	</a>
+	<span class="detailid">
+		<a onclick="location.href ='User?command=otherpage&infoid=<%=hwdto.getId() %>'" style="cursor: pointer">
+			<span style="float: left; font-size: 12px;">
+			<%=hwdto.getId() %>
+			</span>
+		</a>                                  
+		<img src="image/actionpoint.PNG" class="pointimg" style="max-width: 13px; float:left; max-height: 13px;">
+		<span style="float: left; font-size: 12px;"><%=score%></span><br>
+		<span style="font-size: 10px; margin-top:3px; float: left;"><%=hwdto.getWdate() %></span>
+	</span> 
+</p>
+		<div style="clear: both;"></div>
 	
 			<%
 			}
-			}}
+			}
 			%>
 		</table>
 		</div>
-		
 	</div>
 <script type="text/javascript">
 	function logout() {
