@@ -259,7 +259,7 @@ if(sortlist==null||whatsort==null||sortlist.size()==0){	//sort안했다
 	if(ologin == null){
 			%>
 	
-	<button class="create btn btn-success btn-wide pull-right " type="button" id="loginhe">게시글쓰기</button></div>
+	<button class="create btn btn-success btn-wide pull-right " type="button" onclick="location.href = 'User?command=guest'">게시글쓰기</button></div>
 	
 	<%
 		}else{

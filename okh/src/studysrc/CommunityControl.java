@@ -37,11 +37,9 @@ public class CommunityControl extends HttpServlet {
 		
 		if(command.equals("list")) {
 			System.out.println("list");
+			
+			
 			response.sendRedirect("study_communitybbs.jsp");
-			
-			
-			
-		
 		}else if(command.equals("write")) {
 			response.sendRedirect("study_communitybbswrite.jsp");
 		
