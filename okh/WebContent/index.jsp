@@ -121,6 +121,7 @@ if(getCookie('okhpop') != 'rangs') {
 			}else{
 				location.href = "CommunityControl?command=list";
 			}
+			
 		});
 	});
 	</script>
