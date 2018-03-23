@@ -610,8 +610,8 @@ if(list==null||list.size()==0){
 	<tr>
 		<td>
 		<%
-		score=uservice.getScore(list.get(i).getBbsid());
-		getprofile=uservice.getProfile(list.get(i).getBbsid());
+		score=uservice.getScore(list.get(i).getCommentid());
+		getprofile=uservice.getProfile(list.get(i).getCommentid());
 		%>
 		<a onclick="location.href ='User?command=otherpage&infoid=<%= list.get(i).getCommentid() %>'" style="cursor: pointer">
 		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 30px; float:left; max-height: 30px; margin: 0 auto;">
