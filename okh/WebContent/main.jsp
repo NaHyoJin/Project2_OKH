@@ -823,11 +823,11 @@ function searchBbs1(e) {
 								if(mem == null){
 									String memNull = null;
 							%>
-				<span style="font-size: 15px; margin-top: 5px;"><a href="BBSHWCodingController?command=techdetail&likeid=<%=memNull %>&seq=<%=hwdto.getSeq()%>"><%=hwdto.getTitle() %></a></span>
+				<span style="font-size: 15px; margin-top: 5px;"><a href="BBSHWCodingController?command=hwdetail&likeid=<%=memNull %>&seq=<%=hwdto.getSeq()%>"><%=hwdto.getTitle() %></a></span>
 						<%
 							}else{//로그인 하고 글 볼때.
 						%>
-				<span style="font-size: 15px; margin-top: 5px;"><a href="BBSHWCodingController?command=techdetail&likeid=<%=mem.getId() %>&seq=<%=hwdto.getSeq()%>"><%=hwdto.getTitle() %></a></span>		
+				<span style="font-size: 15px; margin-top: 5px;"><a href="BBSHWCodingController?command=hwdetail&likeid=<%=mem.getId() %>&seq=<%=hwdto.getSeq()%>"><%=hwdto.getTitle() %></a></span>		
 						<%
 							}
 			 			%>
