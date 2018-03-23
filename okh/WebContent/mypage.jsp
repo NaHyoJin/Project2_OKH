@@ -255,6 +255,7 @@
 		location.href ="User?command=mypage";
 	}
 	</script>
+	
 <!-- View -->
 	<div class="titlediv">
 		<h2>내 정보</h2>
