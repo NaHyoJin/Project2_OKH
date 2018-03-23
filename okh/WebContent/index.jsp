@@ -292,7 +292,7 @@ function searchBbs() {
 		return;
 	}
 	if(document.getElementById("search").value==""){//빈문자열에서검색시
-		location.href = "totalbbs.jsp?findWord=TechTips&choice=tagname";	
+		
 		return;
 	}
 	var word = document.getElementById("search").value;
