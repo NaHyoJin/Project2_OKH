@@ -677,9 +677,7 @@ public class TotalController extends HttpServlet {
 				String sec=wdatee.substring(17, 19);
 				String todate=mon+day+hou+min+sec;
 				wdate=Integer.parseInt(todate);
-				String insertid1="";
-				insertid1=","+lifedto.getId()+",";
-				totallist.add(new totalbbsdto(lifedto.getSeq(), "사는얘기",insertid1, 
+				totallist.add(new totalbbsdto(lifedto.getSeq(), "사는얘기",lifedto.getId(), 
 						lifedto.getTitle(),lifedto.getContent(), lifedto.getReadcount(), lifedto.getUp(), 
 						lifedto.getCountreply(), wdate));
 			}

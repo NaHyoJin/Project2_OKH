@@ -1396,7 +1396,7 @@ public class TechbbsDao implements iTechbbsDao {
 		int totalCount = 0;
 		try {
 			String sql = " SELECT * FROM LIFEBBS "
-					+ "  WHERE DEL=0 AND UPID LIKE '%"+likeid+",%' ";
+					+ "  WHERE DEL=0 AND UPID LIKE '%,"+likeid+"%' ";
 
 			conn=DBConnection.getConnection();
 			System.out.println(" (1/6) getlifeBbsList Success");
