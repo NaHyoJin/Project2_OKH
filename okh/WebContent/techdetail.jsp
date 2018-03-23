@@ -80,11 +80,18 @@ TechRepbbsServiceImpl trservice=TechRepbbsService.getInstance();
 List<TechRepbbsDto> replist=trservice.getRepBbsList(whatlist.get(0).getSeq());
 IUserService service = UserService.getInstance();
 String profile = null;
+int mainscore=0;
+String maingetprofile="";
+
 if(ologin != null){
 	profile = service.getProfile(mem.getId());
+	mainscore=service.getScore(mem.getId());
+	maingetprofile=service.getProfile(mem.getId());
 }
-int mainscore=service.getScore(mem.getId());
-String maingetprofile=service.getProfile(mem.getId());
+String userID = null;
+   if(session.getAttribute("userID") != null){
+      userID = (String)session.getAttribute("userID");
+   }
 %>
 
 

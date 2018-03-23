@@ -96,9 +96,18 @@ HWRepbbsServiceImpl trservice = HWRepbbsService.getInstance();
 List<HWRepbbsDto> replist = trservice.getRepBbsList(whatlist.get(0).getSeq());
 IUserService service = UserService.getInstance();
 String profile = null;
+int mainscore=0;
+String maingetprofile="";
+
 if(ologin != null){
 	profile = service.getProfile(mem.getId());
+	mainscore=service.getScore(mem.getId());
+	maingetprofile=service.getProfile(mem.getId());
 }
+String userID = null;
+   if(session.getAttribute("userID") != null){
+      userID = (String)session.getAttribute("userID");
+   }
 %>
 
 
@@ -118,10 +127,10 @@ if(ologin != null){
 		<input type="button" class="homebtn" id="homebtn">
 <div class="actionlogin">
 <a onclick="upmydetail()" style="cursor: pointer">
-	<img src="<%=profile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+	<img src="<%=maingetprofile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
 </a>		
 			<span class="memid"><a onclick="upmydetail()" style="cursor: pointer;color: #fff;"><%=mem.getId() %></a></span> <br>
-			<span class="point" style="margin-top: 0"><img src="image/actionpoint.PNG" class="pointimg"><%=mem.getScore()%></span>
+			<span class="point" style="margin-top: 0"><img src="image/actionpoint.PNG" class="pointimg"><%=mainscore%></span>
 			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
 				</div>
 		<%

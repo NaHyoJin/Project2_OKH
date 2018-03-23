@@ -66,11 +66,18 @@ public String toDates(String mdate){
 	String yn="";
 	IUserService uservice = UserService.getInstance();
 	String profile = null;
+	int mainscore=0;
+	String maingetprofile="";
+	
 	if(ologin != null){
 		profile = uservice.getProfile(mem.getId());
+		mainscore=uservice.getScore(mem.getId());
+		maingetprofile=uservice.getProfile(mem.getId());
 	}
-	int mainscore=uservice.getScore(mem.getId());
-	String maingetprofile=uservice.getProfile(mem.getId());
+	String userID = null;
+	   if(session.getAttribute("userID") != null){
+	      userID = (String)session.getAttribute("userID");
+	   }
 	%>
 <!-- 메뉴 -->
 	<div class="menu">

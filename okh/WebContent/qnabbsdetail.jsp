@@ -85,11 +85,18 @@ String yn="";
 List<QnaAnswerDto> replist=aservice.getRepBbsList(whatlist.get(0).getSeq());
 IUserService sservice = UserService.getInstance();
 String profile = null;
+int mainscore=0;
+String maingetprofile="";
+
 if(ologin != null){
 	profile = sservice.getProfile(mem.getId());
+	mainscore=sservice.getScore(mem.getId());
+	maingetprofile=sservice.getProfile(mem.getId());
 }
-int mainscore=sservice.getScore(mem.getId());
-String maingetprofile=sservice.getProfile(mem.getId());
+String userID = null;
+   if(session.getAttribute("userID") != null){
+      userID = (String)session.getAttribute("userID");
+   }
 %>
 
 
