@@ -23,6 +23,8 @@
 	<script src="js/bootstrap.js"></script>
 	<link rel="stylesheet" type="text/css" href="_lifedetail.css?ver=1.25">
 	<link rel="stylesheet" type="text/css" href="_main.css?ver=1.36">
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/custom.css">
 </head>
 <body>
 <!-- 로그인 세션 -->
@@ -46,6 +48,32 @@
 	      userID = (String)session.getAttribute("userID");
 	   }
 	%>
+	<script type="text/javascript">
+	function getUnread() {
+		$.ajax({
+			type: "POST",
+			url: "Chat?command=unread",
+			data: {
+				userID: encodeURIComponent('<%=userID %>')
+			},
+			success: function(result) {
+				if(result >= 1){
+					showUnread(result);
+				}else{
+					showUnread('');
+				}
+			}
+		});
+	}
+	function getInfiniteUnread() {
+		setInterval(function() {
+			getUnread();
+		}, 4000);
+	}
+	function showUnread(result) {
+		$('#unread').html(result);
+	}
+	</script>
 
 <!-- 메뉴 -->
 	<div class="menu">
@@ -239,6 +267,8 @@
 					
 					<button style="margin-left:30px" class="create btn btn-success btn-wide pull-right" onclick="location.href='loginProfileUpdate.jsp'">프로필 수정</button>
 					<button  class="create btn btn-success btn-wide pull-right" onclick="location.href='loginUpdate.jsp'">회원 정보 수정</button>
+					<button onclick="location.href='find.jsp'">친구 찾기</button>
+					<button onclick="location.href='box.jsp'">메시지함<span id="unread" class="label label-info"></span></button>
 				</div>
 			
 		</div>
@@ -427,6 +457,19 @@
 	
 		</div>
 	</div>
+<!-- setinterval -->
+<%
+if(userID != null){
+%>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		getUnread();
+		getInfiniteUnread();
+	});
+	</script>
+<%
+}
+%>
 
 </body>
 </html>

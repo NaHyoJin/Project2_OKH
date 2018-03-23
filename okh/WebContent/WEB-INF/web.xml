@@ -29,6 +29,16 @@ version="3.0">
     <url-pattern>/UserProfile</url-pattern>
   </servlet-mapping>
   
+<!-- 채팅 -->
+  <servlet>
+    <servlet-name>ChatController</servlet-name>
+    <servlet-class>chat.ChatController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ChatController</servlet-name>
+    <url-pattern>/Chat</url-pattern>
+  </servlet-mapping>
+  
 <!-- 사는얘기 게시판 -->
   <servlet>
     <servlet-name>LifeBbsController</servlet-name>

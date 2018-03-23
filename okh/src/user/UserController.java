@@ -62,6 +62,7 @@ public class UserController extends HttpServlet {
 				request.getSession().setAttribute("messageType", "성공 메시지");
 				request.getSession().setAttribute("messageContent", "로그인에 성공했습니다.");
 				request.getSession().setAttribute("id", userDto.getId());
+				request.getSession().setAttribute("userID", userDto.getId());
 				response.sendRedirect("main.jsp");
 				return;
 			}else {
@@ -89,7 +90,7 @@ public class UserController extends HttpServlet {
 // ID 확인
 		else if(command.equals("check")) {
 			int result = userService.registerCheck(userID);
-			
+			if(userID == null | userID.equals("")) response.getWriter().write("-1");
 			response.getWriter().write(result + "");
 		}
 // 회원 등록
