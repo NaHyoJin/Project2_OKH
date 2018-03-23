@@ -218,8 +218,8 @@ String userID = null;
 			});
 			
 		//  정재흥 column 부분
-			$("column").click(function() {
-				alert("정재흥 버튼.");
+			$("#column").click(function() {
+//				alert("정재흥 버튼.");
 				location.href = "Controller?command=column"
 			});
 			
