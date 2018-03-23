@@ -24,7 +24,9 @@ import likescrap.LikeScrapServiceImpl;
 import techbbs.TechbbsDto;
 import techbbs.TechbbsService;
 import techbbs.TechbbsServiceImpl;
+import user.IUserService;
 import user.UserDao;
+import user.UserService;
 
 public class TechRepbbsController extends HttpServlet {
 	
@@ -86,10 +88,13 @@ public class TechRepbbsController extends HttpServlet {
 				dto1=new TechbbsDto(0, 2);
 			}
 			
-			
+			IUserService serviceU = UserService.getInstance();
 			TechRepbbsDto dto2=new TechRepbbsDto(memid, content, parent);
 			boolean b=trservice.writeBbs(dto2);
 			if (b) {
+				int score = serviceU.getScore(memid);
+		         score += 5;
+		         serviceU.updateScore(memid, score);
 				System.out.println("성공"+dto.getContent()+dto.getId()+dto.getParent());
 				tservice.commentcountplus(parent);
 				boolean is=tservice.getparent(parent);

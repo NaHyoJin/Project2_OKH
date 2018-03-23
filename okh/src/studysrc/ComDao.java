@@ -496,7 +496,7 @@ public boolean writeBbs(CombbsDto dto) {
 		psmt.setString(3, dto.getTagname());
 		psmt.setString(4, dto.getContent());
 		psmt.setString(5, dto.getJoindate());
-		psmt.setString(6, "글쓴이,"+dto.getId()+",");
+		psmt.setString(6, " ,"+dto.getId()+",");
 		
 		
 		

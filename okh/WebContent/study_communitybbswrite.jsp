@@ -38,6 +38,8 @@ String profile = null;
 if(ologin != null){
 	profile = service.getProfile(mem.getId());
 }
+int mainscore=service.getScore(mem.getId());
+String maingetprofile=service.getProfile(mem.getId());
 %>
 
 
@@ -63,10 +65,10 @@ if(ologin != null){
 <div class="actionlogin">
 
 	<a onclick="upmydetail()" style="cursor: pointer">
-			<img src="<%=profile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+			<img src="<%=maingetprofile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
 		</a>
 			<span class="memid"><a onclick="upmydetail()" style="cursor: pointer;color: #fff;"><%=mem.getId() %></a></span> <br>
-					<span class="point"><img src="image/actionpoint.PNG" style="margin-top: 0" class="pointimg"><%=mem.getScore()%></span>
+					<span class="point"><img src="image/actionpoint.PNG" style="margin-top: 0" class="pointimg"><%=mainscore%></span>
 			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
 				
 </div>

@@ -36,6 +36,8 @@
 	if(ologin != null){
 		profile = service.getProfile(mem.getId());
 	}
+	int mainscore=service.getScore(mem.getId());
+	String maingetprofile=service.getProfile(mem.getId());
 	%>
 
 <!-- 메뉴 -->
@@ -54,10 +56,10 @@
 		<input type="button" class="homebtn" id="homebtn">
 <div class="actionlogin">
 <a onclick="upmydetail()" style="cursor: pointer">
-	<img src="<%=profile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+	<img src="<%=maingetprofile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
 </a>		
 			<span class="memid"><a onclick="upmydetail()" style="cursor: pointer;color: #fff;"><%=mem.getId() %></a></span> <br>
-			<span class="point" style="margin-top: 0"><img src="image/actionpoint.PNG" class="pointimg"><%=mem.getScore()%></span>
+			<span class="point" style="margin-top: 0"><img src="image/actionpoint.PNG" class="pointimg"><%=mainscore%></span>
 			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
 				</div>
 		<%
@@ -226,7 +228,7 @@
 		<div class="myinfo">
 			<br>
 				<div>
-					<img src="<%=profile %>" class="media-object img-circle" style="max-width: 100px; float:left; max-height: 100px; margin: 0 auto;"><span style="font-size: 30px; margin-left: 30px;">아이디 <%=mem.getId() %>  활동점수 <%=mem.getScore() %></span>
+					<img src="<%=maingetprofile %>" class="media-object img-circle" style="max-width: 100px; float:left; max-height: 100px; margin: 0 auto;"><span style="font-size: 30px; margin-left: 30px;">아이디 <%=mem.getId() %>  활동점수 <%=mainscore %></span>
 					
 					<button style="margin-left:30px" class="create btn btn-success btn-wide pull-right" onclick="location.href='loginProfileUpdate.jsp'">프로필 수정</button>
 					<button  class="create btn btn-success btn-wide pull-right" onclick="location.href='loginUpdate.jsp'">회원 정보 수정</button>

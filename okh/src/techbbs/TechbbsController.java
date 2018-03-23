@@ -23,7 +23,9 @@ import likescrap.LikeScrapService;
 import likescrap.LikeScrapServiceImpl;
 import techpds.PdsService;
 import techpds.PdsServiceImpl;
+import user.IUserService;
 import user.UserDao;
+import user.UserService;
 
 public class TechbbsController extends HttpServlet {
 	
@@ -41,7 +43,7 @@ public class TechbbsController extends HttpServlet {
 		int parent=0;
 		String command = request.getParameter("command");
 		String command1=(String)request.getAttribute("command");
-		
+		IUserService serviceU = UserService.getInstance();
 		TechbbsServiceImpl tservice=TechbbsService.getInstance();
 		PdsServiceImpl pservice=PdsService.getInstance();
 		if(command.equals("techbbs")) {
@@ -74,6 +76,7 @@ public class TechbbsController extends HttpServlet {
 				dispatch("techwriteAf.jsp", request, response);
 			}
 			if(tagnames==null) {
+				
 				TechbbsDto dto=new TechbbsDto(id, title, tagname, content);
 				request.setAttribute("techwritedto", dto);
 				dispatch("techwriteAf.jsp", request, response);

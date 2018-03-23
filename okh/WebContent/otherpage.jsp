@@ -45,6 +45,7 @@
 	if(ologin != null){
 		profile = service.getProfile(mem.getId());
 	}
+	
 	%>
 
 <!-- 메뉴 -->
@@ -63,10 +64,10 @@
 		<input type="button" class="homebtn" id="homebtn">
 <div class="actionlogin">
 <a onclick="upmydetail()" style="cursor: pointer">
-	<img src="<%=profile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+	<img src="<%=otherprofile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
 </a>		
 			<span class="memid"><a onclick="upmydetail()" style="cursor: pointer;color: #fff;"><%=mem.getId() %></a></span> <br>
-			<span class="point" style="margin-top: 0"><img src="image/actionpoint.PNG" class="pointimg"><%=mem.getScore()%></span>
+			<span class="point" style="margin-top: 0"><img src="image/actionpoint.PNG" class="pointimg"><%=otherscore%></span>
 			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
 				</div>
 		<%
@@ -251,7 +252,7 @@
 					otherprofile = service.getProfile(getid[0]);
 					otherscore=service.getScore(getid[0]);
 				%>
-					<img src="<%=otherprofile %>" class="media-object img-circle" style="max-width: 100px; float:left; max-height: 100px; margin: 0 auto;"><span style="font-size: 30px; margin-left: 30px;">아이디 <%=getid[0] %>  활동점수 <%=mem.getScore() %></span>
+					<img src="<%=otherprofile %>" class="media-object img-circle" style="max-width: 100px; float:left; max-height: 100px; margin: 0 auto;"><span style="font-size: 30px; margin-left: 30px;">아이디 <%=getid[0] %>  활동점수 <%=otherscore %></span>
 
 				<%
 				}

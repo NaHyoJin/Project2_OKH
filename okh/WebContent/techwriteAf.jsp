@@ -1,4 +1,6 @@
 
+<%@page import="user.UserService"%>
+<%@page import="user.IUserService"%>
 <%@page import="techbbs.TechbbsService"%>
 <%@page import="techbbs.TechbbsServiceImpl"%>
 <%@page import="techbbs.TechbbsDto"%>
@@ -39,6 +41,12 @@ if(isS){
 %>
 <script type="text/javascript">
 alert("추가성공");
+<%
+IUserService serviceU = UserService.getInstance();
+int score = serviceU.getScore(techwritedto.getId());
+score += 5;
+serviceU.updateScore(techwritedto.getId(), score);
+%>
 location.href="TechbbsController?command=techbbs";
 </script>
 <%

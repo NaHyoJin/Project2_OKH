@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.ws.Dispatch;
 
+import user.IUserService;
+import user.UserService;
+
 
 
 public class CommunityControl extends HttpServlet {
@@ -34,7 +37,7 @@ public class CommunityControl extends HttpServlet {
 		
 		
 		String command = request.getParameter("command");
-		
+		IUserService serviceU = UserService.getInstance();
 		if(command.equals("list")) {
 			System.out.println("list");
 			
@@ -65,7 +68,9 @@ public class CommunityControl extends HttpServlet {
 			CombbsDto dto = new CombbsDto(id, title, content, tagname, date);
 			ICombbsService service = CombbsService.getInstance();
 			boolean isS = service.writeBbs(dto);
-			
+			int score = serviceU.getScore(id);
+	         score += 5;
+	         serviceU.updateScore(id, score);
 			iCalendar dao = CalendarDao.getInstance();
 			if(isS) {
 				int child =service.getSeq();
@@ -132,7 +137,9 @@ public class CommunityControl extends HttpServlet {
 			int child = parent;
 			/*String childs = request.getParameter("child");
 			int child = Integer.parseInt(childs);*/
-			
+			int score = serviceU.getScore(id);
+	         score += 5;
+	         serviceU.updateScore(id, score);
 			
 			System.out.println(id+parent+content);
 			ComCommentDto dto = new ComCommentDto( id, content,child);
