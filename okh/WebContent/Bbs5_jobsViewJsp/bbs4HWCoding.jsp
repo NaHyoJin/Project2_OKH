@@ -76,6 +76,7 @@ rel="stylesheet">
 	
 	newbbs5HWCodingServiceImpl dao = newbbs5HWCodingService.getInstance();
 	List<newbbs5HWCodingVO> hwlist = dao.gettechBbsList();
+	
 	%>
 
 
@@ -157,6 +158,8 @@ else if(choice.equals("tagname")) cho = 3;
  	if(ologin != null){
  		profile = service.getProfile(mem.getId());
  	}
+ 	int mainscore=service.getScore(mem.getId());
+ 	String maingetprofile=service.getProfile(mem.getId());
 %>
 
 <!-- 정렬 부붙. HW게시판 데이터. 일단 생략해보자.-->
@@ -196,10 +199,10 @@ else if(choice.equals("tagname")) cho = 3;
 		<input type="button" class="homebtn" id="homebtn">
 		<div class="actionlogin">
 		<a onclick="upmydetail()" style="cursor: pointer">
-			<img src="<%=profile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+			<img src="<%=maingetprofile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
 		</a>
 			<span class="memid"><a onclick="upmydetail()" style="cursor: pointer;color: #fff;"><%=mem.getId() %></a></span> <br>
-			<span class="point" style="margin-top: 0"><img src="../image/actionpoint.PNG" class="pointimg"><%=mem.getScore()%></span>
+			<span class="point" style="margin-top: 0"><img src="../image/actionpoint.PNG" class="pointimg"><%=mainscore%></span>
 			<img class="settingbtn" alt="" src="../image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
 				</div>
 		<%
