@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import user.IUserService;
+import user.UserService;
+
 
 
 
@@ -45,6 +48,7 @@ public class QnaServlet extends HttpServlet {
 		
 		QnaServiceImpl service = QnaService.getInstance();
 		QnaAnswerService aservice = QnaAnswerService.getInstance();
+		IUserService serviceU = UserService.getInstance();
 		
 		
 		
@@ -66,7 +70,13 @@ public class QnaServlet extends HttpServlet {
 			
 			System.out.println(dto.toString());
 			
-			service.writeQnaBbs(dto);			
+			String id =req.getParameter("iD");
+			boolean isS = service.writeQnaBbs(dto);
+			if(isS) {
+				int score = serviceU.getScore(id);
+		         score += 5;
+		         serviceU.updateScore(id, score);
+			}
 			
 		//	RequestDispatcher rd = req.getRequestDispatcher("/qnaServlet?command=listQna");						
         //   rd.forward(req, resp);

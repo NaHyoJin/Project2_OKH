@@ -245,7 +245,7 @@ System.out.println("bbs in update : " + bbs.toString());
 <form action="qnaServlet" method="get">
 <table>
 <col width="100"><col width="400"><col width="150">
-<tr>현제 접속 아이디는:<%=mem.getId() %> </tr>
+
 
 <tr>
 	<td>

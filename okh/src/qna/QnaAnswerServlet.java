@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import user.IUserService;
+import user.UserService;
+
 
 public class QnaAnswerServlet extends HttpServlet {
 
@@ -34,6 +37,7 @@ public class QnaAnswerServlet extends HttpServlet {
 		
 		QnaServiceImpl tservice = QnaService.getInstance();
 		QnaAnswerService trservice = QnaAnswerService.getInstance();
+		IUserService serviceU = UserService.getInstance();
 		
 		
 		if(command1==null) {
@@ -78,6 +82,12 @@ public class QnaAnswerServlet extends HttpServlet {
 			QnaAnswerDto dto2=new QnaAnswerDto(memid, content, parent);
 			boolean b=trservice.writeBbs(dto2);
 			if (b) {
+				// 댓글점수 올리기
+				int score = serviceU.getScore(memid);
+		         score += 5;
+		         serviceU.updateScore(memid, score);
+				
+				
 				System.out.println("성공"+dto.getContent()+dto.getId()+dto.getParent());
 				tservice.commentcountplus(parent);
 				boolean is=tservice.getparent(parent);

@@ -351,7 +351,7 @@ if(sortlist==null||whatsort==null||sortlist.size()==0){	//sort안했다
 			<%}
 			for(int j=0;j<tagnames.length;j++){//추가시킬때무조건추가시킬거는 -없이해도되고 엔터치면 -그값을넣어준다
 			%>
-				<span><button class="hjhtag" name="tag<%=j%>" id="tag<%=j%>" onclick="searchBbs1(this)" value="<%=tagnames[j]%>"><%=tagnames[j] %></button></span>
+				<span><button class="hjhtag" name="tag<%=j%>" id="tag<%=j%>"  value="<%=tagnames[j]%>"><%=tagnames[j] %></button></span>
 			<%
 			}
 			
