@@ -244,7 +244,7 @@
 					otherscore=service.getScore(getid[0]);
 				%>
 				<img src="<%=otherprofile %>" class="media-object img-circle" style="max-width: 100px; float:left; max-height: 100px; margin: 0 auto;"><span style="font-size: 30px; margin-left: 30px;">아이디 <%=getid[0] %>  활동점수 <%=otherscore %></span>
-					
+				
 				<%
 				}else{
 					getid=tservice.getTagName(infoid);
@@ -253,6 +253,7 @@
 					otherscore=service.getScore(getid[0]);
 				%>
 					<img src="<%=otherprofile %>" class="media-object img-circle" style="max-width: 100px; float:left; max-height: 100px; margin: 0 auto;"><span style="font-size: 30px; margin-left: 30px;">아이디 <%=getid[0] %>  활동점수 <%=otherscore %></span>
+					<a href="chat.jsp?toid=<%=getid[0] %>" class="btn btn-primary pull-right">메시지 보내기</a>
 
 				<%
 				}
