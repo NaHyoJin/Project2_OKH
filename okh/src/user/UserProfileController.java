@@ -45,10 +45,10 @@ public class UserProfileController extends HttpServlet {
 		System.out.println("userID : " + userID);
 		HttpSession session = request.getSession();
 
-		if(userID.equals((String)session.getAttribute("userID"))) {
+		if(!(userID.equals((String)session.getAttribute("userID")))) {
 			request.getSession().setAttribute("messageType", "오류 메시지");
 			request.getSession().setAttribute("messageContent", "접근할 수 없습니다.");
-			response.sendRedirect("index.jsp");
+			response.sendRedirect("main.jsp");
 			return;
 		}
 		String fileName = "";
@@ -74,7 +74,7 @@ public class UserProfileController extends HttpServlet {
 			new UserService().profile(userID, fileName);
 			request.getSession().setAttribute("messageType", "성공 메시지");
 			request.getSession().setAttribute("messageContent", "성공적으로 프로필이 변경되었습니다.");
-			response.sendRedirect("index.jsp");
+			response.sendRedirect("main.jsp");
 			return;
 		}
 	}

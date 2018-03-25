@@ -214,7 +214,7 @@ alert("검색된결과가없습니다");
 			<%
 			}
 			
-			for(int i=0;i<totallist.size();i++){
+			for(int i=0;i<30;i++){
 				totalbbsdto dto=totallist.get(i);
 				tservice=TechbbsService.getInstance();
 				if(dto.getComentcount()>0){

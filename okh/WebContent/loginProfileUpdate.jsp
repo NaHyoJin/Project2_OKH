@@ -1,3 +1,5 @@
+<%@page import="user.UserService"%>
+<%@page import="user.IUserService"%>
 <%@page import="user.UserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -20,22 +22,40 @@
 	<%
 	Object ologin = session.getAttribute("login");
 	UserDto mem = (UserDto)ologin;
+	IUserService service = UserService.getInstance();
+	String yn="";
+	String profile = null;
+	int mainscore=0;
+	String maingetprofile="";
+	
+	if(ologin != null){
+		profile = service.getProfile(mem.getId());
+		mainscore=service.getScore(mem.getId());
+		maingetprofile=service.getProfile(mem.getId());
+	}
 	%>
 <!-- 메뉴 -->
 	<div class="menu">
 		<%
 		if(ologin == null){
-		%>
+			yn="no";
+			%>
+			<input type="button" class="homebtn" onclick="location.href='index.jsp'">
 		<input type="button" class="login" id="login">
 		<input type="button" class="account" id="account">
 		<%
 		}else{
-		%>
-		<div class="actionlogin">
-			<span><%=mem.getId() %></span>
-			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
-			<img class="alarmbtn" alt="" src="image/alarm.PNG" style="cursor: pointer" id="btnPopover">	
-		</div>
+			yn="yes";
+			%>
+			<input type="button" class="homebtn" id="homebtn">
+			<div class="actionlogin">
+			<a onclick="upmydetail()" style="cursor: pointer">
+				<img src="<%=maingetprofile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+			</a>
+				<span class="memid"><a onclick="upmydetail()" style="cursor: pointer;color: #fff;"><%=mem.getId() %></a></span> <br>
+				<span class="point" style="margin-top: 0"><img src="image/actionpoint.PNG" class="pointimg"><%=mainscore%></span>
+				<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
+					</div>
 		<%
 		}
 		%>
@@ -48,6 +68,9 @@
 	</div>
 	<script type="text/javascript">
 	$(function() {
+		$("#homebtn").click(function() {
+			location.href="main.jsp";
+		});
 		$("#login").click(function() {
 			location.href = "User?command=login";
 		});
@@ -70,7 +93,14 @@
 			location.href = "LifeBbs?command=life";
 		});
 		$("#combbs").click(function () {
-			location.href = "CommunityControl?command=list";
+			if(<%=yn.equals("yes")%>){
+				location.href = "CommunityControl?command=list";
+	
+			}
+			else{
+				location.href = "User?command=guest";
+			}
+			
 		});
 	});
 	</script>
@@ -210,7 +240,7 @@
 		return;
 	}
 	%>
-
+<div class="wrap">
 	<div class="container">
 		<form action="UserProfile" method="POST" enctype="multipart/form-data">
 			<table class="table table-bordered table-hover" style="text-align: center; border: 1px solid #dddddd">
@@ -252,7 +282,7 @@
 			</table>
 		</form>
 	</div>
-
+</div>
 	<div class="modal fade" id="checkModal" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="vertical-alignment-helper">
 			<div class="modal-dialog vertical-align-center">
@@ -285,6 +315,14 @@
 	$(document).on('change', '.file', function() {
 		$(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i, ''));
 	});
+	</script>
+	<script type="text/javascript">
+	function logout() {
+		location.href ="User?command=logout";
+	}
+	function upmydetail() {
+		location.href ="User?command=mypage";
+	}
 	</script>
 </body>
 </html>

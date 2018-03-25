@@ -119,7 +119,7 @@ width: 880px;
  	top:100px;
  	left: 20px;
  	width: 375px;
- 	height: 340px;
+ 	height: 380px;
  	
  }
   .partition2{
@@ -127,22 +127,22 @@ position: absolute;
 top: 100px;
 right:0;
 width: 375px;
-height: 340px;
+height: 380px;
  	
  }
    .partition3{
 position: absolute;
-top: 455px;
+top: 500px;
 left: 20px;
 width: 375px;
-height: 340px;
+height: 380px;
  }
    .partition4{
 position: absolute;
-top: 455px;
+top: 500px;
 right: 0;
 width: 375px;
-height: 340px;
+height: 380px;
  }
  .actionlogin{
  width:240px;

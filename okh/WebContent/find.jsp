@@ -1,3 +1,5 @@
+<%@page import="user.UserService"%>
+<%@page import="user.IUserService"%>
 <%@page import="user.UserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -23,6 +25,16 @@
 		response.sendRedirect("index.jsp");
 		return;
 	}
+	String yn="";
+	String profile = null;
+	int mainscore=0;
+	String maingetprofile="";
+	IUserService service = UserService.getInstance();
+	if(ologin != null){
+		profile = service.getProfile(mem.getId());
+		mainscore=service.getScore(mem.getId());
+		maingetprofile=service.getProfile(mem.getId());
+	}
 	%>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -31,6 +43,7 @@
 	<link rel="stylesheet" href="css/custom.css?ver=1.1">
 	<title>chat</title>
 	<link rel="stylesheet" type="text/css" href="_lifemain.css?ver=1.3">
+	<link rel="stylesheet" type="text/css" href="_main.css?ver=1.37">
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/bootstrap.js"></script>
 </head>
@@ -39,17 +52,24 @@
 	<div class="menu">
 		<%
 		if(ologin == null){
+			yn="no";
 		%>
+		<input type="button" class="homebtn" onclick="location.href='index.jsp'">
 		<input type="button" class="login" id="login">
 		<input type="button" class="account" id="account">
 		<%
 		}else{
+			yn="yes";
 		%>
-		<div class="actionlogin">
-			<span><%=mem.getId() %></span>
+		<input type="button" class="homebtn" id="homebtn">
+<div class="actionlogin">
+<a onclick="upmydetail()" style="cursor: pointer">
+	<img src="<%=maingetprofile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+</a>		
+			<span class="memid"><a onclick="upmydetail()" style="cursor: pointer;color: #fff;"><%=mem.getId() %></a></span> <br>
+			<span class="point" style="margin-top: 0"><img src="image/actionpoint.PNG" class="pointimg"><%=mainscore%></span>
 			<img class="settingbtn" alt="" src="image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
-			<img class="alarmbtn" alt="" src="image/alarm.PNG" style="cursor: pointer" id="btnPopover">	
-		</div>
+				</div>
 		<%
 		}
 		%>
@@ -62,6 +82,9 @@
 	</div>
 	<script type="text/javascript">
 	$(function() {
+		$("#homebtn").click(function() {
+			location.href="main.jsp";
+		});
 		$("#login").click(function() {
 			location.href = "User?command=login";
 		});
@@ -76,6 +99,16 @@
 		});
 		$("#life").click(function() {
 			location.href = "LifeBbs?command=life";
+		});
+		$("#combbs").click(function () {
+			if(<%=yn.equals("yes")%>){
+				location.href = "CommunityControl?command=list";
+	
+			}
+			else{
+				location.href = "User?command=guest";
+			}
+			
 		});
 	});
 	</script>
@@ -313,5 +346,13 @@ if(userID != null){
 <%
 }
 %>
+<script type="text/javascript">
+	function logout() {
+		location.href ="User?command=logout";
+	}
+	function upmydetail() {
+		location.href ="User?command=mypage";
+	}
+	</script>
 </body>
 </html>

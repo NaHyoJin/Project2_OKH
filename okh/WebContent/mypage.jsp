@@ -21,8 +21,8 @@
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/bootstrap.js"></script>
-	<link rel="stylesheet" type="text/css" href="_lifedetail.css?ver=1.25">
-	<link rel="stylesheet" type="text/css" href="_main.css?ver=1.36">
+	<link rel="stylesheet" type="text/css" href="_lifedetail.css?ver=1.26">
+	<link rel="stylesheet" type="text/css" href="_main.css?ver=1.37">
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/custom.css">
 </head>
@@ -259,6 +259,8 @@
 <!-- View -->
 	<div class="titlediv">
 		<h2>내 정보</h2>
+		<button class="create btn btn-success btn-wide pull-right" onclick="location.href='loginProfileUpdate.jsp'">프로필 수정</button>
+					<button  class="create btn btn-success btn-wide pull-right" onclick="location.href='loginUpdate.jsp'">회원 정보 수정</button><br>
 	</div>
 	<div class="wrap">
 		<div class="myinfo">
@@ -266,10 +268,8 @@
 				<div>
 					<img src="<%=maingetprofile %>" class="media-object img-circle" style="max-width: 100px; float:left; max-height: 100px; margin: 0 auto;"><span style="font-size: 30px; margin-left: 30px;">아이디 <%=mem.getId() %>  활동점수 <%=mainscore %></span>
 					
-					<button style="margin-left:30px" class="create btn btn-success btn-wide pull-right" onclick="location.href='loginProfileUpdate.jsp'">프로필 수정</button>
-					<button  class="create btn btn-success btn-wide pull-right" onclick="location.href='loginUpdate.jsp'">회원 정보 수정</button>
-					<button onclick="location.href='find.jsp'">친구 찾기</button>
-					<button onclick="location.href='box.jsp'">메시지함<span id="unread" class="label label-info"></span></button>
+					
+			
 				</div>
 			
 		</div>
@@ -300,7 +300,7 @@
 			<%if(totallist==null||totallist.size()==0){
 				
 			%><tr>
-				<td colspan="5"></td>
+				<td colspan="5">없습니다</td>
 				</tr>
 			<%
 			}else{
@@ -452,7 +452,8 @@
                 <ul class="nav">
                     <li class="active"><a style="cursor: pointer;" onclick="location.href='TotalController?command=givelikelist&memid=<%=mem.getId()%>'">내가 좋아요한 글</a> </li>
                     <li class=""><a style="cursor: pointer;" onclick="location.href='TotalController?command=givewritelist&memid=<%=mem.getId()%>'">내가 쓴글 </a></li>
-                
+                    <li class=""><a style="cursor: pointer;" onclick="location.href='find.jsp'">친구 찾기 </a></li>
+                     <li class=""><a style="cursor: pointer;" onclick="location.href='box.jsp'">메시지함 <span id="unread" class="label label-info"></span></a></li>
                 </ul>
             </div>
 	

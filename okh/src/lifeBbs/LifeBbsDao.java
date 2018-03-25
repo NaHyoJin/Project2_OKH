@@ -508,7 +508,7 @@ public class LifeBbsDao implements ILifeBbsDao {
 			// row를 취득
 			String sql = " SELECT * FROM "
 						+ " (SELECT * FROM (SELECT * FROM LIFEBBS " + sWord + " ORDER BY REF ASC, STEP DESC)"
-						+ "  WHERE ROWNUM <=" + paging.getStartNum() + " ORDER BY REF DESC, STEP ASC) "
+						+ "  WHERE ROWNUM <=" + paging.getStartNum() + " AND DEL=0 ORDER BY REF DESC, STEP ASC) "
 						+ "WHERE ROWNUM <=" + paging.getCountPerPage() + "AND DEL=0";
 			
 			psmt = conn.prepareStatement(sql);
@@ -608,7 +608,7 @@ public class LifeBbsDao implements ILifeBbsDao {
 			// row를 취득
 			String sql = " SELECT * FROM "
 						+ " (SELECT * FROM (SELECT * FROM LIFEBBS " + sWord + " ORDER BY " + Sorting + " DESC) "
-						+ "  WHERE ROWNUM <=" + paging.getStartNum() + " ORDER BY " + Sorting + " DESC) "
+						+ "  WHERE ROWNUM <=" + paging.getStartNum() + " AND DEL=0 ORDER BY " + Sorting + " DESC) "
 						+ "WHERE ROWNUM <=" + paging.getCountPerPage() + "AND DEL=0";
 			
 			psmt = conn.prepareStatement(sql);

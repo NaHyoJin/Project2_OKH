@@ -558,7 +558,7 @@ public List<CombbsDto> getpagingComList(PagingBean paging, String searchWord, in
 		// row를 취득
 		String sql = " SELECT * FROM "
 				+ " (SELECT * FROM (SELECT * FROM COMBBS " + sWord + " ORDER BY SEQ ASC) "
-				+ "  WHERE ROWNUM <=" + paging.getStartNum() + " ORDER BY SEQ DESC) "
+				+ "  WHERE ROWNUM <=" + paging.getStartNum() + " AND DEL=0 ORDER BY SEQ DESC) "
 				+ " WHERE ROWNUM <=" + paging.getCountPerPage() +" AND DEL=0 ";
 		
 		System.out.println("paging.getStartNum() = " + paging.getStartNum());

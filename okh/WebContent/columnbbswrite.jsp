@@ -240,15 +240,15 @@
 		<div class="myinfo">
 	 	
 	 	<p class="myinfo_icon" style="margin-bottom: 3px;">
-		<a onclick="upmydetail()" style="cursor: pointer">
-		<img src="<%=profile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
-		</a>
-		<span class="detailid">
-		<a onclick="upmydetail()" style="cursor: pointer; margin-left: 20px;"><%=mem.getId() %></a>
-		</span>
+      <a onclick="upmydetail()" style="cursor: pointer">
+      <img src="<%=maingetprofile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+      </a>
+      <span class="detailid">
+      <a onclick="upmydetail()" style="cursor: pointer; margin-left: 20px;"><%=mem.getId() %></a>
+      </span>
 </p>
 <span class="" style="display: inline-block;"><img src="image/actionpoint.PNG" class="pointimg"></span>
-		<span style="display: inline-block;"><%=mem.getScore()%></span>
+      <span style="display: inline-block;"><%=mainscore%></span>
 		 <input type="hidden" name="id" value="<%=mem.getId()%>">
 		 <input type="hidden" name="command" value="techwriteAf">
 	 </div>

@@ -24,7 +24,7 @@
 	
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/bootstrap.js"></script>
-	<link rel="stylesheet" type="text/css" href="_main.css?ver=1.46">
+	<link rel="stylesheet" type="text/css" href="_main.css?ver=1.47">
 	<link rel="stylesheet" type="text/css" href="_totalbbs.css?ver=1.23">
 <!-- 쿠키용 -->
 <script type="text/javascript" src="js/jquery.cookie.js"></script>
@@ -342,7 +342,7 @@ function searchBbs1(e) {
 			<%
 			}
 			
-			for(int i=0;i<qnalist.size();i++){
+			for(int i=0;i<5;i++){
 				QnaDto qna=qnalist.get(i);
 				
 	
@@ -489,7 +489,7 @@ function searchBbs1(e) {
 			<%
 			}
 			
-			for(int i=0;i<lifelist.size();i++){
+			for(int i=0;i<5;i++){
 				LifeBbsDto dto=lifelist.get(i);
 				
 	
@@ -653,7 +653,7 @@ function searchBbs1(e) {
 			<%
 			}
 			
-			for(int i=0;i<techlist.size();i++){
+			for(int i=0;i<5;i++){
 				TechbbsDto dto=techlist.get(i);
 				
 	
@@ -785,131 +785,149 @@ function searchBbs1(e) {
 		</div>
 	
 		<div class="partition4">
-			<h4 style="margin-bottom: 15px">H/W & Coding 게시판 <a href="BBSHWCodingController?command=main"><img style="float: right" alt="게시판으로가기" src="image/moresee.PNG"></a></h4>
-			<%
-			newbbs5HWCodingServiceImpl hwservice = newbbs5HWCodingService.getInstance();
-			List<newbbs5HWCodingVO> hwlist = hwservice.gettechBbsList();
-			%>
-			<table border="1" class="techtable">
-				<%
-				if(hwlist == null || hwlist.size() == 0){
-				
-			%><tr>
-				<th>H/W & Coding 글이 없습니다.</th>
-				</tr>
-			<%
-			}
-			
-			for(int i = 0; i <hwlist.size(); i++){
-				newbbs5HWCodingVO hwdto = hwlist.get(i);
-				hwservice = newbbs5HWCodingService.getInstance();
-				boolean chekcomment = hwservice.checkcomment(hwlist.get(i).getSeq());
-				if(chekcomment){
-			%>
-			<tr>
-				<th style="padding-left:10px;">
-						<%      
-						//로그인 정보 확인 부분. //로그인한id가져오기
-						 	if(ologin != null){
-								mem = (UserDto)ologin;
-								//로그인 정보 가지고 오나 확인 부분.
-								System.out.println("mem : " + mem.toString());
-							}else{
-								System.out.println("로그인한 정보 없음.");
-							}
-							%>
-							<%
-							//로그인 안하고 글 볼때 null 값으로.
-								if(mem == null){
-									String memNull = null;
-							%>
-				<span style="font-size: 15px; margin-top: 5px;"><a href="BBSHWCodingController?command=techdetail&likeid=<%=memNull %>&seq=<%=hwdto.getSeq()%>"><%=hwdto.getTitle() %></a></span>
-						<%
-							}else{//로그인 하고 글 볼때.
-						%>
-				<span style="font-size: 15px; margin-top: 5px;"><a href="BBSHWCodingController?command=techdetail&likeid=<%=mem.getId() %>&seq=<%=hwdto.getSeq()%>"><%=hwdto.getTitle() %></a></span>		
-						<%
-							}
-			 			%>
-				<%
-		IUserService uservice=UserService.getInstance();
-		
-		int score=uservice.getScore(hwdto.getId());
-		String getprofile=uservice.getProfile(hwdto.getId());
-		%>
+         <h4 style="margin-bottom: 15px">H/W & Coding 게시판<a href="BBSHWCodingController?command=main"><img style="float: right" alt="게시판으로가기" src="image/moresee.PNG"></a></h4>
+          <%
+         newbbs5HWCodingServiceImpl hwservice = newbbs5HWCodingService.getInstance();
+         List<newbbs5HWCodingVO> hwlist = hwservice.gettechBbsList();
+         %>
+         <table border="1" class="techtable">
+            <%
+            if(hwlist == null || hwlist.size()==0){
+            
+         %><tr>
+            <th>H/W & Coding 게시판 글이 없습니다.</th>
+            </tr>
+         <%
+         }
+         
+         for(int i=0;i<5;i++){
+            newbbs5HWCodingVO hwdto=hwlist.get(i);
+            
+            boolean chekcomment=hwservice.checkcomment(hwlist.get(i).getSeq());
+            if(chekcomment){
+         %>
+         <tr>
+            <th style="padding-left:10px;">
+            <%
+      if(ologin == null){   //로그인안한상태
+         %>
+         <span style="font-size: 15px; margin-top: 5px;"><a href="BBSHWCodingController?command=hwdetail&likeid=&seq=<%=hwdto.getSeq()%>"><%=hwdto.getTitle() %></a></span>
+               <%
+      IUserService uservice=UserService.getInstance();
+      
+      int score=uservice.getScore(hwdto.getId());
+      String getprofile=uservice.getProfile(hwdto.getId());
+      %>
 <p class="myinfo_icon" style="float: right;">
-	<a onclick="location.href ='User?command=otherpage&infoid=<%=hwdto.getId() %>'" style="cursor: pointer">
-		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 20px; float:left; max-height: 20px; margin: 0 auto;">
-	</a>
-	<span class="detailid">
-		<a onclick="location.href ='User?command=otherpage&infoid=<%=hwdto.getId() %>'" style="cursor: pointer">
-			<span style="float: left; font-size: 12px;">
-			<%=hwdto.getId() %>
-			</span>
-		</a>                                  
-		<img src="image/actionpoint.PNG" class="pointimg" style="max-width: 13px; float:left; max-height: 13px;">
-		<span style="float: left; font-size: 12px;"><%=score%></span><br>
-		<span style="font-size: 10px; margin-top:3px; float: left;"><%=hwdto.getWdate() %></span>
-	</span> 
+   <a onclick="location.href ='User?command=otherpage&infoid=<%=hwdto.getId() %>'" style="cursor: pointer">
+      <img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 20px; float:left; max-height: 20px; margin: 0 auto;">
+   </a>
+   <span class="detailid">
+      <a onclick="location.href ='User?command=otherpage&infoid=<%=hwdto.getId() %>'" style="cursor: pointer">
+         <span style="float: left; font-size: 12px;">
+         <%=hwdto.getId() %>
+         </span>
+      </a>                                  
+      <img src="image/actionpoint.PNG" class="pointimg" style="max-width: 13px; float:left; max-height: 13px;">
+      <span style="float: left; font-size: 12px;"><%=score%></span><br>
+      <span style="font-size: 10px; margin-top:3px; float: left;"><%=hwdto.getWdate() %></span>
+   </span> 
 </p>
-		<div style="clear: both;"></div>
-			<%
-			}else{
-			%>
-			<tr>
-				<th style="padding-left:10px; border-left: 5px solid #808080">
-				<%      
-				//로그인 정보 확인 부분. //로그인한id가져오기
-						 	if(ologin != null){
-								mem = (UserDto)ologin;
-								//로그인 정보 가지고 오나 확인 부분.
-								System.out.println("mem : " + mem.toString());
-							}else{
-								System.out.println("로그인한 정보 없음.");
-							}
-							%>
-				<%
-							//로그인 안하고 글 볼때 null 값으로.
-								if(mem == null){
-									String memNull = null;
-							%>
-				<span style="font-size: 15px; margin-top: 5px;"><a href="BBSHWCodingController?command=hwdetail&likeid=<%=memNull %>&seq=<%=hwdto.getSeq()%>"><%=hwdto.getTitle() %></a></span>
-						<%
-							}else{//로그인 하고 글 볼때.
-						%>
-				<span style="font-size: 15px; margin-top: 5px;"><a href="BBSHWCodingController?command=hwdetail&likeid=<%=mem.getId() %>&seq=<%=hwdto.getSeq()%>"><%=hwdto.getTitle() %></a></span>		
-						<%
-							}
-			 			%>
-				<%
-		IUserService uservice=UserService.getInstance();
-		
-		int score=uservice.getScore(hwdto.getId());
-		String getprofile=uservice.getProfile(hwdto.getId());
-		%>
+      <div style="clear: both;"></div>
+      
+            <%
+      }else{
+         
+      %>
+            <span style="font-size: 15px; margin-top: 5px;"><a href="BBSHWCodingController?command=hwdetail&likeid=<%=mem.getId() %>&seq=<%=hwdto.getSeq()%>"><%=hwdto.getTitle() %></a></span>
+               <%
+      IUserService uservice=UserService.getInstance();
+      
+      int score=uservice.getScore(hwdto.getId());
+      String getprofile=uservice.getProfile(hwdto.getId());
+      %>
 <p class="myinfo_icon" style="float: right;">
-	<a onclick="location.href ='User?command=otherpage&infoid=<%=hwdto.getId() %>'" style="cursor: pointer">
-		<img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 20px; float:left; max-height: 20px; margin: 0 auto;">
-	</a>
-	<span class="detailid">
-		<a onclick="location.href ='User?command=otherpage&infoid=<%=hwdto.getId() %>'" style="cursor: pointer">
-			<span style="float: left; font-size: 12px;">
-			<%=hwdto.getId() %>
-			</span>
-		</a>                                  
-		<img src="image/actionpoint.PNG" class="pointimg" style="max-width: 13px; float:left; max-height: 13px;">
-		<span style="float: left; font-size: 12px;"><%=score%></span><br>
-		<span style="font-size: 10px; margin-top:3px; float: left;"><%=hwdto.getWdate() %></span>
-	</span> 
+   <a onclick="location.href ='User?command=otherpage&infoid=<%=hwdto.getId() %>'" style="cursor: pointer">
+      <img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 20px; float:left; max-height: 20px; margin: 0 auto;">
+   </a>
+   <span class="detailid">
+      <a onclick="location.href ='User?command=otherpage&infoid=<%=hwdto.getId() %>'" style="cursor: pointer">
+         <span style="float: left; font-size: 12px;">
+         <%=hwdto.getId() %>
+         </span>
+      </a>                                  
+      <img src="image/actionpoint.PNG" class="pointimg" style="max-width: 13px; float:left; max-height: 13px;">
+      <span style="float: left; font-size: 12px;"><%=score%></span><br>
+      <span style="font-size: 10px; margin-top:3px; float: left;"><%=hwdto.getWdate() %></span>
+   </span> 
 </p>
-		<div style="clear: both;"></div>
-	
-			<%
-			}
-			}
-			%>
-		</table>
-		</div>
+      <div style="clear: both;"></div>
+      <%
+      }
+         }else{
+         %>
+         
+         <tr>
+            <th style="padding-left:10px; border-left: 5px solid #808080">
+               <%
+      if(ologin == null){   //로그인안한상태
+         %>
+         <span style="font-size: 15px; margin-top: 5px;"><a href="BBSHWCodingController?command=hwdetail&likeid=&seq=<%=hwdto.getSeq()%>"><%=hwdto.getTitle() %></a></span>
+               <%
+      IUserService uservice=UserService.getInstance();
+      
+      int score=uservice.getScore(hwdto.getId());
+      String getprofile=uservice.getProfile(hwdto.getId());
+      %>
+<p class="myinfo_icon" style="float: right;">
+   <a onclick="location.href ='User?command=otherpage&infoid=<%=hwdto.getId() %>'" style="cursor: pointer">
+      <img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 20px; float:left; max-height: 20px; margin: 0 auto;">
+   </a>
+   <span class="detailid">
+      <a onclick="location.href ='User?command=otherpage&infoid=<%=hwdto.getId() %>'" style="cursor: pointer">
+         <span style="float: left; font-size: 12px;">
+         <%=hwdto.getId() %>
+         </span>
+      </a>                                  
+      <img src="image/actionpoint.PNG" class="pointimg" style="max-width: 13px; float:left; max-height: 13px;">
+      <span style="float: left; font-size: 12px;"><%=score%></span><br>
+      <span style="font-size: 10px; margin-top:3px; float: left;"><%=hwdto.getWdate() %></span>
+   </span> 
+</p>
+      <div style="clear: both;"></div>
+      
+            <%
+      }else{
+         
+      %>
+            <span style="font-size: 15px; margin-top: 5px;"><a href="BBSHWCodingController?command=hwdetail&likeid=<%=mem.getId() %>&seq=<%=hwdto.getSeq()%>"><%=hwdto.getTitle() %></a></span>
+               <%
+      IUserService uservice=UserService.getInstance();
+      
+      int score=uservice.getScore(hwdto.getId());
+      String getprofile=uservice.getProfile(hwdto.getId());
+      %>
+<p class="myinfo_icon" style="float: right;">
+   <a onclick="location.href ='User?command=otherpage&infoid=<%=hwdto.getId() %>'" style="cursor: pointer">
+      <img src="<%=getprofile %>" class="media-object img-circle" style="max-width: 20px; float:left; max-height: 20px; margin: 0 auto;">
+   </a>
+   <span class="detailid">
+      <a onclick="location.href ='User?command=otherpage&infoid=<%=hwdto.getId() %>'" style="cursor: pointer">
+         <span style="float: left; font-size: 12px;">
+         <%=hwdto.getId() %>
+         </span>
+      </a>                                  
+      <img src="image/actionpoint.PNG" class="pointimg" style="max-width: 13px; float:left; max-height: 13px;">
+      <span style="float: left; font-size: 12px;"><%=score%></span><br>
+      <span style="font-size: 10px; margin-top:3px; float: left;"><%=hwdto.getWdate() %></span>
+   </span> 
+</p>
+      <div style="clear: both;"></div>
+         <%}
+         }}
+         %>
+      </table>
+      </div>
 	</div>
 <script type="text/javascript">
 	function logout() {

@@ -248,16 +248,16 @@ String userID = null;
 			<col width="100"> <col width="800">
 			<tr>
 			<td style="vertical-align: middle;">작성자</td>
-				<td><p class="myinfo_icon" style="margin-bottom: 3px; ">
-		<a onclick="upmydetail()" style="cursor: pointer">
-		<img src="<%=profile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
-		</a>
-		<span class="detailid">
-		<a onclick="upmydetail()" style="cursor: pointer; margin-left: 20px;"><%=mem.getId() %></a>
-		</span>
+				<td><p class="myinfo_icon" style="margin-bottom: 3px;">
+      <a onclick="upmydetail()" style="cursor: pointer">
+      <img src="<%=maingetprofile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+      </a>
+      <span class="detailid">
+      <a onclick="upmydetail()" style="cursor: pointer; margin-left: 20px;"><%=mem.getId() %></a>
+      </span>
 </p>
 <span class="" style="display: inline-block;"><img src="image/actionpoint.PNG" class="pointimg"></span>
-		<span style="display: inline-block;"><%=mem.getScore()%></span></td>
+      <span style="display: inline-block;"><%=mainscore%></span></td>
 				
 				<td>
 				

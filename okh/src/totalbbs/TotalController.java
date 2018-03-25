@@ -814,14 +814,13 @@ public class TotalController extends HttpServlet {
 			
 			List<totalbbsdto> serchlist=new ArrayList<>();
 			memid="-"+memid+"-";
-			System.out.println(memid+"누가들어왔나"+totallist.get(0).getId());
 			for (int i = 0; i < totallist.size(); i++) {
 				if(totallist.get(i).getId().contains(memid)) {
 					serchlist.add(totallist.get(i));
 				}else {
 				}
 			}
-			System.out.println(serchlist.get(0).getId()+"dpd"+totallist.get(0).getId());
+			
 			sort=1;
 			Collections.sort(totallist,new CompareSeqDesc());
 			request.setAttribute("writeserchlist", serchlist);

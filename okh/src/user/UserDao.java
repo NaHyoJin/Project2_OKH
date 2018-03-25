@@ -235,10 +235,10 @@ public class UserDao implements IUserDao {
 			if(rs.next()) {
 				if(rs.getString(1).equals(" ")) {
 					System.out.println("왔ㄴ니ㅣ니니?");
-					return "http://localhost:8090/okh/image/muser.png";
+					return "http://192.168.10.48:8090/okh/image/muser.png";
 				}
 				System.out.println("왓왓!!?");
-				return "http://localhost:8090/okh/upload/" + rs.getString(1);
+				return "http://192.168.10.48:8090/okh/upload/" + rs.getString(1);
 			}
 			
 		} catch (SQLException e) {
@@ -248,7 +248,7 @@ public class UserDao implements IUserDao {
 			DBClose.close(psmt, conn, rs);
 		}
 		System.out.println("잉잉!!?");
-		return "http://localhost:8090/okh/image/muser.png";
+		return "http://192.168.10.48:8090/okh/image/muser.png";
 	}
 
 	@Override
