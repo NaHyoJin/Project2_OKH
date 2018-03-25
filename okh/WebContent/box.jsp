@@ -5,6 +5,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+
 <!-- 로그인 세션 -->
 	<%
 	Object ologin = session.getAttribute("login");
