@@ -56,7 +56,7 @@ boolean isS = service.writeBbs(techwritedto);
 if(isS){
 %>
 	<script type="text/javascript">
-	alert("HW 글 추가 성공");
+	/* alert("HW 글 추가 성공"); */
 	
 	<%
 	//여기서 글 작성 하면 점수 올라가게 해주는 것 해보자. 정상적으로 글 작성 하면 점수 올라가는 것.
@@ -72,7 +72,7 @@ if(isS){
 %>
 	<script type="text/javascript">
 	alert("다시 입력해 주세요.");
-	location.href = "BBSHWCodingController?command=techbbs";
+	location.href = "BBSHWCodingController?command=main";
 	</script>
 <%
 }

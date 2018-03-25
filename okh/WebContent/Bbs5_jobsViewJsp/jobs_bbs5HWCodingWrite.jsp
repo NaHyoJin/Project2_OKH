@@ -148,7 +148,7 @@ $("#pdsup").click(function() {
 			<img src="<%=maingetprofile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
 		</a>
 			<span class="memid"><a onclick="upmydetail()" style="cursor: pointer;color: #fff;"><%=mem.getId() %></a></span> <br>
-					<span class="point"><img src="../image/actionpoint.PNG" style="margin-top: 0" class="pointimg"><%=mainscore%></span>
+					<span class="point"><img src="image/actionpoint.PNG" style="margin-top: 0" class="pointimg"><%=mainscore%></span>
 			<img class="settingbtn" alt="" src="../image/mainsetting.PNG" style="cursor: pointer" id="btnPopover">
 				
 </div>
@@ -238,16 +238,16 @@ $("#pdsup").click(function() {
 	 
 	 <div class="myinfo">
 	 	
-	 	<p class="myinfo_icon" style="margin-bottom: 3px;">
-		<a onclick="upmydetail()" style="cursor: pointer">
-		<img src="<%=profile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
-		</a>
-		<span class="detailid">
-		<a onclick="upmydetail()" style="cursor: pointer; margin-left: 20px;"><%=mem.getId() %></a>
-		</span>
+	 <p class="myinfo_icon" style="margin-bottom: 3px;">
+      <a onclick="upmydetail()" style="cursor: pointer">
+      <img src="<%=maingetprofile %>" class="media-object img-circle" style="max-width: 50px; float:left; max-height: 50px; margin: 0 auto;">
+      </a>
+      <span class="detailid">
+      <a onclick="upmydetail()" style="cursor: pointer; margin-left: 20px;"><%=mem.getId() %></a>
+      </span>
 </p>
-<span class="" style="display: inline-block;"><img src="../image/actionpoint.PNG" class="pointimg"></span>
-		<span style="display: inline-block;"><%=mem.getScore()%></span>
+<span class="" style="display: inline-block;"><img src="image/actionpoint.PNG" class="pointimg"></span>
+      <span style="display: inline-block;"><%=mainscore%></span>
 		 <input type="hidden" name="id" value="<%=mem.getId()%>">
 		 <input type="hidden" name="command" value="techwriteAf">
 	 </div>
@@ -386,7 +386,7 @@ function eventonblur() {
 	var button = document.createElement("img")	//span태그옆에 취소버튼(name=cancel)
 	var BtnText = document.createTextNode( 'X' );
 	button.name=obj;
-	button.src="image/x.PNG"
+	button.src="../image/x.PNG"
 		button.style.cursor="pointer";
 	button.onclick = function(){
 	doSelect(this);
@@ -405,87 +405,72 @@ function eventonblur() {
 </script>
 
 <!-- 로그아웃, 정보수정 popover -->
-	<script>
-      $(function() {
-         $('#btnPopover').popover({
-            placement: 'right',
-            container: 'body',
-            html: true,
-            trigger: 'hover',
-            content: '<button onclick="logout()" type="button" class="btn btn-default popover-dismiss">logout</button><button onclick="upmydetail()" type="button" class="btn btn-default popover-dismiss">정보수정</button>'
-         });
-         $('#btnPopover').on('hide.bs.popover', function(evt) {
-            if(!$(evt.target).hasClass('hide-popover')) {
-               evt.preventDefault();
-               evt.stopPropagation();
-               evt.cancelBubble = true;
-            }
-         });
-         $('#btnPopover').on('hidden.bs.popover', function(evt) {
-            $(this).removeClass('hide-popover');
-         });
-         $('body').on('click', '.popover-dismiss', function() {
-            $('#btnPopover').addClass('hide-popover');
-            $('#btnPopover').popover('hide');
-         });
-          
-          $('#btnPopover').data('overButton', false);
-          $('#btnPopover').data('overPopover', false);
-          $.fn.closePopover = function(){
-            var $this = $(this);
-            
-            if(!$this.data('overPopover') && !$this.data('overButton')){
-              $this.addClass('hide-popover');
-              $this.popover('hide');              
-            }
-          }
-          
-          $('#btnPopover').on('mouseenter', function(evt){
-            $(this).data('overButton', true);
-          });
-          $('#btnPopover').on('mouseleave', function(evt){
-            var $btn = $(this);
-            $btn.data('overButton', false);
-            
-            setTimeout(function() {$btn.closePopover();}, 200);
-            
-          });
-          $('#btnPopover').on('shown.bs.popover', function () {
-            var $btn = $(this);
-            $('.popover-content').on('mouseenter', function (evt){
-              $btn.data('overPopover', true);
-            });
-            $('.popover-content').on('mouseleave', function (evt){
-              $btn.data('overPopover', false);
-              
-              setTimeout(function() {$btn.closePopover();}, 200);
-            });
-          });
+	<script type="text/javascript">
+	$(function() {
+		$('#btnPopover').popover({
+			placement: 'right',
+			container: 'body',
+			html: true,
+			trigger: 'hover',
+			content: '<p>설정</p><hr><button type="button" class="btn btn-default popover-dismiss" onclick="logout()">로그아웃</button><button type="button" class="btn btn-default popover-dismiss" onclick="mypage()">정보수정</button>'
+		});
+		$('#btnPopover').on('hide.bs.popover', function(evt) {
+			if(!$(evt.target).hasClass('hide-popover')) {
+				evt.preventDefault();
+				evt.stopPropagation();
+				evt.cancelBubble = true;
+			}
+		});
+		$('#btnPopover').on('hidden.bs.popover', function(evt) {
+			$(this).removeClass('hide-popover');
+		});
+		$('body').on('click', '.popover-dismiss', function() {
+			$('#btnPopover').addClass('hide-popover');
+			$('#btnPopover').popover('hide');
+		});
+      
+      $('#btnPopover').data('overButton', false);
+      $('#btnPopover').data('overPopover', false);
+      $.fn.closePopover = function(){
+        var $this = $(this);
+        
+        if(!$this.data('overPopover') && !$this.data('overButton')){
+          $this.addClass('hide-popover');
+          $this.popover('hide');              
+        }
+      }
+      
+      $('#btnPopover').on('mouseenter', function(evt){
+        $(this).data('overButton', true);
+      });
+      $('#btnPopover').on('mouseleave', function(evt){
+        var $btn = $(this);
+        $btn.data('overButton', false);
+        
+        setTimeout(function() {$btn.closePopover();}, 200);
+        
+      });
+      $('#btnPopover').on('shown.bs.popover', function () {
+        var $btn = $(this);
+        $('.popover-content').on('mouseenter', function (evt){
+          $btn.data('overPopover', true);
         });
-   </script>
-<script type="text/javascript">
+        $('.popover-content').on('mouseleave', function (evt){
+          $btn.data('overPopover', false);
+          
+          setTimeout(function() {$btn.closePopover();}, 200);
+        });
+      });
+    });
+	</script>
+	<script type="text/javascript">
 	function logout() {
-		location.href ="User?command=logout";
+		location.href = "../User?command=logout";
 	}
-	function upmydetail() {
-		location.href ="User?command=mypage";
+	function mypage() {
+		location.href = "../User?command=mypage";
 	}
 	</script>
-<!-- var formData = new FormData(); 
-	formData.append("id", $("input[name=id2]").val()); 
-	formData.append("fileload", $("input[name=fileload]")[0].files[0]); 
-	$.ajax({ 
-		url: 'pdsupload.jsp', 
-		data: formData, 
-		processData: false, 
-		contentType: false, 
-		type: 'POST', 
-		success: function(data){ 
-			alert("추가되었습니다"); 
-			
-			}
-		}); 
-	});  -->
 </body>
 </html>
 
